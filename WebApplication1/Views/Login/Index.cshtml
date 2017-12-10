@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.UtilisateurViewModel
+
+
+@{
+    ViewBag.Title = "Connexion";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@if (Model.Authentifie)
+{
+    <h3>
+        Vous êtes déjà authentifié avec le login :
+        @Model.Utilisateur.Identifiant
+    </h3>
+        @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
+}
+else
+{
+    <p>
+        Veuillez vous authentifier :
+    </p>
+    using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(m => m.Utilisateur.Identifiant)
+            @Html.TextBoxFor(m => m.Utilisateur.Identifiant)
+            @Html.ValidationMessageFor(m => m.Utilisateur.Identifiant)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Utilisateur.MotDePasse)
+            @Html.PasswordFor(m => m.Utilisateur.MotDePasse)
+            @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
+        </div>
+        <input type="submit" value="Se connecter" />
+        <br />
+        @Html.ActionLink("Créer un compte", "CreerCompte")
+    }
+}
