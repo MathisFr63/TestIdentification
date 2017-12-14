@@ -9,7 +9,7 @@ namespace WebApplication1.Models
     public class Utilisateur
     {
         //[Required]
-        public int ID { get; set; }
+        public int ID { get; private set; }
         //[Required]
         public string Identifiant { get; set; }
         //[Required]
@@ -21,6 +21,8 @@ namespace WebApplication1.Models
         public string Prénom { get; set; }
         public string Mail { get; set; }
         public TypeUtilisateur Type { get; set; }
+
+        public List<Client> Clients { get; set; } = new List<Client>();
 
         public override string ToString()
         {

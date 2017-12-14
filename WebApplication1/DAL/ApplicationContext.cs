@@ -10,6 +10,8 @@ namespace WebApplication1.DAL
 {
     public class ApplicationContext : DbContext
     {
+        public Utilisateur UtilisateurCourant { get; set; }
+
         public ApplicationContext() : base("ApplicationContext")
         {
         }
@@ -23,7 +25,9 @@ namespace WebApplication1.DAL
 
         public Utilisateur Authentifier(string identifiant, string motDePasse)
         {
-            return Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
+            UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
+            return UtilisateurCourant;
+            //return Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
@@ -38,5 +42,7 @@ namespace WebApplication1.DAL
             SaveChanges();
             return user.ID;
         }
+
+        public System.Data.Entity.DbSet<WebApplication1.Models.Client> Clients { get; set; }
     }
 }
