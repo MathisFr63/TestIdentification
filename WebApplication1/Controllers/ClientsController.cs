@@ -19,6 +19,7 @@ namespace WebApplication1.Controllers
         // GET: Clients
         public ActionResult Index()
         {
+            db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             return View(db.UtilisateurCourant.Clients.ToList());
         }
 

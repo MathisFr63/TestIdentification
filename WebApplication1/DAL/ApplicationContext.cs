@@ -12,6 +12,8 @@ namespace WebApplication1.DAL
     {
         public Utilisateur UtilisateurCourant { get; set; }
 
+        //public List<Client> Clients { get; set; }
+
         public ApplicationContext() : base("ApplicationContext")
         {
         }
@@ -25,14 +27,12 @@ namespace WebApplication1.DAL
 
         public Utilisateur Authentifier(string identifiant, string motDePasse)
         {
-            UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
-            return UtilisateurCourant;
-            //return Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
-            return Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID.ToString() == identifiant);
         }
 
         public int AjouterUtilisateur(string identifiant, string mdp)
