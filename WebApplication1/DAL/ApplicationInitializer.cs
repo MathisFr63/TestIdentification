@@ -19,8 +19,19 @@ namespace WebApplication1.DAL
                 new Utilisateur{Identifiant="AurelienBerger", MotDePasse="Aurelien", Mail = "Aurelien.BERGER@etu.uca.fr", Nom = "BERGER", Prénom = "Aurélien", Type = TypeUtilisateur.Enregistré},
             };
 
-            utilisateurs.ElementAt(0).Clients.Add(new Client { Nom = "Fnac", SiteWeb = "https://www.fnac.com/", Telephones = { new Telephone { Préfixe = "+33", Type = TypeTelephone.Fixe, Numéro = "0102030405" } }, Commentaire = "La Fnac" });
             utilisateurs.ForEach(s => context.Utilisateurs.Add(s));
+            context.SaveChanges();
+
+            var clients = new List<Client>
+            {
+                new Client{ Nom = "Fnac", SiteWeb = "https://www.fnac.com/", Commentaire = "La Fnac", UtilisateurID=1},
+                new Client{ Nom = "Amazon", SiteWeb = "https://www.amazon.com/", Commentaire = "Le client Amazon", UtilisateurID=1},
+                new Client{ Nom = "Test1", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=1},
+                new Client{ Nom = "Test2", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=2},
+                new Client{ Nom = "Test3", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=3},
+                new Client{ Nom = "Test4", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=4}
+            };
+            clients.ForEach(c => context.Clients.Add(c));
             context.SaveChanges();
         }
     }

@@ -21,6 +21,7 @@ namespace WebApplication1.Controllers
         {
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             return View(db.UtilisateurCourant.Clients.ToList());
+            //return View(db.Clients.Where(c => c.UtilisateurID == db.UtilisateurCourant.ID));
         }
 
         // GET: Clients/Details/5

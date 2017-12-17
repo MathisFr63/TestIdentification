@@ -12,13 +12,12 @@ namespace WebApplication1.DAL
     {
         public Utilisateur UtilisateurCourant { get; set; }
 
-        //public List<Client> Clients { get; set; }
-
         public ApplicationContext() : base("ApplicationContext")
         {
         }
 
         public DbSet<Utilisateur> Utilisateurs { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,7 +41,5 @@ namespace WebApplication1.DAL
             SaveChanges();
             return user.ID;
         }
-
-        public System.Data.Entity.DbSet<WebApplication1.Models.Client> Clients { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace WebApplication1.Models
         public string Mail { get; set; }
         public TypeUtilisateur Type { get; set; }
 
-        public List<Client> Clients { get; set; } = new List<Client>();
+        public virtual ICollection<Client> Clients { get; set; }
 
         public override string ToString()
         {

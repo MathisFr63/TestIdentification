@@ -31,18 +31,17 @@ namespace WebApplication1.Controllers
 
         public ActionResult SeConnecter([Bind(Include = "Identifiant,MotDePasse")] Utilisateur utilisateur)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    Utilisateur UtilisateurCourant;
-            //    if (db.Utilisateurs.Contains(utilisateur))
-            //    {
-            //        UtilisateurCourant = utilisateur;
-            //    }
-            //    else
-            //        UtilisateurCourant = null;
-            //}
-            //return RedirectToAction("Index");
-            return View("Index");
+            if (ModelState.IsValid)
+            {
+                Utilisateur UtilisateurCourant;
+                if (db.Utilisateurs.Contains(utilisateur))
+                {
+                    UtilisateurCourant = utilisateur;
+                }
+                else
+                    UtilisateurCourant = null;
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Utilisateurs/Details/5
