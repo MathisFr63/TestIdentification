@@ -1,50 +1,41 @@
 ﻿@model WebApplication1.Models.Client
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Html.DisplayFor(model => model.Nom) + " (  client )";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Client</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SiteWeb)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SiteWeb)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
-
-    </dl>
-</div>
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href=@Url.Action("Index","Clients") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+
+    <a href=@Url.Action("Edit","Clients",new { id = Model.ID }) class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
 </p>
+
+<br />
+<h3 class="">Informations sur le client :</h3>
+<br />
+
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Site web : <a href="@Html.DisplayFor(model => model.SiteWeb)">@Html.DisplayFor(model => model.SiteWeb)</a></p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.Mail)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Commentaire :@Html.DisplayFor(model => model.Commentaire)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

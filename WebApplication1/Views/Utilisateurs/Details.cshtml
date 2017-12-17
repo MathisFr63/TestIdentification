@@ -4,31 +4,37 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Utilisateur</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Identifiant)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Identifiant)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MotDePasse)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MotDePasse)
-        </dd>
-
-    </dl>
-</div>
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+
+    <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID }) class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
 </p>
+
+<br />
+<h3 class="">Informations sur @Html.DisplayFor(model => model.Identifiant) :</h3>
+<br />
+
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom )</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.Mail)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Type : @Html.DisplayFor(model => model.Type)</p>
+            </div>
+
+        </div>
+    </div>
+</div>
