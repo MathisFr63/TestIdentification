@@ -5,11 +5,8 @@
     ViewBag.Title = "Connexion";
 }
 
-<h2>Index</h2>
+<h2>Connexion</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @if (Model.Authentifie)
 {
     <h3>
@@ -20,23 +17,46 @@
 }
 else
 {
-    <p>
-        Veuillez vous authentifier :
-    </p>
+
     using (Html.BeginForm())
     {
-        <div>
-            @Html.LabelFor(m => m.Utilisateur.Identifiant)
-            @Html.TextBoxFor(m => m.Utilisateur.Identifiant)
-            @Html.ValidationMessageFor(m => m.Utilisateur.Identifiant)
-        </div>
-        <div>
-            @Html.LabelFor(m => m.Utilisateur.MotDePasse)
-            @Html.PasswordFor(m => m.Utilisateur.MotDePasse)
-            @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
-        </div>
-        <input type="submit" value="Se connecter" />
-        <br />
-        @Html.ActionLink("Créer un compte", "CreerCompte")
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                            <p class="lead text-primary">
+                                Nouveau client ?
+                                <br> Créer votre compte gratuitement !
+                            </p>
+                            <div class="form-group">
+                                <label>Email address</label>
+                                <input type="email" name="email" class="form-control" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="Password">
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Sign In"/>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                            <p class="lead text-info">Déjà client ?</p>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Utilisateur.Identifiant)
+                                @Html.TextBoxFor(m => m.Utilisateur.Identifiant, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Utilisateur.Identifiant)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Utilisateur.MotDePasse)
+                                @Html.PasswordFor(m => m.Utilisateur.MotDePasse, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
+                            </div>
+                            <input type="submit" class="btn btn-info" value="Se Connecter" />
+                    </div>
+                </div>
+            </div>
     }
 }
