@@ -54,9 +54,14 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Clients.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (int.TryParse(HttpContext.User.Identity.Name, out int tmp))
+                {
+                    client.UtilisateurID = tmp;
+                    db.Clients.Add(client);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Create");
             }
 
             return View(client);
