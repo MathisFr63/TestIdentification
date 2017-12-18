@@ -20,7 +20,6 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
                 <ul class="nav navbar-nav">
-                    <li style="float:right"><a><span class="glyphicon glyphicon-off"></span></a></li>
                     <li style="float:right;"><a><span class="glyphicon glyphicon-off"></span></a></li>
                     <li style="float:right;"><a style="color:white">Bonjour toi</a></li>
                 </ul>
@@ -44,21 +43,6 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
                 </ul>
             </nav>
-    <nav style="background-color : #6F7E8C;" >
-        <ul class="nav nav-pills nav-stacked nav-stacked-left pull-left" id="myTab">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Utilisateurs", "Index", "Utilisateurs")</li>
-            <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Fournisseurs</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Devis</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Factures</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Avoirs</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
-        </ul>
-    </nav>
-
             <div class="container body-content">
                 @RenderBody()
                 <hr />
