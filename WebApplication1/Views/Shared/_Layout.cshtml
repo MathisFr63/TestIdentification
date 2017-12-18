@@ -43,15 +43,17 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
                 </ul>
             </nav>
-            <div class="container body-content">
-                @RenderBody()
-                <hr />
-            </div>
-            </div>
+            <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                <div class="container body-content">
+                    @RenderBody()
+                    <hr />
+                </div>
+            </main>
         </div>
+    </div>
 
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
-            @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

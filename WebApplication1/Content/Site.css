@@ -1,7 +1,8 @@
-﻿html{
+﻿html {
     min-height: 100%;
     height: 100%;
 }
+
 body {
     min-height: 100%;
     padding-top: 50px;
@@ -33,8 +34,25 @@ textarea {
     height: 100%;
     min-height: 100%;
 }
-.menu li a{
-    color: black;
-    font-size : medium;
-    padding : 20px;
+
+    .menu li a {
+        color: black;
+        font-size: medium;
+        padding: 20px;
+    }
+
+.btn-info {
+    color: #171E26;
+    background-color: #ffffff;
+    border-color: #ffffff;
 }
+
+    .btn-info:hover,
+    .btn-info:focus,
+    .btn-info:active,
+    .btn-info.active,
+    .open .dropdown-toggle.btn-info {
+        color: #ffffff;
+        background-color: #171E26;
+        border-color: #171E26;
+    }

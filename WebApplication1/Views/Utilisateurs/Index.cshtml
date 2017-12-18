@@ -4,7 +4,7 @@
     ViewBag.Title = "Utilisateurs";
 }
 
-<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+
 
     <h2>Index</h2>
 
@@ -63,14 +63,13 @@
                         <span class="glyphicon glyphicon-pencil" />
                     </a>
                     <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
-                        <span class="glyphicon glyphicon-pencil" />
+                        <span class="glyphicon glyphicon-print" />
                     </a>
                     <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
-                        <span class="glyphicon glyphicon-pencil" />
+                        <span class="glyphicon glyphicon-trash" />
                     </a>
                 </td>
             </tr>
         }
 
     </table>
-</main>

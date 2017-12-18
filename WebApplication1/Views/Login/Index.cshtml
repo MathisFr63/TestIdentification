@@ -5,7 +5,6 @@
     ViewBag.Title = "Connexion";
 }
 
-<h2>Index</h2>
 <h2>Connexion</h2>
 
 @if (Model.Authentifie)
@@ -14,7 +13,7 @@
         Vous êtes déjà authentifié avec le login :
         @Model.Utilisateur.Identifiant
     </h3>
-        @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
+    @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
 else
 {
@@ -33,14 +32,14 @@ else
                         <input type="email" name="email" class="form-control" placeholder="Enter email">
                     </div>
                     <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Password">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
                     <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Password">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
-                            <input type="submit" class="btn btn-primary" value="Sign In"/>
+                    <input type="submit" class="btn btn-primary" value="Sign In" />
                 </div>
                 <div class="col-md-6">
                     <br>
