@@ -430,23 +430,23 @@ cite {
 }
 
 .text-primary {
-  color: #428bca;
+    color: #171E26;
 }
 
 .text-warning {
-  color: #c09853;
+    color: #6F7E8C;
 }
 
 .text-danger {
-  color: #b94a48;
+    color: #EF0C1A;
 }
 
 .text-success {
-  color: #468847;
+    color: #424D58;
 }
 
 .text-info {
-  color: #3a87ad;
+    color: #F0F1F4;
 }
 
 .text-left {

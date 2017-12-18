@@ -4,61 +4,73 @@
     ViewBag.Title = "Utilisateurs";
 }
 
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 
-<h2>Index</h2>
+    <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Identifiant)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MotDePasse)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Prénom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-plus" />
+        </a>
+    </p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Identifiant)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MotDePasse)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prénom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Identifiant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotDePasse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prénom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Identifiant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotDePasse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prénom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-pencil" />
+                    </a>
+                    <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-pencil" />
+                    </a>
+                    <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-pencil" />
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</main>
