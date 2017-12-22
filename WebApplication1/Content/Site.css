@@ -35,6 +35,10 @@ textarea {
     min-height: 100%;
 }
 
+    .menu:hover {
+        background-color: #ffffff;
+    }
+
     .menu li a {
         color: black;
         font-size: medium;
@@ -45,6 +49,12 @@ textarea {
     color: #171E26;
     background-color: #ffffff;
     border-color: #ffffff;
+}
+
+.btn-secondary {
+    color: #ffffff;
+    background-color: #171E26;
+    border-color: #171E26;
 }
 
     .btn-info:hover,
