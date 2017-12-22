@@ -17,10 +17,26 @@ namespace WebApplication1.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Clients
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            return View(db.UtilisateurCourant.Clients.ToList());
+            List<Client> listeClients = db.UtilisateurCourant.Clients.ToList();
+            var clients = from s in db.UtilisateurCourant.Clients.ToList()
+                          select s;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    listeClients = (List<Client>) listeClients.OrderByDescending(s => s.Nom);
+                    break;
+                default:
+                    listeClients = (List<Client>) listeClients.OrderBy(s => s.Nom);
+                    break;
+            }
+
+
+            return View(listeClients);
             //return View(db.Clients.Where(c => c.UtilisateurID == db.UtilisateurCourant.ID));
         }
 

@@ -56,6 +56,9 @@ textarea {
     background-color: #171E26;
     border-color: #171E26;
 }
+.btn-secondary:hover{
+    color:white;
+}
 
     .btn-info:hover,
     .btn-info:focus,
