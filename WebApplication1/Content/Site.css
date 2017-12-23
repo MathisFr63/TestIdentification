@@ -29,21 +29,20 @@ textarea {
     max-width: 280px;
 }
 
-.menu {
+
+.menu ul {
     background-color: #e6e6e6;
     height: 100%;
     min-height: 100%;
 }
 
-    .menu:hover {
-        background-color: #ffffff;
-    }
-
-    .menu li a {
+.menu li a {
         color: black;
         font-size: medium;
         padding: 20px;
-    }
+}
+
+
 
 .btn-info {
     color: #171E26;
@@ -51,14 +50,6 @@ textarea {
     border-color: #ffffff;
 }
 
-.btn-secondary {
-    color: #ffffff;
-    background-color: #171E26;
-    border-color: #171E26;
-}
-.btn-secondary:hover{
-    color:white;
-}
 
     .btn-info:hover,
     .btn-info:focus,
@@ -69,3 +60,36 @@ textarea {
         background-color: #171E26;
         border-color: #171E26;
     }
+
+
+.btn-secondary {
+    color: #ffffff;
+    background-color: #171E26;
+    border-color: #171E26;
+}
+
+    .btn-secondary:hover{
+        color:white;
+    }
+
+.btn-primary {
+    color: white;
+    background-color: #EF0C1A;
+    border-color: #EF0C1A;
+}
+
+    .btn-primary:hover {
+        color: white;
+        background-color: #EF0C1A;
+        border-color: #EF0C1A;
+    }
+
+
+.fondGradientGris {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+65,e1e1e1+81,f6f6f6+100 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 65%,rgba(225,225,225,1) 81%,rgba(246,246,246,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 65%,rgba(225,225,225,1) 81%,rgba(246,246,246,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}

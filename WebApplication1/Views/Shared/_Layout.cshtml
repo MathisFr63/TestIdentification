@@ -8,23 +8,27 @@
     <link type="text/css" href="~/Content/Site.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="fondGradientGris">
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <div class="pull-right">
-                    <ul class="nav navbar-nav">
-                        <li style="float:right;"><a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a></li>
-                        <li style="float:right;"><a style="color:white">Bonjour toi</a></li>
-                    </ul>
-                </div>
-            </div>
+        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="pull-right">
+            <ul class="nav navbar-nav">
+                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    <li style="float:right;"><a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a></li>
+                    <li style="float:right;"><a style="color:white">Bonjour toi</a></li>
+                }
+                else
+                {
+                    <li style="float:right;"><a href=@Url.Action("Index", "Login")><span class="glyphicon glyphicon-off"></span></a></li>
+                }
+            </ul>
+        </div>
     </div>
 
     <div class="container-fluid">
-        <div class="row">
-            <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
-                <ul class="nav nav-pills nav-stacked nav-stacked-left pull-left menu" id="myTab">
+            <nav class="col-sm-3 col-md-1 hidden-xs-down sidebar menu" style="padding-left:0px">
+                <ul class="nav nav-pills nav-stacked nav-stacked-left pull-left">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Utilisateurs", "Index", "Utilisateurs")</li>
                     <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
@@ -39,13 +43,13 @@
                 </ul>
             </nav>
             <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                <div class="container body-content">
+                <br/>
+                <div class="container body-content ">
                     @RenderBody()
                     <hr />
                 </div>
             </main>
         </div>
-    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
