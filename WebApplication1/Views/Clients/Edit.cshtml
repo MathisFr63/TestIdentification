@@ -4,8 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-
-    <h2>Edit</h2>
+<br />
+<p>
+    <a href=@Url.Action("Index","Clients") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
 
     @using (Html.BeginForm())
     {
@@ -56,7 +60,3 @@
             </div>
         </div>
     }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>

@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<WebApplication1.Models.Client>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clients";
 }
-
-    <h2>Index</h2>
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -70,9 +68,15 @@
                     @Html.DisplayFor(modelItem => item.Commentaire)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-pencil" />
+                    </a>
+                    <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-print" />
+                    </a>
+                    <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-trash" />
+                    </a>
                 </td>
             </tr>
         }
