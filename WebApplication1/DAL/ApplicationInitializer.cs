@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models;
+using WebApplication1.Models.Compte;
+using WebApplication1.Models.Entreprise;
 
 namespace WebApplication1.DAL
 {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApplication1.DAL;
-using WebApplication1.Models;
+using WebApplication1.Models.Compte;
 
 namespace WebApplication1.Controllers
 {

@@ -157,13 +157,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Entreprise.cs" />
-    <Compile Include="Models\Telephone.cs" />
-    <Compile Include="Models\TypeTelephone.cs" />
-    <Compile Include="Models\TypeUtilisateur.cs" />
-    <Compile Include="Models\Utilisateur.cs" />
-    <Compile Include="Models\UtilisateurViewModel.cs" />
+    <Compile Include="Models\Compte\Lieu.cs" />
+    <Compile Include="Models\Entreprise\Fournisseur.cs" />
+    <Compile Include="Models\Papiers\Devis.cs" />
+    <Compile Include="Models\Entreprise\Client.cs" />
+    <Compile Include="Models\Entreprise\Entreprise.cs" />
+    <Compile Include="Models\Papiers\Article.cs" />
+    <Compile Include="Models\Entreprise\Telephone.cs" />
+    <Compile Include="Models\Papiers\Facture.cs" />
+    <Compile Include="Models\Papiers\TypeMonnaie.cs" />
+    <Compile Include="Models\Papiers\TypeReglement.cs" />
+    <Compile Include="Models\Papiers\TypeService.cs" />
+    <Compile Include="Models\Entreprise\TypeTelephone.cs" />
+    <Compile Include="Models\Compte\TypeUtilisateur.cs" />
+    <Compile Include="Models\Compte\Utilisateur.cs" />
+    <Compile Include="Models\Compte\UtilisateurViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
