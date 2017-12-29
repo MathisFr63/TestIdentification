@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult SeConnecter([Bind(Include = "Identifiant,MotDePasse")] Utilisateur utilisateur)
+        public ActionResult SeConnecter([Bind(Include = "Identifiant, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Identifiant,MotDePasse")] Utilisateur utilisateur)
+        public ActionResult Create([Bind(Include = "ID, Identifiant, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
@@ -102,11 +102,14 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Identifiant,MotDePasse")] Utilisateur utilisateur)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Identifiant, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(utilisateur).State = EntityState.Modified;
+                Utilisateur u = db.Utilisateurs.Find(id);
+                //db.Entry(utilisateur).State = EntityState.Modified;
+                u.Identifiant = utilisateur.Identifiant;
+                u.MotDePasse = utilisateur.MotDePasse;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

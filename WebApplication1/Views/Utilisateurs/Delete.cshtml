@@ -1,16 +1,13 @@
 ﻿@model WebApplication1.Models.Compte.Utilisateur
-
 @{
     ViewBag.Title = "Delete";
 }
-
 <br />
 <p>
     <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
-
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Utilisateur</h4>
@@ -19,22 +16,18 @@
         <dt>
             @Html.DisplayNameFor(model => model.Identifiant)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Identifiant)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.MotDePasse)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.MotDePasse)
         </dd>
-
     </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

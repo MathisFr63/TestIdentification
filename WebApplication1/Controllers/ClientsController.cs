@@ -21,7 +21,6 @@ namespace WebApplication1.Controllers
         {
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             return View(db.UtilisateurCourant.Clients.ToList());
-            //return View(db.Clients.Where(c => c.UtilisateurID == db.UtilisateurCourant.ID));
         }
 
         // GET: Clients/Details/5
@@ -50,7 +49,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nom,SiteWeb,Mail,Commentaire")] Client client)
+        public ActionResult Create([Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -87,11 +86,16 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,SiteWeb,Mail,Commentaire")] Client client)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire")] Client client)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                Client u = db.Clients.Find(id);
+                //db.Entry(client).State = EntityState.Modified;
+                u.Nom = client.Nom;
+                u.SiteWeb = client.SiteWeb;
+                u.Mail = client.Mail;
+                u.Commentaire = client.Commentaire;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

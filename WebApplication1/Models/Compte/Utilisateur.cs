@@ -25,11 +25,15 @@ namespace WebApplication1.Models.Compte
         public Lieu Lieu { get; set; }
 
         public virtual ICollection<Client> Clients { get; set; }
-        //public virtual ICollection<Fournisseur> Fournisseurs { get; set; }
+        public virtual ICollection<Fournisseur> Fournisseurs { get; set; }
 
         public override string ToString()
         {
             return Identifiant + " " + MotDePasse;
         }
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
+        } 
     }
 }
