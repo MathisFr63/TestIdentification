@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebApplication1.Models.Entite;
 
 namespace WebApplication1.Models.Papiers
 {
@@ -23,6 +20,8 @@ namespace WebApplication1.Models.Papiers
         public Dictionary<Article, int> Articles { get; set; }
         
         public int EntrepriseID { get; set; }
+        
+        public int UtilisateurID { get; set; }
 
         // public int Total { get; set; } Prix calculé
     }

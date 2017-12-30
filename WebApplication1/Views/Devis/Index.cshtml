@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Papiers.DevisViewModel
+﻿@model IEnumerable<WebApplication1.Models.Papiers.Devis>
 @{
     ViewBag.Title = "Devis";
 }
@@ -31,57 +31,66 @@
     </div>
 </nav>
 <br />
-
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Devis.Objet)
+            @Html.DisplayNameFor(model => model.Objet)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Devis.Date)
+            @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Devis.Valide)
+            @Html.DisplayNameFor(model => model.Valide)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Devis.Commentaire)
+            @Html.DisplayNameFor(model => model.Commentaire)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Devis.Monnaie)
+            @Html.DisplayNameFor(model => model.Monnaie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Articles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntrepriseID)
         </th>
         <th></th>
     </tr>
-
-    @foreach (var client in Model.Utilisateur.Clients)
+    @foreach (var item in Model)
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => client.Nom)
+            @Html.DisplayFor(modelItem => item.Objet)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => client.SiteWeb)
+            @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => client.Mail)
+            @Html.DisplayFor(modelItem => item.Valide)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => client.Telephones)
+            @Html.DisplayFor(modelItem => item.Commentaire)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => client.Commentaire)
+            @Html.DisplayFor(modelItem => item.Monnaie)
         </td>
         <td>
-            <a href=@Url.Action("Edit", "Devis", new { id = client.ID }) class="btn btn-info">
+            @Html.DisplayFor(modelItem => item.Articles)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntrepriseID)
+        </td>
+        <td>
+            <a href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-pencil" />
             </a>
-            <a href=@Url.Action("Details", "Devis", new { id = client.ID }) class="btn btn-info">
+            <a href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-print" />
             </a>
-            <a href=@Url.Action("Delete", "Devis", new { id = client.ID }) class="btn btn-info">
+            <a href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-trash" />
             </a>
         </td>
     </tr>
     }
-
 </table>

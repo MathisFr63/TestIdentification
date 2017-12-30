@@ -1,64 +1,60 @@
 ﻿@model WebApplication1.Models.Papiers.Devis
-
 @{
     ViewBag.Title = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<br />
+<p>
+    <a href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
+<h3>Voulez-vous supprimer ce devis ?</h3>
 <div>
-    <h4>Devis</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Objet)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Objet)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Valide)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Valide)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Commentaire)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Commentaire)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Monnaie)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Monnaie)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.EntrepriseID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntrepriseID)
+        </dd>
     </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" />
         </div>
     }
 </div>

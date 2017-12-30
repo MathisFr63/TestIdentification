@@ -7,8 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
-using WebApplication1.Models.Papiers;
+using WebApplication1.Models.Compte;
 using WebApplication1.Models.Entite;
+using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.Controllers
 {
@@ -20,12 +21,10 @@ namespace WebApplication1.Controllers
         // GET: Devis
         public ActionResult Index()
         {
-            DevisViewModel viewModel = new DevisViewModel();
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                viewModel.Utilisateur = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            }
-            return View(viewModel);
+            Utilisateur user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var ListDevis = db.Devis.ToList().Where(d => d.UtilisateurID == user.ID);
+
+            return View(ListDevis.ToList());
         }
 
         // GET: Devis/Details/5
@@ -54,12 +53,20 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie, EntrepriseID")] Devis devis)
+        public ActionResult Create([Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
         {
             if (ModelState.IsValid)
             {
+                devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
                 db.Devis.Add(devis);
                 db.SaveChanges();
+                
+                //Client client = db.Clients.Find(devis.EntrepriseID);
+                //if (client != null)
+                //{
+                //    client.Devis.Add(devis);
+                //    db.SaveChanges();
+                //}
                 return RedirectToAction("Index");
             }
 
@@ -86,7 +93,7 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie")] Devis devis)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +104,8 @@ namespace WebApplication1.Controllers
                 u.Valide = devis.Valide;
                 u.Commentaire = devis.Commentaire;
                 u.Monnaie = devis.Monnaie;
+                u.Articles = devis.Articles;
+                u.EntrepriseID = devis.EntrepriseID;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -126,6 +135,10 @@ namespace WebApplication1.Controllers
             Devis devis = db.Devis.Find(id);
             db.Devis.Remove(devis);
             db.SaveChanges();
+
+            //Client client = db.Clients.Find(devis.EntrepriseID);
+            //client.Devis.Remove(devis);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 
