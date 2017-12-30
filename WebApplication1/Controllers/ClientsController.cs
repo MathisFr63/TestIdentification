@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
-using WebApplication1.Models.Entreprise;
+using WebApplication1.Models.Entite;
 
 namespace WebApplication1.Controllers
 {
@@ -86,12 +86,12 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire")] Client client)
+        public ActionResult Edit(int id, [Bind(Include = "Nom, SiteWeb, Mail, Commentaire")] Client client)
         {
             if (ModelState.IsValid)
             {
-                Client u = db.Clients.Find(id);
                 //db.Entry(client).State = EntityState.Modified;
+                Client u = db.Clients.Find(id);
                 u.Nom = client.Nom;
                 u.SiteWeb = client.SiteWeb;
                 u.Mail = client.Mail;

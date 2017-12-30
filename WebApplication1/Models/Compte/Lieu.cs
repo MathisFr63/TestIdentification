@@ -7,7 +7,7 @@ namespace WebApplication1.Models.Compte
 {
     public class Lieu
     {
-        public int ID{ get; private set; }
+        public int ID { get; private set; }
    
         public string Adresse { get; set; }
 

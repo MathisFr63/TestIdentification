@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\DevisController.cs" />
     <Compile Include="Controllers\FournisseursController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -159,17 +160,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Compte\Lieu.cs" />
-    <Compile Include="Models\Entreprise\Fournisseur.cs" />
+    <Compile Include="Models\Entite\Fournisseur.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
-    <Compile Include="Models\Entreprise\Client.cs" />
-    <Compile Include="Models\Entreprise\Entreprise.cs" />
+    <Compile Include="Models\Entite\Client.cs" />
+    <Compile Include="Models\Entite\Entreprise.cs" />
     <Compile Include="Models\Papiers\Article.cs" />
-    <Compile Include="Models\Entreprise\Telephone.cs" />
+    <Compile Include="Models\Entite\Telephone.cs" />
+    <Compile Include="Models\Papiers\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />
     <Compile Include="Models\Papiers\TypeReglement.cs" />
     <Compile Include="Models\Papiers\TypeService.cs" />
-    <Compile Include="Models\Entreprise\TypeTelephone.cs" />
+    <Compile Include="Models\Entite\TypeTelephone.cs" />
     <Compile Include="Models\Compte\TypeUtilisateur.cs" />
     <Compile Include="Models\Compte\Utilisateur.cs" />
     <Compile Include="Models\Compte\UtilisateurViewModel.cs" />
@@ -229,6 +231,11 @@
     <Content Include="Views\Fournisseurs\Delete.cshtml" />
     <Content Include="Views\Fournisseurs\Details.cshtml" />
     <Content Include="Views\Fournisseurs\Edit.cshtml" />
+    <Content Include="Views\Devis\Create.cshtml" />
+    <Content Include="Views\Devis\Delete.cshtml" />
+    <Content Include="Views\Devis\Details.cshtml" />
+    <Content Include="Views\Devis\Edit.cshtml" />
+    <Content Include="Views\Devis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

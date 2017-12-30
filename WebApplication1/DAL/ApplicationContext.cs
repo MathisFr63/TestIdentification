@@ -5,7 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 using WebApplication1.Models.Compte;
-using WebApplication1.Models.Entreprise;
+using WebApplication1.Models.Entite;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.DAL
@@ -22,6 +22,7 @@ namespace WebApplication1.DAL
         public DbSet<Client> Clients { get; set; }
         public DbSet<Fournisseur> Fournisseurs { get; set; }
         public DbSet<Facture> Factures { get; set; }
+        public DbSet<Devis> Devis { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
