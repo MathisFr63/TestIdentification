@@ -21,9 +21,9 @@ namespace WebApplication1.DAL
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Fournisseur> Fournisseurs { get; set; }
-        public DbSet<Facture> Factures { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<DevisArticle> DevisArticle { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

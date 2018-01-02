@@ -18,9 +18,14 @@ namespace WebApplication1.Models.Papiers
         public int Reduction { get; set; }
 
         public int TVA { get; set; }
-        
+
         //public int Prixfinal { get; set; } Prix calculé
-     
+
         //public int TotalTTC { get; set; } Prix calculé
+
+        public override string ToString()
+        {
+            return Nom;
+        }
     }
 }

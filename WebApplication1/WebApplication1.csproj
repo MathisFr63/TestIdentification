@@ -166,6 +166,7 @@
     <Compile Include="Models\Entite\Entreprise.cs" />
     <Compile Include="Models\Papiers\Article.cs" />
     <Compile Include="Models\Entite\Telephone.cs" />
+    <Compile Include="Models\Papiers\DevisArticle.cs" />
     <Compile Include="Models\Papiers\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />

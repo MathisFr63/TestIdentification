@@ -22,9 +22,17 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             Utilisateur user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Devis.ToList().Where(devis => devis.UtilisateurID == user.ID);
-
-            return View(ListDevis.ToList());
+            List<Devis> ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            foreach (Devis devis in ListDevis)
+            {
+                devis.Articles = new Dictionary<Article, int>();
+                foreach (DevisArticle DA in db.DevisArticle.ToList())
+                {
+                    if (DA.DevisID == devis.ID)
+                        devis.Articles.Add(db.Articles.Find(DA.ArticleID), DA.Quantite);
+                }
+            }
+            return View(ListDevis);
         }
 
         // GET: Devis/Details/5
@@ -71,13 +79,15 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                dvm.Devis.Articles = new Dictionary<Article, int>();
-                for (int i=0; i<dvm.ArticlesID.Length; i++)
+                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+                db.Devis.Add(dvm.Devis);
+                db.SaveChanges();
+
+                for (int i =0; i<dvm.ArticlesID.Length; i++)
                 {
                     Article item = db.Articles.ToList()[dvm.ArticlesID[i]-1];
-                    dvm.Devis.Articles.Add(db.Articles.FirstOrDefault(a => a.Nom == item.Nom), 1);
+                    db.DevisArticle.Add(new DevisArticle { DevisID = dvm.Devis.ID, ArticleID = item.ID });
                 }
-                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
 
                 //Client client = db.Clients.Find(devis.EntrepriseID);
                 //if (client != null)
@@ -85,7 +95,6 @@ namespace WebApplication1.Controllers
                 //    client.Devis.Add(devis);
                 //    db.SaveChanges();
                 //}
-                db.Devis.Add(dvm.Devis);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -157,6 +166,13 @@ namespace WebApplication1.Controllers
             db.Devis.Remove(devis);
             db.SaveChanges();
 
+            foreach (DevisArticle DA in db.DevisArticle.ToList())
+            {
+                if (DA.DevisID == devis.ID)
+                    db.DevisArticle.Remove(DA);
+            }
+            db.SaveChanges();
+            
             //Client client = db.Clients.Find(devis.EntrepriseID);
             //client.Devis.Remove(devis);
             //db.SaveChanges();
