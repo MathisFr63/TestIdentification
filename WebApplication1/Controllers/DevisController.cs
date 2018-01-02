@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             Utilisateur user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Devis.ToList().Where(d => d.UtilisateurID == user.ID);
+            var ListDevis = db.Devis.ToList().Where(devis => devis.UtilisateurID == user.ID);
 
             return View(ListDevis.ToList());
         }
@@ -45,7 +45,21 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View();
+            DevisViewModel DVM = new DevisViewModel
+            {
+                Articles = new List<SelectListItem>()
+            };
+
+            foreach (Article article in db.Articles.ToList())
+            {
+                DVM.Articles.Add(new SelectListItem
+                {
+                    Text = article.Nom,
+                    Value = article.ID.ToString()
+                });
+            }
+
+            return View(DVM);
         }
 
         // POST: Devis/Create
@@ -53,24 +67,31 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
+        public ActionResult Create(DevisViewModel dvm)
         {
             if (ModelState.IsValid)
             {
-                devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
-                db.Devis.Add(devis);
-                db.SaveChanges();
-                
+                dvm.Devis.Articles = new Dictionary<Article, int>();
+                for (int i=0; i<dvm.ArticlesID.Length; i++)
+                {
+                    Article item = db.Articles.ToList()[dvm.ArticlesID[i]-1];
+                    dvm.Devis.Articles.Add(db.Articles.FirstOrDefault(a => a.Nom == item.Nom), 1);
+                }
+                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+
                 //Client client = db.Clients.Find(devis.EntrepriseID);
                 //if (client != null)
                 //{
                 //    client.Devis.Add(devis);
                 //    db.SaveChanges();
                 //}
+                db.Devis.Add(dvm.Devis);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
-            return View(devis);
+            
+            return View(dvm);
         }
 
         // GET: Devis/Edit/5

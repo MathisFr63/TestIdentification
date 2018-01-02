@@ -18,7 +18,7 @@ namespace WebApplication1.Models.Papiers
         public TypeMonnaie Monnaie { get; set; }
 
         public Dictionary<Article, int> Articles { get; set; }
-        
+
         public int EntrepriseID { get; set; }
         
         public int UtilisateurID { get; set; }

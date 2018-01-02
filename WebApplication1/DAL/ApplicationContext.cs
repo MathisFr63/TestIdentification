@@ -23,6 +23,7 @@ namespace WebApplication1.DAL
         public DbSet<Fournisseur> Fournisseurs { get; set; }
         public DbSet<Facture> Factures { get; set; }
         public DbSet<Devis> Devis { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
