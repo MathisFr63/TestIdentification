@@ -55,8 +55,18 @@ namespace WebApplication1.Controllers
         {
             DevisViewModel DVM = new DevisViewModel
             {
-                Articles = new List<SelectListItem>()
+                Articles = new List<SelectListItem>(),
+                Entreprises = new List<SelectListItem>()
             };
+
+            foreach (Entreprise entreprise in db.Clients.ToList())
+            {
+                DVM.Entreprises.Add(new SelectListItem
+                {
+                    Text = entreprise.Nom,
+                    Value = entreprise.ID.ToString()
+                });
+            }
 
             foreach (Article article in db.Articles.ToList())
             {
@@ -80,13 +90,16 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+                dvm.Devis.Date = DateTime.Now;
+                dvm.Devis.Valide = true;
                 db.Devis.Add(dvm.Devis);
                 db.SaveChanges();
 
-                for (int i =0; i<dvm.ArticlesID.Length; i++)
+                for (int i = 0; i < dvm.ArticlesID.Length; i++)
                 {
-                    Article item = db.Articles.ToList()[dvm.ArticlesID[i]-1];
-                    db.DevisArticle.Add(new DevisArticle { DevisID = dvm.Devis.ID, ArticleID = item.ID });
+                    Article item = db.Articles.ToList()[dvm.ArticlesID[i] - 1];
+                    //A modifier plus tard pour pouvoir instancier la quantité en fonction du choix de l'utilisateur
+                    db.DevisArticle.Add(new DevisArticle { DevisID = dvm.Devis.ID, ArticleID = item.ID, Quantite = 1 });
                 }
 
                 //Client client = db.Clients.Find(devis.EntrepriseID);
@@ -99,7 +112,7 @@ namespace WebApplication1.Controllers
 
                 return RedirectToAction("Index");
             }
-            
+
             return View(dvm);
         }
 
@@ -172,7 +185,7 @@ namespace WebApplication1.Controllers
                     db.DevisArticle.Remove(DA);
             }
             db.SaveChanges();
-            
+
             //Client client = db.Clients.Find(devis.EntrepriseID);
             //client.Devis.Remove(devis);
             //db.SaveChanges();

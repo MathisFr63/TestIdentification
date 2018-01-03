@@ -35,13 +35,13 @@ namespace WebApplication1.DAL
             clients.ForEach(c => context.Clients.Add(c));
             context.SaveChanges();
 
-            var article = new List<Article>
+            var articles = new List<Article>
             {
                 new Article{ Nom = "Article 1", Commentaire = "Commentaire 1", PrixHT = 10, Reduction =  0, TVA = 3},
                 new Article{ Nom = "Article 2", Commentaire = "Commentaire 2", PrixHT = 20, Reduction = 15, TVA = 5},
                 new Article{ Nom = "Article 3", Commentaire = "Commentaire 3", PrixHT =  5, Reduction =  5, TVA = 0}
             };
-            clients.ForEach(c => context.Clients.Add(c));
+            articles.ForEach(a => context.Articles.Add(a));
             context.SaveChanges();
         }
     }

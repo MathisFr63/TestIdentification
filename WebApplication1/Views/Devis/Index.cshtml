@@ -40,7 +40,7 @@
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Valide)
+            @*@Html.DisplayNameFor(model => model.Valide)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Commentaire)
@@ -63,10 +63,11 @@
             @Html.DisplayFor(modelItem => item.Objet)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @*@Html.DisplayFor(modelItem => item.Date)*@
+            <p>@item.Date.ToString("d")</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Valide)
+            @*@Html.DisplayFor(modelItem => item.Valide)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Commentaire)

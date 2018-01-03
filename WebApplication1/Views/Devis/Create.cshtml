@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<link rel="stylesheet" href="http://cdn.jsdelivr.net/chosen/1.1.0/chosen.css"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/chosen/1.1.0/chosen.css" />
 <script type="text/javascript" src="http://cdn.jsdelivr.net/chosen/1.1.0/"></script>
 
 @using (Html.BeginForm())
@@ -29,23 +29,23 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Devis.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Devis.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Devis.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Devis.Valide, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Devis.Valide)
-                    @Html.ValidationMessageFor(model => model.Devis.Valide, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Devis.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Devis.Date, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Devis.Date, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Devis.Valide, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Devis.Valide)
+                        @Html.ValidationMessageFor(model => model.Devis.Valide, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,7 +75,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.EntrepriseID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Devis.EntrepriseID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.EntreprisesID, Model.Entreprises, new { @class = "form-control chosen-select" })
+                @*@Html.EditorFor(model => model.Devis.EntrepriseID, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Devis.EntrepriseID, "", new { @class = "text-danger" })
             </div>
         </div>

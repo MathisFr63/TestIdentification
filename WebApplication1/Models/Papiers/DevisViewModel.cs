@@ -11,7 +11,9 @@ namespace WebApplication1.Models.Papiers
     public class DevisViewModel
     {
         public Devis Devis { get; set; }
-        public List<SelectListItem> Articles { get; set; }
         public int[] ArticlesID { get; set; }
+        public List<SelectListItem> Articles { get; set; }
+        public int[] EntreprisesID { get; set; }
+        public List<SelectListItem> Entreprises { get; set; }
     }
 }
