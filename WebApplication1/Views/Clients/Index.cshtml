@@ -1,4 +1,8 @@
-﻿@model IEnumerable<WebApplication1.Models.Entite.Client>
+﻿@*@model IEnumerable<WebApplication1.Models.Entite.Client>*@
+@model PagedList.IPagedList<WebApplication1.Models.Entite.Client>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewBag.Title = "Clients";
 }
@@ -6,18 +10,22 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse ">
             <form class="navbar-form navbar-left" method="get" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" value="@ViewData[" currentFilter"]">
-                </div>
-                <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                <button asp-action="Index" type="submit" value="cancel" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                    @using (Html.BeginForm("Index", "Student", FormMethod.Get))
+                    {
+                        <div class="form-group">
+
+                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                            <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                            <button type="reset" value="cancel" onclick="location.href='@Url.Action("Index", "Clients")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                        </div>
+                    }
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default">
-                        <li><a>Date</a></li>
-                        <li><a asp-action="Index" asp-route-sortOrder="@ViewData[" NameSortParm"]" asp-route-currentFilter="@ViewData[" CurrentFilter"]">Nom</a></li>
+                        <li>@Html.ActionLink("Enrollment Date", "Index", new{sortOrder =ViewBag.DateSortParm})</li>
+                        <li>@Html.ActionLink("Last Name", "Index", new{sortOrder =ViewBag.NameSortParm})</li>
                         <li><a href="#">Nb factures</a></li>
                     </ul>
                 </li>
@@ -34,22 +42,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nom)
+            Nom
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SiteWeb)
+            Site Web
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Mail)
+            Mail
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Commentaire)
+            Commentaire
         </th>
         <th></th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SIREN_SIRET)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nom)
             </td>
@@ -76,3 +87,15 @@
         </tr>
     }
 </table>
+
+<br />
+
+<div class="text-center" >
+@Html.PagedListPager(Model, page => Url.Action("Index",
+new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter =ViewBag.CurrentFilter
+}))
+</div>
