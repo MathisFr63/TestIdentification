@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Clients";
 }
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default fondRecherche" role="navigation">
     <div class="container-fluid">
         <div class="collapse navbar-collapse ">
             <form class="navbar-form navbar-left" method="get" role="search">
@@ -20,9 +20,9 @@
                         </div>
                     }
             </form>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-form navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trier par<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;"  data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>@Html.ActionLink("Enrollment Date", "Index", new{sortOrder =ViewBag.DateSortParm})</li>
                         <li>@Html.ActionLink("Last Name", "Index", new{sortOrder =ViewBag.NameSortParm})</li>
@@ -30,9 +30,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href=@Url.Action("Create", "Clients") class="btn btn-info btn-lg">
-                        <span class="glyphicon glyphicon-plus" />
-                    </a>
+                    <button type="reset" value="cancel" onclick="location.href='@Url.Action("Create", "Clients")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -60,9 +58,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.SIREN_SIRET)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SiteWeb)
