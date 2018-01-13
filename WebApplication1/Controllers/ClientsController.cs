@@ -46,7 +46,6 @@ namespace WebApplication1.Controllers
                     }
                 }
                 return View(listTrie.ToPagedList(pageNumber, pageSize));
-
             }
             else
                 return View(db.UtilisateurCourant.Clients.ToPagedList(pageNumber, pageSize));
