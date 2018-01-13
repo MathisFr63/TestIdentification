@@ -250,6 +250,9 @@
     <Content Include="Views\Factures\Details.cshtml" />
     <Content Include="Views\Factures\Index.cshtml" />
     <Content Include="Views\Devis\Quantite.cshtml" />
+    <Content Include="Views\Login\RecoverMDP.cshtml" />
+    <Content Include="Views\Login\RecoverMDPAfterLogin.cshtml" />
+    <Content Include="Views\Login\AfficherMotDePasse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

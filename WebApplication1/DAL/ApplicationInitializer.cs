@@ -8,17 +8,18 @@ using WebApplication1.Models.Entite;
 
 namespace WebApplication1.DAL
 {
-    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<ApplicationContext>
+    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseAlways<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {
             var utilisateurs = new List<Utilisateur>
             {
-                new Utilisateur{Identifiant="MathisFrizot", MotDePasse="root", Mail="Mathis.FRIZOT@etu.uca.fr", Nom="FRIZOT", Prénom="Mathis", Type=TypeUtilisateur.Administrateur},
-                new Utilisateur{Identifiant="MathieuRavel", MotDePasse="Mathieu", Mail = "Mathieu.RAVEL@etu.uca.fr", Nom = "RAVEL", Prénom = "Mathieu", Type = TypeUtilisateur.Enregistré},
-                new Utilisateur{Identifiant="FlavioRanchon", MotDePasse="Flavio", Mail = "Flavio.RANCHON@etu.uca.fr", Nom = "RANCHON", Prénom = "Flavio", Type = TypeUtilisateur.Enregistré},
-                new Utilisateur{Identifiant="BernardoPereiraAugusto", MotDePasse="Bernardo", Mail = "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", Nom = "PEREIRA AUGUSTO", Prénom = "Bernardo", Type = TypeUtilisateur.Enregistré},
-                new Utilisateur{Identifiant="AurelienBerger", MotDePasse="Aurelien", Mail = "Aurelien.BERGER2@etu.uca.fr", Nom = "BERGER", Prénom = "Aurélien", Type = TypeUtilisateur.Enregistré},
+                new Utilisateur("MathisFrizot", "root", "Mathis", "FRIZOT", "Mathis.FRIZOT@etu.uca.fr", TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
+                new Utilisateur("Alexis", "test", "Mathis", "FRIZOT", "Mathis.FRIZOT@etu.uca.fr", TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
+                new Utilisateur("FlavioRanchon", "Flavio", "Flavio", "RANCHON", "Flavio.RANCHON@etu.uca.fr", TypeUtilisateur.Enregistré, "Sport", "Football"),
+                new Utilisateur("MathieuRavel", "Mathieu", "Mathieu", "RAVEL", "Mathieu.RAVEL@etu.uca.fr", TypeUtilisateur.Enregistré, "Nom de famille", "Ravel"),
+                new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT"),
+                new Utilisateur("AurelienBerger", "Aurelien", "Aurélien", "BERGER", "Aurelien.BERGER2@etu.uca.fr", TypeUtilisateur.Enregistré, "Nom de famille", "Berger")
             };
             utilisateurs.ForEach(s => context.Utilisateurs.Add(s));
             context.SaveChanges();

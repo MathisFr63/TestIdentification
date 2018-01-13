@@ -1,0 +1,17 @@
+﻿@model WebApplication1.Models.Compte.Utilisateur
+
+@{
+    ViewBag.Title = "Récupération";
+}
+
+<h2>Récupération du mot de passe réussie</h2>
+
+<div>
+    @Html.LabelFor(m => m.Identifiant)
+    @Html.DisplayFor(m => m.Identifiant)
+</div>
+<div>
+    @Html.LabelFor(m => m.MotDePasse)
+    @Html.DisplayFor(m => m.MotDePasse)
+</div>
+
