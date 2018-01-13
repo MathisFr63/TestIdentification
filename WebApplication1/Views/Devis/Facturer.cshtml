@@ -1,0 +1,76 @@
+﻿@model WebApplication1.Models.Papiers.Facture
+
+@{
+    ViewBag.Title = "Facturer";
+}
+
+<h2>Facturer</h2>
+
+<div>
+    <h4>Facturer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Objet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Objet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commentaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commentaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monnaie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monnaie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntrepriseID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntrepriseID)
+        </dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Reglement, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.Reglement, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Reglement, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Facturer" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

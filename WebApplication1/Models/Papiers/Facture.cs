@@ -1,13 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebApplication1.Models.Papiers
+﻿namespace WebApplication1.Models.Papiers
 {
-    public class Facture : Devis
+    public class Facture : Donnee
     {
+        public int ID { get; private set; }
         public int Relances { get; set; }
         public TypeReglement Reglement { get; set; }
+
+        public Facture(){}
+        public Facture(Devis devis)
+        {
+            Objet = devis.Objet;
+            Date = devis.Date;
+            Commentaire = devis.Commentaire;
+            Monnaie = devis.Monnaie;
+            Articles = devis.Articles;
+            EntrepriseID = devis.EntrepriseID;
+            UtilisateurID = devis.UtilisateurID;
+
+            Relances = 0;
+        }
+        public Facture(Devis devis, TypeReglement type) : this(devis)
+        {
+            Reglement = type;
+        }
     }
 }

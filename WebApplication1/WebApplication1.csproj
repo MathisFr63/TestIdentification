@@ -156,6 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DevisController.cs" />
+    <Compile Include="Controllers\FacturesController.cs" />
     <Compile Include="Controllers\FournisseursController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Models\Entite\Telephone.cs" />
     <Compile Include="Models\Papiers\DevisArticle.cs" />
     <Compile Include="Models\Papiers\DevisViewModel.cs" />
+    <Compile Include="Models\Papiers\Donnee.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />
     <Compile Include="Models\Papiers\TypeReglement.cs" />
@@ -244,6 +246,10 @@
     <Content Include="Views\Devis\Details.cshtml" />
     <Content Include="Views\Devis\Edit.cshtml" />
     <Content Include="Views\Devis\Index.cshtml" />
+    <Content Include="Views\Devis\Facturer.cshtml" />
+    <Content Include="Views\Factures\Details.cshtml" />
+    <Content Include="Views\Factures\Index.cshtml" />
+    <Content Include="Views\Devis\Quantite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

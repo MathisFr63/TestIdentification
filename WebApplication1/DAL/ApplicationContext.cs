@@ -24,6 +24,7 @@ namespace WebApplication1.DAL
         public DbSet<Devis> Devis { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<DevisArticle> DevisArticle { get; set; }
+        public DbSet<Facture> Factures { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

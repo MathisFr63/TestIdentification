@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using WebApplication1.Models.Compte;
-using WebApplication1.Models.Entite;
 
 namespace WebApplication1.Models.Papiers
 {
@@ -13,7 +8,7 @@ namespace WebApplication1.Models.Papiers
         public Devis Devis { get; set; }
         public int[] ArticlesID { get; set; }
         public List<SelectListItem> Articles { get; set; }
-        public int[] EntreprisesID { get; set; }
         public List<SelectListItem> Entreprises { get; set; }
+        public int[] Quantite { get; set; }
     }
 }

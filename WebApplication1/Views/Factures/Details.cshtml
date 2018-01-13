@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Papiers.Devis
+﻿@model WebApplication1.Models.Papiers.Facture
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Devis</h4>
+    <h4>Facture</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -24,14 +24,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Valide)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Valide)
         </dd>
 
         <dt>
@@ -57,9 +49,33 @@
         <dd>
             @Html.DisplayFor(model => model.EntrepriseID)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UtilisateurID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UtilisateurID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Relances)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Relances)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reglement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reglement)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

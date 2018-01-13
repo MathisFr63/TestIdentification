@@ -94,7 +94,7 @@ namespace WebApplication1.Controllers
                 dvm.Devis.Valide = true;
                 db.Devis.Add(dvm.Devis);
                 db.SaveChanges();
-
+                
                 for (int i = 0; i < dvm.ArticlesID.Length; i++)
                 {
                     Article item = db.Articles.ToList()[dvm.ArticlesID[i] - 1];
@@ -109,8 +109,8 @@ namespace WebApplication1.Controllers
                 //    db.SaveChanges();
                 //}
                 db.SaveChanges();
-
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("Quantite", new { id = dvm.Devis.ID });
             }
 
             return View(dvm);
@@ -136,15 +136,15 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Objet, Date, Valide, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
+        public ActionResult Edit(int id, [Bind(Include = "Objet, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
         {
             if (ModelState.IsValid)
             {
                 //db.Entry(devis).State = EntityState.Modified;
                 Devis u = db.Devis.Find(id);
                 u.Objet = devis.Objet;
-                u.Date = devis.Date;
-                u.Valide = devis.Valide;
+                u.Date = DateTime.Now;
+                u.Valide = true;
                 u.Commentaire = devis.Commentaire;
                 u.Monnaie = devis.Monnaie;
                 u.Articles = devis.Articles;
@@ -175,13 +175,12 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Devis devis = db.Devis.Find(id);
-            db.Devis.Remove(devis);
+            db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 
             foreach (DevisArticle DA in db.DevisArticle.ToList())
             {
-                if (DA.DevisID == devis.ID)
+                if (DA.DevisID == id)
                     db.DevisArticle.Remove(DA);
             }
             db.SaveChanges();
@@ -189,6 +188,94 @@ namespace WebApplication1.Controllers
             //Client client = db.Clients.Find(devis.EntrepriseID);
             //client.Devis.Remove(devis);
             //db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Devis/Facturer
+        public ActionResult Facturer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Devis devis = db.Devis.Find(id);
+            if (devis == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new Facture(devis));
+        }
+
+        // POST: Devis/Facturer
+        [HttpPost, ActionName("Facturer")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Facturer(int id, TypeReglement reglement)
+        {
+            db.Factures.Add(new Facture(db.Devis.Find(id), reglement));
+            db.SaveChanges();
+
+            return DeleteConfirmed(id);
+        }
+
+        // GET: Devis/Quantite
+        public ActionResult Quantite(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Devis devis = db.Devis.Find(id);
+            if (devis == null)
+            {
+                return HttpNotFound();
+            }
+            DevisViewModel DVM = new DevisViewModel
+            {
+                Articles = new List<SelectListItem>()
+            };
+            
+            devis.Articles = new Dictionary<Article, int>();
+            foreach (DevisArticle DA in db.DevisArticle.ToList())
+            {
+                if (DA.DevisID == devis.ID)
+                    devis.Articles.Add(db.Articles.Find(DA.ArticleID), DA.Quantite);
+            }
+
+            foreach (Article article in devis.Articles.Keys)
+            {
+                DVM.Articles.Add(new SelectListItem
+                {
+                    Text = article.Nom,
+                    Value = article.ID.ToString()
+                });
+            }
+            return View(DVM);
+        }
+
+        // POST: Devis/Quantite
+        [HttpPost, ActionName("Quantite")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Quantite(int id)
+        {
+            string[] keys = Request.Form.AllKeys;
+            string[] quantite = new string[keys.Length-1];
+            for (int cpt = 1; cpt < keys.Length; cpt++)
+            {
+                quantite[cpt-1] = Request.Form[keys[cpt]];
+            }
+
+            Devis devis = db.Devis.Find(id);
+            devis.Articles = new Dictionary<Article, int>();
+            int i = 0;
+            foreach (DevisArticle DA in db.DevisArticle.ToList())
+            {
+                if (DA.DevisID == devis.ID)
+                {
+                    DA.Quantite = Int32.Parse(quantite[i]);
+                    i++;
+                }
+            }
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
