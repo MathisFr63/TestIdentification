@@ -46,30 +46,5 @@ namespace WebApplication1.Controllers
             }
             base.Dispose(disposing);
         }
-        /* 
-            var message = new MailMessage(new MailAddress("afiacrocus@gmail.com"), new MailAddress("afiacrocus@gmail.com"))
-            {
-                Subject = "Mon sujet",
-                Body = "Message de mon email",
-                IsBodyHtml = true
-            };
-
-            var smtp = new SmtpClient("smtp.gmail.com", 587)
-            {
-                Credentials = new NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
-                EnableSsl = false
-            };
-            smtp.Send(message);
-
-
-            web.config
-            <system.net>
-                <mailSettings>
-                    <smtp deliveryMethod="SpecifiedPickupDirectory">
-                        <specifiedPickupDirectory pickupDirectoryLocation="C:\Mails\"/>
-                    </smtp>
-                </mailSettings>
-            </system.net>
-        */
     }
 }
