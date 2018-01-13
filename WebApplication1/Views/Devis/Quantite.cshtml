@@ -5,13 +5,10 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    var i = Model;
     var cpt = 0;
-    i.Quantite = new int[i.Articles.Count];
     <table class="table">
-        @foreach (var item in i.Articles)
+        @foreach (var item in Model.Articles)
         {
-            i.Quantite[cpt] = 0;
             cpt++;
             <tr>
                 <td>
@@ -19,10 +16,10 @@
                 </td>
                 <td>
                     <div class="form-group">
-                        @Html.LabelFor(modelItem => i.Quantite[cpt - 1], htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(modelItem => modelItem.Quantite, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(modelItem => i.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(modelItem => i.Quantite[cpt - 1], "", new { @class = "text-danger" })
+                            @Html.EditorFor(modelItem => modelItem.Quantite[cpt-1], new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Quantite[cpt - 1], "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </td>
