@@ -1,0 +1,18 @@
+﻿@model WebApplication1.Models.Compte.Utilisateur
+
+@{
+    ViewBag.Title = "Récupération";
+}
+
+<h2>Récupération du mot de passe</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Identifiant)
+        @Html.TextBoxFor(m => m.Identifiant, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Identifiant)
+        <p style="color: red;">@ViewBag.erreur</p>
+        </div>
+        <input type="submit" class="btn btn-secondary" value="Valider" formaction="RecoverMDPAfterLogin" />
+}

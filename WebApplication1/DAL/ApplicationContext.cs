@@ -41,9 +41,9 @@ namespace WebApplication1.DAL
             return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID.ToString() == identifiant);
         }
 
-        public int AjouterUtilisateur(string identifiant, string mdp)
+        public int AjouterUtilisateur(string identifiant, string motDePasse, string nom, string prenom, string mail, TypeUtilisateur type, string question, string reponse)
         {
-            Utilisateur user = new Utilisateur { Identifiant = identifiant, MotDePasse = mdp };
+            Utilisateur user = new Utilisateur(identifiant, motDePasse, nom, prenom, mail, type, question, reponse);
             Utilisateurs.Add(user);
             SaveChanges();
             return user.ID;

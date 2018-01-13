@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse);
+                int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
                 FormsAuthentication.SetAuthCookie(id.ToString(), false);
                 return Redirect("/");
             }
@@ -62,6 +62,35 @@ namespace WebApplication1.Controllers
         {
             FormsAuthentication.SignOut();
             return Redirect("/");
+        }
+
+        public ActionResult RecoverMDP()
+        {
+            return View();
+        }
+
+        public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
+        {
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Identifiant == utilisateur.Identifiant);
+            if (user != null)
+            {
+                user.Réponse = "";
+                return View(user);
+            }
+            ViewBag.erreur = "Identifiant inconnu";
+            return View("RecoverMDP");
+        }
+
+        [HttpPost]
+        public ActionResult VérifierRéponse(Utilisateur utilisateur)
+        {
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Identifiant == utilisateur.Identifiant);
+            if (user != null)
+            {
+                if (user.Réponse == utilisateur.Réponse)
+                    return View("AfficherMotDePasse", user);
+            }
+            return View("RecoverMDP");
         }
     }
 }
