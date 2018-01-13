@@ -4,7 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<br />
+<p>
+    <a href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
 
 @using (Html.BeginForm())
 {
@@ -69,12 +74,8 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
+                <button type="reset" value="facturer" onclick="location.href='@Url.Action("Facturer", "Devis",new { id = Model.ID })'" class="btn btn-default">Facturer</button>
             </div>
         </div>
     </div>
 }
-
-<p>
-    @Html.ActionLink("Facturer", "Facturer", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -4,62 +4,38 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Devis</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Objet)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Objet)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Valide)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Valide)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Monnaie)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Monnaie)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EntrepriseID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EntrepriseID)
-        </dd>
-    </dl>
-</div>
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+
+    <a href=@Url.Action("Edit","Devis",new { id = Model.ID }) class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
 </p>
+
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead">Client : @Html.DisplayFor(model => model.EntrepriseID)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Objet : @Html.DisplayFor(model => model.Objet)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Date : @Html.DisplayFor(model => model.Date)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Validité : @Html.DisplayFor(model => model.Valide)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Commentaire : @Html.DisplayFor(model => model.Commentaire)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Monnaie : @Html.DisplayFor(model => model.Monnaie)</p>
+            </div>
+        </div>
+    </div>
+</div>

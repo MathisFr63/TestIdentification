@@ -85,12 +85,16 @@
 
 <br />
 
-<div class="text-center" >
-@Html.PagedListPager(Model, page => Url.Action("Index",
-new
+@if (!Model.PageCount.Equals(1))
 {
-    page,
-    sortOrder = ViewBag.CurrentSort,
-    currentFilter =ViewBag.CurrentFilter
-}))
-</div>
+    <div class="text-center" >
+    
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter =ViewBag.CurrentFilter
+    }))
+    </div>
+}
