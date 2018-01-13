@@ -253,6 +253,7 @@
     <Content Include="Views\Login\RecoverMDP.cshtml" />
     <Content Include="Views\Login\RecoverMDPAfterLogin.cshtml" />
     <Content Include="Views\Login\AfficherMotDePasse.cshtml" />
+    <Content Include="Views\Login\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

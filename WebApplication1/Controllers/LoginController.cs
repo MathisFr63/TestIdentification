@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(UtilisateurViewModel viewModel, string returnUrl)
+        public ActionResult Index(UtilisateurViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -32,22 +32,20 @@ namespace WebApplication1.Controllers
                 if (utilisateur != null)
                 {
                     FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
-                    if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Utilisateur.Prenom", "Prénom et/ou mot de passe incorrect(s)");
+                ModelState.AddModelError("Utilisateur.Identifiant", "Identifiant et/ou mot de passe incorrect(s)");
             }
-            return View(viewModel);
+            return View("Index", viewModel);
         }
 
-        public ActionResult CreerCompte()
+        public ActionResult CreateUser()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreerCompte(Utilisateur utilisateur)
+        public ActionResult CreateUser(Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {

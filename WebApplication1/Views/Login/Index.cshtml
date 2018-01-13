@@ -36,7 +36,7 @@ else
                         <label>Password</label>
                         <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
-                    <input type="submit" class="btn btn-primary" value="S'inscrire" />
+                    <input type="submit" class="btn btn-primary" value="S'inscrire" formaction="CreateUser" formmethod="get" />
                 </div>
                 <div class="col-md-6">
                     <br>
@@ -51,7 +51,7 @@ else
                         @Html.PasswordFor(m => m.Utilisateur.MotDePasse, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
                     </div>
-                    <input type="submit" class="btn btn-secondary" value="Se Connecter"/>
+                    <input type="submit" class="btn btn-secondary" value="Valider" />
                 </div>
                 <br>
                 @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP")
