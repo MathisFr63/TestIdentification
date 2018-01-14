@@ -15,7 +15,6 @@ namespace WebApplication1.DAL
             var utilisateurs = new List<Utilisateur>
             {
                 new Utilisateur("MathisFrizot", "root", "Mathis", "FRIZOT", "Mathis.FRIZOT@etu.uca.fr", TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
-                new Utilisateur("Alexis", "test", "Mathis", "FRIZOT", "Mathis.FRIZOT@etu.uca.fr", TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
                 new Utilisateur("FlavioRanchon", "Flavio", "Flavio", "RANCHON", "Flavio.RANCHON@etu.uca.fr", TypeUtilisateur.Enregistré, "Sport", "Football"),
                 new Utilisateur("MathieuRavel", "Mathieu", "Mathieu", "RAVEL", "Mathieu.RAVEL@etu.uca.fr", TypeUtilisateur.Enregistré, "Nom de famille", "Ravel"),
                 new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT"),

@@ -49,9 +49,14 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
-                FormsAuthentication.SetAuthCookie(id.ToString(), false);
-                return Redirect("/");
+                if (db.Utilisateurs.Count(u => u.Identifiant == utilisateur.Identifiant) > 0)
+                    ModelState.AddModelError("Identifiant", "Cet identifiant est déjà utilisé");
+                else
+                {
+                    int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
+                    FormsAuthentication.SetAuthCookie(id.ToString(), false);
+                    return Redirect("/");
+                }
             }
             return View(utilisateur);
         }
