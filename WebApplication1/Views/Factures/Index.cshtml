@@ -4,24 +4,39 @@
     ViewBag.Title = "Facture";
 }
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="collapse navbar-collapse ">
-            <form class="navbar-form navbar-left" method="get" role="search">
+
+        <div class="navbar-header">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-align-left"></i>
+            </button>
+        </div>
+
+        <form class="navbar-form navbar-left" method="get" role="search">
+            @using (Html.BeginForm("Index", "Factures", FormMethod.Get))
+            {
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" value="@ViewData[" currentFilter"]">
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    <button type="reset" value="cancel" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                 </div>
-                <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                <button asp-action="Index" type="submit" value="cancel" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-            </form>
+            }
+        </form>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trier par<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default">
-                        <li><a>Date</a></li>
-                        <li><a asp-action="Index" asp-route-sortOrder="@ViewData[" NameSortParm"]" asp-route-currentFilter="@ViewData[" CurrentFilter"]">Nom</a></li>
+                        <li>@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
+                        <li>@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
                         <li><a href="#">Nb factures</a></li>
                     </ul>
+                </li>
+                <li>
+                    <button type="reset" value="cancel" onclick="location.href='@Url.Action("Create", "Factures")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>

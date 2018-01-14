@@ -7,31 +7,29 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-</head>
-<body class="fondGradientGris">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        @Html.ActionLink("Easy Bill", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        <div class="pull-right">
-            <ul class="nav navbar-nav">
-                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    <li style="float:right;"><a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a></li>
-                    <li style="float:right;"><a style="color:white">Bonjour toi</a></li>
-                }
-                else
-                {
-                    <li style="float:right;"><a href=@Url.Action("Index", "Login")><span class="glyphicon glyphicon-off"></span></a></li>
-                }
-            </ul>
-        </div>
-    </div>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/sidebar.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 
-    <div class="container-fluid">
-        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-        {
-            <nav class="col-sm-3 col-md-1 hidden-xs-down sidebar menu" style="padding-left:0px">
-                <ul class="nav pull-left">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+</head>
+
+<body class="fondGradientGris">
+    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Easy Bill</h3>
+                    <strong>EB</strong>
+                </div>
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href=@Url.Action("Index", "Home")>
+                            <i class="glyphicon glyphicon-home"></i>Home
+                        </a>
+                    </li>
                     @*<li>@Html.ActionLink("Utilisateurs", "Index", "Utilisateurs")</li>*@
                     <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
                     <li>@Html.ActionLink("Fournisseurs", "Index", "Fournisseurs")</li>
@@ -41,29 +39,39 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>
+                        <a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a>
+                    </li>
                 </ul>
-            </nav>
-            <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                <br/>
-                <div class="container body-content ">
-                    @RenderBody()
-                    <hr />
-                </div>
-            </main>
-        }
-        else
-        {
-            <main>
-                <br />
-                <div class="container body-content ">
-                    @RenderBody()
-                    <hr />
-                </div>
-            </main>
-        }
-        </div>
 
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+            </nav>
+            <div id="content">
+                @RenderBody()
+            </div>
+        </div>
+    }
+    else
+    {
+                <div class="container body-content ">
+                    @RenderBody()
+                </div>
+                }
+
+                @Scripts.Render("~/bundles/bootstrap")
+                @RenderSection("scripts", required: false)
+
+                <!-- jQuery CDN -->
+                <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+                <!-- Bootstrap Js CDN -->
+                <script src="~/Scripts/bootstrap.min.js"></script>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#sidebarCollapse').on('click', function () {
+                            $('#sidebar').toggleClass('active');
+                        });
+                    });
+                </script>
+    </body>
+
 </html>
