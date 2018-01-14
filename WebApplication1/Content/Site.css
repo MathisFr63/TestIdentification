@@ -22,9 +22,7 @@ body {
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
+input, select, textarea {
     max-width: 280px;
 }
 
@@ -38,9 +36,9 @@ textarea {
 }
 
 .menu li a {
-        color: black;
-        font-size: medium;
-        padding: 20px;
+    color: black;
+    font-size: medium;
+    padding: 20px;
 }
 
 
@@ -52,15 +50,11 @@ textarea {
 }
 
 
-    .btn-info:hover,
-    .btn-info:focus,
-    .btn-info:active,
-    .btn-info.active,
-    .open .dropdown-toggle.btn-info {
-        color: #ffffff;
-        background-color: #171E26;
-        border-color: #171E26;
-    }
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info {
+    color: #ffffff;
+    background-color: #171E26;
+    border-color: #171E26;
+}
 
 
 .btn-secondary {
@@ -69,9 +63,9 @@ textarea {
     border-color: #171E26;
 }
 
-    .btn-secondary:hover{
-        color:white;
-    }
+.btn-secondary:hover{
+    color:white;
+}
 
 .btn-primary {
     color: white;
@@ -79,20 +73,22 @@ textarea {
     border-color: #EF0C1A;
 }
 
-    .btn-primary:hover {
-        color: white;
-        background-color: #EF0C1A;
-        border-color: #EF0C1A;
-    }
+.btn-primary:hover {
+    color: white;
+    background-color: #EF0C1A;
+    border-color: #EF0C1A;
+}
 
 
 .fondGradientGris {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+65,e1e1e1+81,f6f6f6+100 */
     background: rgb(255,255,255); /* Old browsers */
     background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 65%,rgba(225,225,225,1) 81%,rgba(246,246,246,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 65%,rgba(225,225,225,1) 81%,rgba(246,246,246,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .fondRecherche {
@@ -102,6 +98,8 @@ textarea {
     background: -webkit-linear-gradient(-45deg, rgba(245,246,246,1) 0%,rgba(219,220,226,1) 11%,rgba(184,186,198,1) 45%,rgba(221,223,227,1) 92%,rgba(245,246,246,1) 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(135deg, rgba(245,246,246,1) 0%,rgba(219,220,226,1) 11%,rgba(184,186,198,1) 45%,rgba(221,223,227,1) 92%,rgba(245,246,246,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .deroulant{
@@ -121,4 +119,13 @@ textarea {
 
 .text-primary {
     color: black;
+}
+
+.form-group{
+    margin-bottom: 0;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
 }

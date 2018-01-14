@@ -177,6 +177,7 @@
     <Compile Include="Models\Papiers\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\Donnee.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
+    <Compile Include="Models\Papiers\FactureArticles.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />
     <Compile Include="Models\Papiers\TypeReglement.cs" />
     <Compile Include="Models\Papiers\TypeService.cs" />

@@ -25,7 +25,7 @@ namespace WebApplication1.DAL
 
             var clients = new List<Client>
             {
-                new Client{ Nom =   "Fnac", SiteWeb =   "https://www.fnac.com/", Commentaire = "La Fnac", UtilisateurID=1},
+                new Client{ Nom =   "Fnac", SiteWeb = "https://www.fnac.com/",   Commentaire = "La Fnac", UtilisateurID=1},
                 new Client{ Nom = "Amazon", SiteWeb = "https://www.amazon.com/", Commentaire = "Le client Amazon", UtilisateurID=1},
                 new Client{ Nom =  "Test1", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=1},
                 new Client{ Nom =  "Test2", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=2},

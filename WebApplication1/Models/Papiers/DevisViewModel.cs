@@ -9,16 +9,14 @@ namespace WebApplication1.Models.Papiers
     public class DevisViewModel
     {
         public Devis Devis { get; set; }
-
         public int[] ArticlesID { get; set; }
-
         public List<SelectListItem> Articles { get; set; }
-
         public List<SelectListItem> Entreprises { get; set; }
-
         public int[] Quantite { get; set; }
 
-        public DevisViewModel() { }
+
+        public DevisViewModel() {}
+
         public DevisViewModel(List<Client> listClients, List<Article> listArticles)
         {
             Articles = new List<SelectListItem>();
@@ -27,6 +25,7 @@ namespace WebApplication1.Models.Papiers
             Entreprises = new List<SelectListItem>();
             listClients.ForEach(e => Entreprises.Add(new SelectListItem { Text = e.Nom, Value = e.ID.ToString() }));
         }
+
         public DevisViewModel(List<Article> listArticles)
         {
             Articles = new List<SelectListItem>();
