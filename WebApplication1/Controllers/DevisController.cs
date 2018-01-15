@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -15,8 +16,10 @@ namespace WebApplication1.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Devis
-        public ActionResult Index()
+        public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
+            List<Devis> listTrie = new List<Devis>();
+
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
@@ -24,7 +27,23 @@ namespace WebApplication1.Controllers
                                          db.DevisArticle.Where(da => da.DevisID == devis.ID).ToList()
                                             .ForEach(da => devis.Articles.Add(db.Articles.Find(da.ArticleID), da.Quantite));
                                        });
-            return View(ListDevis);
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                return View(ListDevis.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return View(ListDevis.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Devis/Details/5

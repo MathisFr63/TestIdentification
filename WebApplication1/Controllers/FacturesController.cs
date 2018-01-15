@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -19,7 +20,7 @@ namespace WebApplication1.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Factures
-        public ActionResult Index()
+        public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
@@ -30,7 +31,22 @@ namespace WebApplication1.Controllers
                    .ForEach(FA => facture.Articles.Add(db.Articles.Find(FA.ArticleID), FA.Quantite));
             });
 
-            return View(factures);
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                return View(factures.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return View(factures.ToPagedList(pageNumber, pageSize));
         }
         // GET: Factures/Details/5
         public ActionResult Details(int? id)

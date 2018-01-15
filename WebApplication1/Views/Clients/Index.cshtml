@@ -72,13 +72,34 @@
                 @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
+                @if (item.SiteWeb.IsEmpty())
+                {
+                    <p id="italie">pas de site web</p>
+                }
+                else
+                {
                 @Html.DisplayFor(modelItem => item.SiteWeb)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Mail)
+                @if (item.Mail.IsEmpty())
+                {
+                    <p id="italie">pas de mail</p>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Mail)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Commentaire)
+                @if (item.Commentaire.IsEmpty())
+                {
+                    <p id="italie">pas de commentaire</p>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Commentaire)
+                }
             </td>
             <td>
                 <a href=@Url.Action("Edit", "Clients", new { id = item.ID }) class="btn btn-info">

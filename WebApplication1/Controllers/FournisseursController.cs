@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Entite;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -17,10 +18,31 @@ namespace WebApplication1.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Fournisseurs
-        public ActionResult Index()
+        public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            return View(db.UtilisateurCourant.Fournisseurs.ToList());
+            List<Fournisseur> listTrie = new List<Fournisseur>();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                foreach (Fournisseur c in db.UtilisateurCourant.Fournisseurs)
+                    if (c.Nom.ToUpper().Contains(searchstring.ToUpper()))
+                        listTrie.Add(c);
+
+                return View(listTrie.ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return View(db.UtilisateurCourant.Fournisseurs.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Fournisseurs/Details/5

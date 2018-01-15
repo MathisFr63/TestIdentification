@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebApplication1.Models.Papiers.Devis>
+﻿@*@model IEnumerable<WebApplication1.Models.Papiers.Devis>*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Devis";
@@ -45,27 +47,13 @@
 <br />
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Objet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Valide)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Monnaie)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Articles)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EntrepriseID)
-        </th>
+        <th>Objet</th>
+        <th>Date</th>
+        <th>Valide</th>
+        <th>Commentaire</th>
+        <th>Monnaie</th>
+        <th>Articles</th>
+        <th>EntrepriseID</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -106,3 +94,19 @@
     </tr>
     }
 </table>
+
+<br />
+
+@if (!Model.PageCount.Equals(1))
+{
+    <div class="text-center">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter = ViewBag.CurrentFilter
+    }))
+    </div>
+}

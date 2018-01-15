@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebApplication1.Models.Entite.Fournisseur>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Entite.Fournisseur>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Fournisseurs";
@@ -46,18 +47,10 @@
 <br />
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SiteWeb)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </th>
+        <th>Nom</th>
+        <th>SiteWeb</th>
+        <th>Mail</th>
+        <th>Commentaire</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -89,3 +82,20 @@
         </tr>
     }
 </table>
+
+
+<br />
+
+@if (!Model.PageCount.Equals(1))
+{
+    <div class="text-center">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter = ViewBag.CurrentFilter
+    }))
+    </div>
+}

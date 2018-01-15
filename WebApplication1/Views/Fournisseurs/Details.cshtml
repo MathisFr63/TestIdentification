@@ -21,56 +21,27 @@
                 <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
             </div>
             <div class="col-md-6">
-                <p class="lead">Site web : <a target="_blank" href="@Html.DisplayFor(model => model.SiteWeb)">@Html.DisplayFor(model => model.SiteWeb)</a></p>
+                <p class="lead">Site web : <a href="@Html.DisplayFor(model => model.SiteWeb)">@Html.DisplayFor(model => model.SiteWeb)</a></p>
             </div>
             <div class="col-md-6">
                 <p class="lead">Mail : @Html.DisplayFor(model => model.Mail)</p>
             </div>
+
             <div class="col-md-6">
-                <p class="lead">Commentaire : @Html.DisplayFor(model => model.Commentaire)</p>
+                <p class="lead">Commentaire :@Html.DisplayFor(model => model.Commentaire)</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="lead">Code NAF :@Html.DisplayFor(model => model.CodeNAF)</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="lead">SIREN/SIRET :@Html.DisplayFor(model => model.SIREN_SIRET)</p>
+            </div>
+
+            <div class="col-md-6">
+                <p class="lead">Numéro TVA :@Html.DisplayFor(model => model.NumeroTVA)</p>
             </div>
         </div>
     </div>
 </div>
-
-<!--amodel WebApplication1.Models.Entreprise.Client
-
-a{
-    ViewBag.Title = aHtml.DisplayFor(model => model.Nom) + " (  client )";
-}
-
-    <br />
-    <p>
-        <a href=aUrl.Action("Index","Clients") class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-arrow-left" />
-        </a>
-
-        <a href=aUrl.Action("Edit","Clients",new { id = Model.ID }) class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-pencil" />
-        </a>
-    </p>
-
-    <br />
-    <h3 class="">Informations sur le client :</h3>
-    <br />
-
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="lead">Nom : aHtml.DisplayFor(model => model.Nom)</p>
-                </div>
-                <div class="col-md-6">
-                    <p class="lead">Site web : <a href="aHtml.DisplayFor(model => model.SiteWeb)">aHtml.DisplayFor(model => model.SiteWeb)</a></p>
-                </div>
-                <div class="col-md-6">
-                    <p class="lead">Mail : aHtml.DisplayFor(model => model.Mail)</p>
-                </div>
-                <div class="col-md-6">
-                    <p class="lead">Commentaire :aHtml.DisplayFor(model => model.Commentaire)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    -->

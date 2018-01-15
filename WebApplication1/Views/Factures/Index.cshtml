@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebApplication1.Models.Papiers.Facture>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Facture>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Facture";
@@ -42,30 +43,14 @@
 <br />
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Objet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Monnaie)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Articles)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EntrepriseID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Relances)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reglement)
-        </th>
+        <th>Objet</th>
+        <th>Date</th>
+        <th>Commentaire</th>
+        <th>Monnaie</th>
+        <th>Articles</th>
+        <th>EntrepriseID</th>
+        <th>Relances</th>
+        <th>Reglement</th>
         <th></th>
     </tr>
 
@@ -103,3 +88,19 @@
     }
 
 </table>
+
+<br />
+
+@if (!Model.PageCount.Equals(1))
+{
+    <div class="text-center">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter = ViewBag.CurrentFilter
+    }))
+    </div>
+}

@@ -37,7 +37,12 @@
                     <li>@Html.ActionLink("Factures", "Index", "Factures")</li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Avoirs</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>
+                        <a href=@Url.Action("Contact", "Home")>
+                            <i class="glyphicon glyphicon-send"></i>
+                            Contact
+                        </a>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>
                         <a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a>

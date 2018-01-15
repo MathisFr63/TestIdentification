@@ -4,6 +4,13 @@
     ViewBag.Title = "Facturer";
 }
 
+
+<p>
+    <a href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
+
 <h2>Facturer</h2>
 
 <div>
@@ -65,12 +72,9 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Facturer" class="btn btn-default" />
+                    <input type="submit" value="Facturer" class="btn btn-default btn-secondary" />
                 </div>
             </div>
         </div>
     }
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
