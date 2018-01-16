@@ -25,12 +25,12 @@ namespace WebApplication1.DAL
 
             var clients = new List<Client>
             {
-                new Client{ Nom =   "Fnac", SiteWeb = "https://www.fnac.com/",   Commentaire = "La Fnac", UtilisateurID=1},
-                new Client{ Nom = "Amazon", SiteWeb = "https://www.amazon.com/", Commentaire = "Le client Amazon", UtilisateurID=1},
-                new Client{ Nom =  "Test1", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=1},
-                new Client{ Nom =  "Test2", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=2},
-                new Client{ Nom =  "Test3", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=3},
-                new Client{ Nom =  "Test4", SiteWeb = "https://www.amazon.com/", Commentaire = "", UtilisateurID=4}
+                new Client{ Nom =   "Fnac", SiteWeb = "https://www.fnac.com/",     Mail = "fnac@mail.com",  Commentaire = "La Fnac", UtilisateurID=1},
+                new Client{ Nom = "Amazon", SiteWeb = "https://www.amazon.com/", Mail = "amazon@mail.com", Commentaire = "Start-up", UtilisateurID=1},
+                new Client{ Nom =  "Test1", SiteWeb = "https://www.amazon.com/",  Mail = "Test1@mail.com", Commentaire = "", UtilisateurID=1},
+                new Client{ Nom =  "Test2", SiteWeb = "https://www.amazon.com/",  Mail = "Test2@mail.com", Commentaire = "", UtilisateurID=2},
+                new Client{ Nom =  "Test3", SiteWeb = "https://www.amazon.com/",  Mail = "Test3@mail.com", Commentaire = "", UtilisateurID=3},
+                new Client{ Nom =  "Test4", SiteWeb = "https://www.amazon.com/",  Mail = "Test4@mail.com", Commentaire = "", UtilisateurID=4}
             };
             clients.ForEach(c => context.Clients.Add(c));
             context.SaveChanges();
