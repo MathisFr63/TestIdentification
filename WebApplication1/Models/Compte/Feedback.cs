@@ -7,7 +7,6 @@ namespace WebApplication1.Models.Compte
 {
     public class Feedback
     {
-
         public String name { get; set; }
 
         public String email { get; set; }
