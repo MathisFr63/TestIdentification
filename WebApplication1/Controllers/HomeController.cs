@@ -26,5 +26,31 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        
+        [HttpPost]
+        public ActionResult Contact(Feedback feedback)
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("afiacrocus@gmail.com", "Feedback Easybill");
+            mail.To.Add(feedback.email);
+            //mail.IsBodyHtml = true;
+            mail.Subject = "Feedback de "+ feedback.name;
+            mail.Body = feedback.comment;
+            mail.Priority = MailPriority.High;
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718");
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
+
+            return RedirectToAction("FeedbackSent");
+
+        }
+
+        public ActionResult FeedbackSent()
+        {
+            ViewBag.Message = "Votre message a bien été envoyé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
+            return View();
+        }
     }
 }
