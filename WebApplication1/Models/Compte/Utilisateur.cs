@@ -9,6 +9,24 @@ namespace WebApplication1.Models.Compte
 {
     public class Utilisateur
     {
+        public int ID { get; private set; }
+        public string Identifiant { get; set; }
+        [Display(Name = "Mot de passe")]
+        public string MotDePasse { get; set; }
+        public string Nom { get; set; }
+        public string Prénom { get; set; }
+        public string Mail { get; set; }
+        public TypeUtilisateur Type { get; set; }
+        //Question permettant de retrouver son mot de passe
+        public string Question { get; set; }
+        //public string Question { get; }
+        //Réponse à la question permettant de retrouver son mot de passe
+        public string Réponse { get; set; }
+        //public string Réponse { get; }
+
+        public virtual ICollection<Client> Clients { get; set; }
+        public virtual ICollection<Fournisseur> Fournisseurs { get; set; }
+
         /// <summary>
         /// Constructeur par défaut d'un utilisateur
         /// </summary>
@@ -38,24 +56,6 @@ namespace WebApplication1.Models.Compte
             this.Question = question;
             this.Réponse = reponse;
         }
-
-        public int ID { get; private set; }
-        public string Identifiant { get; set; }
-        [Display(Name = "Mot de passe")]
-        public string MotDePasse { get; set; }
-        public string Nom { get; set; }
-        public string Prénom { get; set; }
-        public string Mail { get; set; }
-        public TypeUtilisateur Type { get; set; }
-        //Question permettant de retrouver son mot de passe
-        public string Question { get; set; }
-        //public string Question { get; }
-        //Réponse à la question permettant de retrouver son mot de passe
-        public string Réponse { get; set; }
-        //public string Réponse { get; }
-
-        public virtual ICollection<Client> Clients { get; set; }
-        public virtual ICollection<Fournisseur> Fournisseurs { get; set; }
 
         public override string ToString()
         {

@@ -32,30 +32,35 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Contact(Feedback feedback)
         {
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(feedback.email, "Feedback Easybill");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
+                EnableSsl = true
+            };
+
+            MailMessage mail = new MailMessage
+            {
+                From = new MailAddress(feedback.email, "Feedback Easybill"),
+                IsBodyHtml = true,
+                Subject = "Feedback de " + feedback.name,
+                Body = "Commentaire de : " + feedback.name + "<br/>Email : " + feedback.email + "<br/>Message : " + feedback.comment,
+                Priority = MailPriority.High
+            };
             mail.To.Add("afiacrocus@gmail.com");
-            mail.IsBodyHtml = true;
-            mail.Subject = "Feedback de "+ feedback.name;
-            mail.Body = "Commentaire de : "+feedback.name+ "<br/>Email : " + feedback.email+ "<br/>Message : " + feedback.comment;
-            mail.Priority = MailPriority.High;
-
-            MailMessage mail2 = new MailMessage();
-            mail2.From = new MailAddress("afiacrocus@gmail.com", "Résumé Feedback Easybill");
-            mail2.To.Add(feedback.email);
-            mail2.IsBodyHtml = true;
-            mail2.Subject = "Votre Feedback";
-            mail2.Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.comment+ "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.";
-            mail2.Priority = MailPriority.High;
-
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            smtp.Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718");
-            smtp.EnableSsl = true;
             smtp.Send(mail);
+
+            MailMessage mail2 = new MailMessage
+            {
+                From = new MailAddress("afiacrocus@gmail.com", "Résumé Feedback Easybill"),
+                IsBodyHtml = true,
+                Subject = "Votre Feedback",
+                Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.comment + "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.",
+                Priority = MailPriority.High
+            };
+            mail2.To.Add(feedback.email);
             smtp.Send(mail2);
 
             return RedirectToAction("FeedbackSent");
-
         }
 
         public ActionResult FeedbackSent()
