@@ -16,19 +16,36 @@ else
 {
     using (Html.BeginForm())
     {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Utilisateur.Identifiant)
-            @Html.TextBoxFor(m => m.Utilisateur.Identifiant, new { @class = "form-control", @required = "required" })
-            @Html.ValidationMessageFor(m => m.Utilisateur.Identifiant, "", new { @class = "text-danger" })
+        <div class="py-5 text-white opaque-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="text-gray-dark">Connection</h1>
+                        <p class="lead mb-4">Vous êtes déjà client ?</p>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Utilisateur.Identifiant)
+                            @Html.TextBoxFor(m => m.Utilisateur.Identifiant, new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Utilisateur.Identifiant, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Utilisateur.MotDePasse)
+                            @Html.PasswordFor(m => m.Utilisateur.MotDePasse, new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
+                        </div>
+                        @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3" })
+
+                        <p class="my-3 py-5"></p>
+                        <input type="submit" class="btn btn-secondary" value="Valider" />
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="text-gray-dark">Inscription</h1>
+                        <p class="lead mb-4">Vous n'avez pas encore de compte ? Inscrivez-vous dès maintenant !</p>
+                        <a href=@Url.Action("CreateUser", "Login") class="btn btn-primary">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Utilisateur.MotDePasse)
-            @Html.PasswordFor(m => m.Utilisateur.MotDePasse, new { @class = "form-control", @required = "required" })
-            @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
-        </div>
-        <input type="submit" class="btn btn-secondary" value="Valider" />
+
+        
     }
-    @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP")
-    <br />
-    @Html.ActionLink("S'inscrire", "CreateUser")
 }

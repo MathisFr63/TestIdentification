@@ -31,22 +31,55 @@
                         </a>
                     </li>
                     @*<li>@Html.ActionLink("Utilisateurs", "Index", "Utilisateurs")</li>*@
-                    <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
-                    <li>@Html.ActionLink("Fournisseurs", "Index", "Fournisseurs")</li>
-                    <li>@Html.ActionLink("Devis", "Index", "Devis")</li>
-                    <li>@Html.ActionLink("Factures", "Index", "Factures")</li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Avoirs</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Acomptes</a></li>
+
+                    <li>
+                        <a href="#entrepriseSubmenu" data-toggle="collapse">
+                            <i class="glyphicon glyphicon-user"></i>
+                            Entreprises
+                        </a>
+                        <ul class="collapse list-unstyled" id="entrepriseSubmenu">
+                            <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
+                            <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#papierSubmenu" data-toggle="collapse">
+                            <i class="glyphicon glyphicon-file"></i>
+                            Papiers
+                        </a>
+                        <ul class="collapse list-unstyled" id="papierSubmenu">
+                            <li><a href=@Url.Action("Index", "Devis")>Devis</a></li>
+                            <li><a href=@Url.Action("Index", "Factures")>Factures</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-tags"></i>
+                            Produits
+                        </a>
+                    </li>
+
                     <li>
                         <a href=@Url.Action("Contact", "Home")>
                             <i class="glyphicon glyphicon-send"></i>
                             Contact
                         </a>
                     </li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+
                     <li>
-                        <a href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span></a>
+                        <a href=@Url.Action("About", "Home")>
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                            A propos
+                        </a>
                     </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <li> #ID user</li>
+                    <li>Nom user</li>
+                    <li><a class="btn-primary" href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span> Déconnection</a></li>
                 </ul>
 
             </nav>
