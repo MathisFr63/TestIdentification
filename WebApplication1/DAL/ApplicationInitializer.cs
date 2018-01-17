@@ -20,7 +20,7 @@ namespace WebApplication1.DAL
                 new Utilisateur("AurelienBerger", "Aurelien", "Aurélien", "BERGER",  "Aurelien.BERGER2@etu.uca.fr", TypeUtilisateur.Enregistré,     "Nom de famille", "Berger"),
                 new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
             };
-            utilisateurs.ForEach(s => context.Utilisateurs.Add(s));
+            utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
             context.SaveChanges();
 
             var entreprises = new List<Entreprise>
@@ -35,13 +35,13 @@ namespace WebApplication1.DAL
             entreprises.ForEach(e => context.Entreprises.Add(e));
             context.SaveChanges();
 
-            var articles = new List<Article>
+            var produits = new List<Produit>
             {
-                new Article{ Nom = "Article 1", Commentaire = "Commentaire 1", PrixHT = 10, Reduction =  0, TVA = 3},
-                new Article{ Nom = "Article 2", Commentaire = "Commentaire 2", PrixHT = 20, Reduction = 15, TVA = 5},
-                new Article{ Nom = "Article 3", Commentaire = "Commentaire 3", PrixHT =  5, Reduction =  5, TVA = 0}
+                new Produit{ Nom = "Article 1", Commentaire = "Commentaire 1", PrixHT = 10, Reduction =  0, TVA = 3},
+                new Produit{ Nom = "Article 2", Commentaire = "Commentaire 2", PrixHT = 20, Reduction = 15, TVA = 5},
+                new Produit{ Nom = "Article 3", Commentaire = "Commentaire 3", PrixHT =  5, Reduction =  5, TVA = 0}
             };
-            articles.ForEach(a => context.Articles.Add(a));
+            produits.ForEach(p => context.Produits.Add(p));
             context.SaveChanges();
         }
     }

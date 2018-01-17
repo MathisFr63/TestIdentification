@@ -171,10 +171,10 @@
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
     <Compile Include="Models\Entite\Entreprise.cs" />
-    <Compile Include="Models\Papiers\Article.cs" />
+    <Compile Include="Models\Papiers\Produit.cs" />
     <Compile Include="Models\Entite\Telephone.cs" />
     <Compile Include="Models\Papiers\DevisViewModel.cs" />
-    <Compile Include="Models\Papiers\DonneeArticle.cs" />
+    <Compile Include="Models\Papiers\DonneeProduit.cs" />
     <Compile Include="Models\Papiers\Donnee.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />

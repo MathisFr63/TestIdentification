@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebApplication1.Models.Compte;
-using WebApplication1.Models.Entite;
 
 namespace WebApplication1.Models.Papiers
 {
@@ -16,7 +13,7 @@ namespace WebApplication1.Models.Papiers
 
         public TypeMonnaie Monnaie { get; set; }
 
-        public Dictionary<Article, int> Articles { get; set; }
+        public Dictionary<Produit, int> Produits { get; set; }
 
         public int EntrepriseID { get; set; }
 

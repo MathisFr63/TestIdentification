@@ -23,9 +23,9 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
-            ListDevis.ForEach(devis => { devis.Articles = new Dictionary<Article, int>();
-                                         db.DonneeArticle.Where(da => da.DonneeID == devis.ID).ToList()
-                                            .ForEach(da => devis.Articles.Add(db.Articles.Find(da.ArticleID), da.Quantite));
+            ListDevis.ForEach(devis => { devis.Produits = new Dictionary<Produit, int>();
+                                         db.DonneeProduit.Where(DP => DP.DonneeID == devis.ID).ToList()
+                                            .ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.DonneeID), DP.Quantite));
                                        });
 
             if (searchstring != null)
@@ -61,7 +61,7 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View(new DevisViewModel(db.Entreprises.ToList(), db.Articles.ToList()));
+            return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
         }
 
         // POST: Devis/Create
@@ -79,21 +79,14 @@ namespace WebApplication1.Controllers
                 db.Devis.Add(dvm.Devis);
                 db.SaveChanges();
 
-                for (int i = 0; i < dvm.ArticlesID.Length; i++)
+                for (int i = 0; i < dvm.ProduitsID.Length; i++)
                 {
-                    Article item = db.Articles.ToList()[dvm.ArticlesID[i] - 1];
+                    Produit item = db.Produits.ToList()[dvm.ProduitsID[i] - 1];
                     //A modifier plus tard pour pouvoir instancier la quantité en fonction du choix de l'utilisateur
-                    db.DonneeArticle.Add(new DonneeArticle { DonneeID = dvm.Devis.ID, ArticleID = item.ID, Quantite = 1 });
+                    db.DonneeProduit.Add(new DonneeProduit { DonneeID = dvm.Devis.ID, ProduitID = item.ID, Quantite = 1 });
                 }
 
-                //Client client = db.Clients.Find(devis.EntrepriseID);
-                //if (client != null)
-                //{
-                //    client.Devis.Add(devis);
-                //    db.SaveChanges();
-                //}
                 db.SaveChanges();
-                
                 return RedirectToAction("Quantite", new { id = dvm.Devis.ID });
             }
 
@@ -128,7 +121,7 @@ namespace WebApplication1.Controllers
                 u.Valide = true;
                 u.Commentaire = devis.Commentaire;
                 u.Monnaie = devis.Monnaie;
-                u.Articles = devis.Articles;
+                u.Produits = devis.Produits;
                 u.EntrepriseID = devis.EntrepriseID;
 
                 db.SaveChanges();
@@ -158,7 +151,7 @@ namespace WebApplication1.Controllers
             db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 
-            db.DonneeArticle.Where(DA => DA.DonneeID == id).ToList().ForEach(DA => db.DonneeArticle.Remove(DA));
+            db.DonneeProduit.Where(DP => DP.DonneeID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
             db.SaveChanges();
 
             //Client client = db.Clients.Find(devis.EntrepriseID);
@@ -199,10 +192,10 @@ namespace WebApplication1.Controllers
             if (devis == null) return HttpNotFound();
 
             
-            devis.Articles = new Dictionary<Article, int>();
-            db.DonneeArticle.Where(DA => DA.DonneeID == devis.ID).ToList().ForEach(DA => devis.Articles.Add(db.Articles.Find(DA.ArticleID), DA.Quantite));
+            devis.Produits = new Dictionary<Produit, int>();
+            db.DonneeProduit.Where(DP => DP.DonneeID == devis.ID).ToList().ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.ProduitID), DP.Quantite));
 
-            return View(new DevisViewModel(devis.Articles.Keys.ToList()));
+            return View(new DevisViewModel(devis.Produits.Keys.ToList()));
         }
 
         // POST: Devis/Quantite
@@ -211,12 +204,12 @@ namespace WebApplication1.Controllers
         public ActionResult Quantite(int id, DevisViewModel dvm)
         {
             Devis devis = db.Devis.Find(id);
-            devis.Articles = new Dictionary<Article, int>();
+            devis.Produits = new Dictionary<Produit, int>();
 
             int i = 0;
-            foreach (DonneeArticle DA in db.DonneeArticle.ToList())
-                if (DA.DonneeID == devis.ID)
-                    DA.Quantite = dvm.Quantite[i++];
+            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
+                if (DP.DonneeID == devis.ID)
+                    DP.Quantite = dvm.Quantite[i++];
 
             db.SaveChanges();
             return RedirectToAction("Index");

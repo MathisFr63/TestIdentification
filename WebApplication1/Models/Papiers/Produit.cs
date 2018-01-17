@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebApplication1.Models.Papiers
+﻿namespace WebApplication1.Models.Papiers
 {
-    public class Article
+    public class Produit
     {
         public int ID { get; private set; }
 
