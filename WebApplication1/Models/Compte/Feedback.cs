@@ -7,10 +7,10 @@ namespace WebApplication1.Models.Compte
 {
     public class Feedback
     {
-        public String name { get; set; }
+        public String Name { get; set; }
 
-        public String email { get; set; }
+        public String Email { get; set; }
 
-        public String comment { get; set; }
+        public String Comment { get; set; }
     }
 }

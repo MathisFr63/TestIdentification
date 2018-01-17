@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            List<Fournisseur> listTrie = new List<Fournisseur>();
+            List<Entreprise> listTrie = new List<Entreprise>();
 
             if (searchstring != null)
                 page = 1;
@@ -35,14 +35,13 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
             {
-                foreach (Fournisseur c in db.UtilisateurCourant.Fournisseurs)
-                    if (c.Nom.ToUpper().Contains(searchstring.ToUpper()))
-                        listTrie.Add(c);
+                foreach (Entreprise e in db.UtilisateurCourant.Entreprises.Where(e => e.Type == TypeEntreprise.Fournisseur))
+                    if (e.NomEntreprise.ToUpper().Contains(searchstring.ToUpper()))
+                        listTrie.Add(e);
 
                 return View(listTrie.ToPagedList(pageNumber, pageSize));
             }
-            else
-                return View(db.UtilisateurCourant.Fournisseurs.ToPagedList(pageNumber, pageSize));
+            return View(db.UtilisateurCourant.Entreprises.Where(e => e.Type == TypeEntreprise.Fournisseur).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Fournisseurs/Details/5
@@ -52,12 +51,12 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fournisseur fournisseur = db.Fournisseurs.Find(id);
-            if (fournisseur == null)
+            Entreprise entreprise = db.Entreprises.Find(id);
+            if (entreprise == null)
             {
                 return HttpNotFound();
             }
-            return View(fournisseur);
+            return View(entreprise);
         }
 
         // GET: Fournisseurs/Create
@@ -71,36 +70,36 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire")] Fournisseur fournisseur)
+        public ActionResult Create([Bind(Include = "ID, NomEntreprise, NomContact, Mail")] Entreprise entreprise)
         {
             if (ModelState.IsValid)
             {
                 if (int.TryParse(HttpContext.User.Identity.Name, out int tmp))
                 {
-                    fournisseur.UtilisateurID = tmp;
-                    db.Fournisseurs.Add(fournisseur);
+                    entreprise.UtilisateurID = tmp;
+                    entreprise.Type = TypeEntreprise.Fournisseur;
+                    db.Entreprises.Add(entreprise);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Create");
             }
 
-            return View(fournisseur);
+            return View(entreprise);
         }
 
         // GET: Fournisseurs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fournisseur fournisseur = db.Fournisseurs.Find(id);
-            if (fournisseur == null)
-            {
+            
+            Entreprise entreprise = db.Entreprises.Find(id);
+
+            if (entreprise == null)
                 return HttpNotFound();
-            }
-            return View(fournisseur);
+            
+            return View(entreprise);
         }
 
         // POST: Fournisseurs/Edit/5
@@ -108,35 +107,32 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire")] Fournisseur fournisseur)
+        public ActionResult Edit(int id, [Bind(Include = "NomEntreprise, NomContact, Mail")] Entreprise entreprise)
         {
             if (ModelState.IsValid)
             {
-                Fournisseur u = db.Fournisseurs.Find(id);
+                Entreprise u = db.Entreprises.Find(id);
                 //db.Entry(fournisseur).State = EntityState.Modified;
-                u.Nom = fournisseur.Nom;
-                u.SiteWeb = fournisseur.SiteWeb;
-                u.Mail = fournisseur.Mail;
-                u.Commentaire = fournisseur.Commentaire;
+                u.NomEntreprise = entreprise.NomEntreprise;
+                u.Mail = entreprise.Mail;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(fournisseur);
+            return View(entreprise);
         }
 
         // GET: Fournisseurs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fournisseur fournisseur = db.Fournisseurs.Find(id);
-            if (fournisseur == null)
-            {
+            
+            Entreprise entreprise = db.Entreprises.Find(id);
+
+            if (entreprise == null)
                 return HttpNotFound();
-            }
-            return View(fournisseur);
+           
+            return View(entreprise);
         }
 
         // POST: Fournisseurs/Delete/5
@@ -144,8 +140,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Fournisseur fournisseur = db.Fournisseurs.Find(id);
-            db.Fournisseurs.Remove(fournisseur);
+            db.Entreprises.Remove(db.Entreprises.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -153,9 +148,8 @@ namespace WebApplication1.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
+           
             base.Dispose(disposing);
         }
     }

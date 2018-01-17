@@ -33,13 +33,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Utilisateur UtilisateurCourant;
-                if (db.Utilisateurs.Contains(utilisateur))
-                {
-                    UtilisateurCourant = utilisateur;
-                }
-                else
-                    UtilisateurCourant = null;
+                Utilisateur UtilisateurCourant = db.Utilisateurs.Contains(utilisateur) ? utilisateur : null;
             }
             return RedirectToAction("Index");
         }
@@ -48,14 +42,13 @@ namespace WebApplication1.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
+
             if (utilisateur == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(utilisateur);
         }
 
@@ -86,14 +79,13 @@ namespace WebApplication1.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
+
             if (utilisateur == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(utilisateur);
         }
 
@@ -120,14 +112,13 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
+
             if (utilisateur == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(utilisateur);
         }
 
@@ -136,8 +127,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-            db.Utilisateurs.Remove(utilisateur);
+            db.Utilisateurs.Remove(db.Utilisateurs.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -145,9 +135,7 @@ namespace WebApplication1.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

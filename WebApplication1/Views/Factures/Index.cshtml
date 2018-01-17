@@ -5,6 +5,11 @@
     ViewBag.Title = "Facture";
 }
 
+<h2>
+    Facture
+</h2>
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -56,35 +61,35 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Objet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Commentaire)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Monnaie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Articles)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EntrepriseID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Relances)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reglement)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.ID })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monnaie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Articles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntrepriseID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relances)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reglement)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+            </td>
+        </tr>
     }
 
 </table>
@@ -96,11 +101,11 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-    new
-    {
-        page,
-        sortOrder = ViewBag.CurrentSort,
-        currentFilter = ViewBag.CurrentFilter
-    }))
+         new
+         {
+             page,
+             sortOrder = ViewBag.CurrentSort,
+             currentFilter = ViewBag.CurrentFilter
+         }))
     </div>
 }

@@ -8,12 +8,12 @@
 @using (Html.BeginForm())
 {
     <p>Nom:</p>
-    <p>@Html.TextBoxFor(m => m.name, new { @class = "form-control" })</p>
+    <p>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</p>
     <p>Mail:</p>
-    <p>@Html.TextBoxFor(m => m.email, new { @class = "form-control" })</p>
+    <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</p>
 
     <p>Message:</p>
-    <p>@Html.TextAreaFor(m => m.comment, new { @class = "form-control", @cols = 80, @rows = 10 })</p>
+    <p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @cols = 80, @rows = 10 })</p>
     <input type="submit" value="Submit" />
 }
 

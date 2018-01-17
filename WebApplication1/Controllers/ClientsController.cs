@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             db.UtilisateurCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            List<Client> listTrie = new List<Client>();
+            List<Entreprise> listTrie = new List<Entreprise>();
 
             if (searchstring != null)
                 page = 1;
@@ -35,14 +35,14 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
             {
-                foreach(Client c in db.UtilisateurCourant.Clients)
-                    if (c.Nom.ToUpper().Contains(searchstring.ToUpper()))
-                        listTrie.Add(c);
+                foreach(Entreprise e in db.UtilisateurCourant.Entreprises.Where(e => e.Type == TypeEntreprise.CLient))
+                    if (e.NomEntreprise.ToUpper().Contains(searchstring.ToUpper()))
+                        listTrie.Add(e);
 
                 return View(listTrie.ToPagedList(pageNumber, pageSize));
             }
             else
-                return View(db.UtilisateurCourant.Clients.ToPagedList(pageNumber, pageSize));
+                return View(db.UtilisateurCourant.Entreprises.Where(e => e.Type == TypeEntreprise.CLient).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Clients/Details/5
@@ -50,11 +50,11 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Client client = db.Clients.Find(id);
+            Entreprise entreprise = db.Entreprises.Find(id);
 
-            if (client == null) return HttpNotFound();
+            if (entreprise == null) return HttpNotFound();
             
-            return View(client);
+            return View(entreprise);
         }
 
         // GET: Clients/Create
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Nom, SiteWeb, Mail, Commentaire, CodeNAF, SIREN_SIRET")] Client client)
+        public ActionResult Create([Bind(Include = "ID, NomEntreprise, NomContact, Mail")] Entreprise entreprise)
         {
             try
             {
@@ -76,8 +76,9 @@ namespace WebApplication1.Controllers
                 {
                     if (int.TryParse(HttpContext.User.Identity.Name, out int tmp))
                     {
-                        client.UtilisateurID = tmp;
-                        db.Clients.Add(client);
+                        entreprise.UtilisateurID = tmp;
+                        entreprise.Type = TypeEntreprise.CLient;
+                        db.Entreprises.Add(entreprise);
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
@@ -89,19 +90,21 @@ namespace WebApplication1.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
-            return View(client);
+            return View(entreprise);
         }
 
         // GET: Clients/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
-            Client client = db.Clients.Find(id);
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if (client == null) return HttpNotFound();
+            Entreprise entreprise = db.Entreprises.Find(id);
 
-            return View(client);
+            if (entreprise == null)
+                return HttpNotFound();
+
+            return View(entreprise);
         }
 
         // POST: Clients/Edit/5
@@ -109,32 +112,32 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "Nom, SiteWeb, Mail, Commentaire")] Client client)
+        public ActionResult Edit(int id, [Bind(Include = "NomEntreprise, NomContact, Mail")] Entreprise entreprise)
         {
             if (ModelState.IsValid)
             {
                 //db.Entry(client).State = EntityState.Modified;
-                Client u = db.Clients.Find(id);
-                u.Nom = client.Nom;
-                u.SiteWeb = client.SiteWeb;
-                u.Mail = client.Mail;
-                u.Commentaire = client.Commentaire;
+                Entreprise u = db.Entreprises.Find(id);
+                u.NomEntreprise = entreprise.NomEntreprise;
+                u.Mail = entreprise.Mail;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            return View(entreprise);
         }
 
         // GET: Clients/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Client client = db.Clients.Find(id);
+            Entreprise entreprise = db.Entreprises.Find(id);
 
-            if (client == null) return HttpNotFound();
+            if (entreprise == null)
+                return HttpNotFound();
 
-            return View(client);
+            return View(entreprise);
         }
 
         // POST: Clients/Delete/5
@@ -142,7 +145,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.Clients.Remove(db.Clients.Find(id));
+            db.Entreprises.Remove(db.Entreprises.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }

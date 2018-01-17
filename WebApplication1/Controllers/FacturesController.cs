@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
 
             factures.ForEach(facture => {
                 facture.Articles = new Dictionary<Article, int>();
-                db.FactureArticle.Where(FA => FA.FactureID == facture.ID).ToList()
+                db.DonneeArticle.Where(FA => FA.DonneeID == facture.ID).ToList()
                    .ForEach(FA => facture.Articles.Add(db.Articles.Find(FA.ArticleID), FA.Quantite));
             });
 

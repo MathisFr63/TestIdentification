@@ -19,6 +19,8 @@ namespace WebApplication1.Models.Papiers
 
         public int TVA { get; set; }
 
+        public TypeService Type { get; set; }
+
         //public int Prixfinal { get; set; } Prix calculé
 
         //public int TotalTTC { get; set; } Prix calculé

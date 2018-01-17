@@ -18,14 +18,12 @@ namespace WebApplication1.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
         
@@ -40,10 +38,10 @@ namespace WebApplication1.Controllers
 
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(feedback.email, "Feedback Easybill"),
+                From = new MailAddress(feedback.Email, "Feedback Easybill"),
                 IsBodyHtml = true,
-                Subject = "Feedback de " + feedback.name,
-                Body = "Commentaire de : " + feedback.name + "<br/>Email : " + feedback.email + "<br/>Message : " + feedback.comment,
+                Subject = "Feedback de " + feedback.Name,
+                Body = "Commentaire de : " + feedback.Name + "<br/>Email : " + feedback.Email + "<br/>Message : " + feedback.Comment,
                 Priority = MailPriority.High
             };
             mail.To.Add("afiacrocus@gmail.com");
@@ -54,10 +52,10 @@ namespace WebApplication1.Controllers
                 From = new MailAddress("afiacrocus@gmail.com", "Résumé Feedback Easybill"),
                 IsBodyHtml = true,
                 Subject = "Votre Feedback",
-                Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.comment + "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.",
+                Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.Comment + "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.",
                 Priority = MailPriority.High
             };
-            mail2.To.Add(feedback.email);
+            mail2.To.Add(feedback.Email);
             smtp.Send(mail2);
 
             return RedirectToAction("FeedbackSent");

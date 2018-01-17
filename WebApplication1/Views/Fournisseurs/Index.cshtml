@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Entite.Fournisseur>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Entite.Entreprise>
 @using PagedList.Mvc;
 
 @{
@@ -47,26 +47,22 @@
 <br />
 <table class="table">
     <tr>
-        <th>Nom</th>
-        <th>SiteWeb</th>
+        <th>Nom de l'entreprise</th>
+        <th>Nom du contact</th>
         <th>Mail</th>
-        <th>Commentaire</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+                @Html.DisplayFor(modelItem => item.NomEntreprise)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SiteWeb)
+                @Html.DisplayFor(modelItem => item.NomContact)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Commentaire)
             </td>
             <td>
                 <a href=@Url.Action("Edit", "Fournisseurs", new { id = item.ID }) class="btn btn-info">

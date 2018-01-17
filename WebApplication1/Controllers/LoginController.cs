@@ -16,10 +16,8 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
+            if (viewModel.Authentifie)
                 viewModel.Utilisateur = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            }
             return View(viewModel);
         }
 
@@ -49,14 +47,13 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Utilisateurs.Count(u => u.Identifiant == utilisateur.Identifiant) > 0)
-                    ModelState.AddModelError("Identifiant", "Cet identifiant est déjà utilisé");
-                else
+                if (db.Utilisateurs.Count(u => u.Identifiant == utilisateur.Identifiant) == 0)
                 {
                     int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
                     FormsAuthentication.SetAuthCookie(id.ToString(), false);
                     return Redirect("/");
                 }
+                ModelState.AddModelError("Identifiant", "Cet identifiant est déjà utilisé");
             }
             return View(utilisateur);
         }
@@ -89,10 +86,9 @@ namespace WebApplication1.Controllers
         {
             Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Identifiant == utilisateur.Identifiant);
             if (user != null)
-            {
                 if (user.Réponse == utilisateur.Réponse)
                     return View("AfficherMotDePasse", user);
-            }
+
             return View("RecoverMDP");
         }
     }

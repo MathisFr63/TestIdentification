@@ -77,8 +77,10 @@
                 </ul>
 
                 <ul class="list-unstyled CTAs">
-                    <li> #ID user</li>
-                    <li>Nom user</li>
+                    @{var db = new WebApplication1.DAL.ApplicationContext();
+                    <li>
+                        @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                    </li>}
                     <li><a class="btn-primary" href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span> Déconnection</a></li>
                 </ul>
 
@@ -90,26 +92,26 @@
     }
     else
     {
-                <div class="container body-content ">
-                    @RenderBody()
-                </div>
-                }
+        <div class="container body-content ">
+            @RenderBody()
+        </div>
+    }
 
-                @Scripts.Render("~/bundles/bootstrap")
-                @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
-                <!-- jQuery CDN -->
-                <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-                <!-- Bootstrap Js CDN -->
-                <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- jQuery CDN -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $('#sidebarCollapse').on('click', function () {
-                            $('#sidebar').toggleClass('active');
-                        });
-                    });
-                </script>
-    </body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+</body>
 
 </html>

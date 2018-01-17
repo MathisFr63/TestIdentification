@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<WebApplication1.Models.Entite.Client>*@
-@model PagedList.IPagedList<WebApplication1.Models.Entite.Client>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Entite.Entreprise>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -27,9 +26,7 @@
                 </div>
             }
         </form>
-
-
-
+        
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -51,37 +48,24 @@
 <br />
 <table class="table">
     <tr>
-        <th>
-            Nom
-        </th>
-        <th>
-            Site Web
-        </th>
-        <th>
-            Mail
-        </th>
-        <th>
-            Commentaire
-        </th>
+        <th>Nom de l'entreprise</th>
+        <th>Nom du contact</th>
+        <th>Mail</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+                @Html.DisplayFor(modelItem => item.NomEntreprise)
             </td>
             <td>
-                @if (item.SiteWeb.IsEmpty())
-                {
-                    <p id="italie">pas de site web</p>
-                }
-                else
-                {
-                @Html.DisplayFor(modelItem => item.SiteWeb)
-                }
+                @Html.DisplayFor(modelItem => item.NomContact)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            @*<td>
                 @if (item.Mail.IsEmpty())
                 {
                     <p id="italie">pas de mail</p>
@@ -90,17 +74,8 @@
                 {
                     @Html.DisplayFor(modelItem => item.Mail)
                 }
-            </td>
-            <td>
-                @if (item.Commentaire.IsEmpty())
-                {
-                    <p id="italie">pas de commentaire</p>
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.Commentaire)
-                }
-            </td>
+            </td>*@
+
             <td>
                 <a href=@Url.Action("Edit", "Clients", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />
@@ -120,14 +95,14 @@
 
 @if (!Model.PageCount.Equals(1))
 {
-    <div class="text-center" >
-    
-    @Html.PagedListPager(Model, page => Url.Action("Index",
-    new
-    {
-        page,
-        sortOrder = ViewBag.CurrentSort,
-        currentFilter =ViewBag.CurrentFilter
-    }))
+    <div class="text-center">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new
+            {
+                page,
+                sortOrder = ViewBag.CurrentSort,
+                currentFilter = ViewBag.CurrentFilter
+            }))
     </div>
 }

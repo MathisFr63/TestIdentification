@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
             ListDevis.ForEach(devis => { devis.Articles = new Dictionary<Article, int>();
-                                         db.DevisArticle.Where(da => da.DevisID == devis.ID).ToList()
+                                         db.DonneeArticle.Where(da => da.DonneeID == devis.ID).ToList()
                                             .ForEach(da => devis.Articles.Add(db.Articles.Find(da.ArticleID), da.Quantite));
                                        });
 
@@ -61,7 +61,7 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View(new DevisViewModel(db.Clients.ToList(), db.Articles.ToList()));
+            return View(new DevisViewModel(db.Entreprises.ToList(), db.Articles.ToList()));
         }
 
         // POST: Devis/Create
@@ -83,7 +83,7 @@ namespace WebApplication1.Controllers
                 {
                     Article item = db.Articles.ToList()[dvm.ArticlesID[i] - 1];
                     //A modifier plus tard pour pouvoir instancier la quantité en fonction du choix de l'utilisateur
-                    db.DevisArticle.Add(new DevisArticle { DevisID = dvm.Devis.ID, ArticleID = item.ID, Quantite = 1 });
+                    db.DonneeArticle.Add(new DonneeArticle { DonneeID = dvm.Devis.ID, ArticleID = item.ID, Quantite = 1 });
                 }
 
                 //Client client = db.Clients.Find(devis.EntrepriseID);
@@ -158,7 +158,7 @@ namespace WebApplication1.Controllers
             db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 
-            db.DevisArticle.Where(DA => DA.DevisID == id).ToList().ForEach(DA => db.DevisArticle.Remove(DA));
+            db.DonneeArticle.Where(DA => DA.DonneeID == id).ToList().ForEach(DA => db.DonneeArticle.Remove(DA));
             db.SaveChanges();
 
             //Client client = db.Clients.Find(devis.EntrepriseID);
@@ -184,26 +184,9 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            Facture facture = new Facture(db.Devis.Find(id), reglement);
-            db.Factures.Add(facture);
+            db.Factures.Add(new Facture(db.Devis.Find(id), reglement));
             db.SaveChanges();
-
-            foreach(DevisArticle DA in db.DevisArticle)
-            {
-                if (DA.DevisID == id)
-                {
-                    db.DevisArticle.Remove(DA);
-                    db.FactureArticle.Add(new FactureArticle
-                    {
-                        FactureID = facture.ID,
-                        ArticleID = DA.ArticleID,
-                        Quantite  = DA.Quantite
-                    });
-                }
-            }
-
-            db.SaveChanges();
-            return DeleteConfirmed(id);
+            return RedirectToAction("Index");
         }
 
         // GET: Devis/Quantite
@@ -217,7 +200,7 @@ namespace WebApplication1.Controllers
 
             
             devis.Articles = new Dictionary<Article, int>();
-            db.DevisArticle.Where(DA => DA.DevisID == devis.ID).ToList().ForEach(DA => devis.Articles.Add(db.Articles.Find(DA.ArticleID), DA.Quantite));
+            db.DonneeArticle.Where(DA => DA.DonneeID == devis.ID).ToList().ForEach(DA => devis.Articles.Add(db.Articles.Find(DA.ArticleID), DA.Quantite));
 
             return View(new DevisViewModel(devis.Articles.Keys.ToList()));
         }
@@ -231,8 +214,8 @@ namespace WebApplication1.Controllers
             devis.Articles = new Dictionary<Article, int>();
 
             int i = 0;
-            foreach (DevisArticle DA in db.DevisArticle.ToList())
-                if (DA.DevisID == devis.ID)
+            foreach (DonneeArticle DA in db.DonneeArticle.ToList())
+                if (DA.DonneeID == devis.ID)
                     DA.Quantite = dvm.Quantite[i++];
 
             db.SaveChanges();

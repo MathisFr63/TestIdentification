@@ -8,31 +8,31 @@ using WebApplication1.Models.Entite;
 
 namespace WebApplication1.DAL
 {
-    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseAlways<ApplicationContext>
+    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {
             var utilisateurs = new List<Utilisateur>
             {
-                new Utilisateur("MathisFrizot", "root", "Mathis", "FRIZOT", "Mathis.FRIZOT@etu.uca.fr", TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
-                new Utilisateur("FlavioRanchon", "Flavio", "Flavio", "RANCHON", "Flavio.RANCHON@etu.uca.fr", TypeUtilisateur.Enregistré, "Sport", "Football"),
-                new Utilisateur("MathieuRavel", "Mathieu", "Mathieu", "RAVEL", "Mathieu.RAVEL@etu.uca.fr", TypeUtilisateur.Enregistré, "Nom de famille", "Ravel"),
-                new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT"),
-                new Utilisateur("AurelienBerger", "Aurelien", "Aurélien", "BERGER", "Aurelien.BERGER2@etu.uca.fr", TypeUtilisateur.Enregistré, "Nom de famille", "Berger")
+                new Utilisateur("MathisFrizot",   "root",     "Mathis",   "FRIZOT",  "Mathis.FRIZOT@etu.uca.fr",    TypeUtilisateur.Administrateur, "Nom du chat",    "Siboulette"),
+                new Utilisateur("FlavioRanchon",  "Flavio",   "Flavio",   "RANCHON", "Flavio.RANCHON@etu.uca.fr",   TypeUtilisateur.Enregistré,     "Sport",          "Football"),
+                new Utilisateur("MathieuRavel",   "Mathieu",  "Mathieu",  "RAVEL",   "Mathieu.RAVEL@etu.uca.fr",    TypeUtilisateur.Enregistré,     "Nom de famille", "Ravel"),
+                new Utilisateur("AurelienBerger", "Aurelien", "Aurélien", "BERGER",  "Aurelien.BERGER2@etu.uca.fr", TypeUtilisateur.Enregistré,     "Nom de famille", "Berger"),
+                new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
             };
             utilisateurs.ForEach(s => context.Utilisateurs.Add(s));
             context.SaveChanges();
 
-            var clients = new List<Client>
+            var entreprises = new List<Entreprise>
             {
-                new Client{ Nom =   "Fnac", SiteWeb = "https://www.fnac.com/",     Mail = "fnac@mail.com", Commentaire = "La Fnac", UtilisateurID=1},
-                new Client{ Nom = "Amazon", SiteWeb = "https://www.amazon.com/", Mail = "amazon@mail.com", Commentaire = "Start-up", UtilisateurID=1},
-                new Client{ Nom =  "Test1", SiteWeb = "https://www.amazon.com/",  Mail = "Test1@mail.com", Commentaire = "", UtilisateurID=1},
-                new Client{ Nom =  "Test2", SiteWeb = "https://www.amazon.com/",  Mail = "Test2@mail.com", Commentaire = "", UtilisateurID=2},
-                new Client{ Nom =  "Test3", SiteWeb = "https://www.amazon.com/",  Mail = "Test3@mail.com", Commentaire = "", UtilisateurID=3},
-                new Client{ Nom =  "Test4", SiteWeb = "https://www.amazon.com/",  Mail = "Test4@mail.com", Commentaire = "", UtilisateurID=4}
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =   "Fnac",   Mail = "fnac@mail.com", UtilisateurID=1},
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise = "Amazon", Mail = "amazon@mail.com", UtilisateurID=1},
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test1",  Mail = "Test1@mail.com", UtilisateurID=1},
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test2",  Mail = "Test2@mail.com", UtilisateurID=2},
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test3",  Mail = "Test3@mail.com", UtilisateurID=3},
+                new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test4",  Mail = "Test4@mail.com", UtilisateurID=4}
             };
-            clients.ForEach(c => context.Clients.Add(c));
+            entreprises.ForEach(e => context.Entreprises.Add(e));
             context.SaveChanges();
 
             var articles = new List<Article>
