@@ -27,10 +27,22 @@
                 <ul class="list-unstyled components">
                     <li>
                         <a href=@Url.Action("Index", "Home")>
-                            <i class="glyphicon glyphicon-home"></i>Home
+                            <i class="glyphicon glyphicon-home"></i>Accueil
                         </a>
                     </li>
-                    @*<li>@Html.ActionLink("Utilisateurs", "Index", "Utilisateurs")</li>*@
+
+                    @{
+                        var db = new WebApplication1.DAL.ApplicationContext();
+                        if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
+                        {
+                            <li>
+                                <a href=@Url.Action("Index", "Utilisateurs")>
+                                    <i class="glyphicon glyphicon-star"></i>Utilisateurs
+                                </a>
+                            </li>
+                            }
+
+                        }
 
                     <li>
                         <a href="#entrepriseSubmenu" data-toggle="collapse">
@@ -76,11 +88,13 @@
                     </li>
                 </ul>
 
-                <ul class="list-unstyled CTAs">
-                    @{var db = new WebApplication1.DAL.ApplicationContext();
+                <ul class="list-unstyled userinfo">
+                    
                     <li>
-                        @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
-                    </li>}
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
+                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                        </a>
+                    </li>
                     <li><a class="btn-primary" href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span> Déconnection</a></li>
                 </ul>
 

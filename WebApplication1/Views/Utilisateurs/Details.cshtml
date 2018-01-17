@@ -5,8 +5,11 @@
 }
 
 <br />
+
+@if (Model.Type == 0)
+{
 <p>
-    <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
+    <a href=@Url.Action("Index", "Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 
@@ -14,6 +17,7 @@
         <span class="glyphicon glyphicon-pencil" />
     </a>
 </p>
+}
 
 <br />
 <h3 class="">Informations sur @Html.DisplayFor(model => model.Identifiant) :</h3>

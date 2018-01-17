@@ -124,3 +124,7 @@ h3 {
 #italie {
     font-style:italic;
 }
+
+.nom {
+    font-size:15px;
+}

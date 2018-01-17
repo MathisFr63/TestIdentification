@@ -118,13 +118,17 @@ i, span {
             font-size: 1.8em;
         }
 
+    #sidebar .userinfo {
+        padding: 15px;
+    }
+
+
     #sidebar ul.components {
-        padding: 20px 0;
         border-bottom: 1px solid #47748b;
     }
 
     #sidebar ul li a {
-        padding: 10px;
+        padding: 16px;
         font-size: 1.1em;
         display: block;
     }
@@ -266,5 +270,9 @@ a.article, a.article:hover {
 
     #sidebarCollapse span {
         display: none;
+    }
+
+    #sidebar.active .userinfo {
+        padding: 0;
     }
 }
