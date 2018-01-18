@@ -15,7 +15,7 @@
             Date = devis.Date;
             Commentaire = devis.Commentaire;
             Monnaie = devis.Monnaie;
-            Articles = devis.Articles;
+            Produits = devis.Produits;
             EntrepriseID = devis.EntrepriseID;
             UtilisateurID = devis.UtilisateurID;
 
