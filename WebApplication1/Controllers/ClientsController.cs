@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Entite;
 using PagedList;
+using System.Data.Entity.Infrastructure;
 
 namespace WebApplication1.Controllers
 {
@@ -110,20 +111,24 @@ namespace WebApplication1.Controllers
         // POST: Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "NomEntreprise, NomContact, Mail")] Entreprise entreprise)
+        public ActionResult EditPost(int id)
         {
-            if (ModelState.IsValid)
+            var client = db.Entreprises.Find(id);
+            if (TryUpdateModel(client, "", new string[] { "NomEntreprise", "NomContact", "Mail" }))
             {
-                //db.Entry(client).State = EntityState.Modified;
-                Entreprise u = db.Entreprises.Find(id);
-                u.NomEntreprise = entreprise.NomEntreprise;
-                u.Mail = entreprise.Mail;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
+                }
             }
-            return View(entreprise);
+            return View(client);
         }
 
         // GET: Clients/Delete/5

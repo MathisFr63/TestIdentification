@@ -37,9 +37,9 @@ namespace WebApplication1.DAL
 
             var produits = new List<Produit>
             {
-                new Produit{ Nom = "Article 1", Commentaire = "Commentaire 1", PrixHT = 10, Reduction =  0, TVA = 3},
-                new Produit{ Nom = "Article 2", Commentaire = "Commentaire 2", PrixHT = 20, Reduction = 15, TVA = 5},
-                new Produit{ Nom = "Article 3", Commentaire = "Commentaire 3", PrixHT =  5, Reduction =  5, TVA = 0}
+                new Produit{ Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur", PrixHT = 10, Reduction =  0, TVA = 3, Type = TypeService.Bien},
+                new Produit{ Nom = "Opium",    Commentaire = "Latex qu'exsude le pavot somnifère", PrixHT = 20, Reduction = 15, TVA = 5, Type = TypeService.Bien},
+                new Produit{ Nom = "Boules de cristal", Commentaire = "Drago Ball Z",              PrixHT =  5, Reduction =  5, TVA = 0, Type = TypeService.Bien}
             };
             produits.ForEach(p => context.Produits.Add(p));
             context.SaveChanges();

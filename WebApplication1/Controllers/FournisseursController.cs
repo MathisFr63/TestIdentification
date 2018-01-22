@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Entite;
 using PagedList;
+using System.Data.Entity.Infrastructure;
 
 namespace WebApplication1.Controllers
 {
@@ -105,20 +106,24 @@ namespace WebApplication1.Controllers
         // POST: Fournisseurs/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "NomEntreprise, NomContact, Mail")] Entreprise entreprise)
+        public ActionResult EditPost(int id)
         {
-            if (ModelState.IsValid)
+            var fournisseur = db.Entreprises.Find(id);
+            if (TryUpdateModel(fournisseur, "", new string[] { "NomEntreprise", "NomContact", "Mail" }))
             {
-                Entreprise u = db.Entreprises.Find(id);
-                //db.Entry(fournisseur).State = EntityState.Modified;
-                u.NomEntreprise = entreprise.NomEntreprise;
-                u.Mail = entreprise.Mail;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
+                }
             }
-            return View(entreprise);
+            return View(fournisseur);
         }
 
         // GET: Fournisseurs/Delete/5

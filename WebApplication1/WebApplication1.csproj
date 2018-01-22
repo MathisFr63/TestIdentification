@@ -160,6 +160,7 @@
     <Compile Include="Controllers\FournisseursController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Controllers\UtilisateursController.cs" />
     <Compile Include="DAL\ApplicationContext.cs" />
     <Compile Include="DAL\ApplicationInitializer.cs" />
@@ -264,6 +265,11 @@
     <Content Include="Views\Login\AfficherMotDePasse.cshtml" />
     <Content Include="Views\Login\CreateUser.cshtml" />
     <Content Include="Views\Home\FeedbackSent.cshtml" />
+    <Content Include="Views\Produits\Create.cshtml" />
+    <Content Include="Views\Produits\Delete.cshtml" />
+    <Content Include="Views\Produits\Details.cshtml" />
+    <Content Include="Views\Produits\Edit.cshtml" />
+    <Content Include="Views\Produits\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

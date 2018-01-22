@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
 using PagedList;
+using System.Data.Entity.Infrastructure;
 
 namespace WebApplication1.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebApplication1.Controllers
 
             ListDevis.ForEach(devis => { devis.Produits = new Dictionary<Produit, int>();
                                          db.DonneeProduit.Where(DP => DP.DonneeID == devis.ID).ToList()
-                                            .ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.DonneeID), DP.Quantite));
+                                            .ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.ProduitID), DP.Quantite));
                                        });
 
             if (searchstring != null)
@@ -108,26 +109,25 @@ namespace WebApplication1.Controllers
         // POST: Devis/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "Objet, Commentaire, Monnaie, Articles, EntrepriseID")] Devis devis)
+        public ActionResult EditPost(int id)
         {
-            if (ModelState.IsValid)
+            var devis = db.Devis.Find(id);
+            if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie", "Produits", "EntrepriseID" }))
             {
-                //db.Entry(devis).State = EntityState.Modified;
-                Devis u = db.Devis.Find(id);
-                u.Objet = devis.Objet;
-                u.Date = DateTime.Now;
-                u.Valide = true;
-                u.Commentaire = devis.Commentaire;
-                u.Monnaie = devis.Monnaie;
-                u.Produits = devis.Produits;
-                u.EntrepriseID = devis.EntrepriseID;
-
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    devis.Date = DateTime.Now;
+                    devis.Valide = true;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
+                }
             }
-
             return View(devis);
         }
 

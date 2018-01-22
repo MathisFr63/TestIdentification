@@ -3,102 +3,87 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize]
-    public class UtilisateursController : Controller
+    public class ProduitsController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
 
-        // GET: Utilisateurs
-        [Authorize]
+        // GET: Produits
         public ActionResult Index()
         {
-            return View(db.Utilisateurs.ToList());
+            return View(db.Produits.ToList());
         }
 
-        public ActionResult Connection()
-        {
-            return View();
-        }
-
-        public ActionResult SeConnecter([Bind(Include = "Identifiant, MotDePasse")] Utilisateur utilisateur)
-        {
-            if (ModelState.IsValid)
-            {
-                Utilisateur UtilisateurCourant = db.Utilisateurs.Contains(utilisateur) ? utilisateur : null;
-            }
-            return RedirectToAction("Index");
-        }
-
-        // GET: Utilisateurs/Details/5
+        // GET: Produits/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-
-            if (utilisateur == null)
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
                 return HttpNotFound();
-
-            return View(utilisateur);
+            }
+            return View(produit);
         }
 
-        // GET: Utilisateurs/Create
+        // GET: Produits/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Utilisateurs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Produits/Create
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Identifiant, MotDePasse, Nom, Prénom, Mail, Type")] Utilisateur utilisateur)
+        public ActionResult Create([Bind(Include = "ID, Nom, Commentaire, PrixHT, Reduction, TVA, Type")] Produit produit)
         {
             if (ModelState.IsValid)
             {
-                db.Utilisateurs.Add(utilisateur);
+                db.Produits.Add(produit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(utilisateur);
+            return View(produit);
         }
 
-        // GET: Utilisateurs/Edit/5
+        // GET: Produits/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-
-            if (utilisateur == null)
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
                 return HttpNotFound();
-
-            return View(utilisateur);
+            }
+            return View(produit);
         }
 
-        // POST: Utilisateurs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Produits/Edit/5
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int id)
         {
-            var utilisateur = db.Utilisateurs.Find(id);
-            if (TryUpdateModel(utilisateur, "", new string[] { "Identifiant", "MotDePasse" }))
+            var produit = db.Produits.Find(id);
+            if (TryUpdateModel(produit, "", new string[] { "Nom", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
             {
                 try
                 {
@@ -110,29 +95,31 @@ namespace WebApplication1.Controllers
                     ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
                 }
             }
-            return View(utilisateur);
+            return View(produit);
         }
 
-        // GET: Utilisateurs/Delete/5
+        // GET: Produits/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-
-            if (utilisateur == null)
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
                 return HttpNotFound();
-
-            return View(utilisateur);
+            }
+            return View(produit);
         }
 
-        // POST: Utilisateurs/Delete/5
+        // POST: Produits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.Utilisateurs.Remove(db.Utilisateurs.Find(id));
+            Produit produit = db.Produits.Find(id);
+            db.Produits.Remove(produit);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -140,7 +127,9 @@ namespace WebApplication1.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
+            {
                 db.Dispose();
+            }
             base.Dispose(disposing);
         }
     }

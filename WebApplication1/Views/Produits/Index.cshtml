@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication1.Models.Papiers.Produit>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Commentaire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrixHT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reduction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TVA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Commentaire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrixHT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reduction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TVA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
