@@ -100,6 +100,11 @@
 
             </nav>
             <div id="content">
+                <div class="navbar-header" style="margin: 10px;">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <i class="glyphicon glyphicon-align-left"></i>
+                    </button>
+                </div>
                 @RenderBody()
             </div>
         </div>
@@ -123,6 +128,7 @@
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
             });
         });
     </script>
