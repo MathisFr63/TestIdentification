@@ -9,11 +9,10 @@ namespace WebApplication1.Models.Entite
 {
     public class Entreprise
     {
-        public int ID { get; private set; }
+        public int ID { get; set; }
 
-        [ForeignKey("Utilisateur")]
         public int UtilisateurID { get; set; }
-        public Utilisateur Utilisateur { get; set; }
+        public virtual Utilisateur Utilisateur { get; set; }
 
         public TypeEntreprise Type { get; set; }
 

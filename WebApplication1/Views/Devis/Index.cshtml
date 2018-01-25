@@ -57,7 +57,7 @@
         <th>Commentaire</th>
         <th>Monnaie</th>
         <th>Produits</th>
-        <th>Entreprise</th>
+        @*<th>Entreprise</th>*@
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -81,9 +81,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Produits)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.EntrepriseID)
-        </td>
+        </td>*@
         <td>
             <a href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-pencil" />

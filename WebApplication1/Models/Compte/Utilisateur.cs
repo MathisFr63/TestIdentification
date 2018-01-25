@@ -9,7 +9,7 @@ namespace WebApplication1.Models.Compte
 {
     public class Utilisateur
     {
-        public int ID { get; private set; }
+        public int ID { get; set; }
 
         public string Nom { get; set; }
         public string Prénom { get; set; }
@@ -25,7 +25,7 @@ namespace WebApplication1.Models.Compte
         public string Question { get; set; } //Question permettant de retrouver son mot de passe { get; }
         public string Réponse { get; set; } //Réponse à la question permettant de retrouver son mot de passe { get; }
 
-        public virtual ICollection<Entreprise> Entreprises { get; set; }
+        //public virtual ICollection<Entreprise> Entreprises { get; set; }
 
         /// <summary>
         /// Constructeur par défaut d'un utilisateur

@@ -16,6 +16,7 @@ namespace WebApplication1.Controllers
     [Authorize]
     public class FournisseursController : Controller
     {
+        /*        
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Fournisseurs
@@ -157,5 +158,6 @@ namespace WebApplication1.Controllers
            
             base.Dispose(disposing);
         }
+        */
     }
 }

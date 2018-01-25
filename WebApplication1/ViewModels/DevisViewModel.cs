@@ -3,8 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Entite;
+using WebApplication1.Models.Papiers;
 
-namespace WebApplication1.Models.Papiers
+namespace WebApplication1.ViewModels
 {
     public class DevisViewModel
     {

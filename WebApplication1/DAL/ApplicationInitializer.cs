@@ -22,7 +22,7 @@ namespace WebApplication1.DAL
             };
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
             context.SaveChanges();
-
+            /*
             var entreprises = new List<Entreprise>
             {
                 new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =   "Fnac",   Mail = "fnac@mail.com", UtilisateurID=1},
@@ -34,7 +34,7 @@ namespace WebApplication1.DAL
             };
             entreprises.ForEach(e => context.Entreprises.Add(e));
             context.SaveChanges();
-
+            */
             var produits = new List<Produit>
             {
                 new Produit{ Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur", PrixHT = 10, Reduction =  0, TVA = 3, Type = TypeService.Bien},

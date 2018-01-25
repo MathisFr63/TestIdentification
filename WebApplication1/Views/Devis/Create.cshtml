@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Papiers.DevisViewModel
+﻿@model WebApplication1.ViewModels.DevisViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -22,11 +22,11 @@
             <h3>Informations règlement:</h3>
             <hr />
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label>Client</label>
                 @Html.DropDownListFor(model => model.Devis.EntrepriseID, Model.Entreprises, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Devis.EntrepriseID, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label>Objet</label>

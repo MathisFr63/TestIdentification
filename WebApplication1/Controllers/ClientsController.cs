@@ -16,6 +16,7 @@ namespace WebApplication1.Controllers
     [Authorize]
     public class ClientsController : Controller
     {
+        /*
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Clients
@@ -162,5 +163,6 @@ namespace WebApplication1.Controllers
 
             base.Dispose(disposing);
         }
+        */
     }
 }

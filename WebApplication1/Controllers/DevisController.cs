@@ -4,10 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using WebApplication1.DAL;
-using WebApplication1.Models.Papiers;
 using PagedList;
 using System.Data.Entity.Infrastructure;
+using WebApplication1.DAL;
+using WebApplication1.Models.Papiers;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
@@ -62,7 +63,8 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
+            return View(new DevisViewModel(db.Produits.ToList()));
+            //return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
         }
 
         // POST: Devis/Create
