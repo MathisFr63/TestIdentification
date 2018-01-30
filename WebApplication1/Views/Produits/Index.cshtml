@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Vos Produits</h2>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+    </div>
+</nav>
+<br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -53,9 +56,15 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn btn-info">
+                <span class="glyphicon glyphicon-pencil" />
+            </a>
+            <a title="Imprimer" href=@Url.Action("Details", "Produits", new { id = item.ID }) class="btn btn-info">
+                <span class="glyphicon glyphicon-print" />
+            </a>
+            <a title="Supprimer" href=@Url.Action("Delete", "Produits", new { id = item.ID }) class="btn btn-info">
+                <span class="glyphicon glyphicon-trash" />
+            </a>
         </td>
     </tr>
 }

@@ -19,9 +19,9 @@
                 <div class="form-group">
 
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                    <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                    <button type="reset" value="cancel" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default">avancee</button>
+                    <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default">avancee</button>
                 </div>
             }
         </form>
@@ -37,7 +37,7 @@
                     </ul>
                 </li>
                 <li>
-                    <button type="reset" value="cancel" onclick="location.href='@Url.Action("Create", "Devis")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Devis")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -80,13 +80,13 @@
             @Html.DisplayFor(modelItem => item.EntrepriseID)
         </td>*@
         <td>
-            <a href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
+            <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-pencil" />
             </a>
-            <a href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
+            <a title="Imprimer" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-print" />
             </a>
-            <a href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
+            <a title="Supprimer" href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-trash" />
             </a>
         </td>
