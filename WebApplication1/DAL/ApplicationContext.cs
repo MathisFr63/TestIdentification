@@ -24,6 +24,7 @@ namespace WebApplication1.DAL
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
         public DbSet<Facture> Factures { get; set; }
         public DbSet<Produit> Produits { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

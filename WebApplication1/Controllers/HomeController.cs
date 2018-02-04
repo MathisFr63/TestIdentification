@@ -4,12 +4,15 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.DAL;
 using WebApplication1.Models.Compte;
 
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationContext db = new ApplicationContext();
+
         public ActionResult Index()
         {
             return View();
@@ -57,6 +60,10 @@ namespace WebApplication1.Controllers
             };
             mail2.To.Add(feedback.Email);
             smtp.Send(mail2);
+
+            feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+            db.Feedbacks.Add(feedback);
+            db.SaveChanges();
 
             return RedirectToAction("FeedbackSent");
         }

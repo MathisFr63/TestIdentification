@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Devis devis = db.Devis.Find(id);
+            var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
 
@@ -138,7 +138,7 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Devis devis = db.Devis.Find(id);
+            var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
 

@@ -1,0 +1,33 @@
+﻿@model WebApplication1.Models.Compte.Feedback
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<br />
+<p>
+    <a title="Retour" href=@Url.Action("Index","Feedback") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+
+    <a href=@Url.Action("Edit","Feedback",new { id = Model.ID }) class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
+</p>
+
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead">Nom : @Html.DisplayFor(model => model.Name)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.Email)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Message : @Html.DisplayFor(model => model.Comment)</p>
+            </div>
+        </div>
+    </div>
+</div>
+

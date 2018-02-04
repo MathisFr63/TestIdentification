@@ -89,13 +89,22 @@
                 </ul>
 
                 <ul class="list-unstyled userinfo">
-                    
+                    <li>
+                        <a href=@Url.Action("Index", "Feedbacks")>
+                            <i class="glyphicon glyphicon-tags"></i>
+                            Feedbacks
+                        </a>
+                    </li>
                     <li>
                         <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
                             @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
                         </a>
                     </li>
-                    <li><a class="btn-primary" href=@Url.Action("Deconnexion", "Login")><span class="glyphicon glyphicon-off"></span> Déconnection</a></li>
+                    <li>
+                        <a class="btn-primary" href=@Url.Action("Deconnexion", "Login")>
+                            <span class="glyphicon glyphicon-off"></span> Déconnection
+                        </a>
+                    </li>
                 </ul>
 
             </nav>
@@ -133,5 +142,4 @@
         });
     </script>
 </body>
-
 </html>
