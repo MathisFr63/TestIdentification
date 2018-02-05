@@ -21,7 +21,7 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default">avancee</button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                 </div>
             }
         </form>

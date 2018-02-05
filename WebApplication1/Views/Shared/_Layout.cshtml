@@ -73,41 +73,49 @@
                         </a>
                     </li>
 
+                </ul>
+
+                <ul class="list-unstyled components">
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Compte.TypeUtilisateur.Enregistré)
+                    {
                     <li>
                         <a href=@Url.Action("Contact", "Home")>
                             <i class="glyphicon glyphicon-send"></i>
-                            Contact
+                            Feedback
                         </a>
                     </li>
-
+                    }
                     <li>
                         <a href=@Url.Action("About", "Home")>
                             <i class="glyphicon glyphicon-info-sign"></i>
                             A propos
                         </a>
                     </li>
-                </ul>
-
-                <ul class="list-unstyled userinfo">
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
+                    {
                     <li>
                         <a href=@Url.Action("Index", "Feedbacks")>
-                            <i class="glyphicon glyphicon-tags"></i>
+                            <i class="glyphicon glyphicon-envelope"></i>
                             Feedbacks
                         </a>
                     </li>
-                    <li>
-                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
-                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
-                        </a>
-                    </li>
-                    <li>
-                        <a class="btn-primary" href=@Url.Action("Deconnexion", "Login")>
-                            <span class="glyphicon glyphicon-off"></span> Déconnection
-                        </a>
-                    </li>
-                </ul>
+                    }
+                 </ul>
 
-            </nav>
+                    <ul class="list-unstyled userinfo">
+                        <li>
+                            <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
+                                @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn-primary" href=@Url.Action("Deconnexion", "Login")>
+                                <span class="glyphicon glyphicon-off"></span> Déconnection
+                            </a>
+                        </li>
+                    </ul>
+
+</nav>
             <div id="content">
                 <div class="navbar-header" style="margin: 10px;">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
