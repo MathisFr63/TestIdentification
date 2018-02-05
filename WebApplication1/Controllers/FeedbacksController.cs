@@ -84,5 +84,19 @@ namespace WebApplication1.Controllers
 
             base.Dispose(disposing);
         }
+
+        public ActionResult Check(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var feedback = db.Feedbacks.Find(id);
+
+            if (feedback == null) return HttpNotFound();
+            
+            if (feedback.Etat == "En cours") feedback.Etat = "Résolu";
+            else feedback.Etat = "En cours";
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

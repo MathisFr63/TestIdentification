@@ -66,6 +66,9 @@
                 @Html.DisplayFor(modelItem => item.Etat)
             </td>
             <td>
+                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-check" />
+                </a>
                 <a title="Imprimer" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-print" />
                 </a>
