@@ -121,11 +121,45 @@ i, span {
     #sidebar .userinfo {
         padding: 15px;
     }
+        .userinfo li a {
+            border-radius: 15px;
+        }
 
+#sidebar ul.userinfo li a {
+   
+}
 
-    #sidebar ul.components {
-        border-bottom: 1px solid #47748b;
+#sidebar ul.userinfo li a:hover {
+    background-color: #171E26;
+    color: #fff;
+    text-decoration: underline;
+}
+
+#sidebar ul.userinfo li a p.textdeco {
+    font-size: 1.1em;
+    text-align: left;
+    color: white;
+    float:right;
+    position:relative;
+}
+
+#sidebar.active ul.userinfo li a p.textdeco {
+    display:none;
+}
+    #sidebar ul.userinfo li a {
+    border-radius: 60px;
+}
+#sidebar ul.userinfo li a.btn_deco:hover {
+    background-color: #EF0C1A;
+    text-decoration:none;
+}
+    #sidebar.active ul.userinfo li a.btn_deco:hover {
+        background-color : #EF0C1A;
     }
+
+#sidebar ul.components {
+    border-bottom: 1px solid #47748b;
+}
 
     #sidebar ul li a {
         padding: 16px;
@@ -133,7 +167,7 @@ i, span {
         display: block;
     }
 
-        #sidebar ul li a:hover {
+        #sidebar ul.components li a:hover {
             color: #fff;
             background: #EF0C1A;
         }

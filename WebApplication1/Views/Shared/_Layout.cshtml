@@ -118,8 +118,8 @@
                             </a>
                         </li>
                         <li>
-                            <a class="btn-primary" href=@Url.Action("Deconnexion", "Login")>
-                                <span class="glyphicon glyphicon-off"></span> Déconnection
+                            <a class="btn-primary btn_deco" href=@Url.Action("Deconnexion", "Login")>
+                                <span class="glyphicon glyphicon-off"></span> <p class="textdeco">Déconnection</p>
                             </a>
                         </li>
                     </ul>
@@ -137,7 +137,7 @@
     }
     else
     {
-        <div class="container body-content ">
+        <div>
             @RenderBody()
         </div>
     }

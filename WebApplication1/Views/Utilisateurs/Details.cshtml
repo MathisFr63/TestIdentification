@@ -9,10 +9,6 @@
 @if (Model.Type == 0)
 {
 <p>
-    <a href=@Url.Action("Index", "Utilisateurs") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-
     <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID }) class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-pencil" />
     </a>
