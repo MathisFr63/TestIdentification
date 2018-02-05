@@ -179,8 +179,20 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            db.Factures.Add(new Facture(db.Devis.Find(id), reglement));
+            var facture = new Facture(db.Devis.Find(id), reglement);
+            db.Factures.Add(facture);
             db.SaveChanges();
+            /*
+            foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DonneeID == id))
+            {
+                db.DonneeProduit.Add(new DonneeProduit
+                {
+                    DonneeID = facture.ID,
+                    ProduitID = dp.ProduitID,
+                    Quantite = dp.Quantite
+                });
+            }
+            db.SaveChanges();*/
             return RedirectToAction("Index");
         }
 
