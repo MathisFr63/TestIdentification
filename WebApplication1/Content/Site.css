@@ -128,3 +128,8 @@ h3 {
 .nom {
     font-size:15px;
 }
+
+textarea {
+    width:360px;
+    height:75px;
+}
