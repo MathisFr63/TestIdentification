@@ -35,9 +35,6 @@
                         <li><a href="#">Nb factures</a></li>
                     </ul>
                 </li>
-                <li>
-                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Feedbacks")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
-                </li>
             </ul>
         </div>
     </div>
@@ -65,9 +62,6 @@
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                <a title="Modifier" href=@Url.Action("Edit", "Feedbacks", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-pencil" />
-                </a>
                 <a title="Imprimer" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-print" />
                 </a>

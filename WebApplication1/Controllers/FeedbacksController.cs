@@ -54,66 +54,6 @@ namespace WebApplication1.Controllers
             return View(feedback);
         }
 
-        // GET: Feedbacks/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Feedbacks/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Feedback feedback)
-        {
-            if (ModelState.IsValid)
-            {
-                feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
-                db.Feedbacks.Add(feedback);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-
-            return View(feedback);
-        }
-
-        // GET: Feedbacks/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var feedback = db.Feedbacks.Find(id);
-
-            if (feedback == null) return HttpNotFound();
-
-            return View(feedback);
-        }
-
-        // POST: Feedbacks/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int id)
-        {
-            var feedback = db.Feedbacks.Find(id);
-            if (TryUpdateModel(feedback, "", new string[] { "Name", "Email", "Comment" }))
-            {
-                try
-                {   
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (RetryLimitExceededException)
-                {
-                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
-                }
-            }
-            return View(feedback);
-        }
-
         // GET: Feedbacks/Delete/5
         public ActionResult Delete(int? id)
         {
