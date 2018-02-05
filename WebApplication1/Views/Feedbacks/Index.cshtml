@@ -46,6 +46,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Comment</th>
+        <th>Etat</th>
         <th></th>
     </tr>
 
@@ -60,6 +61,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etat)
             </td>
             <td>
                 <a title="Imprimer" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn btn-info">

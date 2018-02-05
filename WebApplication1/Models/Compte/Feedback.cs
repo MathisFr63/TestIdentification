@@ -12,6 +12,8 @@ namespace WebApplication1.Models.Compte
 
         public String Comment { get; set; }
 
+        public String Etat { get; set; }
+
         public int UtilisateurID { get; set; }
     }
 }
