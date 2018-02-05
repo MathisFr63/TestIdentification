@@ -78,8 +78,17 @@
                 <ul class="list-unstyled components">
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Compte.TypeUtilisateur.Enregistré)
                     {
+                        <li>
+                            <a href=@Url.Action("Contact", "Home")>
+                                <i class="glyphicon glyphicon-send"></i>
+                                Contact
+                            </a>
+                        </li>
+                    }
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Compte.TypeUtilisateur.Enregistré)
+                    {
                     <li>
-                        <a href=@Url.Action("Contact", "Home")>
+                        <a href=@Url.Action("Feedbacks", "Home")>
                             <i class="glyphicon glyphicon-send"></i>
                             Feedback
                         </a>
