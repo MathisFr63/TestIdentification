@@ -31,6 +31,7 @@ namespace WebApplication1.Controllers
         }
         
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Contact(Feedback feedback)
         {
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
