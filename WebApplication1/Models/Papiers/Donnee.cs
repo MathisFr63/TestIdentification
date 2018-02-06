@@ -5,6 +5,8 @@ namespace WebApplication1.Models.Papiers
 {
     public class Donnee
     {
+        public int ID { get; private set; }
+
         public string Objet { get; set; }
 
         public DateTime Date { get; set; }
@@ -13,7 +15,7 @@ namespace WebApplication1.Models.Papiers
 
         public TypeMonnaie Monnaie { get; set; }
 
-        public Dictionary<Produit, int> Produits { get; set; }
+        public ICollection<DonneeProduit> Produits { get; set; }
 
         public int EntrepriseID { get; set; }
 

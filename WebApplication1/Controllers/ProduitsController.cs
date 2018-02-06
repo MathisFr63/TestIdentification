@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,9 +18,29 @@ namespace WebApplication1.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Produits
-        public ActionResult Index()
+        public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
-            return View(db.Produits.ToList());
+            var listTrie = new List<Produit>();
+
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var ListDevis = db.Produits.ToList();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                return View(ListDevis.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return View(ListDevis.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Produits/Details/5

@@ -2,8 +2,6 @@
 {
     public class Facture : Donnee
     {
-        public int ID { get; private set; }
-
         public int Relances { get; set; }
 
         public TypeReglement Reglement { get; set; }

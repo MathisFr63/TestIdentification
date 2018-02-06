@@ -12,13 +12,14 @@ namespace WebApplication1.ViewModels
         public Devis Devis { get; set; }
         public List<SelectListItem> Produits { get; set; }
         public List<SelectListItem> Entreprises { get; set; }
+        public IEnumerable<DonneeProduit> DP { get; set; }
         public int[] ProduitsID { get; set; }
         public int[] Quantite { get; set; }
 
 
         public DevisViewModel() {}
 
-        public DevisViewModel(List<Entreprise> listClients, List<Produit> listArticles)
+        public DevisViewModel(List<Entreprise> listClients, List<DonneeProduit> listArticles)
         {
             Produits = new List<SelectListItem>();
             listArticles.ForEach(a => Produits.Add(new SelectListItem { Text = a.Nom, Value = a.ID.ToString() }));
@@ -27,6 +28,11 @@ namespace WebApplication1.ViewModels
             listClients.ForEach(e => Entreprises.Add(new SelectListItem { Text = e.NomEntreprise, Value = e.ID.ToString() }));
         }
 
+        public DevisViewModel(List<DonneeProduit> listArticles)
+        {
+            Produits = new List<SelectListItem>();
+            listArticles.ForEach(a => Produits.Add(new SelectListItem { Text = a.Nom, Value = a.ID.ToString() }));
+        }
         public DevisViewModel(List<Produit> listArticles)
         {
             Produits = new List<SelectListItem>();

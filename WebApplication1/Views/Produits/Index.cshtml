@@ -1,72 +1,89 @@
-﻿@model IEnumerable<WebApplication1.Models.Papiers.Produit>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Produit>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Produits";
 }
 
-<h2>Vos Produits</h2>
+<h2>@ViewBag.Title</h2>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+        <form class="navbar-form navbar-left" method="get" role="search">
+            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+            {
+                <div class="form-group">
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                </div>
+            }
+        </form>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
+                        <li>@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
+                        <li><a href="#">Nb factures</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 <br />
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrixHT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reduction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TVA)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
+        <th>Nom</th>
+        <th>Commentaire</th>
+        <th>PrixHT</th>
+        <th>Reduction</th>
+        <th>TVA</th>
+        <th>Type</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Commentaire)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrixHT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reduction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TVA)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-pencil" />
-            </a>
-            <a title="Imprimer" href=@Url.Action("Details", "Produits", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-print" />
-            </a>
-            <a title="Supprimer" href=@Url.Action("Delete", "Produits", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-trash" />
-            </a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixHT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reduction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TVA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-pencil" />
+                </a>
+                <a title="Imprimer" href=@Url.Action("Details", "Produits", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-print" />
+                </a>
+                <a title="Supprimer" href=@Url.Action("Delete", "Produits", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-trash" />
+                </a>
+            </td>
+        </tr>
+    }
 
 </table>

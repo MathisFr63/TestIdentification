@@ -64,11 +64,11 @@ i, span {
     z-index: 999;
 }
 
-    #sidebar.active {
-        min-width: 100px;
-        max-width: 100px;
-        text-align: center;
-    }
+#sidebar.active {
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
 
         #sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
             display: none;
@@ -83,7 +83,7 @@ i, span {
     }
 
     #sidebar.active ul li a {
-        padding: 20px 10px;
+        padding: 10px 5px;
         text-align: center;
         font-size: 0.85em;
     }
@@ -135,15 +135,16 @@ i, span {
     text-decoration: underline;
 }
 
-#sidebar ul.userinfo li a p.textdeco {
+#sidebar ul.userinfo li a i.textdeco {
     font-size: 1.1em;
+    font-style: normal;
     text-align: left;
     color: white;
     float:right;
     position:relative;
 }
 
-#sidebar.active ul.userinfo li a p.textdeco {
+#sidebar.active ul.userinfo li a i.textdeco {
     display:none;
 }
     #sidebar ul.userinfo li a {
@@ -152,10 +153,15 @@ i, span {
 #sidebar ul.userinfo li a.btn_deco:hover {
     background-color: #EF0C1A;
     text-decoration:none;
+    display:flex;width:100%;justify-content:space-between;
 }
-    #sidebar.active ul.userinfo li a.btn_deco:hover {
-        background-color : #EF0C1A;
-    }
+#sidebar.active ul.userinfo li a.btn_deco e{
+    display:none
+}
+
+#sidebar.active ul.userinfo li a.btn_deco:hover {
+    background-color: #EF0C1A;
+}
 
 #sidebar ul.components {
     border-bottom: 1px solid #47748b;

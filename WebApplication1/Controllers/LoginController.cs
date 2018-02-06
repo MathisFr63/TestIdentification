@@ -50,6 +50,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.Identifiant == utilisateur.Identifiant) == 0)
                 {
+                    utilisateur.Type = TypeUtilisateur.Enregistré;
                     int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
                     FormsAuthentication.SetAuthCookie(id.ToString(), false);
                     return Redirect("/");

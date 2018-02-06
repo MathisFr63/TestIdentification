@@ -58,7 +58,7 @@
                     <li>
                         <a href="#papierSubmenu" data-toggle="collapse">
                             <i class="glyphicon glyphicon-file"></i>
-                            Papiers
+                            Documents
                         </a>
                         <ul class="collapse list-unstyled" id="papierSubmenu">
                             <li><a href=@Url.Action("Index", "Devis")>Devis</a></li>
@@ -111,20 +111,19 @@
                     }
                  </ul>
 
-                    <ul class="list-unstyled userinfo">
-                        <li>
-                            <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
-                                @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn-primary btn_deco" href=@Url.Action("Deconnexion", "Login")>
-                                <span class="glyphicon glyphicon-off"></span> <p class="textdeco">Déconnection</p>
-                            </a>
-                        </li>
-                    </ul>
-
-</nav>
+                <ul class="list-unstyled userinfo">
+                    <li>
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
+                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn-primary btn_deco" href=@Url.Action("Deconnexion", "Login")>
+                            <span class="glyphicon glyphicon-off"></span> <e>Déconnection</e>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             <div id="content">
                 <div class="navbar-header" style="margin: 10px;">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">

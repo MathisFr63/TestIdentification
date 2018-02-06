@@ -74,7 +74,11 @@
             @Html.DisplayFor(modelItem => item.Monnaie)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Produits)
+            @foreach ( var a in item.Produits)
+            {
+                @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                @Html.DisplayFor(elt => a.Quantite); <br />
+            }
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.EntrepriseID)

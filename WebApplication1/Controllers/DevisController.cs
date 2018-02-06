@@ -25,10 +25,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
-            ListDevis.ForEach(devis => { devis.Produits = new Dictionary<Produit, int>();
-                                         db.DonneeProduit.Where(DP => DP.DonneeID == devis.ID).ToList()
-                                            .ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.ProduitID), DP.Quantite));
-                                       });
+            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
 
             if (searchstring != null)
                 page = 1;
@@ -41,9 +38,7 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
                 return View(ListDevis.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            }
             else
                 return View(ListDevis.ToPagedList(pageNumber, pageSize));
         }
@@ -86,7 +81,7 @@ namespace WebApplication1.Controllers
                 {
                     Produit item = db.Produits.ToList()[dvm.ProduitsID[i] - 1];
                     //A modifier plus tard pour pouvoir instancier la quantité en fonction du choix de l'utilisateur
-                    db.DonneeProduit.Add(new DonneeProduit { DonneeID = dvm.Devis.ID, ProduitID = item.ID, Quantite = 1 });
+                    db.DonneeProduit.Add(new DonneeProduit (item) { DevisID = dvm.Devis.ID, Quantite = 1 });
                 }
 
                 db.SaveChanges();
@@ -105,6 +100,8 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
+            devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == id).ToList();
+
             return View(devis);
         }
 
@@ -113,9 +110,18 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int id)
+        public ActionResult EditPost(int id, DevisViewModel dvm)
         {
+            //var r = Request.Form;
             var devis = db.Devis.Find(id);
+            devis.Produits = new List<DonneeProduit>();
+
+            int i = 0;
+            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
+                if (DP.DevisID == devis.ID)
+                    DP.Quantite = dvm.Quantite[i++];
+
+            db.SaveChanges();
             if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie", "Produits", "EntrepriseID" }))
             {
                 try
@@ -150,10 +156,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.Devis.Remove(db.Devis.Find(id));
+            db.DonneeProduit.Where(DP => DP.DevisID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
             db.SaveChanges();
 
-            db.DonneeProduit.Where(DP => DP.DonneeID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
+            db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 
             //Client client = db.Clients.Find(devis.EntrepriseID);
@@ -206,10 +212,9 @@ namespace WebApplication1.Controllers
             if (devis == null) return HttpNotFound();
 
             
-            devis.Produits = new Dictionary<Produit, int>();
-            db.DonneeProduit.Where(DP => DP.DonneeID == devis.ID).ToList().ForEach(DP => devis.Produits.Add(db.Produits.Find(DP.ProduitID), DP.Quantite));
+            devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
 
-            return View(new DevisViewModel(devis.Produits.Keys.ToList()));
+            return View(new DevisViewModel(devis.Produits.ToList()));
         }
 
         // POST: Devis/Quantite
@@ -218,11 +223,11 @@ namespace WebApplication1.Controllers
         public ActionResult Quantite(int id, DevisViewModel dvm)
         {
             Devis devis = db.Devis.Find(id);
-            devis.Produits = new Dictionary<Produit, int>();
+            devis.Produits = new List<DonneeProduit>();
 
             int i = 0;
             foreach (DonneeProduit DP in db.DonneeProduit.ToList())
-                if (DP.DonneeID == devis.ID)
+                if (DP.DevisID == devis.ID)
                     DP.Quantite = dvm.Quantite[i++];
 
             db.SaveChanges();

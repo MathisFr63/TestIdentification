@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Papiers.Devis
+﻿@model WebApplication1.ViewModels.DevisViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -14,18 +14,19 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    var cpt = 0;
 
     <div class="form-horizontal">
         <h4>Devis</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Devis.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Objet, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Devis.Objet, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Objet, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Objet, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Devis.Objet, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -48,20 +49,34 @@
             </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Devis.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Commentaire, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Commentaire, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Devis.Commentaire, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Monnaie, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Monnaie, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Monnaie, "", new { @class = "text-danger" })
+                @Html.EnumDropDownListFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Devis.Monnaie, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <hr />
+
+        @foreach (var item in Model.Produits)
+        {
+            cpt++;
+            <div class="form-group">
+                <label class="control-label col-md-2">@item.Text</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantite[cpt - 1], "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.EntrepriseID, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -74,7 +89,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Sauvegarder" class="btn btn-default btn-primary" />
-                <button type="reset" value="facturer" onclick="location.href='@Url.Action("Facturer", "Devis",new { id = Model.ID })'" class="btn btn-default btn-secondary">Facturer</button>
+                <button type="reset" value="facturer" onclick="location.href='@Url.Action("Facturer", "Devis",new { id = Model.Devis.ID })'" class="btn btn-default btn-secondary">Facturer</button>
             </div>
         </div>
     </div>
