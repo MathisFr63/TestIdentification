@@ -27,13 +27,13 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.Identifiant, viewModel.Utilisateur.MotDePasse);
+                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.Mail, viewModel.motDePasse);
                 if (utilisateur != null)
                 {
                     FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Utilisateur.Identifiant", "Identifiant et/ou mot de passe incorrect(s)");
+                ModelState.AddModelError("Utilisateur.Mail", "Adresse e-mail et/ou mot de passe incorrect(s)");
             }
             return View("Index", viewModel);
         }
@@ -44,20 +44,19 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUser(Utilisateur utilisateur)
+        public ActionResult CreateUser(UtilisateurViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                if (db.Utilisateurs.Count(u => u.Identifiant == utilisateur.Identifiant) == 0)
+                if (db.Utilisateurs.Count(u => u.Mail == vm.Utilisateur.Mail) == 0)
                 {
-                    utilisateur.Type = TypeUtilisateur.Enregistré;
-                    int id = db.AjouterUtilisateur(utilisateur.Identifiant, utilisateur.MotDePasse, utilisateur.Nom, utilisateur.Prénom, utilisateur.Mail, utilisateur.Type, utilisateur.Question, utilisateur.Réponse);
+                    int id = db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
                     FormsAuthentication.SetAuthCookie(id.ToString(), false);
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Identifiant", "Cet identifiant est déjà utilisé");
+                ModelState.AddModelError("Mail", "Cette adresse e-mail est déjà utilisée");
             }
-            return View(utilisateur);
+            return View(vm.Utilisateur);
         }
 
         public ActionResult Deconnexion()
@@ -73,20 +72,20 @@ namespace WebApplication1.Controllers
 
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Identifiant == utilisateur.Identifiant);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
             if (user != null)
             {
                 user.Réponse = "";
                 return View(user);
             }
-            ViewBag.erreur = "Identifiant inconnu";
+            ViewBag.erreur = "Adresse e-mail inconnue";
             return View("RecoverMDP");
         }
 
         [HttpPost]
         public ActionResult VérifierRéponse(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Identifiant == utilisateur.Identifiant);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
             if (user != null)
                 if (user.Réponse == utilisateur.Réponse)
                     return View("AfficherMotDePasse", user);

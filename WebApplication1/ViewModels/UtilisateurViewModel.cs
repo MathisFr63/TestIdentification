@@ -9,6 +9,7 @@ namespace WebApplication1.ViewModels
     public class UtilisateurViewModel
     {
         public Utilisateur Utilisateur { get; set; }
+        public string motDePasse { get; set; }
         public bool Authentifie { get; set; }
     }
 }

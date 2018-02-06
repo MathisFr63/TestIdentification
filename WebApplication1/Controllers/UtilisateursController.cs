@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult SeConnecter([Bind(Include = "Identifiant, MotDePasse")] Utilisateur utilisateur)
+        public ActionResult SeConnecter([Bind(Include = "Mail, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Identifiant, MotDePasse, Nom, Prénom, Mail, Type")] Utilisateur utilisateur)
+        public ActionResult Create([Bind(Include = "ID, Mail, MotDePasse, Nom, Prénom, Type")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditPost(int id)
         {
             var utilisateur = db.Utilisateurs.Find(id);
-            if (TryUpdateModel(utilisateur, "", new string[] { "Identifiant", "MotDePasse" }))
+            if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "MotDePasse" }))
             {
                 try
                 {

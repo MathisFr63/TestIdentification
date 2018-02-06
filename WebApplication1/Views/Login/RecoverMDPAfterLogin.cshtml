@@ -6,7 +6,7 @@
 
 <p>
     <a href=@Url.Action("RecoverMDP","Login") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" /> Identifiant
+        <span class="glyphicon glyphicon-arrow-left" /> Mail
     </a>
 </p>
 <h2>Récupération du mot de passe</h2>
@@ -14,7 +14,7 @@
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        @Html.HiddenFor(m => m.Identifiant)
+        @Html.HiddenFor(m => m.Mail)
         @Html.LabelFor(m => m.Question)
         @Html.DisplayFor(m => m.Question)
     </div>

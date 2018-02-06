@@ -14,9 +14,9 @@
 @using (Html.BeginForm())
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Identifiant)
-        @Html.TextBoxFor(m => m.Identifiant, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Identifiant)
+        @Html.LabelFor(m => m.Mail)
+        @Html.TextBoxFor(m => m.Mail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Mail)
         <p style="color: red;">@ViewBag.erreur</p>
     </div>
     <input type="submit" class="btn btn-secondary" value="Valider" formaction="RecoverMDPAfterLogin" />

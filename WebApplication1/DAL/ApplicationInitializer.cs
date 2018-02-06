@@ -14,11 +14,11 @@ namespace WebApplication1.DAL
         {
             var utilisateurs = new List<Utilisateur>
             {
-                new Utilisateur("MathisFrizot",   "root",     "Mathis",   "FRIZOT",  "Mathis.FRIZOT@etu.uca.fr",    TypeUtilisateur.Administrateur, "Nom du chat",    "Siboulette"),
-                new Utilisateur("FlavioRanchon",  "Flavio",   "Flavio",   "RANCHON", "Flavio.RANCHON@etu.uca.fr",   TypeUtilisateur.Enregistré,     "Sport",          "Football"),
-                new Utilisateur("MathieuRavel",   "Mathieu",  "Mathieu",  "RAVEL",   "Mathieu.RAVEL@etu.uca.fr",    TypeUtilisateur.Enregistré,     "Nom de famille", "Ravel"),
-                new Utilisateur("AurelienBerger", "Aurelien", "Aurélien", "BERGER",  "Aurelien.BERGER2@etu.uca.fr", TypeUtilisateur.Enregistré,     "Nom de famille", "Berger"),
-                new Utilisateur("BernardoPereiraAugusto", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
+                new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root",     "Mathis",   "FRIZOT",  TypeUtilisateur.Administrateur, "Nom du chat",    "Siboulette"),
+                new Utilisateur("Flavio.RANCHON@etu.uca.fr",   "Flavio",   "Flavio",   "RANCHON", TypeUtilisateur.Enregistré,     "Sport",          "Football"),
+                new Utilisateur("Mathieu.RAVEL@etu.uca.fr",    "Mathieu",  "Mathieu",  "RAVEL",   TypeUtilisateur.Enregistré,     "Nom de famille", "Ravel"),
+                new Utilisateur("Aurelien.BERGER2@etu.uca.fr", "Aurelien", "Aurélien", "BERGER",  TypeUtilisateur.Enregistré,     "Nom de famille", "Berger"),
+                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
             };
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
             context.SaveChanges();

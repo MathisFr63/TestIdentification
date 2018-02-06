@@ -31,19 +31,22 @@ namespace WebApplication1.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-        public Utilisateur Authentifier(string identifiant, string motDePasse)
+        public Utilisateur Authentifier(string mail, string motDePasse)
         {
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Identifiant == identifiant && u.MotDePasse == motDePasse);
+            int tmp = motDePasse.GetHashCode();
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Mail == mail && u.MotDePasse == tmp);
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID.ToString() == identifiant);
+            int tmp;
+            int.TryParse(identifiant, out tmp);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == tmp);
         }
 
-        public int AjouterUtilisateur(string identifiant, string motDePasse, string nom, string prenom, string mail, TypeUtilisateur type, string question, string reponse)
+        public int AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
         {
-            Utilisateur user = new Utilisateur(identifiant, motDePasse, nom, prenom, mail, type, question, reponse);
+            Utilisateur user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
             Utilisateurs.Add(user);
             SaveChanges();
             return user.ID;
