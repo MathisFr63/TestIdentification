@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Compte;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
@@ -64,16 +65,15 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID, Mail, MotDePasse, Nom, Prénom, Type")] Utilisateur utilisateur)
+        public ActionResult Create(UtilisateurViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                db.Utilisateurs.Add(utilisateur);
-                db.SaveChanges();
+                db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
                 return RedirectToAction("Index");
             }
 
-            return View(utilisateur);
+            return View(vm.Utilisateur);
         }
 
         // GET: Utilisateurs/Edit/5
