@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditPost(int id)
         {
             var utilisateur = db.Utilisateurs.Find(id);
-            if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "MotDePasse" }))
+            if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "Nom", "Prénom", "Type" }))
             {
                 try
                 {
