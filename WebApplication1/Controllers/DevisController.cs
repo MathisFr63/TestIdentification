@@ -102,7 +102,7 @@ namespace WebApplication1.Controllers
 
             devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == id).ToList();
 
-            return View(devis);
+            return View(new DevisViewModel(devis.Produits.ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -120,8 +120,8 @@ namespace WebApplication1.Controllers
             foreach (DonneeProduit DP in db.DonneeProduit.ToList())
                 if (DP.DevisID == devis.ID)
                     DP.Quantite = dvm.Quantite[i++];
-
             db.SaveChanges();
+
             if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie", "Produits", "EntrepriseID" }))
             {
                 try
