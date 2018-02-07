@@ -65,15 +65,18 @@
         </div>
 
         <hr />
-
+        <h4>Produits</h4>
         @foreach (var item in Model.Produits)
         {
             cpt++;
             <div class="form-group">
                 <label class="control-label col-md-2">@item.Text</label>
-                <div class="col-md-10">
+                <div class="col-md-10" style="display: flex;padding-bottom: 20px;">
                     @Html.EditorFor(model => model.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Quantite[cpt - 1], "", new { @class = "text-danger" })
+                    <a style="margin-left:10px" title="Supprimer" href=@Url.Action("RemoveProduit", "Devis", new { DevisID = Model.Devis.ID, indice = cpt }) class="btn btn-info">
+                        <span class="glyphicon glyphicon-trash" />
+                    </a>
                 </div>
             </div>
         }

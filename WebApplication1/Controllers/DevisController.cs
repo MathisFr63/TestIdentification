@@ -105,6 +105,24 @@ namespace WebApplication1.Controllers
             return View(new DevisViewModel(devis.Produits.ToList()) { Devis = devis });
         }
 
+        public ActionResult RemoveProduit(int DevisID, int indice)
+        {
+            var devis = db.Devis.Find(DevisID);
+
+            int i = 0;
+            List<DonneeProduit> list = new List<DonneeProduit>();
+            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
+            {
+                if (DP.DevisID == devis.ID)
+                {
+                    list.Add(DP);
+                }
+            }
+            db.DonneeProduit.Remove(list[indice-1]);
+            db.SaveChanges();
+            return RedirectToAction("Edit", new { id = DevisID });
+        }
+
         // POST: Devis/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
