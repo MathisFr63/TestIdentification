@@ -4,7 +4,8 @@
 
 @if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
-    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSS dependencies -->
         <link rel="stylesheet" href="~/Content/theme.css">
         <!-- Script: Make my navbar transparent when the document is scrolled to top -->
@@ -21,13 +22,13 @@
                 <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href=@Url.Action("About","Home")>A propos</a>
+                            <a class="nav-link" href="#download">A propos</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#reviews">Contact</a>
                         </li>
                     </ul>
-                    <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Se Connecter</a>
+                    <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
                 </div>
             </div>
         </nav>
@@ -166,7 +167,7 @@
             </div>
         </div>
         <!-- Call to action -->
-        <div class="py-5 section-primary" id="download" style="background-image: url(&quot;~/assets/app/action.jpg&quot;);">
+        <div class="py-5 section-primary" id="download">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 animate-in-left">
