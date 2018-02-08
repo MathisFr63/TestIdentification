@@ -125,7 +125,7 @@ i, span {
             border-radius: 15px;
         }
 
-#sidebar ul.userinfo li a {
+#sidebar ul.userinfo li a:hover {
    
 }
 
@@ -153,7 +153,7 @@ i, span {
 #sidebar ul.userinfo li a.btn_deco:hover {
     background-color: #EF0C1A;
     text-decoration:none;
-    display:flex;width:100%;justify-content:space-between;
+    /*display:flex;width:100%;justify-content:space-between;*/
 }
 #sidebar.active ul.userinfo li a.btn_deco e{
     display:none

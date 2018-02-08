@@ -196,19 +196,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\app\action.jpg" />
+    <Content Include="assets\app\download_android.png" />
+    <Content Include="assets\app\download_ios.png" />
+    <Content Include="assets\app\iphone_cover_light.png" />
+    <Content Include="assets\app\iphone_features_light.png" />
+    <Content Include="assets\app\iphone_ipad_light.png" />
+    <Content Include="assets\app\iphone_isometric_light.png" />
+    <Content Include="assets\app\iphone_side_light.png" />
+    <Content Include="assets\app\reviews_logo_1_light.png" />
+    <Content Include="assets\app\reviews_logo_2_light.png" />
+    <Content Include="assets\app\reviews_logo_3_light.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\sidebar.css" />
+    <Content Include="Content\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\animate-in.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\theme.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -218,8 +232,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\navbar-ontop.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\smooth-scroll.js" />
     <Content Include="Views\Devis\UserControlArticle.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
