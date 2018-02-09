@@ -58,7 +58,7 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View(new DevisViewModel(db.Produits.ToList()));
+            return View(new DevisProduitViewModel());
             //return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
         }
 
