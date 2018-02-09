@@ -7,7 +7,7 @@ using System.Net;
 using System.Web.Mvc;
 using PagedList;
 using WebApplication1.DAL;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Account;
 
 namespace WebApplication1.Controllers
 {
@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             List<Feedback> listTrie = new List<Feedback>();
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
+            var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.compte.ID).ToList();
 
             if (searchstring != null)
                 page = 1;

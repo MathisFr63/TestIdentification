@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Account;
 using WebApplication1.Models.Papiers;
 using WebApplication1.Models.Entite;
 
 namespace WebApplication1.DAL
 {
-    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<ApplicationContext>
+    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseAlways<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {

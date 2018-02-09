@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Account;
 using WebApplication1.Models.Entite;
 using WebApplication1.Models.Papiers;
 
@@ -19,6 +19,7 @@ namespace WebApplication1.DAL
         }
 
         public DbSet<Utilisateur> Utilisateurs { get; set; }
+        public DbSet<Compte> Comptes { get; set; }
         //public DbSet<Entreprise> Entreprises { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
@@ -34,14 +35,17 @@ namespace WebApplication1.DAL
         public Utilisateur Authentifier(string mail, string motDePasse)
         {
             int tmp = motDePasse.GetHashCode();
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Mail == mail && u.MotDePasse == tmp);
+            Compte account = Comptes.FirstOrDefault(c => c.Mail == mail && c.MotDePasse == tmp);
+            if (account == null)
+                return null;
+            return Utilisateurs.FirstOrDefault(u => u.compte.ID == account.ID);
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
             int tmp;
             int.TryParse(identifiant, out tmp);
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == tmp);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.compte.ID == tmp);
         }
 
         public int AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
@@ -49,7 +53,7 @@ namespace WebApplication1.DAL
             Utilisateur user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
             Utilisateurs.Add(user);
             SaveChanges();
-            return user.ID;
+            return user.compte.ID;
         }
     }
 }

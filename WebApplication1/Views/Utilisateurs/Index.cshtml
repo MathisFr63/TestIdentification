@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.Compte.Utilisateur>
+﻿@model IEnumerable<WebApplication1.Models.Account.Utilisateur>
 
 
 @{
@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Mail)
+            @Html.DisplayNameFor(model => model.compte.Mail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MotDePasse)
+            @Html.DisplayNameFor(model => model.compte.MotDePasse)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Prénom)
@@ -32,10 +32,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Mail)
+                @Html.DisplayFor(modelItem => item.compte.Mail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MotDePasse)
+                @Html.DisplayFor(modelItem => item.compte.MotDePasse)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Prénom)

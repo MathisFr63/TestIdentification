@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models.Compte
+﻿namespace WebApplication1.Models.Account
 {
     public enum TypeUtilisateur
     {

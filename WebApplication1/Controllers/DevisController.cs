@@ -58,8 +58,9 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            return View(new DevisProduitViewModel());
+            //return View(new DevisProduitViewModel());
             //return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
+            return View();
         }
 
         // POST: Devis/Create
@@ -71,7 +72,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).compte.ID;
                 dvm.Devis.Date = DateTime.Now;
                 dvm.Devis.Valide = true;
                 db.Devis.Add(dvm.Devis);
@@ -109,7 +110,6 @@ namespace WebApplication1.Controllers
         {
             var devis = db.Devis.Find(DevisID);
 
-            int i = 0;
             List<DonneeProduit> list = new List<DonneeProduit>();
             foreach (DonneeProduit DP in db.DonneeProduit.ToList())
             {

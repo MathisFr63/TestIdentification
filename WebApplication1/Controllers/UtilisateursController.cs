@@ -9,7 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Account;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                db.AjouterUtilisateur(vm.Utilisateur.compte.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
                 return RedirectToAction("Index");
             }
 

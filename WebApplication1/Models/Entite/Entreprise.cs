@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models.Compte;
+using WebApplication1.Models.Account;
 
 namespace WebApplication1.Models.Entite
 {

@@ -76,7 +76,7 @@
                 </ul>
 
                 <ul class="list-unstyled components">
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Compte.TypeUtilisateur.Enregistré)
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
                     {
                         <li>
                             <a href=@Url.Action("Contact", "Home")>
@@ -85,7 +85,7 @@
                             </a>
                         </li>
                     }
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Compte.TypeUtilisateur.Enregistré)
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
                     {
                     <li>
                         <a href=@Url.Action("Feedbacks", "Home")>

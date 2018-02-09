@@ -168,14 +168,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Compte\Feedback.cs" />
+    <Compile Include="Models\Account\Compte.cs" />
+    <Compile Include="Models\Account\Feedback.cs" />
     <Compile Include="Models\Entite\Lieu.cs" />
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
     <Compile Include="Models\Entite\Entreprise.cs" />
     <Compile Include="Models\Papiers\Produit.cs" />
     <Compile Include="Models\Entite\Telephone.cs" />
-    <Compile Include="ViewModels\DevisProduitViewModel.cs" />
     <Compile Include="ViewModels\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\DonneeProduit.cs" />
     <Compile Include="Models\Papiers\Donnee.cs" />
@@ -184,8 +184,8 @@
     <Compile Include="Models\Papiers\TypeReglement.cs" />
     <Compile Include="Models\Papiers\TypeService.cs" />
     <Compile Include="Models\Entite\TypeTelephone.cs" />
-    <Compile Include="Models\Compte\TypeUtilisateur.cs" />
-    <Compile Include="Models\Compte\Utilisateur.cs" />
+    <Compile Include="Models\Account\TypeUtilisateur.cs" />
+    <Compile Include="Models\Account\Utilisateur.cs" />
     <Compile Include="ViewModels\UtilisateurViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Devis\UserControlArticle.ascx.cs">
