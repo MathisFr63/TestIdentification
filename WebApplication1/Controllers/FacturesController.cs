@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == user.compte.ID).ToList();
+            var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 

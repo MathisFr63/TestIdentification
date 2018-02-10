@@ -6,10 +6,12 @@ using System.Web;
 
 namespace WebApplication1.Models.Account
 {
-    public class Compte
+    public class Compte : AdresseMail
+    //public class Compte
     {
-        public int ID { get; set; }
-        public string Mail { get; set; }
+        //public int ID { get; set; }
+
+        //public string Mail { get; set; }
 
         [Display(Name = "Mot de passe")]
         public int MotDePasse { get; set; }

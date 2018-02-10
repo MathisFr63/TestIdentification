@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Models\Account\Compte.cs" />
     <Compile Include="Models\Account\Feedback.cs" />
+    <Compile Include="Models\Account\AdresseMail.cs" />
     <Compile Include="Models\Entite\Lieu.cs" />
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />

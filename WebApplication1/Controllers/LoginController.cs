@@ -27,10 +27,10 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.compte.Mail, viewModel.motDePasse);
+                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.Mail, viewModel.motDePasse);
                 if (utilisateur != null)
                 {
-                    FormsAuthentication.SetAuthCookie(utilisateur.compte.ID.ToString(), false);
+                    FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
                     return Redirect("/");
                 }
                 ModelState.AddModelError("Utilisateur.Mail", "Adresse e-mail et/ou mot de passe incorrect(s)");
@@ -48,9 +48,9 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Utilisateurs.Count(u => u.compte.Mail == vm.Utilisateur.compte.Mail) == 0)
+                if (db.Utilisateurs.Count(u => u.Mail == vm.Utilisateur.Mail) == 0)
                 {
-                    int id = db.AjouterUtilisateur(vm.Utilisateur.compte.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                    int id = db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
                     FormsAuthentication.SetAuthCookie(id.ToString(), false);
                     return Redirect("/");
                 }
@@ -72,7 +72,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.compte.Mail == utilisateur.compte.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
             if (user != null)
             {
                 user.Réponse = "";
@@ -85,7 +85,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult VérifierRéponse(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.compte.Mail == utilisateur.compte.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
             if (user != null)
                 if (user.Réponse == utilisateur.Réponse)
                     return View("AfficherMotDePasse", user);

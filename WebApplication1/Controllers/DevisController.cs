@@ -72,7 +72,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).compte.ID;
+                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
                 dvm.Devis.Date = DateTime.Now;
                 dvm.Devis.Valide = true;
                 db.Devis.Add(dvm.Devis);

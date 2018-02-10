@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             List<Feedback> listTrie = new List<Feedback>();
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.compte.ID).ToList();
+            var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;

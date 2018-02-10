@@ -18,8 +18,9 @@ namespace WebApplication1.DAL
         {
         }
 
-        public DbSet<Utilisateur> Utilisateurs { get; set; }
+        public DbSet<AdresseMail> Mails { get; set; }
         public DbSet<Compte> Comptes { get; set; }
+        public DbSet<Utilisateur> Utilisateurs { get; set; }
         //public DbSet<Entreprise> Entreprises { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
@@ -38,14 +39,14 @@ namespace WebApplication1.DAL
             Compte account = Comptes.FirstOrDefault(c => c.Mail == mail && c.MotDePasse == tmp);
             if (account == null)
                 return null;
-            return Utilisateurs.FirstOrDefault(u => u.compte.ID == account.ID);
+            return Utilisateurs.FirstOrDefault(u => u.ID == account.ID);
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
             int tmp;
             int.TryParse(identifiant, out tmp);
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.compte.ID == tmp);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == tmp);
         }
 
         public int AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
@@ -53,7 +54,7 @@ namespace WebApplication1.DAL
             Utilisateur user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
             Utilisateurs.Add(user);
             SaveChanges();
-            return user.compte.ID;
+            return user.ID;
         }
     }
 }

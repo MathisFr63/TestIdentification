@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
             mail2.To.Add(feedback.Email);
             smtp.Send(mail2);
 
-            feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).compte.ID;
+            feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
             feedback.Etat = "En cours";
             db.Feedbacks.Add(feedback);
             db.SaveChanges();

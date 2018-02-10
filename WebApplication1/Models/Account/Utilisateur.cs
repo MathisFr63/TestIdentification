@@ -7,11 +7,11 @@ using WebApplication1.Models.Entite;
 
 namespace WebApplication1.Models.Account
 {
-    public class Utilisateur
+    public class Utilisateur : Compte
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
 
-        public Compte compte { get; set; }
+        //public Compte compte { get; set; }
 
         public string Nom { get; set; }
         public string Prénom { get; set; }
@@ -40,9 +40,10 @@ namespace WebApplication1.Models.Account
         /// <param name="type">Type d'utilisateur</param>
         /// <param name="question">Question pour retrouver le mot de passe de l'utilisateur</param>
         /// <param name="reponse">Réponse à la question pour retrouver le mot de passe</param>
-        public Utilisateur(string mail, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse)
+        public Utilisateur(string mail, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse) : base(mail, motDePasse)
+        //public Utilisateur(string mail, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse)
         {
-            this.compte = new Compte(mail, motDePasse);
+            //this.compte = new Compte(mail, motDePasse);
             this.Prénom = prenom;
             this.Nom = nom;
             this.Type = type;

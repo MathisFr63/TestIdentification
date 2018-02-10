@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AjouterUtilisateur(vm.Utilisateur.compte.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
                 return RedirectToAction("Index");
             }
 
