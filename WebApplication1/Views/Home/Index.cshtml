@@ -40,15 +40,9 @@
                         <h1 class="display-1">Easy Bill</h1>
                         <p class="lead">Votre application de gestion commerciale.</p>
                         <div class="row mt-5">
+                            <div class="col-6 col-lg-4"></div>
                             <div class="col-6 col-lg-4">
-                                <a href="#">
-                                    <img class="center-block img-fluid d-block shadowed" src="~/assets/app/download_android.png">
-                                </a>
-                            </div>
-                            <div class="col-6 col-lg-4">
-                                <a href="#">
-                                    <img class="center-block img-fluid d-block shadowed" src="~/assets/app/download_ios.png">
-                                </a>
+                                <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
                             </div>
                         </div>
                     </div>
@@ -197,12 +191,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                        <p class="lead">Sign up to our newsletter for the latest news</p>
+                        <p class="lead">Inscrivez-vous à notre newsletter pour recevoir les dernières news.</p>
                         <form class="form-inline">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Your e-mail here">
+                                <input type="email" class="form-control" placeholder="Votre mail">
                             </div>
-                            <button type="submit" class="btn ml-2 btn-secondary">Subscribe</button>
+                            <button type="submit" class="btn ml-2 btn-secondary">S'abonner</button>
                         </form>
                     </div>
                 </div>
