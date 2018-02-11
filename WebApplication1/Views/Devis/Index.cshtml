@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<WebApplication1.Models.Papiers.Devis>*@
-@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
+﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
 @using PagedList.Mvc;
 
 @{
@@ -52,7 +51,6 @@
         <th>Commentaire</th>
         <th>Monnaie</th>
         <th>Produits</th>
-        @*<th>Entreprise</th>*@
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -80,9 +78,6 @@
                 @Html.DisplayFor(elt => a.Quantite); <br />
             }
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.EntrepriseID)
-        </td>*@
         <td>
             <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
                 <span class="glyphicon glyphicon-pencil" />

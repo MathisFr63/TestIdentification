@@ -70,12 +70,11 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var keys = Request.Form.AllKeys;
                 var devis = new Devis
                 {
-                    Objet = keys[1],
-                    Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), Request.Form.GetValues(keys[2])[0]),
-                    Commentaire = keys[3],                
+                    Objet = Request.Form["Devis.Objet"],
+                    Monnaie = (TypeMonnaie) Enum.Parse(typeof(TypeMonnaie), Request.Form["Devis.Monnaie"]),
+                    Commentaire = Request.Form["Devis.Commentaire"],
                     UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
                     Date = DateTime.Now,
                     Valide = true
@@ -83,6 +82,7 @@ namespace WebApplication1.Controllers
                 db.Devis.Add(devis);
                 db.SaveChanges();
 
+                var keys = Request.Form.AllKeys;
                 for (int i = 4; i < keys.Length; i++)
                 {
                     var name = keys[i];
@@ -105,26 +105,7 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == id).ToList();
-
-            return View(new DevisViewModel(devis.Produits.ToList()) { Devis = devis });
-        }
-
-        public ActionResult RemoveProduit(int DevisID, int indice)
-        {
-            var devis = db.Devis.Find(DevisID);
-
-            List<DonneeProduit> list = new List<DonneeProduit>();
-            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
-            {
-                if (DP.DevisID == devis.ID)
-                {
-                    list.Add(DP);
-                }
-            }
-            db.DonneeProduit.Remove(list[indice-1]);
-            db.SaveChanges();
-            return RedirectToAction("Edit", new { id = DevisID });
+            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()));
         }
 
         // POST: Devis/Edit/5
@@ -207,19 +188,15 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            db.Factures.Add(new Facture(db.Devis.Find(id), reglement));
+            var facture = new Facture(db.Devis.Find(id), reglement);
+            db.Factures.Add(facture);
             db.SaveChanges();
-            /*
-            foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DonneeID == id))
+            
+            foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DevisID == id))
             {
-                db.DonneeProduit.Add(new DonneeProduit
-                {
-                    DonneeID = facture.ID,
-                    ProduitID = dp.ProduitID,
-                    Quantite = dp.Quantite
-                });
+                db.DonneeProduit.Add(new DonneeProduit (dp, facture.ID));
             }
-            db.SaveChanges();*/
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

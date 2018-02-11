@@ -42,5 +42,17 @@
             DevisID = id;
             Quantite = quantite;
         }
+
+        public DonneeProduit(DonneeProduit dp, int id) : this()
+        {
+            Nom = dp.Nom;
+            Commentaire = dp.Commentaire;
+            PrixHT = dp.PrixHT;
+            Reduction = dp.Reduction;
+            TVA = dp.TVA;
+            Type = dp.Type;
+            Quantite = dp.Quantite;
+            FactureID = id;
+        }
     }
 }

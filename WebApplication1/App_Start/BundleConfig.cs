@@ -21,7 +21,15 @@ namespace WebApplication1
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/site.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/site").Include(
+                      "~/Scripts/site.js"));
+            //<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+            //<script type="text/javascript" src="~/Scripts/Site.js"></script>
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -1,4 +1,4 @@
-﻿@model WebApplication1.ViewModels.DevisViewModel
+﻿@model WebApplication1.ViewModels.DevisProduitViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -30,24 +30,6 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Valide, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.Valide)
-                        @Html.ValidationMessageFor(model => model.Valide, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -65,29 +47,54 @@
         </div>
 
         <hr />
-        <h4>Produits</h4>
-        @foreach (var item in Model.Produits)
-        {
-            cpt++;
-            <div class="form-group">
-                <label class="control-label col-md-2">@item.Text</label>
-                <div class="col-md-10" style="display: flex;padding-bottom: 20px;">
-                    @Html.EditorFor(model => model.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Quantite[cpt - 1], "", new { @class = "text-danger" })
-                    <a style="margin-left:10px" title="Supprimer" href=@Url.Action("RemoveProduit", "Devis", new { DevisID = Model.Devis.ID, indice = cpt }) class="btn btn-info">
-                        <span class="glyphicon glyphicon-trash" />
-                    </a>
-                </div>
+        <h3>Informations articles:</h3>
+
+        <div class="multiselect">
+            <div class="selectBox" onclick="showCheckboxes()">
+                <select>
+                    <option>Select an option</option>
+                </select>
+                <div class="overSelect"></div>
             </div>
+            <div class="checkboxes edit">
+                @foreach (var item in Model.Produits)
+                {
+                    <label>
+                        <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
+                    </label>
+                }
+            </div>
+        </div>
+
+        <div id="articles"></div>
+        @foreach (var item in Model.ProduitsSelected)
+        {
+            <script type="text/javascript">
+                toggleArticle(@item.Nom);
+            </script>
         }
+        @*@foreach (var item in Model.Produits)
+            {
+                cpt++;
+                <div class="form-group">
+                    <label class="control-label col-md-2">@item.Text</label>
+                    <div class="col-md-10" style="display: flex;padding-bottom: 20px;">
+                        @Html.EditorFor(model => model.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantite[cpt - 1], "", new { @class = "text-danger" })
+                        <a style="margin-left:10px" title="Supprimer" href=@Url.Action("RemoveProduit", "Devis", new { DevisID = Model.Devis.ID, indice = cpt }) class="btn btn-info">
+                            <span class="glyphicon glyphicon-trash" />
+                        </a>
+                    </div>
+                </div>
+            }*@
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.EntrepriseID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EntrepriseID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EntrepriseID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.EntrepriseID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EntrepriseID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EntrepriseID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

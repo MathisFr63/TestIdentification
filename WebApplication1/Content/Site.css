@@ -63,11 +63,11 @@ input, select, textarea {
     border-color: #171E26;
 }
 
-    .btn-secondary:hover {
-        color: #ffffff;
-        background-color: #171E26;
-        border-color: #171E26;
-    }
+.btn-secondary:hover {
+    color: #ffffff;
+    background-color: #171E26;
+    border-color: #171E26;
+}
 
 .btn-primary {
     color: white;
@@ -156,15 +156,19 @@ textarea {
     bottom: 0;
 }
 
-#checkboxes {
+.checkboxes {
     display: none;
     border: 1px #dadada solid;
 }
 
-#checkboxes label {
+.edit{
     display: block;
 }
 
-#checkboxes label:hover {
+.checkboxes label {
+    display: block;
+}
+
+.checkboxes label:hover {
     background-color: #1e90ff;
 }

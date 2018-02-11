@@ -48,7 +48,6 @@
         <th>Commentaire</th>
         <th>Monnaie</th>
         <th>Produits</th>
-        <th>EntrepriseID</th>
         <th>Relances</th>
         <th>Reglement</th>
         <th></th>
@@ -70,10 +69,11 @@
                 @Html.DisplayFor(modelItem => item.Monnaie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Produits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EntrepriseID)
+                @foreach (var a in item.Produits)
+                {
+                        @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                        @Html.DisplayFor(elt => a.Quantite); <br />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Relances)
