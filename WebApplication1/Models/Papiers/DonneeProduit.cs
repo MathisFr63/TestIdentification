@@ -27,7 +27,7 @@
         {
         }
 
-        public DonneeProduit(Produit produit)
+        public DonneeProduit(Produit produit) : this()
         {
             Nom = produit.Nom;
             Commentaire = produit.Commentaire;
@@ -35,6 +35,12 @@
             Reduction = produit.Reduction;
             TVA = produit.TVA;
             Type = produit.Type;
+        }
+
+        public DonneeProduit(Produit produit, int id, int quantite) : this(produit)
+        {
+            DevisID = id;
+            Quantite = quantite;
         }
     }
 }

@@ -116,31 +116,25 @@
             <h3>Informations articles:</h3>
             <hr />
 
-            <input type="button" value="PLUS" onclick="changer()">
 
-            <div id="message">
-                <table class="table" id="a">
-                    <tr>
-                        <td>
-                            <label>Articles</label>
-                            <br />
-                            @Html.DropDownListFor(m => m.Produits, Model.Produits, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Produits, "", new { @class = "text-danger" })
-                        </td>
-                        <td>
-                            <label>Quantité</label>
-                            <br />
-                            @Html.EditorFor(model => model.Quantite[0], new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Quantite[0], "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                </table>
+            <div class="multiselect">
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select>
+                        <option>Select an option</option>
+                    </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div id="checkboxes">
+                    @foreach (var item in Model.Produits)
+                    {
+                        <label>
+                            <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
+                        </label>
+                    }
+                </div>
             </div>
-            <script type="text/javascript">
-                function changer() {
-                    $("#a").clone().appendTo("#message");
-                }
-            </script>
+
+            <div id="articles"></div>
 
             <br />
             <div class="form-group">
@@ -152,3 +146,4 @@
     </div>
 }
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="~/Scripts/Site.js"></script>

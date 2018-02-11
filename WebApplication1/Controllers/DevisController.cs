@@ -58,9 +58,7 @@ namespace WebApplication1.Controllers
         // GET: Devis/Create
         public ActionResult Create()
         {
-            //return View(new DevisProduitViewModel());
-            //return View(new DevisViewModel(db.Entreprises.ToList(), db.Produits.ToList()));
-            return View();
+            return View(new DevisProduitViewModel());
         }
 
         // POST: Devis/Create
@@ -68,28 +66,34 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DevisViewModel dvm)
+        public ActionResult Create(DevisProduitViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                dvm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
-                dvm.Devis.Date = DateTime.Now;
-                dvm.Devis.Valide = true;
-                db.Devis.Add(dvm.Devis);
-                db.SaveChanges();
-
-                for (int i = 0; i < dvm.ProduitsID.Length; i++)
+                var keys = Request.Form.AllKeys;
+                var devis = new Devis
                 {
-                    Produit item = db.Produits.ToList()[dvm.ProduitsID[i] - 1];
-                    //A modifier plus tard pour pouvoir instancier la quantité en fonction du choix de l'utilisateur
-                    db.DonneeProduit.Add(new DonneeProduit (item) { DevisID = dvm.Devis.ID, Quantite = 1 });
-                }
-
+                    Objet = keys[1],
+                    Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), Request.Form.GetValues(keys[2])[0]),
+                    Commentaire = keys[3],                
+                    UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                    Date = DateTime.Now,
+                    Valide = true
+                };
+                db.Devis.Add(devis);
                 db.SaveChanges();
-                return RedirectToAction("Quantite", new { id = dvm.Devis.ID });
-            }
 
-            return View(dvm);
+                for (int i = 4; i < keys.Length; i++)
+                {
+                    var name = keys[i];
+                    var produit = db.Produits.First(p => p.Nom == name);
+
+                    db.DonneeProduit.Add(new DonneeProduit(produit, devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            return View(vm);
         }
 
         // GET: Devis/Edit/5
@@ -203,8 +207,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            var facture = new Facture(db.Devis.Find(id), reglement);
-            db.Factures.Add(facture);
+            db.Factures.Add(new Facture(db.Devis.Find(id), reglement));
             db.SaveChanges();
             /*
             foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DonneeID == id))
@@ -217,38 +220,6 @@ namespace WebApplication1.Controllers
                 });
             }
             db.SaveChanges();*/
-            return RedirectToAction("Index");
-        }
-
-        // GET: Devis/Quantite
-        public ActionResult Quantite(int? id)
-        {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Devis devis = db.Devis.Find(id);
-
-            if (devis == null) return HttpNotFound();
-
-            
-            devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
-
-            return View(new DevisViewModel(devis.Produits.ToList()));
-        }
-
-        // POST: Devis/Quantite
-        [HttpPost, ActionName("Quantite")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Quantite(int id, DevisViewModel dvm)
-        {
-            Devis devis = db.Devis.Find(id);
-            devis.Produits = new List<DonneeProduit>();
-
-            int i = 0;
-            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
-                if (DP.DevisID == devis.ID)
-                    DP.Quantite = dvm.Quantite[i++];
-
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

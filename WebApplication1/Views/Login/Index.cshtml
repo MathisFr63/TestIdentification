@@ -26,14 +26,36 @@ else
                         <h1 class="text-gray-dark">Connection</h1>
                         <p class="lead mb-4">Vous êtes déjà client ?</p>
                         <div class="form-group">
+<<<<<<< .mine
+                            @Html.LabelFor(m => m.Utilisateur.Compte.Mail)
+                            @Html.TextBoxFor(m => m.Utilisateur.Compte.Mail, new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Utilisateur.Compte.Mail, "", new { @class = "text-danger" })
+||||||| .r95
+                            @Html.LabelFor(m => m.Utilisateur.compte.Mail)
+                            @Html.TextBoxFor(m => m.Utilisateur.compte.Mail, new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(m => m.Utilisateur.compte.Mail, "", new { @class = "text-danger" })
+=======
                             @Html.LabelFor(m => m.Utilisateur.Mail)
                             @Html.TextBoxFor(m => m.Utilisateur.Mail, new { @class = "form-control", @required = "required" })
                             @Html.ValidationMessageFor(m => m.Utilisateur.Mail, "", new { @class = "text-danger" })
+>>>>>>> .r98
                         </div>
                         <div class="form-group">
+<<<<<<< .mine
+                            @Html.LabelFor(m => m.Utilisateur.Compte.MotDePasse)
+||||||| .r95
+                            @Html.LabelFor(m => m.Utilisateur.compte.MotDePasse)
+=======
                             @Html.LabelFor(m => m.Utilisateur.MotDePasse)
+>>>>>>> .r98
                             @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
+<<<<<<< .mine
+                            @Html.ValidationMessageFor(m => m.Utilisateur.Compte.MotDePasse)
+||||||| .r95
+                            @Html.ValidationMessageFor(m => m.Utilisateur.compte.MotDePasse)
+=======
                             @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
+>>>>>>> .r98
                         </div>
                         @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3" })
 
@@ -71,13 +93,13 @@ else
                         <form>
                             <div class="form-group">
                                 <label for="InputName">Votre mail</label>
-                                @Html.TextBoxFor(m => m.Utilisateur.compte.Mail, new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Utilisateur.compte.Mail, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.Utilisateur.Mail, new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.Utilisateur.Mail, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label for="InputEmail1">Votre mot de passe</label>
                                 @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Utilisateur.compte.MotDePasse)
+                                @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
                             </div>
                             @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />
                             <button type="submit" class="btn btn-secondary my-2">Connection</button>

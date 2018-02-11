@@ -6,10 +6,10 @@ using System.Web;
 
 namespace WebApplication1.Models.Account
 {
-    public class Compte : AdresseMail
+    public class Compte //: AdresseMail
     //public class Compte
     {
-        //public int ID { get; set; }
+        public int ID { get; set; }
 
         //public string Mail { get; set; }
 
@@ -18,7 +18,7 @@ namespace WebApplication1.Models.Account
 
         public Compte(string mail, string motDePasse)
         {
-            this.Mail = mail;
+            //this.Mail = mail;
             this.MotDePasse = motDePasse.GetHashCode();
         }
 

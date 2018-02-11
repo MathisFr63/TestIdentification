@@ -170,13 +170,13 @@
     </Compile>
     <Compile Include="Models\Account\Compte.cs" />
     <Compile Include="Models\Account\Feedback.cs" />
-    <Compile Include="Models\Account\AdresseMail.cs" />
     <Compile Include="Models\Entite\Lieu.cs" />
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
     <Compile Include="Models\Entite\Entreprise.cs" />
     <Compile Include="Models\Papiers\Produit.cs" />
     <Compile Include="Models\Entite\Telephone.cs" />
+    <Compile Include="ViewModels\DevisProduitViewModel.cs" />
     <Compile Include="ViewModels\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\DonneeProduit.cs" />
     <Compile Include="Models\Papiers\Donnee.cs" />
@@ -237,6 +237,7 @@
     <Content Include="Scripts\navbar-ontop.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\smooth-scroll.js" />
     <Content Include="Views\Devis\UserControlArticle.ascx" />
     <Content Include="Web.config" />
@@ -251,7 +252,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Feedbacks.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Create.cshtml" />
     <Content Include="Views\Utilisateurs\Delete.cshtml" />
@@ -277,7 +277,6 @@
     <Content Include="Views\Devis\Facturer.cshtml" />
     <Content Include="Views\Factures\Details.cshtml" />
     <Content Include="Views\Factures\Index.cshtml" />
-    <Content Include="Views\Devis\Quantite.cshtml" />
     <Content Include="Views\Login\RecoverMDP.cshtml" />
     <Content Include="Views\Login\RecoverMDPAfterLogin.cshtml" />
     <Content Include="Views\Login\AfficherMotDePasse.cshtml" />
