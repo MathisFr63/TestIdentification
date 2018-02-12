@@ -105,7 +105,7 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()));
+            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -115,17 +115,26 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int id, DevisViewModel dvm)
         {
-            //var r = Request.Form;
             var devis = db.Devis.Find(id);
             devis.Produits = new List<DonneeProduit>();
 
-            int i = 0;
-            foreach (DonneeProduit DP in db.DonneeProduit.ToList())
-                if (DP.DevisID == devis.ID)
-                    DP.Quantite = dvm.Quantite[i++];
-            db.SaveChanges();
+            var donneeProduit = db.DonneeProduit;
+            foreach (var item in donneeProduit.Where(dp => dp.DevisID == id))
+            {
+                donneeProduit.Remove(item);
+            }
 
-            if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie", "Produits", "EntrepriseID" }))
+            var keys = Request.Form.AllKeys;
+            for (int i = 5; i < keys.Length; i++)
+            {
+                var name = keys[i];
+                var produit = db.Produits.First(p => p.Nom == name);
+
+                db.DonneeProduit.Add(new DonneeProduit(produit, devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
+                db.SaveChanges();
+            }
+
+            if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie" }))
             {
                 try
                 {

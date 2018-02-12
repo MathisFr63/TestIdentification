@@ -56,22 +56,26 @@
                 </select>
                 <div class="overSelect"></div>
             </div>
-            <div class="checkboxes edit">
+            <div id="checkboxes" style="display: block;">
                 @foreach (var item in Model.Produits)
                 {
                     <label>
-                        <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
+                        <input type="checkbox" onclick="toggleArticle('@item.Text')" id='@item.Text input' />@item.Text
                     </label>
                 }
             </div>
         </div>
 
         <div id="articles"></div>
+
         @foreach (var item in Model.ProduitsSelected)
         {
-            <script type="text/javascript">
-                toggleArticle(@item.Nom);
-            </script>
+            <text>
+                <script type="text/javascript">
+                    toggleArticleEdit("@item.Nom", @item.Quantite);
+                    document.getElementById("@item.Nom input").checked = true;
+                </script>
+            </text>
         }
 
         <div class="form-group">
