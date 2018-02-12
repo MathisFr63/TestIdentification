@@ -1,7 +1,7 @@
 @model WebApplication1.Models.Account.Feedback
 
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Feedback";
 }
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -12,19 +12,38 @@
     @Html.AntiForgeryToken()
     <div>
         <br />
-        <div style="display:flex;width:100%;justify-content:space-around">
-            <div>
-                <p>Nom:</p>
-                <p>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @required = "required" })</p>
-                <p>Mail:</p>
-                <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", type = "email" })</p>
-                <p>Message:</p>
-                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @required = "required", @cols = 80, @rows = 10, @style = "margin: 0px; height: 219px; width: 317px;" })
-                <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
-            </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3309.765019177911!2d3.1008611737627265!3d45.76779241986469!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f71bf527f9a57b%3A0x2df926ae3d326c8b!2sC4C+Consulting!5e0!3m2!1sfr!2sfr!4v1510239009277" width="600" height="450" frameborder="0" style="border:0" allowfullscreen=""></iframe>
-        </div>
+        <p>Nom:</p>
+        <p>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @required = "required" })</p>
+        <p>Mail:</p>
+        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", type = "email" })</p>
+
+        <p></p>
+
+        <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @required = "required", @cols = 80, @rows = 10 })</p>-->
+        @Html.TextAreaFor(m => m.Comment)
+        <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
     </div>
 }
 
 <script src="~/scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
+-
+<script type="text/javascript">
+    // Initialize your tinyMCE Editor with your preferred options
+    tinyMCE.init({
+        // General options
+        mode: "textareas",
+        theme: "modern",
+        toolbar: 'styleselect | bold italic underline | alignleft aligncenter alignright | undo redo | outdent indent code',
+        menubar: false,
+        height: 200,
+        // Theme options
+        theme_advanced_buttons1: "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+        theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+        theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+        theme_advanced_buttons4: "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_toolbar_align: "left",
+        theme_advanced_statusbar_location: "bottom",
+        theme_advanced_resizing: true,
+    });
+</script> 

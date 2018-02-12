@@ -8,7 +8,7 @@ using WebApplication1.Models.Entite;
 
 namespace WebApplication1.DAL
 {
-    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseAlways<ApplicationContext>
+    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {
@@ -21,9 +21,8 @@ namespace WebApplication1.DAL
                 new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "Bernardo", "PEREIRA AUGUSTO", TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
             };
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
-            context.SaveChanges();
-            /*
-            var entreprises = new List<Entreprise>
+
+            /*var entreprises = new List<Entreprise>
             {
                 new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =   "Fnac",   Mail = "fnac@mail.com", UtilisateurID=1},
                 new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise = "Amazon", Mail = "amazon@mail.com", UtilisateurID=1},
@@ -32,9 +31,8 @@ namespace WebApplication1.DAL
                 new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test3",  Mail = "Test3@mail.com", UtilisateurID=3},
                 new Entreprise{ Type = TypeEntreprise.CLient, NomEntreprise =  "Test4",  Mail = "Test4@mail.com", UtilisateurID=4}
             };
-            entreprises.ForEach(e => context.Entreprises.Add(e));
-            context.SaveChanges();
-            */
+            entreprises.ForEach(e => context.Entreprises.Add(e));*/
+
             var produits = new List<Produit>
             {
                 new Produit{ Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur", PrixHT = 10, Reduction =  0, TVA = 3, Type = TypeService.Bien},
@@ -42,6 +40,13 @@ namespace WebApplication1.DAL
                 new Produit{ Nom = "Boules de cristal", Commentaire = "Drago Ball Z",              PrixHT =  5, Reduction =  5, TVA = 0, Type = TypeService.Bien}
             };
             produits.ForEach(p => context.Produits.Add(p));
+
+            var feedbacks = new List<Feedback>
+            {
+                new Feedback{Email = "Mathis.FRIZOT@etu.uca.fr", Comment = "Problème lors de l'affichage des feedbacks, je ne les vois pas apparaître !", UtilisateurID = 1, Name = "Problèmes Feedbacks", Etat = "En cours"}
+            };
+            feedbacks.ForEach(f => context.Feedbacks.Add(f));
+
             context.SaveChanges();
         }
     }
