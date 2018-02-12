@@ -73,28 +73,6 @@
                 toggleArticle(@item.Nom);
             </script>
         }
-        @*@foreach (var item in Model.Produits)
-            {
-                cpt++;
-                <div class="form-group">
-                    <label class="control-label col-md-2">@item.Text</label>
-                    <div class="col-md-10" style="display: flex;padding-bottom: 20px;">
-                        @Html.EditorFor(model => model.Quantite[cpt - 1], new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Quantite[cpt - 1], "", new { @class = "text-danger" })
-                        <a style="margin-left:10px" title="Supprimer" href=@Url.Action("RemoveProduit", "Devis", new { DevisID = Model.Devis.ID, indice = cpt }) class="btn btn-info">
-                            <span class="glyphicon glyphicon-trash" />
-                        </a>
-                    </div>
-                </div>
-            }*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.EntrepriseID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EntrepriseID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EntrepriseID, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
