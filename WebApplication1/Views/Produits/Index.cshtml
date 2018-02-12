@@ -45,8 +45,8 @@
         <th>Nom</th>
         <th>Commentaire</th>
         <th>PrixHT</th>
-        <th>Reduction</th>
-        <th>TVA</th>
+        @*<th>Reduction</th>
+    <th>TVA</th>*@
         <th>Type</th>
         <th></th>
     </tr>
@@ -63,12 +63,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PrixHT)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Reduction)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TVA)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
@@ -87,3 +87,20 @@
     }
 
 </table>
+
+
+<br />
+
+@if (!Model.PageCount.Equals(1))
+{
+    <div class="text-center">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page,
+        sortOrder = ViewBag.CurrentSort,
+        currentFilter = ViewBag.CurrentFilter
+    }))
+    </div>
+}
