@@ -27,7 +27,6 @@ namespace WebApplication1
 
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
                       "~/Scripts/site.js"));
-            //<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
             //<script type="text/javascript" src="~/Scripts/Site.js"></script>
 
 

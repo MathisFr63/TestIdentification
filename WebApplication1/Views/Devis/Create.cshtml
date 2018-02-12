@@ -1,78 +1,4 @@
-﻿@*@model WebApplication1.ViewModels.DevisViewModel
-
-    @{
-        ViewBag.Title = "Create";
-    }
-
-    <link rel="stylesheet" href="http://cdn.jsdelivr.net/chosen/1.1.0/chosen.css" />
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/chosen/1.1.0/"></script>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <br/>
-        <p>
-            <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
-                <span class="glyphicon glyphicon-arrow-left" />
-            </a>
-        </p>
-
-        <div class="col-md-6">
-            <div class="form-horizontal">
-
-                <h3>Informations règlement:</h3>
-                <hr />
-*@
-@*<div class="form-group">
-        <label>Client</label>
-        @Html.DropDownListFor(model => model.Devis.EntrepriseID, Model.Entreprises, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Devis.EntrepriseID, "", new { @class = "text-danger" })
-    </div>*@
-
-@*<div class="form-group">
-                    <label>Objet</label>
-                    @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Devis.Objet, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    <label>Monnaie</label>
-                    @Html.EnumDropDownListFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Devis.Monnaie, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    <label>Commentaire</label> <br />
-                    @Html.TextAreaFor(model => model.Devis.Commentaire, new { htmlAttributes = new { @class = "form-control", @cols = 100, @rows = 10 } })
-                    @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
-                </div>
-
-                <br />
-                <h3>Informations articles:</h3>
-                <hr />
-
-                <div class="form-group">
-                    <label>Articles</label>
-                    <br />
-                    @Html.DropDownListFor(model => model.ProduitsID, Model.Produits, htmlAttributes: new { @class = "chosen-select form-control", @multiple = "true" })
-                    @Html.ValidationMessageFor(model => model.Produits, "", new { @class = "text-danger" })
-                </div>
-
-                <br />
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" value="Create" class="btn btn-secondary">Créer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
-    <script>
-        $('.chosen-select').chosen();
-    </script>*@
-
-@model WebApplication1.ViewModels.DevisProduitViewModel
+﻿@model WebApplication1.ViewModels.DevisProduitViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -120,7 +46,7 @@
             <div class="multiselect">
                 <div class="selectBox" onclick="showCheckboxes()">
                     <select>
-                        <option>Select an option</option>
+                        <option>Selectionnez un produit</option>
                     </select>
                     <div class="overSelect"></div>
                 </div>
@@ -145,4 +71,5 @@
         </div>
     </div>
 }
-
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="~/Scripts/Site.js"></script>
