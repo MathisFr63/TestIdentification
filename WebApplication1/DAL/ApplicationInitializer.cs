@@ -18,6 +18,16 @@ namespace WebApplication1.DAL
             //};
             //comptes.ForEach(c => context.Comptes.Add(c));
 
+            var adressesMail = new List<AdresseMail>
+            {
+                new AdresseMail("Mathis.FRIZOT@etu.uca.fr"),
+                new AdresseMail("Flavio.RANCHON@etu.uca.fr"),
+                new AdresseMail("Mathieu.RAVEL@etu.uca.fr"),
+                new AdresseMail("Aurelien.BERGER2@etu.uca.fr"),
+                new AdresseMail("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
+            };
+            adressesMail.ForEach(am => context.AdressesMail.Add(am));
+
             var utilisateurs = new List<Utilisateur>
             {
                 new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root", "Mathis",   "FRIZOT",  TypeUtilisateur.Administrateur, "Nom du chat",    "Siboulette"),

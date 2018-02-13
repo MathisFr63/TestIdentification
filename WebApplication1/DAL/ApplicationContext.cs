@@ -21,6 +21,7 @@ namespace WebApplication1.DAL
         //public List<Utilisateur> l { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Compte> Comptes { get; set; }
+        public DbSet<AdresseMail> AdressesMail { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
         public DbSet<Facture> Factures { get; set; }

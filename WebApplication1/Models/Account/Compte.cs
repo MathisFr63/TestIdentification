@@ -2,22 +2,17 @@
 
 namespace WebApplication1.Models.Account
 {
-    public class Compte
+    public class Compte : AdresseMail
     {
-        public string ID { get; set; }
-
         [Display(Name = "Mot de passe")]
         public int MotDePasse { get; set; }
 
         public int UtilisateurID { get; set; }
 
-        public Compte(string mail, string motDePasse, int userID)
+        public Compte(string mail, string motDePasse, int userID) : base(mail)
         {
-            this.ID = mail;
             this.MotDePasse = motDePasse.GetHashCode();
             this.UtilisateurID = userID;
         }
-
-        public Compte() { }
     }
 }
