@@ -6,14 +6,14 @@ namespace WebApplication1.Models.Account
     {
         public int ID { get; private set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Email { get; set; }
+        public string Email { get; set; }
 
-        public String Comment { get; set; }
+        public string Comment { get; set; }
 
-        public String Etat { get; set; }
+        public string Etat { get; set; }
 
-        public int UtilisateurID { get; set; }
+        public string UtilisateurID { get; set; }
     }
 }

@@ -9,10 +9,7 @@ namespace WebApplication1.Models.Account
 {
     public class Utilisateur
     {
-        public int ID { get; set; }
-
-        //public Compte compte { get; set; }
-        public string Mail { get; set; }
+        public string ID { get; set; }
         public int MotDePasse { get; set; }
 
         public string Nom { get; set; }
@@ -35,19 +32,15 @@ namespace WebApplication1.Models.Account
         /// <summary>
         /// Constructeur d'un Utilisateur prenant son adresse e-mail, mot de passe, nom, prénom, type, sa question et sa réponse.
         /// </summary>
-        /// <param name="motDePasse">Mot de passe de l'utilisateur</param>
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="nom">Nom de l'utilisateur</param>
-        /// <param name="mail">Adresse e-mail de l'utilisateur</param>
         /// <param name="type">Type d'utilisateur</param>
         /// <param name="question">Question pour retrouver le mot de passe de l'utilisateur</param>
         /// <param name="reponse">Réponse à la question pour retrouver le mot de passe</param>
-        public Utilisateur(string mail, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse) //: base(mail, motDePasse)
-        //public Utilisateur(string mail, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse)
+        public Utilisateur(string identifiant, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse)
         {
-            //this.compte = new Compte(mail, motDePasse);
+            this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
-            this.Mail = mail;
             this.Prénom = prenom;
             this.Nom = nom;
             this.Type = type;

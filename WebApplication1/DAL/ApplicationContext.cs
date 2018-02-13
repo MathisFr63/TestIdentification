@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using WebApplication1.Models.Account;
-using WebApplication1.Models.Entite;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.DAL
@@ -16,11 +15,12 @@ namespace WebApplication1.DAL
 
         public ApplicationContext() : base("ApplicationContext")
         {
+            //l = Utilisateurs.ToList();
         }
 
+        //public List<Utilisateur> l { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Compte> Comptes { get; set; }
-        //public DbSet<Entreprise> Entreprises { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
         public DbSet<Facture> Factures { get; set; }
@@ -34,27 +34,22 @@ namespace WebApplication1.DAL
 
         public Utilisateur Authentifier(string mail, string motDePasse)
         {
-            int tmp = motDePasse.GetHashCode();
-            /*Compte account = Comptes.FirstOrDefault(c => c.Mail == mail && c.MotDePasse == tmp);
-            if (account == null)
-                return null;*/
-            //return Utilisateurs.FirstOrDefault(u => u.Compte.ID == account.ID);
-            return Utilisateurs.FirstOrDefault(u => u.Mail == mail);
+            //var user = l.FirstOrDefault(u => u.ID == mail);
+            var user = Utilisateurs.Find(mail);
+            return user.MotDePasse == motDePasse.GetHashCode() ? user : null;
         }
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
-            int.TryParse(identifiant, out int tmp);
-            //return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.Compte.ID == tmp);
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == tmp);
+            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == identifiant);
         }
 
-        public int AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
+        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
         {
-            Utilisateur user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
             Utilisateurs.Add(user);
+
             SaveChanges();
-            //return user.Compte.ID;
             return user.ID;
         }
     }

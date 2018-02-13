@@ -70,17 +70,11 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var devis = new Devis
-                {
-                    Objet = Request.Form["Devis.Objet"],
-                    Monnaie = (TypeMonnaie) Enum.Parse(typeof(TypeMonnaie), Request.Form["Devis.Monnaie"]),
-                    Commentaire = Request.Form["Devis.Commentaire"],
-                    UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                    Date = DateTime.Now,
-                    Valide = true
-                };
-                db.Devis.Add(devis);
-                db.SaveChanges();
+                vm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+                vm.Devis.Date = DateTime.Now;
+                vm.Devis.Valide = true;
+
+                db.Devis.Add(vm.Devis);
 
                 var keys = Request.Form.AllKeys;
                 for (int i = 4; i < keys.Length; i++)
@@ -88,9 +82,10 @@ namespace WebApplication1.Controllers
                     var name = keys[i];
                     var produit = db.Produits.First(p => p.Nom == name);
 
-                    db.DonneeProduit.Add(new DonneeProduit(produit, devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
-                    db.SaveChanges();
+                    db.DonneeProduit.Add(new DonneeProduit(produit, vm.Devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
                 }
+
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(vm);
@@ -174,9 +169,6 @@ namespace WebApplication1.Controllers
             db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 
-            //Client client = db.Clients.Find(devis.EntrepriseID);
-            //client.Devis.Remove(devis);
-            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 

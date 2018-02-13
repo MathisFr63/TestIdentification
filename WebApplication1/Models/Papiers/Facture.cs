@@ -14,7 +14,6 @@
             Commentaire = devis.Commentaire;
             Monnaie = devis.Monnaie;
             Produits = devis.Produits;
-            EntrepriseID = devis.EntrepriseID;
             UtilisateurID = devis.UtilisateurID;
 
             Relances = 0;

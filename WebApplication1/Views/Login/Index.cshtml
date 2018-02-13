@@ -9,7 +9,7 @@
 {
     <h3>
         Vous êtes déjà authentifié avec l'adresse e-mail :
-        @Model.Utilisateur.Mail
+        @Model.Utilisateur.ID
     </h3>
     @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
@@ -93,8 +93,8 @@ else
                         <form>
                             <div class="form-group">
                                 <label for="InputName">Votre mail</label>
-                                @Html.TextBoxFor(m => m.Utilisateur.Mail, new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Utilisateur.Mail, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.Utilisateur.ID, new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.Utilisateur.ID, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label for="InputEmail1">Votre mot de passe</label>

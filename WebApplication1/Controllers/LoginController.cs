@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.Mail, viewModel.motDePasse);
+                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.ID, viewModel.motDePasse);
                 if (utilisateur != null)
                 {
                     FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
@@ -48,10 +48,10 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Utilisateurs.Count(u => u.Mail == vm.Utilisateur.Mail) == 0)
+                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    int id = db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
-                    FormsAuthentication.SetAuthCookie(id.ToString(), false);
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                    FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
                 ModelState.AddModelError("Mail", "Cette adresse e-mail est déjà utilisée");
@@ -72,7 +72,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user != null)
             {
                 user.Réponse = "";
@@ -85,7 +85,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult VérifierRéponse(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user != null)
                 if (user.Réponse == utilisateur.Réponse)
                     return View("AfficherMotDePasse", user);

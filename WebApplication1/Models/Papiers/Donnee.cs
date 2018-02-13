@@ -17,8 +17,8 @@ namespace WebApplication1.Models.Papiers
 
         public ICollection<DonneeProduit> Produits { get; set; }
 
-        public int EntrepriseID { get; set; }
+        //public int EntrepriseID { get; set; }
 
-        public int UtilisateurID { get; set; }
+        public string UtilisateurID { get; set; }
     }
 }
