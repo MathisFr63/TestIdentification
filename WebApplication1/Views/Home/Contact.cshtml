@@ -12,16 +12,16 @@
     @Html.AntiForgeryToken()
     <div>
         <br />
-        <p>Nom:</p>
+        <p>Nom</p>
         <p>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @required = "required" })</p>
-        <p>Mail:</p>
+        <p>Mail</p>
         <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", type = "email" })</p>
 
         <p></p>
 
         <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @required = "required", @cols = 80, @rows = 10 })</p>-->
         @Html.TextAreaFor(m => m.Comment)
-        <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
+        <button type="submit" value="Create" class="btn btn-secondary my-2">Envoyer</button>
     </div>
 }
 

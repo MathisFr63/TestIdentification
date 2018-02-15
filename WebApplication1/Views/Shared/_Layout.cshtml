@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 
-<body class="fondGradientGris">
+<body id="fondGradientGris">
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
         <div class="wrapper">
@@ -85,7 +85,7 @@
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
                     {
                     <li>
-                        <a href=@Url.Action("Feedbacks", "Home")>
+                        <a href=@Url.Action("Index", "Feedbacks")>
                             <i class="glyphicon glyphicon-send"></i>
                             Feedback
                         </a>
