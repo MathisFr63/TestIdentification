@@ -4,6 +4,6 @@
     {
         public bool Valide { get; set; }
 
-        // public int Total { get; set; } Prix calculé
+        //public int Total { get; set; } Prix calculé
     }
 }
