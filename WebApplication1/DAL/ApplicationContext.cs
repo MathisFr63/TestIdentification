@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.SqlClient;
 using System.Linq;
 using WebApplication1.Models.Account;
 using WebApplication1.Models.Papiers;
@@ -15,12 +12,9 @@ namespace WebApplication1.DAL
 
         public ApplicationContext() : base("ApplicationContext")
         {
-            //l = Utilisateurs.ToList();
         }
 
-        //public List<Utilisateur> l { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
-        public DbSet<Compte> Comptes { get; set; }
         public DbSet<AdresseMail> AdressesMail { get; set; }
         public DbSet<Devis> Devis { get; set; }
         public DbSet<DonneeProduit> DonneeProduit { get; set; }
@@ -35,7 +29,6 @@ namespace WebApplication1.DAL
 
         public Utilisateur Authentifier(string mail, string motDePasse)
         {
-            //var user = l.FirstOrDefault(u => u.ID == mail);
             var user = Utilisateurs.Find(mail);
             return user.MotDePasse == motDePasse.GetHashCode() ? user : null;
         }

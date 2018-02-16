@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApplication1.DAL;
@@ -16,9 +13,10 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
-            if (viewModel.Authentifie)
-                viewModel.Utilisateur = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+
+            if (viewModel.Authentifie) viewModel.Utilisateur = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
             return View(viewModel);
         }
 
@@ -27,7 +25,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Utilisateur utilisateur = db.Authentifier(viewModel.Utilisateur.ID, viewModel.motDePasse);
+                var utilisateur = db.Authentifier(viewModel.Utilisateur.ID, viewModel.motDePasse);
                 if (utilisateur != null)
                 {
                     FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
@@ -72,7 +70,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
+            var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user != null)
             {
                 user.Réponse = "";
@@ -85,7 +83,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult VérifierRéponse(Utilisateur utilisateur)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
+            var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user != null)
                 if (user.Réponse == utilisateur.Réponse)
                     return View("AfficherMotDePasse", user);

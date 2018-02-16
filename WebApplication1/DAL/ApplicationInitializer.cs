@@ -1,23 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using WebApplication1.Models.Account;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.DAL
 {
-    public class ApplicationInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<ApplicationContext>
+    public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {
-            //var comptes = new List<Compte>
-            //{
-            //    new Compte("Mathis.FRIZOT@etu.uca.fr", "root", 1),
-            //    new Compte("Flavio.RANCHON@etu.uca.fr", "Flavio", 2),
-            //    new Compte("Mathieu.RAVEL@etu.uca.fr", "Mathieu", 3),
-            //    new Compte("Aurelien.BERGER2@etu.uca.fr", "Aurelien", 4),
-            //    new Compte("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", 5),
-            //};
-            //comptes.ForEach(c => context.Comptes.Add(c));
-
             var adressesMail = new List<AdresseMail>
             {
                 new AdresseMail("Mathis.FRIZOT@etu.uca.fr"),
