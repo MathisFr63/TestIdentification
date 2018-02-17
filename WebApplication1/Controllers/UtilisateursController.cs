@@ -23,7 +23,10 @@ namespace WebApplication1.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Utilisateurs.ToList());
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type == TypeUtilisateur.Administrateur)
+                return View(db.Utilisateurs.ToList());
+            return RedirectToAction("BadUserTypeError", "Home");
         }
 
         public ActionResult Connection()

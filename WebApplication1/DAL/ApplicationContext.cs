@@ -35,7 +35,7 @@ namespace WebApplication1.DAL
 
         public Utilisateur ObtenirUtilisateur(string identifiant)
         {
-            return UtilisateurCourant = Utilisateurs.FirstOrDefault(u => u.ID == identifiant);
+            return UtilisateurCourant = Utilisateurs.Find(identifiant);
         }
 
         public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)

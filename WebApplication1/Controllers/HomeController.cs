@@ -75,5 +75,11 @@ namespace WebApplication1.Controllers
             ViewBag.Message = "Votre message a bien été envoyé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
             return View();
         }
+
+        public ActionResult BadUserTypeError(string message)
+        {
+            ViewBag.errorMessage = message;
+            return View();
+        }
     }
 }
