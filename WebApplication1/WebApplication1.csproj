@@ -199,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\app\action.jpg" />
+    <Content Include="assets\app\architect.jpg" />
     <Content Include="assets\app\download_android.png" />
     <Content Include="assets\app\download_ios.png" />
     <Content Include="assets\app\iphone_cover_light.png" />

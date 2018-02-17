@@ -43,6 +43,8 @@
                                     @Html.LabelFor(m => m.Réponse)<br />
                                     @Html.TextBoxFor(m => m.Réponse)<br />
                                     @Html.ValidationMessageFor(m => m.Réponse) <br />
+                                    @Html.ValidationMessageFor(m => m.ID)
+                                    <p style="color: red;">@ViewBag.erreur</p>
                                 </div>
                                 <input type="submit" class="btn btn-secondary" value="Valider" formaction="VérifierRéponse" />
                             </form>

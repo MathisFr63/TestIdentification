@@ -17,7 +17,7 @@
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
-                <div class="sidebar-header">
+                <div class="sidebar-header" id="sidebarCollapse">
                     <h3>Easy Bill</h3>
                     <strong>EB</strong>
                 </div>
@@ -81,13 +81,10 @@
                                 Contact
                             </a>
                         </li>
-                    }
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
-                    {
                     <li>
                         <a href=@Url.Action("Index", "Feedbacks")>
-                            <i class="glyphicon glyphicon-send"></i>
-                            Feedback
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            Feedbacks
                         </a>
                     </li>
                     }
@@ -122,11 +119,6 @@
                 </ul>
             </nav>
             <div id="content">
-                <div class="navbar-header" style="margin: 10px;">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                        <i class="glyphicon glyphicon-align-left"></i>
-                    </button>
-                </div>
                 <br />
                 @RenderBody()
             </div>
@@ -139,8 +131,6 @@
         </div>
     }
 
-    @*@Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
 
     <!-- jQuery CDN -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>

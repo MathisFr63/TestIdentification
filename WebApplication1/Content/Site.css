@@ -168,3 +168,7 @@ textarea {
 #checkboxes label:hover {
     background-color: #1e90ff;
 }
+
+dt, dd{
+    font-size:20px;
+}
