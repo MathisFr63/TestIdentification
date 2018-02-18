@@ -46,6 +46,8 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs/Details/5
         public ActionResult Details(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -60,6 +62,8 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs/Create
         public ActionResult Create()
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             return View();
         }
 
@@ -70,6 +74,8 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(UtilisateurViewModel vm)
         {
+            //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                //return RedirectToAction("BadUserTypeError", "Home");
             if (ModelState.IsValid)
             {
                 db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
@@ -82,6 +88,8 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -119,6 +127,8 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 

@@ -19,6 +19,8 @@ namespace WebApplication1.Controllers
         // GET: Feedbacks
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             List<Feedback> listTrie = new List<Feedback>();
 
             //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
@@ -46,6 +48,8 @@ namespace WebApplication1.Controllers
         // GET: Feedbacks/Details/5
         public ActionResult Details(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -58,6 +62,8 @@ namespace WebApplication1.Controllers
         // GET: Feedbacks/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -88,6 +94,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult Check(int? id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
