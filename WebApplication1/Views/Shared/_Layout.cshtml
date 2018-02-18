@@ -107,7 +107,7 @@
 
                 <ul class="list-unstyled userinfo">
                     <li>
-                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name.Replace('.', '~') })>
                             @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
                         </a>
                     </li>

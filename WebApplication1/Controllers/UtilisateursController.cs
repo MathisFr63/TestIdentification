@@ -44,14 +44,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();

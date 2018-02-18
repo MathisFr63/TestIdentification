@@ -44,6 +44,7 @@ namespace WebApplication1.Controllers
             else
                 return View(factures.ToPagedList(pageNumber, pageSize));
         }
+
         // GET: Factures/Details/5
         public ActionResult Details(int? id)
         {
@@ -54,6 +55,21 @@ namespace WebApplication1.Controllers
             if (facture == null) return HttpNotFound();
 
             return View(facture);
+        }
+
+        // GET: Factures/Details/5
+        public ActionResult Relancer(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Facture facture = db.Factures.Find(id);
+
+            if (facture == null) return HttpNotFound();
+
+            facture.Relances++;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
