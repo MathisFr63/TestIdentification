@@ -81,12 +81,15 @@
                                 Contact
                             </a>
                         </li>
-                    <li>
-                        <a href=@Url.Action("Index", "Feedbacks")>
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            Feedbacks
-                        </a>
-                    </li>
+                    }
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
+                    {
+                            <li>
+                                <a href=@Url.Action("Index", "Feedbacks")>
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    Feedbacks
+                                </a>
+                            </li>
                     }
                     <li>
                         <a href=@Url.Action("About", "Home")>

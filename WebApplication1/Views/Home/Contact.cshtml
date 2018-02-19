@@ -1,12 +1,12 @@
 @model WebApplication1.Models.Account.Feedback
 
 @{
-    ViewBag.Title = "Feedback";
+    ViewBag.Title = "Contact";
 }
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
-<h2>@ViewBag.Title</h2>
+<h2>Contactez-nous !</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -17,16 +17,16 @@
         <p>Mail</p>
         <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", type = "email" })</p>
 
-        <p></p>
+        <p>Message</p>
 
         <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @required = "required", @cols = 80, @rows = 10 })</p>-->
         @Html.TextAreaFor(m => m.Comment)
-        <button type="submit" value="Create" class="btn btn-secondary my-2">Envoyer</button>
+        <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
     </div>
 }
 
 <script src="~/scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
--
+
 <script type="text/javascript">
     // Initialize your tinyMCE Editor with your preferred options
     tinyMCE.init({
