@@ -31,6 +31,7 @@ namespace WebApplication1.Controllers
                     FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
                     return Redirect("/");
                 }
+                ViewBag.erreur = "Adresse e-mail et/ou mot de passe incorrect(s)";
                 ModelState.AddModelError("Utilisateur.Mail", "Adresse e-mail et/ou mot de passe incorrect(s)");
             }
             return View("Index", viewModel);

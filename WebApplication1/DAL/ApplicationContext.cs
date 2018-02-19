@@ -30,6 +30,10 @@ namespace WebApplication1.DAL
         public Utilisateur Authentifier(string mail, string motDePasse)
         {
             var user = Utilisateurs.Find(mail);
+
+            if (user == null)
+                return null;
+
             return user.MotDePasse == motDePasse.GetHashCode() ? user : null;
         }
 
