@@ -4,6 +4,7 @@
     ViewBag.Title = "Create";
 }
 
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -19,7 +20,6 @@
 
             <h3>Informations règlement:</h3>
             <hr />
-
             <div class="form-group">
                 <label>Objet</label>
                 @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })

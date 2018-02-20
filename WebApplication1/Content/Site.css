@@ -174,3 +174,14 @@ textarea {
 dt, dd{
     font-size:20px;
 }
+
+.gradientrose {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff5c5c+0,fe9090+45,febbbb+99 */
+    background: #ff5c5c; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #ff5c5c 0%, #fe9090 45%, #febbbb 99%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #ff5c5c 0%,#fe9090 45%,#febbbb 99%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #ff5c5c 0%,#fe9090 45%,#febbbb 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff5c5c', endColorstr='#febbbb',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
