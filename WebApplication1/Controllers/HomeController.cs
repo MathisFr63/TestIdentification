@@ -9,21 +9,27 @@ using WebApplication1.Models.Account;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant l'accès aux pages d'accueil
+    /// </summary>
     public class HomeController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
 
+        // Méthode permettant l'affichage de la page d'accueil.
         public ActionResult Index()
         {
             return View();
         }
 
+        // Méthode permettant l'affichage de la page "À propos".
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
             return View();
         }
 
+        // Méthode permettant l'afichage de la page contact
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -32,6 +38,7 @@ namespace WebApplication1.Controllers
         
         [HttpPost]
         [ValidateInput(false)]
+        // Méthode permettant l'accès à la page de contact afin d'envoyer un feedback.
         public ActionResult Contact(Feedback feedback)
         {
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
@@ -70,12 +77,14 @@ namespace WebApplication1.Controllers
             return RedirectToAction("FeedbackSent");
         }
 
+        // Méthode appelée lorsque l'envoi du feedback a réussi.
         public ActionResult FeedbackSent()
         {
             ViewBag.Message = "Votre message a bien été envoyé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
             return View();
         }
 
+        // Méthode appelée lorsque l'utilisateur n'a pas le bon type (s'il n'est pas administrateur par exemple) afin d'afficher une page d'erreur lui précisant.
         public ActionResult BadUserTypeError(string message)
         {
             ViewBag.errorMessage = message;

@@ -14,6 +14,9 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des utilisateurs de l'application (affichage, ajout, modification, suppression).
+    /// </summary>
     [Authorize]
     public class UtilisateursController : Controller
     {
@@ -21,6 +24,7 @@ namespace WebApplication1.Controllers
 
         // GET: Utilisateurs
         [Authorize]
+        // Méthode permettant d'afficher la liste des utilisateurs de l'application si l'utilisateur courant est un administrateur.
         public ActionResult Index()
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
@@ -29,11 +33,13 @@ namespace WebApplication1.Controllers
             return RedirectToAction("BadUserTypeError", "Home");
         }
 
+        // Méthode permettant à l'utilisateur d'accèder à la page de connexion.
         public ActionResult Connection()
         {
             return View();
         }
 
+        // Méthode permettant à l'utilisateur de se connecter après avoir rentré son identifiant et son mot de passe.
         public ActionResult SeConnecter([Bind(Include = "Mail, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
@@ -44,6 +50,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Details/5
+        // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
         public ActionResult Details(string id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
@@ -58,6 +65,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Create
+        // Méthode permettant grâce à l'accès par l'url d'accéder à la page de création d'un utilisateur si l'utilisateur courant est un administrateur.
         public ActionResult Create()
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
@@ -70,6 +78,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // Méthode permettant à l'administrateur de créer un utilisateur après avoir instancié les données sur la page de création.
         public ActionResult Create(UtilisateurViewModel vm)
         {
             //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
@@ -84,6 +93,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Edit/5
+        // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
         public ActionResult Edit(int? id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
@@ -104,6 +114,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
+        // Méthode permettant à un administrateur de modifier les données de l'utilisateur sélectionné et dont l'id est passé dans l'url après avoir modifié les valeurs sur la page de modification.
         public ActionResult EditPost(int id)
         {
             var utilisateur = db.Utilisateurs.Find(id);
@@ -123,6 +134,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Delete/5
+        // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
         public ActionResult Delete(int? id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
@@ -141,6 +153,7 @@ namespace WebApplication1.Controllers
         // POST: Utilisateurs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // Méthode appelée lorsque l'utilisateur souhaite réelement supprimer l'utilisateur sélectionné (lui même s'il n'est pas administrateur).
         public ActionResult DeleteConfirmed(int id)
         {
             db.Utilisateurs.Remove(db.Utilisateurs.Find(id));

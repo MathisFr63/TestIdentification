@@ -12,12 +12,16 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des devis de l'utilisateur (affichage des devis (après recherche ou non)sur plusieurs pages, ajout d'un devis, détails d'un devis, modification ou suppression, et pour finir facturation si l'utilisateur le souhaite).
+    /// </summary>
     [Authorize]
     public class DevisController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Devis
+        // Méthode permettant grâce à l'accès par l'url d'afficher la liste des devis de l'utilisateur.
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             List<Devis> listTrie = new List<Devis>();
@@ -44,6 +48,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Devis/Details/5
+        // Méthode permettant grâce à l'accès par l'url d'afficher les détails d'un devis de l'utilisateur grâce à son id.
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -56,6 +61,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Devis/Create
+        // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
         public ActionResult Create()
         {
             return View(new DevisProduitViewModel());
@@ -66,6 +72,7 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // Méthode permettant à l'utilisateur d'ajouter le devis qu'il vient de créer sur la page create (get) si le model est valide.
         public ActionResult Create(DevisProduitViewModel vm)
         {
             if (ModelState.IsValid)
@@ -92,6 +99,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Devis/Edit/5
+        // Méthode permettant grâce à l'accès par l'url de modifier le devis sélectionné en passant son id dans l'url.
         public ActionResult Edit(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -108,6 +116,7 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
+        // Méthode permettant la modification du devis sélectionné après avoir modifier les valeurs souhaitées sur la page edit (get)
         public ActionResult EditPost(int id, DevisViewModel dvm)
         {
             var devis = db.Devis.Find(id);
@@ -147,6 +156,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Devis/Delete/5
+        // Méthode permettant grâce à l'accès par l'url en passant l'id du devis d'afficher les détails de celui-ci afin de vérifier si l'utilisateur souhaite réellement le supprimer.
         public ActionResult Delete(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -159,6 +169,7 @@ namespace WebApplication1.Controllers
         }
 
         // POST: Devis/Delete/5
+        // Méthode permettant à l'utilisateur de supprimer le devis sélectionné après qu'il ai vérifié qu'il le souhaitait vraiment.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -173,6 +184,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Devis/Facturer
+        // Méthode permettant à l'utilisateur de facturer le devis sélecitonner en ayant passer son id par l'url.
         public ActionResult Facturer(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -187,6 +199,7 @@ namespace WebApplication1.Controllers
         // POST: Devis/Facturer
         [HttpPost, ActionName("Facturer")]
         [ValidateAntiForgeryToken]
+        // Méthode permettant de facturer un devis c'est à dire d'ajouter une facture de ce devis dans sa liste des factures après avoir spécifié le type de réglement.
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
             var facture = new Facture(db.Devis.Find(id), reglement);
