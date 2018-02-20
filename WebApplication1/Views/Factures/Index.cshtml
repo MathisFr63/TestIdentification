@@ -82,7 +82,9 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                <a title="Details" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-print" />
+                </a>
             </td>
         </tr>
     }

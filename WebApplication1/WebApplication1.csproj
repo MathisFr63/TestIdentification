@@ -198,7 +198,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\app\accueilscreen.png" />
+    <Content Include="assets\app\accueilscreen2.png" />
     <Content Include="assets\app\action.jpg" />
+    <Content Include="assets\app\ajoutdevis.png" />
     <Content Include="assets\app\architect.jpg" />
     <Content Include="assets\app\download_android.png" />
     <Content Include="assets\app\download_ios.png" />
@@ -210,6 +213,7 @@
     <Content Include="assets\app\reviews_logo_1_light.png" />
     <Content Include="assets\app\reviews_logo_2_light.png" />
     <Content Include="assets\app\reviews_logo_3_light.png" />
+    <Content Include="assets\app\test2.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />

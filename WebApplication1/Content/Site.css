@@ -6,6 +6,8 @@
 body {
     min-height: 100%;
     padding-bottom: 20px;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Set padding to keep content from hitting the edges */

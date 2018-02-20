@@ -4,10 +4,15 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<br />
+<p>
+    <a title="Retour" href=@Url.Action("Index","Factures") class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
 
 <div>
-    <h4>Facture</h4>
+    <h2>Facture</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -69,8 +74,4 @@
     </dl>
 </div>
 
-<a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="btn btn-info">Relancer</a>
-
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="btn btn-secondary">Relancer</a>
