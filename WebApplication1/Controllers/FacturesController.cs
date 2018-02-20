@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
-            factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
+            factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.DocumentID == facture.ID).ToList());
 
             if (searchstring != null)
                 page = 1;

@@ -179,7 +179,7 @@
     <Compile Include="ViewModels\DevisProduitViewModel.cs" />
     <Compile Include="ViewModels\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\DonneeProduit.cs" />
-    <Compile Include="Models\Papiers\Donnee.cs" />
+    <Compile Include="Models\Papiers\Document.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />
     <Compile Include="Models\Papiers\TypeReglement.cs" />
