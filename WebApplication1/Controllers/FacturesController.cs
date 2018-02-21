@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
-            factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.DocumentID == facture.ID).ToList());
+            factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
             if (searchstring != null)
                 page = 1;
@@ -42,9 +42,7 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
                 return View(factures.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            }
             else
                 return View(factures.ToPagedList(pageNumber, pageSize));
         }

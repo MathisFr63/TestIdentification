@@ -9,7 +9,11 @@
         public int ID { get; private set; }
 
         // Identifiant du document pour lequel on stocke les données
-        public int DocumentID { get; set; }
+        //public int DocumentID { get; set; }
+
+        public int? DevisID { get; set; }
+
+        public int? FactureID { get; set; }
 
         // Quantité du produit
         public int Quantite { get; set; }
@@ -59,9 +63,9 @@
         /// <param name="produit">Produit dont on veut stocker les données au moment T</param>
         /// <param name="id">Identifiant du document auquel on souhaite lié les données du produit au moment T</param>
         /// <param name="quantite">Quantité du produit ajouté sur le document</param>
-        public DonneeProduit(Produit produit, int id, int quantite) : this(produit)
+        public DonneeProduit(Produit produit, int quantite) : this(produit)
         {
-            DocumentID = id;
+            //DocumentID = id;
             Quantite = quantite;
         }
 
@@ -70,7 +74,7 @@
         /// </summary>
         /// <param name="dp">donnée produit dont on veut copier les données</param>
         /// <param name="id">Identifiant du document auquel on souhaite lier les données du produit</param>
-        public DonneeProduit(DonneeProduit dp, int id) : this()
+        public DonneeProduit(DonneeProduit dp) : this()
         {
             Nom = dp.Nom;
             Commentaire = dp.Commentaire;
@@ -79,7 +83,7 @@
             TVA = dp.TVA;
             Type = dp.Type;
             Quantite = dp.Quantite;
-            DocumentID = id;
+            //DocumentID = id;
         }
     }
 }

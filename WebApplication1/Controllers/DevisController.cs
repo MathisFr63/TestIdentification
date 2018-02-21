@@ -24,27 +24,19 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des devis de l'utilisateur.
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
-            List<Devis> listTrie = new List<Devis>();
-
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
 
-            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DocumentID == devis.ID).ToList());
-
-            if (searchstring != null)
-                page = 1;
-            else
-                searchstring = currentFilter;
+            if (searchstring != null) page = 1;
+            else searchstring = currentFilter;
 
             ViewBag.CurrentFilter = searchstring;
 
-            int pageSize = 15;
-            int pageNumber = (page ?? 1);
-
             if (!String.IsNullOrEmpty(searchstring))
-                return View(ListDevis.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            else
-                return View(ListDevis.ToPagedList(pageNumber, pageSize));
+                return View(ListDevis.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
+            return View( ListDevis.ToPagedList((page ?? 1), 15) );
         }
 
         // GET: Devis/Details/5
@@ -89,7 +81,10 @@ namespace WebApplication1.Controllers
                     var name = keys[i];
                     var produit = db.Produits.First(p => p.Nom == name);
 
-                    db.DonneeProduit.Add(new DonneeProduit(produit, vm.Devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
+                    db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0]))
+                                        {
+                                            DevisID = vm.Devis.ID
+                                        });
                 }
 
                 db.SaveChanges();
@@ -108,7 +103,7 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DocumentID == id).ToList()) { Devis = devis });
+            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -123,10 +118,8 @@ namespace WebApplication1.Controllers
             devis.Produits = new List<DonneeProduit>();
 
             var donneeProduit = db.DonneeProduit;
-            foreach (var item in donneeProduit.Where(dp => dp.DocumentID == id))
-            {
-                donneeProduit.Remove(item);
-            }
+
+            donneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(dp => donneeProduit.Remove(dp));
 
             var keys = Request.Form.AllKeys;
             for (int i = 5; i < keys.Length; i++)
@@ -134,8 +127,7 @@ namespace WebApplication1.Controllers
                 var name = keys[i];
                 var produit = db.Produits.First(p => p.Nom == name);
 
-                db.DonneeProduit.Add(new DonneeProduit(produit, devis.ID, int.Parse(Request.Form.GetValues(keys[i])[0])));
-                db.SaveChanges();
+                db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0])) { DevisID = devis.ID });
             }
 
             if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie" }))
@@ -174,7 +166,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.DonneeProduit.Where(DP => DP.DocumentID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
+            db.DonneeProduit.Where(DP => DP.DevisID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
             db.SaveChanges();
 
             db.Devis.Remove(db.Devis.Find(id));
@@ -206,9 +198,9 @@ namespace WebApplication1.Controllers
             db.Factures.Add(facture);
             db.SaveChanges();
             
-            foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DocumentID == id))
+            foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DevisID == id))
             {
-                db.DonneeProduit.Add(new DonneeProduit (dp, facture.ID));
+                db.DonneeProduit.Add(new DonneeProduit(dp) { FactureID = id });
             }
             db.SaveChanges();
             return RedirectToAction("Index");
