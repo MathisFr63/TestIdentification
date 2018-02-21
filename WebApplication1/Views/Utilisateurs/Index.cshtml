@@ -47,13 +47,13 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
-                <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-print" />
                 </a>
-                <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID }) class="btn btn-info">
+                <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-trash" />
                 </a>
             </td>

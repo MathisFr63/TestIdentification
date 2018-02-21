@@ -94,14 +94,14 @@ namespace WebApplication1.Controllers
 
         // GET: Utilisateurs/Edit/5
         // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -115,9 +115,9 @@ namespace WebApplication1.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         // Méthode permettant à un administrateur de modifier les données de l'utilisateur sélectionné et dont l'id est passé dans l'url après avoir modifié les valeurs sur la page de modification.
-        public ActionResult EditPost(int id)
+        public ActionResult EditPost(string id)
         {
-            var utilisateur = db.Utilisateurs.Find(id);
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
             if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "Nom", "Prénom", "Type" }))
             {
                 try
@@ -135,14 +135,14 @@ namespace WebApplication1.Controllers
 
         // GET: Utilisateurs/Delete/5
         // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -154,9 +154,9 @@ namespace WebApplication1.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         // Méthode appelée lorsque l'utilisateur souhaite réelement supprimer l'utilisateur sélectionné (lui même s'il n'est pas administrateur).
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            db.Utilisateurs.Remove(db.Utilisateurs.Find(id));
+            db.Utilisateurs.Remove(db.Utilisateurs.Find(id.Replace('~', '.')));
             db.SaveChanges();
             return RedirectToAction("Index");
         }
