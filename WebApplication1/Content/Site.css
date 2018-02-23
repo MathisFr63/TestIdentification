@@ -185,3 +185,7 @@ dt, dd{
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+b{
+    font-size:2rem;
+}
