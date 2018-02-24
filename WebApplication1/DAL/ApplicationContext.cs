@@ -13,7 +13,7 @@ namespace WebApplication1.DAL
         // Utilisateur connecté à l'application durant son utilisation
         public Utilisateur UtilisateurCourant { get; set; }
 
-        /// <summary>
+        /// <summary>   
         /// Constructeur par défaut du contexte de l'application.
         /// </summary>
         public ApplicationContext() : base("ApplicationContext")

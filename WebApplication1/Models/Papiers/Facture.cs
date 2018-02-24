@@ -14,7 +14,7 @@
         /// <summary>
         /// Constructeur par défaut d'une facture
         /// </summary>
-        public Facture(){}
+        public Facture() { }
 
 
         // Je suis pas sûr qu'on ai le droit de faire ça là vu que faut forcément qu'on indique le type de règlement sur une facture.

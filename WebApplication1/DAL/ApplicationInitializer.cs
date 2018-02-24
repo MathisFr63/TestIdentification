@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using WebApplication1.Models.Account;
 using WebApplication1.Models.Papiers;
@@ -8,7 +9,8 @@ namespace WebApplication1.DAL
     /// <summary>
     /// Classe permettant l'initialisation de la base de données avec des données en dures lorsque le model change afin de faire des tests sur l'application sans recréer les données à chaque fois.
     /// </summary>
-    public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
+    public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
+    //public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         /// <summary>
         /// Méthode permettant d'initialiser la base de données.
@@ -39,13 +41,22 @@ namespace WebApplication1.DAL
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
 
             // Ajout de produits.
+            var produit1 = new Produit { PrixHT = 90, Reduction = 0, TVA = 2, Type = TypeService.Bien, Nom = "Radiateur", Commentaire = "Radiateur milieu de gamme" };
             var produits = new List<Produit>
             {
-                new Produit{ PrixHT = 10, Reduction =  0, TVA = 3, Type = TypeService.Bien, Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur" },
-                new Produit{ PrixHT = 20, Reduction = 15, TVA = 5, Type = TypeService.Bien, Nom = "Opium", Commentaire = "Latex qu'exsude le pavot somnifère"},
-                new Produit{ PrixHT =  7, Reduction =  7, TVA = 7, Type = TypeService.Bien, Nom = "Boules de cristal", Commentaire = "Drago Ball Z"}
+                produit1,
+                new Produit { PrixHT = 10, Reduction = 0, TVA = 3, Type = TypeService.Bien, Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur" },
+                new Produit { PrixHT = 20, Reduction = 15, TVA = 5, Type = TypeService.Bien, Nom = "Opium", Commentaire = "Latex qu'exsude le pavot somnifère" },
+                new Produit { PrixHT = 7, Reduction = 7, TVA = 7, Type = TypeService.Bien, Nom = "Boules de cristal", Commentaire = "Drago Ball Z" }
             };
             produits.ForEach(p => context.Produits.Add(p));
+
+            //Ajout de devis.
+            var devis = new List<Devis>
+            {
+                new Devis("Installation radiateur", "Installation d'un radiateur neuf à la place d'un radiateur défectueux", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit1, 1)}, "Mathis.FRIZOT@etu.uca.fr")
+            };
+            devis.ForEach(d => context.Devis.Add(d));
 
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>

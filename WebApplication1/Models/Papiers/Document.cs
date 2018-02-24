@@ -31,5 +31,30 @@ namespace WebApplication1.Models.Papiers
 
         // Identifiant de l'utilisateur ayant créée le document.
         public string UtilisateurID { get; set; }
+
+
+        /// <summary>
+        /// Constructeur par défaut d'un document.
+        /// </summary>
+        public Document() { }
+
+
+        /// <summary>
+        /// Constructeur d'un document prenant toutes les variables en paramètres.
+        /// </summary>
+        /// <param name="objet">Objet du document</param>
+        /// <param name="commentaire">Commentaire permettant d'ajouter une description au document</param>
+        /// <param name="monnaie">Monnaie utilisée pour le règlement du document</param>
+        /// <param name="produits">Produits contenus dans le document</param>
+        /// <param name="utilisateurID">Identifiant de l'utilisateur ayant créé le document.</param>
+        public Document(string objet, string commentaire, TypeMonnaie monnaie, ICollection<DonneeProduit> produits, string utilisateurID)
+        {
+            Objet = objet;
+            Date = DateTime.Today;
+            Commentaire = commentaire;
+            Monnaie = monnaie;
+            Produits = produits;
+            UtilisateurID = utilisateurID;
+        }
     }
 }
