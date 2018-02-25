@@ -189,6 +189,7 @@
     <Compile Include="Models\Account\Utilisateur.cs" />
     <Compile Include="ViewModels\UtilisateurViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\UtilisateurViewModelConnection.cs" />
     <Compile Include="Views\Devis\UserControlArticle.ascx.cs">
       <DependentUpon>UserControlArticle.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

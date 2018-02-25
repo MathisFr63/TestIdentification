@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -13,8 +14,10 @@ namespace WebApplication1.Models.Account
     public class Utilisateur
     {
         // Identifiant de l'utilisateur (son adresse mail) afin de l'identifier dans la base de données.
+        [DisplayName("Adresse e-mail")]
         public string ID { get; set; }
         // Mot de passe de l'uitlisateur lui permettant de se connecter.
+        [DisplayName("Mot de passe")]
         public int MotDePasse { get; set; }
 
         // Nom de l'utilisateur.

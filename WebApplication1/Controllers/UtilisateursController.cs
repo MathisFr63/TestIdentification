@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
         public ActionResult Details(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~","."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -79,17 +79,20 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // Méthode permettant à l'administrateur de créer un utilisateur après avoir instancié les données sur la page de création.
-        public ActionResult Create(UtilisateurViewModel vm)
+        public ActionResult Create(UtilisateurViewModelConnection vm)
         {
             //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                //return RedirectToAction("BadUserTypeError", "Home");
+            //return RedirectToAction("BadUserTypeError", "Home");
             if (ModelState.IsValid)
             {
-                db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
-                return RedirectToAction("Index");
+                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
+                {
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             }
-
-            return View(vm.Utilisateur);
+            return View(vm);
         }
 
         // GET: Utilisateurs/Edit/5

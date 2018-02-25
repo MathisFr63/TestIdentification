@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page de connexion de l'application.
         public ActionResult Index()
         {
-            var viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+            var viewModel = new UtilisateurViewModelConnection { Authentifie = HttpContext.User.Identity.IsAuthenticated };
 
             if (viewModel.Authentifie) viewModel.Utilisateur = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
 
@@ -50,7 +50,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         // Méthode permettant à l'utilisateur de s'inscrire après avoir rempli toutes les cases correctement.
-        public ActionResult CreateUser(UtilisateurViewModel vm)
+        public ActionResult CreateUser(UtilisateurViewModelConnection vm)
         {
             if (ModelState.IsValid)
             {
@@ -60,9 +60,9 @@ namespace WebApplication1.Controllers
                     FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Mail", "Cette adresse e-mail est déjà utilisée");
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             }
-            return View(vm.Utilisateur);
+            return View(vm);
         }
 
         // Méthode permettant à l'utilisateur de se déconnecter.
