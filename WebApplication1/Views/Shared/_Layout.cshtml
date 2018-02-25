@@ -30,27 +30,28 @@
 
                     @{
                         var db = new WebApplication1.DAL.ApplicationContext();
-                        if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
+                        var user = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
+                        if (user != null && user.Type == 0)
                         {
                             <li>
                                 <a href=@Url.Action("Index", "Utilisateurs")>
                                     <i class="glyphicon glyphicon-star"></i>Utilisateurs
                                 </a>
                             </li>
-                            }
-
                         }
 
+                    }
+
                     @*<li>
-                        <a href="#entrepriseSubmenu" data-toggle="collapse">
-                            <i class="glyphicon glyphicon-user"></i>
-                            Entreprises
-                        </a>
-                        <ul class="collapse list-unstyled" id="entrepriseSubmenu">
-                            <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
-                            <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
-                        </ul>
-                    </li>*@
+                            <a href="#entrepriseSubmenu" data-toggle="collapse">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Entreprises
+                            </a>
+                            <ul class="collapse list-unstyled" id="entrepriseSubmenu">
+                                <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
+                                <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
+                            </ul>
+                        </li>*@
 
                     <li>
                         <a href="#papierSubmenu" data-toggle="collapse">
@@ -73,23 +74,25 @@
                 </ul>
 
                 <ul class="list-unstyled components">
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
-                    {
-                        <li>
-                            <a href=@Url.Action("Contact", "Home")>
-                                <i class="glyphicon glyphicon-send"></i>
-                                Retour client
-                            </a>
-                        </li>
+                    @{user = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
+                        if (user != null && user.Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
+                        {
+                            <li>
+                                <a href=@Url.Action("Contact", "Home")>
+                                    <i class="glyphicon glyphicon-send"></i>
+                                    Retour client
+                                </a>
+                            </li>
+                        }
                     }
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
-                            <li>
-                                <a href=@Url.Action("Index", "Feedbacks")>
-                                    <i class="glyphicon glyphicon-envelope"></i>
-                                    Feedbacks
-                                </a>
-                            </li>
+                        <li>
+                            <a href=@Url.Action("Index", "Feedbacks")>
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                Feedbacks
+                            </a>
+                        </li>
                     }
                     <li>
                         <a href=@Url.Action("About", "Home")>
@@ -97,12 +100,12 @@
                             A propos
                         </a>
                     </li>
-                 </ul>
+                </ul>
 
                 <ul class="list-unstyled userinfo">
                     <li>
                         <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name.Replace('.', '~') })>
-                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Prénom
                         </a>
                     </li>
                     <li>

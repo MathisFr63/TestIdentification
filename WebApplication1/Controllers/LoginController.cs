@@ -60,9 +60,9 @@ namespace WebApplication1.Controllers
                     FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Mail", "Cette adresse e-mail est déjà utilisée");
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             }
-            return View(vm.Utilisateur);
+            return View(vm);
         }
 
         // Méthode permettant à l'utilisateur de se déconnecter.
