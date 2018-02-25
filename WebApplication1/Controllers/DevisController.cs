@@ -202,6 +202,7 @@ namespace WebApplication1.Controllers
             {
                 db.DonneeProduit.Add(new DonneeProduit(dp) { FactureID = id });
             }
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
