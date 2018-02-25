@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -58,12 +59,13 @@ namespace WebApplication1.Models.Account
         /// <param name="type">Type de l'utilisateur</param>
         /// <param name="question">Question à laquelle il souhait répondre pour récupérer son mot de passe</param>
         /// <param name="reponse">Réponse à la question qui lui sera posée</param>
-        public Utilisateur(string identifiant, string motDePasse, string prenom, string nom, TypeUtilisateur type, string question, string reponse)
+        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
-            this.Prénom = prenom;
-            this.Nom = nom;
+            TextInfo txtInfo = new CultureInfo("en-us", false).TextInfo;
+            this.Prénom = txtInfo.ToTitleCase(prenom).Replace(' ', '-');
+            this.Nom = nom.ToUpper();
             this.Type = type;
             this.Question = question;
             this.Réponse = reponse;
