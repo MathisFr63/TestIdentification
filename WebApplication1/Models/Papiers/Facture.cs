@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WebApplication1.Models.Papiers
+﻿namespace WebApplication1.Models.Papiers
 {
     /// <summary>
     /// Classe représentant les données d'une facture
@@ -37,14 +35,12 @@ namespace WebApplication1.Models.Papiers
         }
 
         /// <summary>
-        /// Constructeur d'une facture prenant en paramètre un devis et un type de règlement.
-        /// La date est automatiquement instanciée à la date du jour.
+        /// Constructeur d'une facture prenant en paramètre un devis et un type de règlement
         /// </summary>
         /// <param name="devis">Devis que l'on souhaite facturer</param>
         /// <param name="type">Type de règlement de la facture</param>
         public Facture(Devis devis, TypeReglement type) : this(devis)
         {
-            Date = DateTime.Now;
             Reglement = type;
         }
     }

@@ -50,7 +50,7 @@ namespace WebApplication1.Models.Papiers
         public Document(string objet, string commentaire, TypeMonnaie monnaie, ICollection<DonneeProduit> produits, string utilisateurID)
         {
             Objet = objet;
-            Date = DateTime.Now;
+            Date = DateTime.Today;
             Commentaire = commentaire;
             Monnaie = monnaie;
             Produits = produits;

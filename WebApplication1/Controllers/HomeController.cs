@@ -33,7 +33,8 @@ namespace WebApplication1.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-            return View();
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            return View(new Feedback(user.ID, user.Nom + " " + user.Prénom));
         }
         
         [HttpPost]
@@ -49,10 +50,10 @@ namespace WebApplication1.Controllers
 
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(feedback.Email, "Feedback Easybill"),
+                From = new MailAddress(feedback.UtilisateurID, "Feedback Easybill"),
                 IsBodyHtml = true,
-                Subject = "Feedback de " + feedback.Name,
-                Body = "Commentaire de : " + feedback.Name + "<br/>Email : " + feedback.Email + "<br/>Message : " + feedback.Comment,
+                Subject = feedback.userName + ": " + feedback.Subject,
+                Body = feedback.Comment,
                 Priority = MailPriority.High
             };
             mail.To.Add("afiacrocus@gmail.com");
@@ -62,15 +63,14 @@ namespace WebApplication1.Controllers
             {
                 From = new MailAddress("afiacrocus@gmail.com", "Résumé Feedback Easybill"),
                 IsBodyHtml = true,
-                Subject = "Votre Feedback",
+                Subject = "Votre Feedback: " + feedback.Subject,
                 Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.Comment + "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.",
                 Priority = MailPriority.High
             };
-            mail2.To.Add(feedback.Email);
+            mail2.To.Add(feedback.UtilisateurID);
             smtp.Send(mail2);
 
             feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
-            feedback.Etat = "En cours";
             db.Feedbacks.Add(feedback);
             db.SaveChanges();
 

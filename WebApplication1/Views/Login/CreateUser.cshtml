@@ -24,50 +24,48 @@
             </div>
         </div>
     </nav>
-
-    <div style="padding-top: 8.5rem !important;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6" id="book">
-                    <div class="card">
-                        <div class="card-body p-5">
-                            <h4 class="pb-3">S'inscrire</h4>
-                            <form>
-                                <div class="form-group">
-                                    <label>Adresse mail</label>
-                                    @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                    @Html.ValidationMessageFor(model => model.Utilisateur.ID, null, new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group">
-                                    <label>Mot de passe</label>
-                                    @Html.EditorFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                </div>
-                                <div class="form-group">
-                                    <label>Nom</label>
-                                    @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                </div>
-                                <div class="form-group">
-                                    <label>Prénom</label>
-                                    @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                </div>
-                                <div class="form-group">
-                                    <label>Question <i style="font-size:1rem">(elle vous sera posée pour recupérer votre mdp)</i></label>
-                                    @Html.EditorFor(model => model.Utilisateur.Question, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                </div>
-                                <div class="form-group">
-                                    <label>Réponse</label>
-                                    @Html.EditorFor(model => model.Utilisateur.Réponse, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                </div>
-                                <button type="submit" class="btn btn-secondary my-2">S'inscrire</button>
-                                @*<input type="submit" class="btn btn-secondary my-2" value="S'inscrire'" formmethod="post" formaction=@Url.Action("Create", "Utilisateurs")>s*@
-                            </form>
-                        </div>
+    
+<div style="padding-top: 8.5rem !important;" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" id="book">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h4 class="pb-3">S'inscrire</h4>
+                        <form>
+                            <div class="form-group">
+                                <label>Adresse mail</label>
+                                @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe</label>
+                                @Html.EditorFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <div class="form-group">
+                                <label>Nom</label>
+                                @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <div class="form-group">
+                                <label>Question <i style="font-size:1rem">(elle vous sera posée pour recupérer votre mdp)</i></label>
+                                @Html.EditorFor(model => model.Utilisateur.Question, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <div class="form-group">
+                                <label>Réponse</label>
+                                @Html.EditorFor(model => model.Utilisateur.Réponse, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                            </div>
+                            <button type="submit" class="btn btn-secondary my-2">S'inscrire</button>
+                        </form>
                     </div>
                 </div>
-                <div class="align-self-center col-md-6">
-                    <h1 class="text-center text-md-left display-3">Inscrivez-vous</h1>
-                    <p>L'inscription est gratuite.</p>
-                </div>
+            </div>
+            <div class="align-self-center col-md-6">
+                <h1 class="text-center text-md-left display-3">Inscrivez-vous</h1>
+                <p>L'inscription est gratuite.</p>
             </div>
         </div>
-    </div>}
+    </div>
+</div>}

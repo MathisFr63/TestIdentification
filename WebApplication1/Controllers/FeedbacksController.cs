@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -43,7 +42,7 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
             {
-                return View(ListFeedbacks.Where(s => s.Name.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(ListFeedbacks.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
             else
                 return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));

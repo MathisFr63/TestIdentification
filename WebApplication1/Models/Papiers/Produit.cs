@@ -26,6 +26,9 @@
         // Type de service lié au produit
         public TypeService Type { get; set; }
 
+        // Identifiant de l'utilisateur auquel appartient le produit.
+        public string UtilisateurID { get; set; }
+
         // Prix final du produit sans la TVA
         //public int Prixfinal { get; set; } Prix calculé
 

@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
             var listTrie = new List<Produit>();
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Produits.ToList();
+            var ListDevis = db.Produits.Where(p=>p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;

@@ -13,9 +13,10 @@
     <div>
         <br />
         <p>Nom</p>
-        <p>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @required = "required" })</p>
+        <p>@Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })</p>
         <p>Mail</p>
-        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", type = "email" })</p>
+        <p>@Html.TextBoxFor(m => m.UtilisateurID, new { @class = "form-control", @required = "required", type = "email" })</p>
+        @*@Html.HiddenFor(m => m.userName)*@
 
         <p>Message</p>
 
