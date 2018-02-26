@@ -6,17 +6,19 @@
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
-<h2>Contactez-nous !</h2>
+<h2>Faites nous parvenir vos remarques !</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div>
         <br />
-        <p>Nom</p>
-        <p>@Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })</p>
         <p>Mail</p>
         <p>@Html.TextBoxFor(m => m.UtilisateurID, new { @class = "form-control", @required = "required", type = "email" })</p>
+        <p>Sujet</p>
+        <p>@Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })</p>
         @Html.HiddenFor(m => m.userName)
+
+        <p>Pièces jointes <input type="file" /></p>
 
         <p>Message</p>
 
@@ -37,6 +39,7 @@
         toolbar: 'styleselect | bold italic underline | alignleft aligncenter alignright | undo redo | outdent indent code',
         menubar: false,
         height: 200,
+        branding: false,
         // Theme options
         theme_advanced_buttons1: "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
         theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
@@ -47,4 +50,4 @@
         theme_advanced_statusbar_location: "bottom",
         theme_advanced_resizing: true,
     });
-</script> 
+</script>

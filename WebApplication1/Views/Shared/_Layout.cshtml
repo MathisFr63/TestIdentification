@@ -78,18 +78,18 @@
                         <li>
                             <a href=@Url.Action("Contact", "Home")>
                                 <i class="glyphicon glyphicon-send"></i>
-                                Retour client
+                                Retour utilisateur
                             </a>
                         </li>
                     }
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
-                            <li>
-                                <a href=@Url.Action("Index", "Feedbacks")>
-                                    <i class="glyphicon glyphicon-envelope"></i>
-                                    Feedbacks
-                                </a>
-                            </li>
+                        <li>
+                            <a href=@Url.Action("Index", "Feedbacks")>
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                Feedbacks
+                            </a>
+                        </li>
                     }
                     <li>
                         <a href=@Url.Action("About", "Home")>

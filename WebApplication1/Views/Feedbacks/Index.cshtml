@@ -16,8 +16,7 @@
             @using (Html.BeginForm("Index", "Feedbacks", FormMethod.Get))
             {
                 <div class="form-group">
-
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "recherche par sujet" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default">avancee</button>
@@ -30,9 +29,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default">
-                        <li>@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
-                        <li>@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
-                        <li><a href="#">Nb factures</a></li>
+                        <li style="background-color: white;">@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
+                        <li style="background-color: white;">@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
+                        <li style="background-color: white;"><a href="#">Nb factures</a></li>
                     </ul>
                 </li>
             </ul>
