@@ -7,16 +7,8 @@
 
 @using (Html.BeginForm())
 {
-    <h3>Saisissez le code qui vous a été envoyé par mail :</h3>
-    <div class="form-group">
-        @Html.HiddenFor(m => m.ID)
-        @Html.LabelFor(m => m.codeRecup)
-        @Html.TextBoxFor(m => m.codeRecup)
-        @Html.ValidationMessageFor(m => m.codeRecup)
-    </div>
-        <input type="submit" class="btn btn-secondary" value="Valider" formaction="VérifierRéponse" />
-
-    <!--<link rel="stylesheet" href="~/Content/theme.css">
+    
+   <link rel="stylesheet" href="~/Content/theme.css">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
@@ -31,32 +23,29 @@
                 <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Home")>Accueil</a>
             </div>
         </div>
-    </nav>-->
+    </nav>
 
 
-    <!--<div class="py-5">
+    <div class="py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3"> </div>
                 <div class="col-md-6">
                     <div class="card p-5">
                         <div class="card-body">
-                            <h1 class="mb-4">Récupération du mot de passe</h1>
+                            <h1 class="mb-4">Saisissez le code qui vous a été envoyé par mail :</h1>
                             <form>
                                 <div class="form-group">
                                     @Html.HiddenFor(m => m.ID)
-                                    
-                                    @Html.ValidationMessageFor(m => m.ID)
-                                    <p style="color: red;">@ViewBag.erreur</p>
+                                    <label>Code</label>
+                                    @Html.TextBoxFor(m => m.codeRecup, new { @class = "form-control my-2", @required = "required" } )
+                                    @Html.ValidationMessageFor(m => m.codeRecup)
                                 </div>
-                                <input type="submit" class="btn btn-secondary" value="Valider" formaction="VérifierRéponse" />
-                            </form>
+                                <input type="submit" class="btn btn-secondary" value="Valider" formaction="VérifierRéponse" />                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>-->
-
-
+    </div>
 }
