@@ -26,9 +26,6 @@ namespace WebApplication1.Models.Papiers
         // Produits liés au document
         public ICollection<DonneeProduit> Produits { get; set; }
 
-        // Entreprise pour laquelle ou par qui a était fait le document.
-        //public int EntrepriseID { get; set; }
-
         // Identifiant de l'utilisateur ayant créée le document.
         public string UtilisateurID { get; set; }
 

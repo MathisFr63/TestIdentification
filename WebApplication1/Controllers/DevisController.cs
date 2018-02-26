@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
         public ActionResult Create()
         {
-            return View(new DevisProduitViewModel());
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID));
         }
 
         // POST: Devis/Create
@@ -103,7 +103,8 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, 
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -112,7 +113,7 @@ namespace WebApplication1.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         // Méthode permettant la modification du devis sélectionné après avoir modifier les valeurs souhaitées sur la page edit (get)
-        public ActionResult EditPost(int id, DevisViewModel dvm)
+        public ActionResult EditPost(int id)
         {
             var devis = db.Devis.Find(id);
             devis.Produits = new List<DonneeProduit>();
@@ -125,9 +126,12 @@ namespace WebApplication1.Controllers
             for (int i = 5; i < keys.Length; i++)
             {
                 var name = keys[i];
-                var produit = db.Produits.First(p => p.Nom == name);
+                var produit = db.DonneeProduit.First(p => p.Nom == name);
 
-                db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0])) { DevisID = devis.ID });
+                db.DonneeProduit.Add(new DonneeProduit(produit){
+                    Quantite = int.Parse(Request.Form.GetValues(keys[i])[0]), 
+                    DevisID = devis.ID 
+                });
             }
 
             if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie" }))
@@ -197,10 +201,10 @@ namespace WebApplication1.Controllers
             var facture = new Facture(db.Devis.Find(id), reglement);
             db.Factures.Add(facture);
             db.SaveChanges();
-            
+
             foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DevisID == id))
             {
-                db.DonneeProduit.Add(new DonneeProduit(dp) { FactureID = id });
+                db.DonneeProduit.Add(new DonneeProduit(dp) { FactureID = facture.ID });
             }
 
             db.SaveChanges();
