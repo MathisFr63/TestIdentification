@@ -22,12 +22,12 @@ namespace WebApplication1.Controllers
 
         // GET: Produits
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des produits de l'utilisateur.
-        public ActionResult Index(String searchstring, string currentFilter, int? page)
+        public ActionResult Index(string searchstring, string currentFilter, int? page)
         {
             var listTrie = new List<Produit>();
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Produits.Where(p=>p.UtilisateurID == user.ID).ToList();
+            var ListDevis = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
             int pageSize = 15;
             int pageNumber = (page ?? 1);
 
-            if (!String.IsNullOrEmpty(searchstring))
+            if (!string.IsNullOrEmpty(searchstring))
             {
                 return View(ListDevis.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
@@ -80,6 +80,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                produit.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
                 db.Produits.Add(produit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
