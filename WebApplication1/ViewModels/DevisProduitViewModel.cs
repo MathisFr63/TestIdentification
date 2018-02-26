@@ -27,17 +27,17 @@ namespace WebApplication1.ViewModels
         /// <summary>
         /// Constructeur par défaut d'un DevisProduitViewModel afin de charger les produits et de pouvoir les sélectionner sur la page de création d'un devis
         /// </summary>
-        public DevisProduitViewModel()
+        public DevisProduitViewModel(string id)
         {
             Produits = new List<SelectListItem>();
-            db.Produits.ToList().ForEach(a => Produits.Add(new SelectListItem { Text = a.Nom, Value = a.ID.ToString() }));
+            db.Produits.Where(p => p.UtilisateurID == id).ToList().ForEach(a => Produits.Add(new SelectListItem { Text = a.Nom, Value = a.ID.ToString() }));
         }
 
         /// <summary>
         /// Constructeur d'une DevisProduitViewModel permettant de construire un devisproduit après avoir sélectionner les produits souhaités
         /// </summary>
         /// <param name="produits"></param>
-        public DevisProduitViewModel(List<DonneeProduit> produits) : this()
+        public DevisProduitViewModel(string id, List<DonneeProduit> produits) : this(id)
         {
             ProduitsSelected = produits;
         }
