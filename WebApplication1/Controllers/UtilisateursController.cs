@@ -121,8 +121,8 @@ namespace WebApplication1.Controllers
         public ActionResult EditPost(string id)
         {
             var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
-            if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "Nom", "Prénom", "Type" }))
-            {
+            if (TryUpdateModel(utilisateur, new string[] { "Nom", "Prénom", "Type"}))
+                {
                 try
                 {
                     db.SaveChanges();

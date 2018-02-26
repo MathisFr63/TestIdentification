@@ -22,15 +22,23 @@ namespace WebApplication1.Models.Account
         public int MotDePasse { get; set; }
 
         // Nom de l'utilisateur.
-        public string Nom { get { return Nom; } set { Nom = value.ToUpper(); } }
+        private string nom;
+        public string Nom
+        {
+            get { return nom; }
+            set { nom = value.ToUpper(); }
+        }
+
+        //public string Nom { get; set; }
         // Prénom de l'utilisateur.
+        private string prénom;
         public string Prénom
         {
-            get { return Prénom; }
+            get { return prénom; }
             set
             {
                 TextInfo txtInfo = new CultureInfo("en-us", false).TextInfo;
-                Prénom = txtInfo.ToTitleCase(value).Replace(' ', '-');
+                prénom = txtInfo.ToTitleCase(value).Replace(' ', '-');
             }
         }
 
@@ -68,7 +76,7 @@ namespace WebApplication1.Models.Account
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
             this.Prénom = prenom;
-            this.Nom = nom.ToUpper();
+            this.Nom = nom;
             this.Type = type;
         }
     }

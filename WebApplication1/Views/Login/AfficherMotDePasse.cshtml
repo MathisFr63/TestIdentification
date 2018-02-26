@@ -4,41 +4,6 @@
     ViewBag.Title = "Récupération";
 }
 
-<p>
-    <a href=@Url.Action("Index","Login") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" /> Accueil
-    </a>
-</p>
-<h2>Récupération du mot de passe réussie</h2>
-
-@using (Html.BeginForm())
-{
-    <div>
-        <h1>Bravo !</h1>
-        @Html.HiddenFor(m => m.Utilisateur.ID)
-
-
-        @Html.LabelFor(m => m.Utilisateur.ID)
-        @Html.DisplayFor(m => m.Utilisateur.ID)
-    </div>
-    <div>
-        <h3>Saisir votre nouveau mot de passe :</h3>
-        <div>
-            @Html.LabelFor(m => m.motDePasse)
-            @Html.PasswordFor(m => m.motDePasse)
-            @Html.ValidationMessageFor(m => m.motDePasse)
-        </div>
-        <div>
-            @Html.LabelFor(m => m.confirmation)
-            @Html.PasswordFor(m => m.confirmation)
-            @Html.ValidationMessageFor(m => m.confirmation)
-        </div>
-    </div>
-    <input type="submit" class="btn btn-secondary" value="Valider" formaction="ChangePassword" />
-}
-
-
-
 <link rel="stylesheet" href="~/Content/theme.css">
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -56,4 +21,45 @@
     </div>
 </nav>
 
+@using (Html.BeginForm())
+{
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"> </div>
+                <div class="col-md-6">
+                    <div class="card p-5">
+                        <div class="card-body">
+                            <h1 class="mb-4">Récupération du mot de passe réussie</h1>
+                            <div>
+                                <h1>Bravo !</h1>
+                                @Html.HiddenFor(m => m.Utilisateur.ID)
+
+
+                                <label>Votre mail</label><br />
+                                @Html.DisplayFor(m => m.Utilisateur.ID)
+                            </div>
+                            <div>
+                                <label>Saisir votre nouveau mot de passe</label>
+                                @Html.LabelFor(m => m.motDePasse)
+                                @Html.PasswordFor(m => m.motDePasse, new { @class = "form-control my-2", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.motDePasse, "", new { @class = "text-danger" })
+                            </div>
+                            <div>
+                                @Html.LabelFor(m => m.confirmation)
+                                @Html.PasswordFor(m => m.confirmation, new { @class = "form-control my-2", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.confirmation, "", new { @class = "text-danger" })
+                            </div>
+                            <input type="submit" class="btn btn-secondary" value="Valider" formaction="ChangePassword" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
 

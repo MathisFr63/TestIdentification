@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers
             Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user.codeRecup == utilisateur.codeRecup)
                 
-                return View("AfficherMotDePasse", new UtilisateurViewModel {Utilisateur=user });
+                return View("AfficherMotDePasse", new UtilisateurViewModelConnection {Utilisateur=user });
 
             
 
@@ -149,13 +149,17 @@ namespace WebApplication1.Controllers
         }
 
         
-        public ActionResult ChangePassword(UtilisateurViewModel m)
+        public ActionResult ChangePassword(UtilisateurViewModelConnection m)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == m.Utilisateur.ID);
-            user.MotDePasse = m.motDePasse.GetHashCode();
-            db.SaveChanges();
-            ViewBag.Message = "Votre mot de passe a bien été changé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
-            return View();
+            if (ModelState.IsValid)
+            {
+                Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == m.Utilisateur.ID);
+                user.MotDePasse = m.motDePasse.GetHashCode();
+                db.SaveChanges();
+                ViewBag.Message = "Votre mot de passe a bien été changé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
+                return View();
+            }
+            return View("AfficherMotDePasse", m);
         }
     }
 }
