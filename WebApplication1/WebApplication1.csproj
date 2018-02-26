@@ -297,11 +297,8 @@
     <Content Include="Views\Feedbacks\Details.cshtml" />
     <Content Include="Views\Feedbacks\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Login\ChangePassword.cshtml" />
-=======
     <Content Include="Views\Home\BadUserTypeError.cshtml" />
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
