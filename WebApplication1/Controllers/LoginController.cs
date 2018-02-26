@@ -153,6 +153,7 @@ namespace WebApplication1.Controllers
         {
             Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == m.Utilisateur.ID);
             user.MotDePasse = m.motDePasse.GetHashCode();
+            db.SaveChanges();
             ViewBag.Message = "Votre mot de passe a bien été changé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
             return View();
         }
