@@ -27,6 +27,14 @@ namespace WebApplication1.ViewModels
         /// <summary>
         /// Constructeur par défaut d'un DevisProduitViewModel afin de charger les produits et de pouvoir les sélectionner sur la page de création d'un devis
         /// </summary>
+        public DevisProduitViewModel()
+        {
+            Produits = new List<SelectListItem>();
+        }
+
+        /// <summary>
+        /// Constructeur par défaut d'un DevisProduitViewModel afin de charger les produits et de pouvoir les sélectionner sur la page de création d'un devis
+        /// </summary>
         public DevisProduitViewModel(string id)
         {
             Produits = new List<SelectListItem>();
@@ -37,7 +45,7 @@ namespace WebApplication1.ViewModels
         /// Constructeur d'une DevisProduitViewModel permettant de construire un devisproduit après avoir sélectionner les produits souhaités
         /// </summary>
         /// <param name="produits"></param>
-        public DevisProduitViewModel(string id, List<DonneeProduit> produits) : this(id)
+        public DevisProduitViewModel(string id, List<DonneeProduit> produits) : this()
         {
             ProduitsSelected = produits;
         }
