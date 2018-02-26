@@ -71,12 +71,10 @@ namespace WebApplication1.DAL
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
-        /// <param name="question">Question qui sera posée à l'utilisateur lors de la récupération de son mot de passe</param>
-        /// <param name="reponse">Réponse à la question qui lui sera posée lors de la récupération de son mot de passe</param>
         /// <returns>string: Identifiant de l'utilisateur créé</returns>
-        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, string question, string reponse)
+        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type)
         {
-            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, question, reponse);
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, type);
             Utilisateurs.Add(user);
 
             SaveChanges();

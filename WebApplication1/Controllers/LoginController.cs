@@ -1,9 +1,9 @@
+using System;
 using System.Linq;
-<<<<<<< HEAD
+
 using System.Net.Mail;
 using System.Web;
-=======
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
+
 using System.Web.Mvc;
 using System.Web.Security;
 using WebApplication1.DAL;
@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
                     return Redirect("/");
                 }
                 ViewBag.erreur = "Adresse e-mail et/ou mot de passe incorrect(s)";
-                ModelState.AddModelError("Utilisateur.Mail", "Adresse e-mail et/ou mot de passe incorrect(s)");
+                ModelState.AddModelError("Utilisateur.ID", "Adresse e-mail et/ou mot de passe incorrect(s)");
             }
             return View("Index", viewModel);
         }
@@ -61,7 +61,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré);
                     FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
             return Redirect("/");
         }
 
-<<<<<<< HEAD
+
         private static Random random = new Random();
         public static string RandomString(int length)
         {
@@ -86,11 +86,10 @@ namespace WebApplication1.Controllers
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public ActionResult RecoverMDP(Utilisateur utilisateur)
-=======
+
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page permettant de récupérer un mot de passe oublié.
         public ActionResult RecoverMDP()
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
+
         {
             return View();
         }
@@ -98,18 +97,18 @@ namespace WebApplication1.Controllers
         // Méthode permettant de continuer la récupération du mot de passe après avoir rentrer l'identifiant du compte.
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
-<<<<<<< HEAD
+
             //Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
             /*if (user != null)
-=======
+
             var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user != null)
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
+
             {
                 user.Réponse = "";
                 return View(user);
             }*/
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             user.codeRecup = RandomString(6);
             db.SaveChanges();
 
@@ -121,13 +120,13 @@ namespace WebApplication1.Controllers
 
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(user.Mail, "Recuperation de mot de passe"),
+                From = new MailAddress(user.ID, "Recuperation de mot de passe"),
                 IsBodyHtml = true,
                 Subject = "Recuperation de mot de passe",
                 Body = "Voici votre code de récupération :<p/>" + user.codeRecup + "<p/>Merci d'utiliser Easy Bill. A bientot !",
                 Priority = MailPriority.High
             };
-            mail.To.Add(user.Mail);
+            mail.To.Add(user.ID);
             smtp.Send(mail);
             ViewBag.erreur = "mail envoyé";
             //ViewBag.erreur = "Adresse e-mail inconnue";
@@ -138,17 +137,13 @@ namespace WebApplication1.Controllers
         // Méthode permettant de vérifier si la réponse est correcte et d'afficher le mot de passe si c'est le cas.
         public ActionResult VérifierRéponse(Utilisateur utilisateur)
         {
-<<<<<<< HEAD
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == utilisateur.Mail);
+
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
             if (user.codeRecup == utilisateur.codeRecup)
                 
                 return View("AfficherMotDePasse", new UtilisateurViewModel {Utilisateur=user });
-=======
-            var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
-            if (user != null)
-                if (user.Réponse == utilisateur.Réponse)
-                    return View("AfficherMotDePasse", user);
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
+
+            
 
             return View("RecoverMDP");
         }
@@ -156,7 +151,7 @@ namespace WebApplication1.Controllers
         
         public ActionResult ChangePassword(UtilisateurViewModel m)
         {
-            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.Mail == m.Utilisateur.Mail);
+            Utilisateur user = db.Utilisateurs.FirstOrDefault(u => u.ID == m.Utilisateur.ID);
             user.MotDePasse = m.motDePasse.GetHashCode();
             ViewBag.Message = "Votre mot de passe a bien été changé. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
             return View();

@@ -4,7 +4,6 @@
     ViewBag.Title = "Récupération";
 }
 
-<<<<<<< HEAD
 <p>
     <a href=@Url.Action("Index","Login") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" /> Accueil
@@ -16,11 +15,11 @@
 {
     <div>
         <h1>Bravo !</h1>
-        @Html.HiddenFor(m => m.Utilisateur.Mail)
+        @Html.HiddenFor(m => m.Utilisateur.ID)
 
 
-        @Html.LabelFor(m => m.Utilisateur.Mail)
-        @Html.DisplayFor(m => m.Utilisateur.Mail)
+        @Html.LabelFor(m => m.Utilisateur.ID)
+        @Html.DisplayFor(m => m.Utilisateur.ID)
     </div>
     <div>
         <h3>Saisir votre nouveau mot de passe :</h3>
@@ -30,7 +29,7 @@
     </div>
     <input type="submit" class="btn btn-secondary" value="Valider" formaction="ChangePassword" />
 }
-=======
+
 
 
 <link rel="stylesheet" href="~/Content/theme.css">
@@ -51,33 +50,3 @@
 </nav>
 
 
-
-@using (Html.BeginForm())
-{
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3"> </div>
-                <div class="col-md-6">
-                    <div class="card p-5">
-                        <div class="card-body">
-                            <h1 class="mb-4">Récupération du mot de passe réussie</h1>
-                            <form>
-                                <div class="form-group">
-                                    <label>Votre mail</label> <br />
-                                    @Html.DisplayFor(m => m.ID)
-                                </div>
-                                <div class="form-group">
-                                    <label>Votre mot de passe</label> <br />
-                                    @Html.DisplayFor(m => m.MotDePasse) <br />
-                                </div>
-                                <input type="submit" class="btn btn-secondary my-2" value="Valider" formaction="RecoverMDPAfterLogin" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
->>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f

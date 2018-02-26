@@ -32,11 +32,11 @@ namespace WebApplication1.DAL
             // Ajout d'utilisateurs.
             var utilisateurs = new List<Utilisateur>
             {
-                new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root", "FRIZOT", "Mathis",TypeUtilisateur.Administrateur, "Nom du chat", "Siboulette"),
-                new Utilisateur("Flavio.RANCHON@etu.uca.fr", "Flavio", "RANCHON", "Flavio",TypeUtilisateur.Enregistré, "Sport", "Football"),
-                new Utilisateur("Mathieu.RAVEL@etu.uca.fr", "Mathieu", "RAVEL", "Mathieu", TypeUtilisateur.Enregistré, "Nom de famille", "Ravel"),
-                new Utilisateur("Aurelien.BERGER2@etu.uca.fr", "Aurélien", "BERGER", "Aurélien",TypeUtilisateur.Enregistré, "Nom de famille", "Berger"),
-                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo",TypeUtilisateur.Enregistré, "Lieu d'étude l'an prochain", "IUT")
+                new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root", "FRIZOT", "Mathis",TypeUtilisateur.Administrateur),
+                new Utilisateur("Flavio.RANCHON@etu.uca.fr", "Flavio", "RANCHON", "Flavio",TypeUtilisateur.Enregistré),
+                new Utilisateur("Mathieu.RAVEL@etu.uca.fr", "Mathieu", "RAVEL", "Mathieu", TypeUtilisateur.Enregistré),
+                new Utilisateur("Aurelien.BERGER2@etu.uca.fr", "Aurélien", "BERGER", "Aurélien",TypeUtilisateur.Enregistré),
+                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo",TypeUtilisateur.Enregistré)
             };
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
 
