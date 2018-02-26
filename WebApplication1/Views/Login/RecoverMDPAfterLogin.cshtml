@@ -13,15 +13,12 @@
 
 @using (Html.BeginForm())
 {
+    <h3>Saisissez le code qui vous a été envoyé par mail :</h3>
     <div class="form-group">
         @Html.HiddenFor(m => m.Mail)
-        @Html.LabelFor(m => m.Question)
-        @Html.DisplayFor(m => m.Question)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Réponse)
-        @Html.TextBoxFor(m => m.Réponse)
-        @Html.ValidationMessageFor(m => m.Réponse)
+        @Html.LabelFor(m => m.codeRecup)
+        @Html.TextBoxFor(m => m.codeRecup)
+        @Html.ValidationMessageFor(m => m.codeRecup)
     </div>
     <input type="submit" class="btn btn-secondary" value="Valider" formaction="VérifierRéponse"/>
 }

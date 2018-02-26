@@ -19,6 +19,8 @@ namespace WebApplication1.Models.Account
         public string Prénom { get; set; }
 
         public TypeUtilisateur Type { get; set; }
+
+        public string codeRecup { get; set; }
         
         public string Question { get; set; } //Question permettant de retrouver son mot de passe { get; }
         public string Réponse { get; set; } //Réponse à la question permettant de retrouver son mot de passe { get; }
