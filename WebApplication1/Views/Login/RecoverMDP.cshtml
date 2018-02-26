@@ -4,20 +4,48 @@
     ViewBag.Title = "Récupération";
 }
 
-<p>
-    <a href=@Url.Action("Index","Login") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" /> Accueil
-    </a>
-</p>
-<h2>Récupération du mot de passe</h2>
+<link rel="stylesheet" href="~/Content/theme.css">
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href=@Url.Action("Index","Home")>Easy Bill</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href=@Url.Action("Index","Login")>Se connecter</a>
+                </li>
+            </ul>
+            <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Home")>Accueil</a>
+        </div>
+    </div>
+</nav>
+
+
 
 @using (Html.BeginForm())
 {
-    <div class="form-group">
-        @Html.LabelFor(m => m.Mail)
-        @Html.TextBoxFor(m => m.Mail, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Mail)
-        <p style="color: red;">@ViewBag.erreur</p>
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"> </div>
+                <div class="col-md-6">
+                    <div class="card p-5">
+                        <div class="card-body">
+                            <h1 class="mb-4">Récupération du mot de passe</h1>
+                            <form>
+                                <div class="form-group">
+                                    <label>Votre mail</label>
+                                    @Html.TextBoxFor(m => m.ID, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ID)
+                                    <p style="color: red;">@ViewBag.erreur</p>
+                                </div>
+                                <input type="submit" class="btn btn-secondary" value="Valider" formaction="RecoverMDPAfterLogin" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <input type="submit" class="btn btn-secondary" value="Valider" formaction="RecoverMDPAfterLogin" />
 }

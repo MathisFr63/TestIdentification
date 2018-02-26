@@ -4,69 +4,85 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<p>
+    <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-secondary btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+</p>
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"> </div>
+            <div class="col-md-6 card">
+                <h3>Etes vous sûr de vouloir supprimer ce produit ?</h3>
+                <div>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Nom)
+                        </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Produit</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Nom)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Commentaire)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Commentaire)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PrixHT)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PrixHT)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PrixHT)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PrixHT)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Reduction)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Reduction)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Reduction)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Reduction)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TVA)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TVA)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TVA)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TVA)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Type)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Type)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
+                    </dl>
 
-    </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input style="display:block;margin:auto" type="submit" value="Delete" class="btn btn-default btn-danger" />
+                        </div>
+                    }
+                </div>
+
+
+            </div>
         </div>
-    }
+    </div>
 </div>

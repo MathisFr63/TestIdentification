@@ -168,7 +168,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Account\Compte.cs" />
+    <Compile Include="Models\Account\AdresseMail.cs" />
     <Compile Include="Models\Account\Feedback.cs" />
     <Compile Include="Models\Entite\Lieu.cs" />
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
@@ -179,7 +179,7 @@
     <Compile Include="ViewModels\DevisProduitViewModel.cs" />
     <Compile Include="ViewModels\DevisViewModel.cs" />
     <Compile Include="Models\Papiers\DonneeProduit.cs" />
-    <Compile Include="Models\Papiers\Donnee.cs" />
+    <Compile Include="Models\Papiers\Document.cs" />
     <Compile Include="Models\Papiers\Facture.cs" />
     <Compile Include="Models\Papiers\TypeMonnaie.cs" />
     <Compile Include="Models\Papiers\TypeReglement.cs" />
@@ -189,6 +189,7 @@
     <Compile Include="Models\Account\Utilisateur.cs" />
     <Compile Include="ViewModels\UtilisateurViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\UtilisateurViewModelConnection.cs" />
     <Compile Include="Views\Devis\UserControlArticle.ascx.cs">
       <DependentUpon>UserControlArticle.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -198,7 +199,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\app\accueilscreen.png" />
+    <Content Include="assets\app\accueilscreen2.png" />
     <Content Include="assets\app\action.jpg" />
+    <Content Include="assets\app\ajoutdevis.png" />
+    <Content Include="assets\app\architect.jpg" />
     <Content Include="assets\app\download_android.png" />
     <Content Include="assets\app\download_ios.png" />
     <Content Include="assets\app\iphone_cover_light.png" />
@@ -209,6 +214,7 @@
     <Content Include="assets\app\reviews_logo_1_light.png" />
     <Content Include="assets\app\reviews_logo_2_light.png" />
     <Content Include="assets\app\reviews_logo_3_light.png" />
+    <Content Include="assets\app\test2.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
@@ -291,7 +297,11 @@
     <Content Include="Views\Feedbacks\Details.cshtml" />
     <Content Include="Views\Feedbacks\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Login\ChangePassword.cshtml" />
+=======
+    <Content Include="Views\Home\BadUserTypeError.cshtml" />
+>>>>>>> b79922169b30c2efb1c34df6d7e268f373cfb92f
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,6 +14,9 @@ using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des utilisateurs de l'application (affichage, ajout, modification, suppression).
+    /// </summary>
     [Authorize]
     public class UtilisateursController : Controller
     {
@@ -21,16 +24,22 @@ namespace WebApplication1.Controllers
 
         // GET: Utilisateurs
         [Authorize]
+        // Méthode permettant d'afficher la liste des utilisateurs de l'application si l'utilisateur courant est un administrateur.
         public ActionResult Index()
         {
-            return View(db.Utilisateurs.ToList());
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type == TypeUtilisateur.Administrateur)
+                return View(db.Utilisateurs.ToList());
+            return RedirectToAction("BadUserTypeError", "Home");
         }
 
+        // Méthode permettant à l'utilisateur d'accèder à la page de connexion.
         public ActionResult Connection()
         {
             return View();
         }
 
+        // Méthode permettant à l'utilisateur de se connecter après avoir rentré son identifiant et son mot de passe.
         public ActionResult SeConnecter([Bind(Include = "Mail, MotDePasse")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
@@ -41,12 +50,13 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Details/5
-        public ActionResult Details(int? id)
+        // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
+        public ActionResult Details(string id)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~","."))
+                return RedirectToAction("BadUserTypeError", "Home");
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -55,8 +65,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Create
+        // Méthode permettant grâce à l'accès par l'url d'accéder à la page de création d'un utilisateur si l'utilisateur courant est un administrateur.
         public ActionResult Create()
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             return View();
         }
 
@@ -65,24 +78,33 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UtilisateurViewModel vm)
+        // Méthode permettant à l'administrateur de créer un utilisateur après avoir instancié les données sur la page de création.
+        public ActionResult Create(UtilisateurViewModelConnection vm)
         {
+            //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            //return RedirectToAction("BadUserTypeError", "Home");
             if (ModelState.IsValid)
             {
-                db.AjouterUtilisateur(vm.Utilisateur.Mail, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
-                return RedirectToAction("Index");
+                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
+                {
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré, vm.Utilisateur.Question, vm.Utilisateur.Réponse);
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             }
-
-            return View(vm.Utilisateur);
+            return View(vm);
         }
 
         // GET: Utilisateurs/Edit/5
-        public ActionResult Edit(int? id)
+        // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
+        public ActionResult Edit(string id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -95,9 +117,10 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int id)
+        // Méthode permettant à un administrateur de modifier les données de l'utilisateur sélectionné et dont l'id est passé dans l'url après avoir modifié les valeurs sur la page de modification.
+        public ActionResult EditPost(string id)
         {
-            var utilisateur = db.Utilisateurs.Find(id);
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
             if (TryUpdateModel(utilisateur, "", new string[] { "Mail", "Nom", "Prénom", "Type" }))
             {
                 try
@@ -114,12 +137,15 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Utilisateurs/Delete/5
-        public ActionResult Delete(int? id)
+        // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
+        public ActionResult Delete(string id)
         {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -130,9 +156,10 @@ namespace WebApplication1.Controllers
         // POST: Utilisateurs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        // Méthode appelée lorsque l'utilisateur souhaite réelement supprimer l'utilisateur sélectionné (lui même s'il n'est pas administrateur).
+        public ActionResult DeleteConfirmed(string id)
         {
-            db.Utilisateurs.Remove(db.Utilisateurs.Find(id));
+            db.Utilisateurs.Remove(db.Utilisateurs.Find(id.Replace('~', '.')));
             db.SaveChanges();
             return RedirectToAction("Index");
         }

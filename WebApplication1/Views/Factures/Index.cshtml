@@ -45,8 +45,8 @@
     <tr>
         <th>Objet</th>
         <th>Date</th>
-        <th>Commentaire</th>
-        <th>Monnaie</th>
+        @*<th>Commentaire</th>
+        <th>Monnaie</th>*@
         <th>Produits</th>
         <th>Relances</th>
         <th>Reglement</th>
@@ -62,12 +62,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Commentaire)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Monnaie)
-            </td>
+            </td>*@
             <td>
                 @foreach (var a in item.Produits)
                 {
@@ -82,7 +82,9 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                <a title="Details" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-print" />
+                </a>
             </td>
         </tr>
     }

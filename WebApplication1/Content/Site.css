@@ -6,6 +6,8 @@
 body {
     min-height: 100%;
     padding-bottom: 20px;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -156,19 +158,34 @@ textarea {
     bottom: 0;
 }
 
-.checkboxes {
+#checkboxes {
     display: none;
     border: 1px #dadada solid;
 }
 
-.edit{
+#checkboxes label {
     display: block;
 }
 
-.checkboxes label {
-    display: block;
-}
-
-.checkboxes label:hover {
+#checkboxes label:hover {
     background-color: #1e90ff;
+}
+
+dt, dd{
+    font-size:20px;
+}
+
+.gradientrose {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff5c5c+0,fe9090+45,febbbb+99 */
+    background: #ff5c5c; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #ff5c5c 0%, #fe9090 45%, #febbbb 99%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #ff5c5c 0%,#fe9090 45%,#febbbb 99%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #ff5c5c 0%,#fe9090 45%,#febbbb 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff5c5c', endColorstr='#febbbb',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+b{
+    font-size:2rem;
 }

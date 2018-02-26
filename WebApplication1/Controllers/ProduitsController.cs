@@ -13,17 +13,21 @@ using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des produits de l'utilisateur (afficahge, ajout, modification, suppression).
+    /// </summary>
     public class ProduitsController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Produits
+        // Méthode permettant grâce à l'accès par l'url d'afficher la liste des produits de l'utilisateur.
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             var listTrie = new List<Produit>();
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Produits.ToList();
+            var ListDevis = db.Produits.Where(p=>p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -44,6 +48,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Produits/Details/5
+        // Méthode pemettant grâce à l'accès par l'url d'afficher les détails du produit dont l'id est passer dans l'url.
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -59,6 +64,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Produits/Create
+        // Méthode permettant grâce à l'accès par l'url d'accèder à la page d'ajout d'un produit.
         public ActionResult Create()
         {
             return View();
@@ -69,6 +75,7 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // Méthode permettant d'ajouter un produit à la liste des produits de l'utilisateur après avoir rempli les champs de la page de création.
         public ActionResult Create([Bind(Include = "ID, Nom, Commentaire, PrixHT, Reduction, TVA, Type")] Produit produit)
         {
             if (ModelState.IsValid)
@@ -82,6 +89,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Produits/Edit/5
+        // Méthode permettant grâce à l'accès par l'url d'afficher la page de modification du produit sélectionné et dont l'id et passé par l'url.
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,6 +109,7 @@ namespace WebApplication1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
+        // Méthode permettant de modifier le produit sélectionné dont l'id est passé en paramètre avec les valeurs modifiées sur la page de modification.
         public ActionResult EditPost(int id)
         {
             var produit = db.Produits.Find(id);
@@ -120,6 +129,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Produits/Delete/5
+        // Méthode permettant grâce à l'accès par l'url d'accèder à l'affichage des détails du produit sélectionné afin de vérifier si l'utilisateur veut le supprimer.
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -137,6 +147,7 @@ namespace WebApplication1.Controllers
         // POST: Produits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // Mèthode permettant de supprimer le produit sélectionné de la liste des produits de l'utilisateurs après qu'il ai vérifié qu'il souhaitait le supprimer.
         public ActionResult DeleteConfirmed(int id)
         {
             Produit produit = db.Produits.Find(id);

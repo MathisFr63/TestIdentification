@@ -13,6 +13,9 @@ using System.Data.Entity.Infrastructure;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des clients de l'utilisateur (affichage, ajout, modification, suppression)
+    /// </summary>
     [Authorize]
     public class ClientsController : Controller
     {

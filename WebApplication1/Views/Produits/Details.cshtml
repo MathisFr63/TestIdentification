@@ -4,20 +4,21 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<br />
+<p>
+    <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-secondary btn-lg">
+        <span class="glyphicon glyphicon-arrow-left" />
+    </a>
+    <a href=@Url.Action("Edit","Produits",new { id = Model.ID }) class="btn btn-secondary btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
+</p>
+
+<h2>@Html.DisplayFor(model => model.Nom)</h2>
 
 <div>
-    <h4>Produit</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Commentaire)
         </dt>
@@ -60,7 +61,3 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

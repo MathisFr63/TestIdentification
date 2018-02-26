@@ -15,11 +15,15 @@ using PagedList;
 
 namespace WebApplication1.Controllers
 {
+    /// <summary>
+    /// Controller permettant la gestion des factures de l'utilisateur (affichage des factures (après recherche ou non)sur plusieurs pages, détails d'une facture).
+    /// </summary>
     public class FacturesController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Factures
+        // Méthode permettant grâce à l'accès par l'url d'afficher la liste des factures de l'utilisateur (après recherche ou non).
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
@@ -38,13 +42,13 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
                 return View(factures.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            }
             else
                 return View(factures.ToPagedList(pageNumber, pageSize));
         }
+
         // GET: Factures/Details/5
+        // Méthode permettant grâce à l'accès par l'url d'afficher les détails de la facture sélectionnée
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -54,6 +58,22 @@ namespace WebApplication1.Controllers
             if (facture == null) return HttpNotFound();
 
             return View(facture);
+        }
+
+        // GET: Factures/Details/5
+        // Méthode permettant d'incrémenter le nombre de relances de la facture sélectionnée si le client n'a pas encore réglé la facture.
+        public ActionResult Relancer(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Facture facture = db.Factures.Find(id);
+
+            if (facture == null) return HttpNotFound();
+
+            facture.Relances++;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

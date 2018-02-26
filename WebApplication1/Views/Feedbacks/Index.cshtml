@@ -43,9 +43,10 @@
 
 <table class="table">
     <tr>
-        <th>Name</th>
+        <th>Nom</th>
         <th>Email</th>
-        <th>Comment</th>
+        <th>Sujet</th>
+        <th>Commentaire</th>
         <th>Etat</th>
         <th></th>
     </tr>
@@ -54,13 +55,17 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.userName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.UtilisateurID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Comment)
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
+                @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Etat)
@@ -87,11 +92,11 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-         new
-         {
-             page,
-             sortOrder = ViewBag.CurrentSort,
-             currentFilter = ViewBag.CurrentFilter
-         }))
+              new
+              {
+                  page,
+                  sortOrder = ViewBag.CurrentSort,
+                  currentFilter = ViewBag.CurrentFilter
+              }))
     </div>
 }

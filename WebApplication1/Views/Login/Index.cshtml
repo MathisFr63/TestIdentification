@@ -1,5 +1,4 @@
 ﻿@model WebApplication1.ViewModels.UtilisateurViewModel
-
 @{
     ViewBag.Title = "Connexion";
 }
@@ -9,7 +8,7 @@
 {
     <h3>
         Vous êtes déjà authentifié avec l'adresse e-mail :
-        @Model.Utilisateur.Mail
+        @Model.Utilisateur.ID
     </h3>
     @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
@@ -18,59 +17,6 @@ else
     using (Html.BeginForm())
     {
         <link rel="stylesheet" href="~/Content/theme.css">
-
-        @*<div class="py-5 text-white opaque-overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h1 class="text-gray-dark">Connection</h1>
-                        <p class="lead mb-4">Vous êtes déjà client ?</p>
-                        <div class="form-group">
-<<<<<<< .mine
-                            @Html.LabelFor(m => m.Utilisateur.Compte.Mail)
-                            @Html.TextBoxFor(m => m.Utilisateur.Compte.Mail, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(m => m.Utilisateur.Compte.Mail, "", new { @class = "text-danger" })
-||||||| .r95
-                            @Html.LabelFor(m => m.Utilisateur.compte.Mail)
-                            @Html.TextBoxFor(m => m.Utilisateur.compte.Mail, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(m => m.Utilisateur.compte.Mail, "", new { @class = "text-danger" })
-=======
-                            @Html.LabelFor(m => m.Utilisateur.Mail)
-                            @Html.TextBoxFor(m => m.Utilisateur.Mail, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(m => m.Utilisateur.Mail, "", new { @class = "text-danger" })
->>>>>>> .r98
-                        </div>
-                        <div class="form-group">
-<<<<<<< .mine
-                            @Html.LabelFor(m => m.Utilisateur.Compte.MotDePasse)
-||||||| .r95
-                            @Html.LabelFor(m => m.Utilisateur.compte.MotDePasse)
-=======
-                            @Html.LabelFor(m => m.Utilisateur.MotDePasse)
->>>>>>> .r98
-                            @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
-<<<<<<< .mine
-                            @Html.ValidationMessageFor(m => m.Utilisateur.Compte.MotDePasse)
-||||||| .r95
-                            @Html.ValidationMessageFor(m => m.Utilisateur.compte.MotDePasse)
-=======
-                            @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
->>>>>>> .r98
-                        </div>
-                        @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3" })
-
-                        <p class="my-3 py-5"></p>
-                        <input type="submit" class="btn btn-secondary" value="Valider" />
-                    </div>
-                    <div class="col-md-6">
-                        <h1 class="text-gray-dark">Inscription</h1>
-                        <p class="lead mb-4">Vous n'avez pas encore de compte ? Inscrivez-vous dès maintenant !</p>
-                        <a href=@Url.Action("CreateUser", "Login") class="btn btn-primary">S'inscrire</a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
 
         <!-- Navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -82,57 +28,67 @@ else
                 </div>
             </div>
         </nav>
-        
-        <br />
-        <div class="py-5 bg-primary text-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h1>Connectez-vous</h1>
-                        <p class="text-white">Nous sommes ravis de vous revoir</p>
-                        <form>
-                            <div class="form-group">
-                                <label for="InputName">Votre mail</label>
-                                @Html.TextBoxFor(m => m.Utilisateur.Mail, new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Utilisateur.Mail, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group">
-                                <label for="InputEmail1">Votre mot de passe</label>
-                                @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
-                                @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
-                            </div>
-                            @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />
-                            <button type="submit" class="btn btn-secondary my-2">Connection</button>
-                        </form>
-                    </div><div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <h1>Inscrivez-vous</h1>
-                        <p class="text-white">Vous n'avez pas de compte ? Inscrivez-vous !</p>
-                        <form>
-                            <button type="button" onclick="location.href='@Url.Action("CreateUser", "Login")'" class="btn btn-secondary my-2">Inscription</button>
-                        </form>
+
+        <div class="gradientrose">
+            <br />
+            <div class="py-5 text-white">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @if (ViewBag.erreur != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Warning !</strong> @ViewBag.erreur
+                                </div>
+                            }
+
+                            <h1>Connectez-vous</h1>
+                            <p class="text-white">Nous sommes ravis de vous revoir</p>
+
+                            <form>
+                                <div class="form-group">
+                                    <label for="InputName">Votre mail</label>
+                                    @Html.TextBoxFor(m => m.Utilisateur.ID, new { @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Utilisateur.ID, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputEmail1">Votre mot de passe</label>
+                                    @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
+                                </div>
+                                @* À remettre lorsque la récupération du mot de passe refonctionnera (par mail avec la tâche d'Aurélien) *@
+                                @*@Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />*@
+                                <button type="submit" class="btn btn-secondary my-2">Connection</button>
+                            </form>
+                        </div><div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <h1>Inscrivez-vous</h1>
+                            <p class="text-white">Vous n'avez pas de compte ? Inscrivez-vous !</p>
+                            <form>
+                                <button type="button" onclick="location.href='@Url.Action("CreateUser", "Login")'" class="btn btn-secondary my-2">Inscription</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            
-        <div class="py-5 text-white bg-primary text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>S'abonner à la Newsletter</h1>
-                        <p class="lead mb-4">Recevez tous les mois les actualités d'Easy Bill.</p>
-                        <form class="form-inline justify-content-center">
-                            <div class="input-group my-1">
-                                <input type="text" class="form-control mr-3 my-1" placeholder="Votre mail" id="inlineFormInputGroup">
-                            </div>
-                            <button type="submit" class="btn btn-secondary">S'abonner</button>
-                        </form>
+
+            <div class="py-5 text-white text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>S'abonner à la Newsletter</h1>
+                            <p class="lead mb-4">Recevez tous les mois les actualités d'Easy Bill.</p>
+                            <form class="form-inline justify-content-center">
+                                <div class="input-group my-1">
+                                    <input type="text" class="form-control mr-3 my-1" placeholder="Votre mail" id="inlineFormInputGroup">
+                                </div>
+                                <button type="submit" class="btn btn-secondary">S'abonner</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
-
     }
 }

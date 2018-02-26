@@ -11,13 +11,13 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 
-<body class="fondGradientGris">
+<body id="fondGradientGris">
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
-                <div class="sidebar-header">
+                <div class="sidebar-header" id="sidebarCollapse">
                     <h3>Easy Bill</h3>
                     <strong>EB</strong>
                 </div>
@@ -78,18 +78,18 @@
                         <li>
                             <a href=@Url.Action("Contact", "Home")>
                                 <i class="glyphicon glyphicon-send"></i>
-                                Contact
+                                Retour client
                             </a>
                         </li>
                     }
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
-                    <li>
-                        <a href=@Url.Action("Feedbacks", "Home")>
-                            <i class="glyphicon glyphicon-send"></i>
-                            Feedback
-                        </a>
-                    </li>
+                            <li>
+                                <a href=@Url.Action("Index", "Feedbacks")>
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    Feedbacks
+                                </a>
+                            </li>
                     }
                     <li>
                         <a href=@Url.Action("About", "Home")>
@@ -97,21 +97,12 @@
                             A propos
                         </a>
                     </li>
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
-                    {
-                    <li>
-                        <a href=@Url.Action("Index", "Feedbacks")>
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            Feedbacks
-                        </a>
-                    </li>
-                    }
                  </ul>
 
                 <ul class="list-unstyled userinfo">
                     <li>
-                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name })>
-                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Nom
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name.Replace('.', '~') })>
+                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Prénom
                         </a>
                     </li>
                     <li>
@@ -122,11 +113,6 @@
                 </ul>
             </nav>
             <div id="content">
-                <div class="navbar-header" style="margin: 10px;">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                        <i class="glyphicon glyphicon-align-left"></i>
-                    </button>
-                </div>
                 <br />
                 @RenderBody()
             </div>
@@ -139,8 +125,6 @@
         </div>
     }
 
-    @*@Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
 
     <!-- jQuery CDN -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
