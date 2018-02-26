@@ -57,7 +57,7 @@ else
                                     @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
                                 </div>
                                 @* À remettre lorsque la récupération du mot de passe refonctionnera (par mail avec la tâche d'Aurélien) *@
-                                @*@Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />*@
+                                @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />
                                 <button type="submit" class="btn btn-secondary my-2">Connection</button>
                             </form>
                         </div><div class="col-md-4"></div>
