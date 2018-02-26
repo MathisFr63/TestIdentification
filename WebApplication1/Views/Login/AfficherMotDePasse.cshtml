@@ -1,4 +1,4 @@
-﻿@model WebApplication1.ViewModels.UtilisateurViewModel
+﻿@model WebApplication1.ViewModels.UtilisateurViewModelConnection
 
 @{
     ViewBag.Title = "Récupération";
@@ -23,9 +23,16 @@
     </div>
     <div>
         <h3>Saisir votre nouveau mot de passe :</h3>
-        @Html.LabelFor(m => m.motDePasse)
-        @Html.PasswordFor(m => m.motDePasse)
-        @Html.ValidationMessageFor(m => m.motDePasse)
+        <div>
+            @Html.LabelFor(m => m.motDePasse)
+            @Html.PasswordFor(m => m.motDePasse)
+            @Html.ValidationMessageFor(m => m.motDePasse)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.confirmation)
+            @Html.PasswordFor(m => m.confirmation)
+            @Html.ValidationMessageFor(m => m.confirmation)
+        </div>
     </div>
     <input type="submit" class="btn btn-secondary" value="Valider" formaction="ChangePassword" />
 }

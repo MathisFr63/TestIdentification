@@ -22,15 +22,23 @@ namespace WebApplication1.Models.Account
         public int MotDePasse { get; set; }
 
         // Nom de l'utilisateur.
-        public string Nom { get; set; }
+        public string Nom { get { return Nom; } set { Nom = value.ToUpper(); } }
         // Prénom de l'utilisateur.
-        public string Prénom { get; set; }
+        public string Prénom
+        {
+            get { return Prénom; }
+            set
+            {
+                TextInfo txtInfo = new CultureInfo("en-us", false).TextInfo;
+                Prénom = txtInfo.ToTitleCase(value).Replace(' ', '-');
+            }
+        }
 
         // Type de l'utilisateur (Administrateur ou enregistré).
         public TypeUtilisateur Type { get; set; }
 
         public string codeRecup { get; set; }
-        
+
 
         //public virtual ICollection<Entreprise> Entreprises { get; set; }
 
@@ -54,13 +62,12 @@ namespace WebApplication1.Models.Account
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
-        
+
         public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
-            TextInfo txtInfo = new CultureInfo("en-us", false).TextInfo;
-            this.Prénom = txtInfo.ToTitleCase(prenom).Replace(' ', '-');
+            this.Prénom = prenom;
             this.Nom = nom.ToUpper();
             this.Type = type;
         }
