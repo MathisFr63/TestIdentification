@@ -45,7 +45,7 @@ namespace WebApplication1.ViewModels
         /// Constructeur d'une DevisProduitViewModel permettant de construire un devisproduit après avoir sélectionner les produits souhaités
         /// </summary>
         /// <param name="produits"></param>
-        public DevisProduitViewModel(string id, List<DonneeProduit> produits) : this()
+        public DevisProduitViewModel(string id, List<DonneeProduit> produits) : this(id)
         {
             ProduitsSelected = produits;
         }
