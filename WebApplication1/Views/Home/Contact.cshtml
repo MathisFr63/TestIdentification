@@ -3,10 +3,9 @@
 @{
     ViewBag.Title = "Contact";
 }
-<head>
-    <meta name="viewport" content="width=device-width" />
-</head>
+
 <h2>Faites nous parvenir vos remarques !</h2>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -22,7 +21,7 @@
 
         <p>Message</p>
 
-        <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @required = "required", @cols = 80, @rows = 10 })</p>-->
+        <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @required = "required", @cols = 80, @rows = 10 })</p>-->
         @Html.TextAreaFor(m => m.Comment)
         <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
     </div>
@@ -49,5 +48,25 @@
         theme_advanced_toolbar_align: "left",
         theme_advanced_statusbar_location: "bottom",
         theme_advanced_resizing: true,
+
+        execcommand_callback: "initialize"
     });
+
+    setTimeout(function () {
+        initialize();
+    }, 100);
+
+    function initialize() {
+        @{
+            var user = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
+            var prenom = user.Prénom;
+            var nom = user.Nom;
+         }
+        var top = "<p>Bonjour,</p>" +
+                  "<br/>" +
+                  "<p>Cordialement,</p>" +
+                  "<p>@prenom @nom</p>";
+
+        tinymce.get("Comment").setContent(top);
+    }
 </script>
