@@ -194,3 +194,11 @@ dt, dd{
 b{
     font-size:2rem;
 }
+
+.trie li a{
+    background-color:white;
+}
+
+    .trie li a:hover {
+        background-color: #EF0C1A;
+    }

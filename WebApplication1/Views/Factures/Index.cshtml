@@ -30,10 +30,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
-                    <ul class="dropdown-menu dropdown-menu-default">
-                        <li>@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
-                        <li>@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
-                        <li><a href="#">Nb factures</a></li>
+                    <ul class="dropdown-menu dropdown-menu-default trie">
+                        <li>@Html.ActionLink("Objet ↑", "Index", new { sortOrder = "objetAZ" })</li>
+                        <li>@Html.ActionLink("Objet ↓", "Index", new { sortOrder = "objetZA" })</li>
+                        <li>@Html.ActionLink("Date ↑", "Index", new { sortOrder = "dateNewOld" })</li>
+                        <li>@Html.ActionLink("Date ↓", "Index", new { sortOrder = "dateOldNew" })</li>
                     </ul>
                 </li>
             </ul>

@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
 
         // GET: Factures
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des factures de l'utilisateur (après recherche ou non).
-        public ActionResult Index(String searchstring, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
@@ -38,13 +38,36 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
+            var listeTrie = factures.OrderBy(s => s.Objet);
+
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = factures.OrderBy(s => s.Objet);
+                    break;
+                case "objetZA":
+                    listeTrie = factures.OrderByDescending(s => s.Objet);
+                    break;
+                case "dateOldNew":
+                    listeTrie = factures.OrderBy(s => s.Date);
+                    break;
+                case "dateNewOld":
+                    listeTrie = factures.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    listeTrie = factures.OrderBy(s => s.Objet);
+                    break;
+            }
+
+
             int pageSize = 15;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(factures.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             else
-                return View(factures.ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Factures/Details/5

@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
         // GET: Devis
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des devis de l'utilisateur.
-        public ActionResult Index(String searchstring, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
 
@@ -34,9 +34,31 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
+            var listeTrie = ListDevis.OrderBy(s => s.Objet);
+            
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+                case "objetZA":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
+                    break;
+                case "dateOldNew":
+                    listeTrie = ListDevis.OrderBy(s => s.Date);
+                    break;
+                case "dateNewOld":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+            }
+
             if (!String.IsNullOrEmpty(searchstring))
-                return View(ListDevis.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-            return View( ListDevis.ToPagedList((page ?? 1), 15) );
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
+            return View( listeTrie.ToPagedList((page ?? 1), 15) );
         }
 
         // GET: Devis/Details/5

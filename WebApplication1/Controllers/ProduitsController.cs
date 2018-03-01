@@ -22,12 +22,10 @@ namespace WebApplication1.Controllers
 
         // GET: Produits
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des produits de l'utilisateur.
-        public ActionResult Index(string searchstring, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchstring, string currentFilter, int? page)
         {
-            var listTrie = new List<Produit>();
-
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var ListDevis = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -36,15 +34,37 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
+
+            var listeTrie = listProduit.OrderBy(s => s.Nom);
+            
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    break;
+                case "objetZA":
+                    listeTrie = listeTrie.OrderByDescending(s => s.Nom);
+                    break;
+                case "prixFaibleFort":
+                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
+                    break;
+                case "prixFortFaible":
+                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
+                    break;
+                default:
+                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    break;
+            }
+
             int pageSize = 15;
             int pageNumber = (page ?? 1);
 
             if (!string.IsNullOrEmpty(searchstring))
             {
-                return View(ListDevis.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
-            else
-                return View(ListDevis.ToPagedList(pageNumber, pageSize));
+            return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Produits/Details/5
