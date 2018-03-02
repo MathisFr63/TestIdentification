@@ -5,7 +5,8 @@
     ViewBag.Title = "Produits";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="titreIndex">Vos produits</h2>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <form class="navbar-form navbar-left" method="get" role="search">
@@ -26,10 +27,10 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
-                        <li>@Html.ActionLink("Nom ↑", "Index", new { sortOrder = "objetAZ" })</li>
-                        <li>@Html.ActionLink("Nom ↓", "Index", new { sortOrder = "objetZA" })</li>
-                        <li>@Html.ActionLink("Prix ↑", "Index", new { sortOrder = "prixFaibleFort" })</li>
-                        <li>@Html.ActionLink("Prix ↓", "Index", new { sortOrder = "prixFortFaible" })</li>
+                        <li>@Html.ActionLink("Nom ↑", "Index", new { sortOrder = "objetAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Nom ↓", "Index", new { sortOrder = "objetZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Prix ↑", "Index", new { sortOrder = "prixFaibleFort", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Prix ↓", "Index", new { sortOrder = "prixFortFaible", searchString = ViewBag.CurrentFilter as string })</li>
                     </ul>
                 </li>
                 <li>
@@ -101,7 +102,8 @@
     {
         page,
         sortOrder = ViewBag.CurrentSort,
-        currentFilter = ViewBag.CurrentFilter
+        currentFilter = ViewBag.CurrentFilter,
+
     }))
     </div>
 }

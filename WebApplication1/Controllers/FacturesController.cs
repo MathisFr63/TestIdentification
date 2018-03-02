@@ -37,6 +37,7 @@ namespace WebApplication1.Controllers
                 searchstring = currentFilter;
 
             ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
 
             var listeTrie = factures.OrderBy(s => s.Objet);
 

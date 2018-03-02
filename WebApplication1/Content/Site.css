@@ -202,3 +202,16 @@ b{
     .trie li a:hover {
         background-color: #EF0C1A;
     }
+
+.titreIndex {
+    justify-content: center;
+    display: flex;
+    margin-top: 0px;
+}
+
+
+.textAreaCSS {
+    min-height: 8rem;
+    max-height: 11rem;
+    min-width:500px;
+}

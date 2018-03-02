@@ -33,6 +33,7 @@ namespace WebApplication1.Controllers
             else searchstring = currentFilter;
 
             ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
 
             var listeTrie = ListDevis.OrderBy(s => s.Objet);
             

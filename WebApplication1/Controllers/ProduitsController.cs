@@ -33,6 +33,7 @@ namespace WebApplication1.Controllers
                 searchstring = currentFilter;
 
             ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
 
 
             var listeTrie = listProduit.OrderBy(s => s.Nom);
