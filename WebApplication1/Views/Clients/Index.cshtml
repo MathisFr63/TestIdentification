@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Entite.Entreprise>
+﻿@*Vue permettant l'affiche de la liste de tous les clients de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Entite.Entreprise>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -6,6 +7,7 @@
     ViewBag.Title = "Clients";
 }
 
+@*Navbar permettant de trier et de faire une recherche sur la liste des clients.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -41,6 +43,8 @@
 </nav>
 
 <br />
+
+@*Affichage de la liste des clients*@
 <table class="table">
     <tr>
         <th>Nom de l'entreprise</th>
@@ -48,6 +52,8 @@
         <th>Mail</th>
         <th></th>
     </tr>
+    @*Pour chaque client, affichage du nom de l'entreprise, du nom du contact, et de l'adresse e-mail*@
+    @*En plus, ajouter à droite de chaque client 3 boutons permettant de modifier, afficher les détails et supprimer le client*@
     @foreach (var item in Model)
     {
         <tr>
@@ -88,6 +94,7 @@
 
 <br />
 
+@*Partie permettant d'afficher et de se diriger sur les différentes pages s'il y en a plusieurs*@
 @if (!Model.PageCount.Equals(1))
 {
     <div class="text-center">

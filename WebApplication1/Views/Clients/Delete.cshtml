@@ -1,26 +1,30 @@
-﻿@model WebApplication1.Models.Entite.Entreprise
+﻿@*Vue permettant de supprimer un client*@
+@model WebApplication1.Models.Entite.Entreprise
 @{
     ViewBag.Title = "Delete";
 }
 <br />
 <p>
+    @*Bouton de retour*@
     <a href=@Url.Action("Index","Clients") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 <h3>Voulez-vous supprimer ce client ?</h3>
 <br />
+
+@*Div permettant l'affichage des détails du client (Nom de l'entreprise, nom du contact et adresse e-mail avant la suppression)*@
 <div class="py-5">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <p class="lead">Nom de l'entreprise : @Html.DisplayFor(model => model.NomEntreprise)</p>
             </div>
-            
+
             <div class="col-md-6">
                 <p class="lead">Nom du contact : @Html.DisplayFor(model => model.NomContact)</p>
             </div>
-            
+
             <div class="col-md-6">
                 <p class="lead">Mail : @Html.DisplayFor(model => model.Mail)</p>
             </div>
@@ -31,6 +35,7 @@
     {
         @Html.AntiForgeryToken()
 
+        @*Bouton permettant de valider la suppresion du client*@
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default btn-primary" />
         </div>

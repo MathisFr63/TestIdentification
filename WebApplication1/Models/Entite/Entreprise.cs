@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -24,12 +25,15 @@ namespace WebApplication1.Models.Entite
         public TypeEntreprise Type { get; set; }
 
         // Nom de l'entreprise
+        [Display(Name = "Nom de l'entreprise")]
         public string NomEntreprise { get; set; }
 
         // Nom du contact dans l'entreprise
+        [Display(Name = "Nom du contact")]
         public string NomContact { get; set; }
 
         // Mail de l'entreprise afin de la contacter
+        [Display(Name = "Adresse e-mail")]
         public string Mail { get; set; }
 
         // Liste des téléphones de l'entreprise

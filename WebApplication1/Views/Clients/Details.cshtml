@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Entite.Entreprise
+﻿@*Vue permettant d'afficher les détails d'un client*@
+@model WebApplication1.Models.Entite.Entreprise
 @{
     ViewBag.Title = @Html.DisplayFor(model => model.NomEntreprise) + " (  client )";
 }
@@ -6,9 +7,11 @@
 <br />
 
 <p>
+    @*Bouton de retour*@
     <a href=@Url.Action("Index","Clients") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
+    @*Bouton permettant d'accéder à la modification du client*@
     <a href=@Url.Action("Edit","Clients",new { id = Model.ID }) class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-pencil" />
     </a>
@@ -18,6 +21,7 @@
 <h3 class="">Informations sur le client :</h3>
 <br />
 
+@*Div permettant l'affichage des informations du client*@
 <div class="py-5">
     <div class="container">
         <div class="row">
