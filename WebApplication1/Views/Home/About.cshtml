@@ -1,9 +1,11 @@
-﻿@model WebApplication1.Models.Account.Utilisateur
+﻿@*Vue permettant d'afficher les informations concernant l'application (À propos)*@
+@model WebApplication1.Models.Account.Utilisateur
 
 @{
     ViewBag.Title = "A propos";
 }
 
+@*Div permettant d'afficher ce que permet de faire l'application pour un utilisateur basique*@
 <div class="py-5 text-center bg-light">
     <div class="container">
         <div class="row">
@@ -73,6 +75,8 @@
     </div>
 </div>
 <hr />
+
+@*Div permettant d'afficher les informations sur l'équipe ayant travaillé sur la conception de l'application*@
 <div class="py-5">
     <div class="container">
         <div class="row">
@@ -87,6 +91,8 @@
     </div>
 </div>
 <br />
+
+@*Div permettant d'afficher une map afin de situer géographiquement les locaux où nous travaillons, ainsi que des coordonnées afin de nous joindre*@
 <div class="py-5 bg-primary text-white">
     <div class="container">
         <div class="row">

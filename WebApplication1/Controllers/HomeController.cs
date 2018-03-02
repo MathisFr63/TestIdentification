@@ -34,9 +34,9 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Message = "Your contact page.";
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            return View(new Feedback(user.ID, user.Nom + " " + user.Prénom));
+            return View(user != null ? new Feedback(user.ID, user.Nom + " " + user.Prénom) : new Feedback());
         }
-        
+
         [HttpPost]
         [ValidateInput(false)]
         // Méthode permettant l'accès à la page de contact afin d'envoyer un feedback.

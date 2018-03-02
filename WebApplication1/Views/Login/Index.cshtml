@@ -1,9 +1,12 @@
-﻿@model WebApplication1.ViewModels.UtilisateurViewModel
+﻿@*Page de connexion*@
+@model WebApplication1.ViewModels.UtilisateurViewModel
 @{
     ViewBag.Title = "Connexion";
 }
 <br />
 @{ string motDePasse = ViewBag.motDePasse; }
+
+@*Affiche à l'utilisateur qu'il est déjà authentifié et lui propose de se déconnecter*@
 @if (Model.Authentifie)
 {
     <h3>
@@ -12,13 +15,17 @@
     </h3>
     @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
+
+@*Sinon, affichage de la page de connexion*@
 else
 {
+    //Formulaire permettant à l'utilisateur de saisir ses identifiant et mot de passe afin de se connecter
     using (Html.BeginForm())
     {
         <link rel="stylesheet" href="~/Content/theme.css">
 
-        <!-- Navbar -->
+        <!--Navbar-->
+        //Navbar permettant d'accéder à la page d'accueil
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container">
                 <a class="navbar-brand" href=@Url.Action("Index","Home")>Easy Bill</a>
@@ -29,12 +36,14 @@ else
             </div>
         </nav>
 
+        //Div permettant de saisir l'identifiant et le mot de passe ou de cliquer pour récupérer un mot de passe perdu, ou pour s'inscrire si ce n'est pas encore fait
         <div class="gradientrose">
             <br />
             <div class="py-5 text-white">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
+                            @*Affichage de l'erreur si il y en a une*@
                             @if (ViewBag.erreur != null)
                             {
                                 <div class="alert alert-danger">
@@ -44,27 +53,36 @@ else
 
                             <h1>Connectez-vous</h1>
                             <p class="text-white">Nous sommes ravis de vous revoir</p>
-
+                            @*Formulaire permettant de saisir ses identifiant et mot de passe afin de se connecter*@
                             <form>
+                                @*Div permettant de saisir l'identifiant*@
                                 <div class="form-group">
-                                    <label for="InputName">Votre mail</label>
+                                    @Html.LabelFor(m => m.Utilisateur.ID)
                                     @Html.TextBoxFor(m => m.Utilisateur.ID, new { @class = "form-control", @required = "required" })
                                     @Html.ValidationMessageFor(m => m.Utilisateur.ID, "", new { @class = "text-danger" })
                                 </div>
+
+                                @*Div permettant de saisir le mot de passe*@
                                 <div class="form-group">
-                                    <label for="InputEmail1">Votre mot de passe</label>
+                                    @Html.LabelFor(m => m.Utilisateur.MotDePasse)
                                     @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
                                     @Html.ValidationMessageFor(m => m.Utilisateur.MotDePasse)
                                 </div>
-                                @* À remettre lorsque la récupération du mot de passe refonctionnera (par mail avec la tâche d'Aurélien) *@
+
+                                @*Lien permettant à un utilisateur de récupérer son mot de passe s'il l'a perdu ou qu'il souhaite le modifier*@
                                 @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />
+
+                                @*Bouton permettant d'essayer de se connecter*@
                                 <button type="submit" class="btn btn-secondary my-2">Connection</button>
                             </form>
                         </div><div class="col-md-4"></div>
+
+                        @*Div permettant d'afficher des informations sur l'inscription*@
                         <div class="col-md-4">
                             <h1>Inscrivez-vous</h1>
                             <p class="text-white">Vous n'avez pas de compte ? Inscrivez-vous !</p>
                             <form>
+                                @*Bouton permettant d'accéder à la page d'inscription*@
                                 <button type="button" onclick="location.href='@Url.Action("CreateUser", "Login")'" class="btn btn-secondary my-2">Inscription</button>
                             </form>
                         </div>
@@ -72,6 +90,7 @@ else
                 </div>
             </div>
 
+            @*Div permettant à un utilisateur de s'abonner aux newletter en entrant son adresse e-mail*@
             <div class="py-5 text-white text-center">
                 <div class="container">
                     <div class="row">

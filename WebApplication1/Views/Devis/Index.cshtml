@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
+﻿@*Vue permettant l'affichage des devis de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
 @using PagedList.Mvc;
 
 @{
@@ -9,6 +10,7 @@
     Vos Devis
 </h2>
 
+@*Navbar permettant de trier et de faire une recherche sur la liste des devis.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -44,68 +46,73 @@
     </div>
 </nav>
 <br />
+
+@*Affichage de la liste des devis*@
 <table class="table">
     <tr>
         <th>Objet</th>
         <th>Date</th>
         <th>Valide</th>
         @*<th>Commentaire</th>
-        <th>Monnaie</th>*@
+            <th>Monnaie</th>*@
         <th>Produits</th>
         <th></th>
     </tr>
+    @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
+    @*En plus, ajouter à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Objet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valide)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Commentaire)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Monnaie)
-        </td>*@
-        <td>
-            @foreach ( var a in item.Produits)
-            {
-                @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                @Html.DisplayFor(elt => a.Quantite); <br />
-            }
-        </td>
-        <td>
-            <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-pencil" />
-            </a>
-            <a title="Imprimer" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-print" />
-            </a>
-            <a title="Supprimer" href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
-                <span class="glyphicon glyphicon-trash" />
-            </a>
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valide)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Commentaire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monnaie)
+                </td>*@
+            <td>
+                @foreach (var a in item.Produits)
+                {
+                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                    @Html.DisplayFor(elt => a.Quantite); <br />
+                }
+            </td>
+            <td>
+                <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-pencil" />
+                </a>
+                <a title="Imprimer" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-print" />
+                </a>
+                <a title="Supprimer" href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-trash" />
+                </a>
+            </td>
+        </tr>
     }
 </table>
 
 <br />
 
+@*Partie permettant d'afficher et de se diriger sur les différentes pages s'il y en a plusieurs*@
 @if (!Model.PageCount.Equals(1))
 {
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-    new
-    {
-        page,
-        sortOrder = ViewBag.CurrentSort,
-        currentFilter = ViewBag.CurrentFilter
-    }))
+                   new
+                   {
+                       page,
+                       sortOrder = ViewBag.CurrentSort,
+                       currentFilter = ViewBag.CurrentFilter
+                   }))
     </div>
 }

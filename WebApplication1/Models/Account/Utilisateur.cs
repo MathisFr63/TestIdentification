@@ -45,6 +45,7 @@ namespace WebApplication1.Models.Account
         // Type de l'utilisateur (Administrateur ou enregistré).
         public TypeUtilisateur Type { get; set; }
 
+        [Display(Name = "Code de récupération")]
         public string codeRecup { get; set; }
 
 

@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Papiers.Facture
+﻿@*Vue permettant d'afficher les détails d'une facture*@
+@model WebApplication1.Models.Papiers.Facture
 
 @{
     ViewBag.Title = "Details";
@@ -6,15 +7,18 @@
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Factures") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 
+@*Div permettant l'affichage des détails de la facture*@
 <div>
     <h2>Facture</h2>
     <hr />
     <dl class="dl-horizontal">
+        @*Affichage de l'objet*@
         <dt>
             @Html.DisplayNameFor(model => model.Objet)
         </dt>
@@ -23,6 +27,7 @@
             @Html.DisplayFor(model => model.Objet)
         </dd>
 
+        @*Affichage de la date de création*@
         <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
@@ -31,6 +36,7 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
+        @*Affichage du commentaire lié à la facture*@
         <dt>
             @Html.DisplayNameFor(model => model.Commentaire)
         </dt>
@@ -39,6 +45,7 @@
             @Html.DisplayFor(model => model.Commentaire)
         </dd>
 
+        @*Affichage de la monnaie utilisée par la facture*@
         <dt>
             @Html.DisplayNameFor(model => model.Monnaie)
         </dt>
@@ -47,6 +54,7 @@
             @Html.DisplayFor(model => model.Monnaie)
         </dd>
 
+        @*Affichage de l'identifiant de l'utilisateur ayant créer le devis/ la facture*@
         <dt>
             @Html.DisplayNameFor(model => model.UtilisateurID)
         </dt>
@@ -55,6 +63,7 @@
             @Html.DisplayFor(model => model.UtilisateurID)
         </dd>
 
+        @*Affichage du nombre de relances ayant été effectuées.*@
         <dt>
             @Html.DisplayNameFor(model => model.Relances)
         </dt>
@@ -63,6 +72,7 @@
             @Html.DisplayFor(model => model.Relances)
         </dd>
 
+        @*Affichage de la méthode de règlement utilisée pour la facture*@
         <dt>
             @Html.DisplayNameFor(model => model.Reglement)
         </dt>
@@ -74,4 +84,5 @@
     </dl>
 </div>
 
+@*Bouton permettant de relancer la facture*@
 <a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="btn btn-secondary">Relancer</a>

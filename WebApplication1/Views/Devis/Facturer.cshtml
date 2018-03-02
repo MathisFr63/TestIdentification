@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Papiers.Facture
+﻿Vue permettant de valider la facturation du devis
+@model WebApplication1.Models.Papiers.Facture
 
 @{
     ViewBag.Title = "Facturer";
@@ -6,6 +7,7 @@
 
 
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
@@ -13,10 +15,12 @@
 
 <h2>Facturer</h2>
 
+@*Div permettant d'afficher les détails du devis avant de le facturer*@
 <div>
     <h4>Facturer</h4>
     <hr />
     <dl class="dl-horizontal">
+        @*Affichage de l'objet du devis*@
         <dt>
             @Html.DisplayNameFor(model => model.Objet)
         </dt>
@@ -25,6 +29,7 @@
             @Html.DisplayFor(model => model.Objet)
         </dd>
 
+        @*Affichage de la date de création du devis*@
         <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
@@ -33,6 +38,7 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
+        @*Affichage du commentaire lié au devis*@
         <dt>
             @Html.DisplayNameFor(model => model.Commentaire)
         </dt>
@@ -41,6 +47,7 @@
             @Html.DisplayFor(model => model.Commentaire)
         </dd>
 
+        @*Affichage de la monnaie utilisée par le devis*@
         <dt>
             @Html.DisplayNameFor(model => model.Monnaie)
         </dt>
@@ -57,6 +64,8 @@
             @Html.DisplayFor(model => model.EntrepriseID)
         </dd>*@
     </dl>
+
+    @*Formulaire permettant de valider la facturation du devis ainsi que de créer la facture lié au devis*@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -70,6 +79,7 @@
                     @Html.ValidationMessageFor(model => model.Reglement, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @*Bouton permettant de valider la facturation du devis*@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Facturer" class="btn btn-default btn-secondary" />

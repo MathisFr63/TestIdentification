@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Facture>
+﻿@*Vue permettant l'affichage des factures de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Facture>
 @using PagedList.Mvc;
 
 @{
@@ -10,6 +11,7 @@
 </h2>
 
 
+@*Navbar permettant de trier et de faire une recherche sur la liste des factures.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -42,18 +44,22 @@
     </div>
 </nav>
 <br />
+
+@*Affichage de la liste des factures*@
 <table class="table">
     <tr>
         <th>Objet</th>
         <th>Date</th>
         @*<th>Commentaire</th>
-        <th>Monnaie</th>*@
+            <th>Monnaie</th>*@
         <th>Produits</th>
         <th>Relances</th>
         <th>Reglement</th>
         <th></th>
     </tr>
 
+    @*Pour chaque facture, affichage de l'objet, de la date de création, de la liste des produits(et de leur quantité), du nombre de relances et du type de règlement*@
+    @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
     @foreach (var item in Model)
     {
         <tr>
@@ -64,16 +70,16 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Commentaire)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Monnaie)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Commentaire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monnaie)
+                </td>*@
             <td>
                 @foreach (var a in item.Produits)
                 {
-                        @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                        @Html.DisplayFor(elt => a.Quantite); <br />
+                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                    @Html.DisplayFor(elt => a.Quantite); <br />
                 }
             </td>
             <td>
@@ -94,16 +100,17 @@
 
 <br />
 
+@*Partie permettant d'afficher et de se diriger sur les différentes pages s'il y en a plusieurs*@
 @if (!Model.PageCount.Equals(1))
 {
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-         new
-         {
-             page,
-             sortOrder = ViewBag.CurrentSort,
-             currentFilter = ViewBag.CurrentFilter
-         }))
+                   new
+                   {
+                       page,
+                       sortOrder = ViewBag.CurrentSort,
+                       currentFilter = ViewBag.CurrentFilter
+                   }))
     </div>
 }

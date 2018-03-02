@@ -1,3 +1,4 @@
+@*Vue permettant l'envoi d'un feedback par un utilisateur de l'application*@
 @model WebApplication1.Models.Account.Feedback
 
 @{
@@ -6,29 +7,36 @@
 
 <h2>Faites nous parvenir vos remarques !</h2>
 
+@*Formulaire permettant d'indiquer l'identifiant de l'utilisateur, le sujet du feedback, ainsi que le commentaire qui lui est lié*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div>
         <br />
-        <p>Mail</p>
-        <p>@Html.TextBoxFor(m => m.UtilisateurID, new { @class = "form-control", @required = "required", type = "email" })</p>
-        <p>Sujet</p>
-        <p>@Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })</p>
+        @*Modification de l'identifiant de l'utilisateur (normalement rempli automatiquement)*@
+        @Html.LabelFor(m => m.UtilisateurID)
+        @Html.TextBoxFor(m => m.UtilisateurID, new { @class = "form-control", @required = "required", type = "email" })
+
+        @*Modification du sujet du feedback*@
+        @Html.LabelFor(m => m.Subject)
+        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })
+
+        @*Champs caché permettant de stocker le nom de l'utilisateur afin de l'utiliser ensuite*@
         @Html.HiddenFor(m => m.userName)
 
-        <p>Pièces jointes <input type="file" class="inputCSS"/></p>
+        <p>Pièces jointes <input type="file" class="inputCSS" /></p>
 
-        <p>Message</p>
-
-        <!--<p>@Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @required = "required", @cols = 80, @rows = 10 })</p>-->
-        @Html.TextAreaFor(m => m.Comment)
+        @*Modification du commentaire / message lié au feedback*@
+        @Html.LabelFor(m => m.Comment)
+        @Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @required = "required", @cols = 80, @rows = 10 })
         <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
     </div>
 }
 
+@*Script permettant l'utilisation de l'outil de modification de la forme du message lié au feedback*@
 <script src="~/scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
 
+@*Script permettant de modifier l'outil de modification de la forme du message lié au feedback*@
 <script type="text/javascript">
     // Initialize your tinyMCE Editor with your preferred options
     tinyMCE.init({
@@ -56,17 +64,23 @@
         initialize();
     }, 100);
 
+    //Fonction permettant d'initialiser le corps du message avec Boujour, Cordialement, et le nom de l'utilisateur envoyant le feedback
     function initialize() {
         @{
-            var user = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
-            var prenom = user.Prénom;
-            var nom = user.Nom;
-         }
-        var top = "<p>Bonjour,</p>" +
-                  "<br/>" +
-                  "<p>Cordialement,</p>" +
-                  "<p>@prenom @nom</p>";
+                var user = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
+            var prenom = "";
+            var nom = "";
+                if (user != null)
+                {
+                    prenom = user.Prénom;
+                    nom = user.Nom;
+                }
+            }
+            var top = "<p>Bonjour,</p>" +
+                      "<br/>" +
+                      "<p>Cordialement,</p>" +
+                      "<p>@prenom @nom</p>";
 
-        tinymce.get("Comment").setContent(top);
+            tinymce.get("Comment").setContent(top);
     }
 </script>

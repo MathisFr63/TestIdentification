@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Models.Account
 {
@@ -11,14 +12,17 @@ namespace WebApplication1.Models.Account
         public int ID { get; private set; }
 
         // Nom du feedback permettant d'avoir un aperçu rapide de ce dont il est question.
+        [Display(Name = "Sujet")]
         public string Subject { get; set; }
 
         // Commentaire de l'utilisateur quant à son retour client.
+        [Display(Name = "Message")]
         public string Comment { get; set; }
 
         // État du feedback ("en cours", ou "résolu") permettant de savoir s'il faut toujours réglé un problème.
         public string Etat { get; set; } = "En cours";
         // Identifiant de l'utilisateur ayant envoyé le feedback.
+        [Display(Name = "Adresse e-mail")]
         public string UtilisateurID { get; set; }
 
         //public string userName { get; }

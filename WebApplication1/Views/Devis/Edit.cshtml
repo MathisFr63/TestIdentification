@@ -1,4 +1,5 @@
-﻿@model WebApplication1.ViewModels.DevisProduitViewModel
+﻿@*Vue permettant la modification d'un devis*@
+@model WebApplication1.ViewModels.DevisProduitViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -6,22 +7,25 @@
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 
+@*Formulaire permettant de modifier les champs voulus*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    var cpt = 0;
 
     <div class="form-horizontal">
         <h4>Devis</h4>
         <hr />
+        @*Div permettant de stocker l'identifiant du devis (sans l'afficher) afin de pouvoir l'utiliser ensuite*@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Devis.ID)
 
+        @*Div permettant la modification de l'objet du devis*@
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.Objet, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -30,6 +34,7 @@
             </div>
         </div>
 
+        @*Div permettant la modification du commentaire lié au devis*@
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,6 +43,7 @@
             </div>
         </div>
 
+        @*Div permettant la modification de la monnaie utilisée par le devis*@
         <div class="form-group">
             @Html.LabelFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -48,7 +54,7 @@
 
         <hr />
         <h3>Informations articles:</h3>
-
+        @*Div permettant la modification des produits que possède le devis*@
         <div class="multiselect">
             <div class="selectBox" onclick="showCheckboxes()">
                 <select>
@@ -68,6 +74,7 @@
 
         <div id="articles"></div>
 
+        @*Script permettant de sélectionner la quantité voulue pour chaque produit du devis*@
         @foreach (var item in Model.ProduitsSelected)
         {
             <text>
@@ -78,10 +85,11 @@
             </text>
         }
 
+        @*Bouton permettant de valider la modification du devis (sauvegarder les modification) ou de facturer le devis*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Sauvegarder" class="btn btn-default btn-primary" />
-                <button type="reset" value="facturer" onclick="location.href='@Url.Action("Facturer", "Devis",new { id = Model.Devis.ID })'" class="btn btn-default btn-secondary">Facturer</button>
+                <button type="reset" value="Facturer" onclick="location.href='@Url.Action("Facturer", "Devis",new { id = Model.Devis.ID })'" class="btn btn-default btn-secondary">Facturer</button>
             </div>
         </div>
     </div>

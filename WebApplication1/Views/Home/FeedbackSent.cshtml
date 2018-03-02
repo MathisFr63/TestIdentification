@@ -1,9 +1,10 @@
-﻿
+﻿@*Vue permettant d'afficher (et de signaler) à l'utiliser que son feedback a bien été envoyé*@
 @{
     ViewBag.Title = "FeedbackSent";
 }
 <h2>Feedback envoyé !</h2>
 <h2>@ViewBag.Message</h2>
 
+@*Bouton de retour à l'accueil*@
 <a href=@Url.Action("Index", "Home") class="btn btn-lg btn-primary mx-1">Accéder</a>
 

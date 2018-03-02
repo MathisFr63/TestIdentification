@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Account.Feedback
+﻿@*Vue permettant de supprimer un feedback*@
+@model WebApplication1.Models.Account.Feedback
 
 @{
     ViewBag.Title = "Delete";
@@ -6,16 +7,19 @@
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Feedback") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 <h3>Voulez-vous supprimer ce feedback ?</h3>
 
+@*Div permettant d'afficher les détails du feedback avant de le supprimer*@
 <div>
     <h4>Feedback</h4>
     <hr />
     <dl class="dl-horizontal">
+        @*Affichage du sujet du feedback*@
         <dt>
             @Html.DisplayNameFor(model => model.Subject)
         </dt>
@@ -24,6 +28,7 @@
             @Html.DisplayFor(model => model.Subject)
         </dd>
 
+        @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
         <dt>
             @Html.DisplayNameFor(model => model.UtilisateurID)
         </dt>
@@ -32,6 +37,7 @@
             @Html.DisplayFor(model => model.UtilisateurID)
         </dd>
 
+        @*Affichage du commentaire lié au feedback*@
         <dt>
             @Html.DisplayNameFor(model => model.Comment)
         </dt>
@@ -42,6 +48,7 @@
 
     </dl>
 
+    @*Bouton permettant la suppression du feedback*@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

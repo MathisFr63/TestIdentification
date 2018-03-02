@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Account.Utilisateur
+﻿@*Vue permettant de commencer la récupération du mot de passe en rentrant son adresse e-mail*@
+@model WebApplication1.Models.Account.Utilisateur
 
 @{
     ViewBag.Title = "Récupération";
@@ -6,6 +7,7 @@
 
 <link rel="stylesheet" href="~/Content/theme.css">
 
+@*Navbar permettant d'accéder à la page de connexion, ou à la page d'accueil*@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
         <a class="navbar-brand" href=@Url.Action("Index","Home")>Easy Bill</a>
@@ -21,8 +23,7 @@
     </div>
 </nav>
 
-
-
+@*Formulaire permettant de saisir son adresse e-mail*@
 @using (Html.BeginForm())
 {
     <div class="py-5">

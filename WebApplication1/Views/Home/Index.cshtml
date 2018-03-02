@@ -1,207 +1,217 @@
-﻿@{
+﻿@*Page d'accueil de l'application*@
+@{
     ViewBag.Title = "Easy Bill";
 }
 
+@*Éléments affichés lorsque l'utilisateur n'est pas connecté*@
 @if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- CSS dependencies -->
-        <link rel="stylesheet" href="~/Content/theme.css">
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="~/Content/theme.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-        <!-- Script: Make my navbar transparent when the document is scrolled to top -->
-        <script src="~/Scripts/navbar-ontop.js"></script>
-        <!-- Script: Animated entrance -->
-        <script src="~/Scripts/animate-in.js"></script>
+    <!-- Script: Make my navbar transparent when the document is scrolled to top -->
+    <script src="~/Scripts/navbar-ontop.js"></script>
+    <!-- Script: Animated entrance -->
+    <script src="~/Scripts/animate-in.js"></script>
 
-        
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">Easy Bill</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-                <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#features">Fonctionnalités</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#download">Contact</a>
-                        </li>
-                    </ul>
-                    <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
-                </div>
+    <!-- Navbar -->
+    //Bouton permettant d'accéder à la page de connexion (dans la navbar)
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Easy Bill</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+            <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="#features">Fonctionnalités</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="#download">Contact</a>
+                    </li>
+                </ul>
+                <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
             </div>
-        </nav>
-        <!-- Cover -->
-        <div class="pt-5 gradientrose">
-            <div class="container mt-5 pt-5">
-                <div class="row">
-                    <div class="col-md-6 my-5 text-lg-left text-center align-self-center">
-                        <h1 class="display-1">Easy Bill</h1>
-                        <p class="lead">Votre application de gestion commerciale.</p>
-                        <div class="row mt-5">
-                            <div class="col-6 col-lg-4"></div>
-                            <div class="col-6 col-lg-4">
-                                <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
-                            </div>
+        </div>
+    </nav>
+
+    <!-- Cover -->
+    //Bouton permettant d'accéder à la page de connexion (dans le corps de la page)
+    <div class="pt-5 gradientrose">
+        <div class="container mt-5 pt-5">
+            <div class="row">
+                <div class="col-md-6 my-5 text-lg-left text-center align-self-center">
+                    <h1 class="display-1">Easy Bill</h1>
+                    <p class="lead">Votre application de gestion commerciale.</p>
+                    <div class="row mt-5">
+                        <div class="col-6 col-lg-4"></div>
+                        <div class="col-6 col-lg-4">
+                            <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Index","Login")>Accéder</a>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <img style="position:relative;" class="d-block mx-auto" src="~/assets/app/accueilscreen2.png" width="1000">
-                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img style="position:relative;" class="d-block mx-auto" src="~/assets/app/accueilscreen2.png" width="1000">
                 </div>
             </div>
         </div>
-        <div class="bg-light">
-            <!-- Article style section -->
-            <div class="py-5">
-                <div class="container">
-                    <div class="row py-5">
-                        <div class="col-md-5 order-2 order-md-1 animate-in-left">
-                            <img class="img-fluid d-block my-3 mx-auto" src="~/assets/app/ajoutdevis.png" width="400">
-                        </div>
-                        <div class="col-md-7 align-self-center order-1 order-md-2 my-3 text-md-left text-center">
-                            <h2>Facile d'utilisation</h2>
-                            <p class="my-4 text-muted">
-                                Nous souhaitons avant tout que Easy Bill soit accessible par tout le monde. C'est pour celà que nous avons agencé de site de manière claire et ergonomique.
-                                Reglez vos paramètres et créez des devis encore plus facilement et rapidement.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row pt-5">
-                        <div class="align-self-center col-lg-7 text-md-left text-center">
-                            <h2>Travailler partout</h2>
-                            <p class="my-4 text-muted">
-                                Plus besoin de bureau pour créer vos devis et vos factures, faites vos devis directement sur place avec votre client.
-                                Pas besoin de connexion internet, Easy Bill est disponible hors ligne.
-                            </p>
-                        </div>
-                        <div class="align-self-center mt-5 col-lg-5 animate-in-right">
-                            <img class="img-fluid d-block" src="~/assets/app/architect.jpg">
-                        </div>
-                    </div>
-                    <hr class="mt-0 my-4">
-                </div>
-            </div>
+    </div>
 
-            <div id="features" class="py-5 bg-light">
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-md-12">
-                            <h1 class="mb-4 text-primary" style="font-size:5rem;">Les fonctionnalités d'Easy Bill</h1>
-                            <p class="lead text-dark">
-                                Votre application de gestion commerciale préféré vous offre de nombreuses 
-                                <br>fonctionnalités qui vous aideront dans vos démarches commerciales.
-                            </p>
-                            <div class="row text-left mt-5">
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-users"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>Gérer vos clients</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Une gestion simple et complète vos clients et fournisseurs.</p>
-                                </div>
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x far fa-copy"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>Créer des devis</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Créer des devis n'a jamais été aussi simple. Ne rentrer que les informations utiles, on s'occupe du reste !</p>
-                                </div>
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-file-alt"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>Transformer vos devis en facture</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Une facturation simple qui s'occupe de tout. Ne vous souciez plus de votre comptabilité.</p>
-                                </div>
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-user-circle"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>Gérer votre profil</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Personnalisez votre profil afin d'être plus productifs dans votre travail.</p>
-                                </div>
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-chart-pie"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>Accéder à votre tableau de bord</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Votre récapitulatif du mois vous informe sur l'évolution de votre entreprise.</p>
-                                </div>
-                                <div class="col-md-4 my-3">
-                                    <div class="row mb-3">
-                                        <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-chart-line"></i></div>
-                                        <div class="align-self-center col-10">
-                                            <h5 class="text-secondary"><b>D'être plus productifs.</b></h5>
-                                        </div>
-                                    </div>
-                                    <p>Easy Bill a permit à nos clients d'économiser du temps sur leurs papiers. Ils ont ainsi plus de temps à consacrer à l'essentiel.</p>
-                                </div>
-                            </div>
-                        </div>
+    //Affichage des fonctionnalités de l'application
+    <div class="bg-light">
+        <!-- Article style section -->
+        <div class="py-5">
+            <div class="container">
+                <div class="row py-5">
+                    <div class="col-md-5 order-2 order-md-1 animate-in-left">
+                        <img class="img-fluid d-block my-3 mx-auto" src="~/assets/app/ajoutdevis.png" width="400">
+                    </div>
+                    <div class="col-md-7 align-self-center order-1 order-md-2 my-3 text-md-left text-center">
+                        <h2>Facile d'utilisation</h2>
+                        <p class="my-4 text-muted">
+                            Nous souhaitons avant tout que Easy Bill soit accessible par tout le monde. C'est pour celà que nous avons agencé de site de manière claire et ergonomique.
+                            Reglez vos paramètres et créez des devis encore plus facilement et rapidement.
+                        </p>
                     </div>
                 </div>
+                <div class="row pt-5">
+                    <div class="align-self-center col-lg-7 text-md-left text-center">
+                        <h2>Travailler partout</h2>
+                        <p class="my-4 text-muted">
+                            Plus besoin de bureau pour créer vos devis et vos factures, faites vos devis directement sur place avec votre client.
+                            Pas besoin de connexion internet, Easy Bill est disponible hors ligne.
+                        </p>
+                    </div>
+                    <div class="align-self-center mt-5 col-lg-5 animate-in-right">
+                        <img class="img-fluid d-block" src="~/assets/app/architect.jpg">
+                    </div>
+                </div>
+                <hr class="mt-0 my-4">
             </div>
         </div>
 
-        <!-- Call to action -->
-        <div class="py-5 section-primary" id="download">
+        <div id="features" class="py-5 bg-light">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6 align-self-center text-center text-md-left">
-                        <h1><b>Vous souhaitez nous contacter ?</b></h1>
-                        <p class="lead">Nous sommes à votre écoute.</p>
-                        <div class="row mt-5">
-                            <div class="col-6 col-lg-4">
-                                <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Contact","Home")>Contacter</a>
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h1 class="mb-4 text-primary" style="font-size:5rem;">Les fonctionnalités d'Easy Bill</h1>
+                        <p class="lead text-dark">
+                            Votre application de gestion commerciale préféré vous offre de nombreuses
+                            <br>fonctionnalités qui vous aideront dans vos démarches commerciales.
+                        </p>
+                        <div class="row text-left mt-5">
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-users"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>Gérer vos clients</b></h5>
+                                    </div>
+                                </div>
+                                <p>Une gestion simple et complète vos clients et fournisseurs.</p>
+                            </div>
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x far fa-copy"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>Créer des devis</b></h5>
+                                    </div>
+                                </div>
+                                <p>Créer des devis n'a jamais été aussi simple. Ne rentrer que les informations utiles, on s'occupe du reste !</p>
+                            </div>
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-file-alt"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>Transformer vos devis en facture</b></h5>
+                                    </div>
+                                </div>
+                                <p>Une facturation simple qui s'occupe de tout. Ne vous souciez plus de votre comptabilité.</p>
+                            </div>
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-user-circle"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>Gérer votre profil</b></h5>
+                                    </div>
+                                </div>
+                                <p>Personnalisez votre profil afin d'être plus productifs dans votre travail.</p>
+                            </div>
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-chart-pie"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>Accéder à votre tableau de bord</b></h5>
+                                    </div>
+                                </div>
+                                <p>Votre récapitulatif du mois vous informe sur l'évolution de votre entreprise.</p>
+                            </div>
+                            <div class="col-md-4 my-3">
+                                <div class="row mb-3">
+                                    <div class="text-center col-2"><i class="d-block mx-auto fa fa-2x fa-chart-line"></i></div>
+                                    <div class="align-self-center col-10">
+                                        <h5 class="text-secondary"><b>D'être plus productifs.</b></h5>
+                                    </div>
+                                </div>
+                                <p>Easy Bill a permit à nos clients d'économiser du temps sur leurs papiers. Ils ont ainsi plus de temps à consacrer à l'essentiel.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 animate-in-left">
-                        @*<img class="img-fluid d-block my-4 animate-slide-in" src="~/assets/app/iphone_isometric_light.png">*@
-                    </div>
                 </div>
             </div>
         </div>
-        <!-- Footer -->
-        <div class="py-5 bg-dark">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-9">
-                        <p class="lead">Inscrivez-vous à notre newsletter pour recevoir les dernières news.</p>
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Votre mail">
-                            </div>
-                            <button type="submit" class="btn ml-2 btn-secondary">S'abonner</button>
-                        </form>
+    </div>
+
+    <!-- Call to action -->
+    // Bouton permettant à l'utilisateur de contacter un administrateur avec l'envoi d'un feedback
+    <div class="py-5 section-primary" id="download">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 align-self-center text-center text-md-left">
+                    <h1><b>Vous souhaitez nous contacter ?</b></h1>
+                    <p class="lead">Nous sommes à votre écoute.</p>
+                    <div class="row mt-5">
+                        <div class="col-6 col-lg-4">
+                            <a class="btn navbar-btn text-white mx-2 btn-secondary" href=@Url.Action("Contact","Home")>Contacter</a>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 my-3 text-center">
-                        <p class="text-muted">© Copyright 2018 Easy Bill - All rights reserved.</p>
-                    </div>
+                <div class="col-md-6 animate-in-left">
+                    @*<img class="img-fluid d-block my-4 animate-slide-in" src="~/assets/app/iphone_isometric_light.png">*@
                 </div>
             </div>
         </div>
-        <!-- JavaScript dependencies -->
-        <script src="~/Scripts/jquery-1.10.2.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
-        <!-- Script: Smooth scrolling between anchors in the same page -->
-        <script src="~/Scripts/smooth-scroll.js"></script>
+    </div>
+    <!-- Footer -->
+    //Div permettant de donner son adresse e-mail et de s'abonner à la newsletter
+    <div class="py-5 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <p class="lead">Inscrivez-vous à notre newsletter pour recevoir les dernières news.</p>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Votre mail">
+                        </div>
+                        <button type="submit" class="btn ml-2 btn-secondary">S'abonner</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 my-3 text-center">
+                    <p class="text-muted">© Copyright 2018 Easy Bill - All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript dependencies -->
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Script: Smooth scrolling between anchors in the same page -->
+    <script src="~/Scripts/smooth-scroll.js"></script>
 }
+
+@*Éléments affichés lorsque l'utilisateur est connecté*@
 else
 {
     <div class="py-5 text-center opaque-overlay">

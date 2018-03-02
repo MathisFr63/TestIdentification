@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Account.Feedback>
+﻿@*Vue permettant l'affichage des feedbacks envoyés aux administrateurs*@
+@model PagedList.IPagedList<WebApplication1.Models.Account.Feedback>
 @using PagedList.Mvc;
 
 @{
@@ -9,6 +10,7 @@
     Les Feedbacks
 </h2>
 
+@*Navbar permettant de trier et de faire une recherche sur la liste des feedbacks.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -40,6 +42,7 @@
 </nav>
 <br />
 
+@*Affichage de la liste des feedbacks*@
 <table class="table">
     <tr>
         <th>Nom</th>
@@ -49,23 +52,33 @@
         <th>Etat</th>
         <th></th>
     </tr>
-
+    @*Pour chaque feedback, affichage du nom de l'utilisateur, de son identifiant, du sujet du feedback, du commentaire lui étant lié et de son état*@
+    @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier l'état, afficher les détails et supprimer le feedback*@
     @foreach (var item in Model)
     {
         <tr>
+            @*Affichage du nom de l'utilisateur ayant envoyé le feedback*@
             <td>
                 @Html.DisplayFor(modelItem => item.userName)
             </td>
+
+            @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
             <td>
                 @Html.DisplayFor(modelItem => item.UtilisateurID)
             </td>
+
+            @*Affichage du sujet du feedback*@
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
             </td>
+
+            @*Affichage du commentaire lié au feedback*@
             <td>
                 <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
                 @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
+
+            @*Affichage de l'état du feedback*@
             <td>
                 @Html.DisplayFor(modelItem => item.Etat)
             </td>
@@ -86,16 +99,17 @@
 
 <br />
 
+@*Partie permettant d'afficher et de se diriger sur les différentes pages s'il y en a plusieurs*@
 @if (!Model.PageCount.Equals(1))
 {
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-              new
-              {
-                  page,
-                  sortOrder = ViewBag.CurrentSort,
-                  currentFilter = ViewBag.CurrentFilter
-              }))
+                             new
+                             {
+                                 page,
+                                 sortOrder = ViewBag.CurrentSort,
+                                 currentFilter = ViewBag.CurrentFilter
+                             }))
     </div>
 }
