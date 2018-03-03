@@ -246,7 +246,9 @@
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\smooth-scroll.js" />
     <Content Include="Views\Devis\UserControlArticle.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
