@@ -39,7 +39,7 @@
             @*Div permettant d'ajouter un commentaire au devis*@
             <div class="form-group">
                 @Html.LabelFor(model => model.Devis.Commentaire)<br />
-                @Html.TextAreaFor(model => model.Devis.Commentaire, new { htmlAttributes = new { @class = "form-control", @cols = 100, @rows = 10 } })
+                @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS"} )
                 @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
             </div>
 

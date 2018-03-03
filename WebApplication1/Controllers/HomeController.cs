@@ -19,6 +19,27 @@ namespace WebApplication1.Controllers
         // Méthode permettant l'affichage de la page d'accueil.
         public ActionResult Index()
         {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user != null)
+            {
+                var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+                ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+                ListDevis = ListDevis.OrderByDescending(s => s.Date).ToList();
+                ViewBag.listeDevis = ListDevis.Take(6);
+                ViewBag.NbDevis = ListDevis.Count();
+
+                var ListFactures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+                ListFactures = ListFactures.OrderByDescending(s => s.Date).ToList();
+                ViewBag.listeFactures = ListFactures.Take(6);
+                ViewBag.NbFactures = ListFactures.Count();
+
+                var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
+                ListProduits.Reverse();
+                ViewBag.listeProduits = ListProduits.Take(6);
+                ViewBag.NbProduits = ListProduits.Count();
+
+            }
+            
             return View();
         }
 
