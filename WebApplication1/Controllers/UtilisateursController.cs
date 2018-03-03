@@ -60,6 +60,13 @@ namespace WebApplication1.Controllers
 
             if (utilisateur == null)
                 return HttpNotFound();
+            
+            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).ToList();
+            ViewBag.NbDevis = ListDevis.Count();
+            var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
+            ViewBag.NbFactures = factures.Count();
+            var listProduit = db.Produits.Where(p => p.UtilisateurID == utilisateur.ID).ToList();
+            ViewBag.NbProduits = listProduit.Count();
 
             return View(utilisateur);
         }

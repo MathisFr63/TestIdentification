@@ -16,12 +16,16 @@
 }
 
 <br />
-<h3 class="">Informations sur @Html.DisplayFor(model => model.ID) :</h3>
+<h3 class="">Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom) :</h3>
+<br />
 <br />
 
 <div class="py-5">
     <div class="container">
         <div class="row">
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
+            </div>
             <div class="col-md-6">
                 <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom )</p>
             </div>
@@ -29,9 +33,17 @@
                 <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
             </div>
             <div class="col-md-6">
-                <p class="lead">Type : @Html.DisplayFor(model => model.Type)</p>
+                <p class="lead">Vous êtes @Html.DisplayFor(model => model.Type)</p>
             </div>
-
+            <div class="col-md-6">
+                <p class="lead">Vous avez réalisé @ViewBag.NbDevis devis.</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Vous avez facturé @ViewBag.NbFactures devis.</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Vous avez une liste de @ViewBag.NbProduits produits.</p>
+            </div>
         </div>
     </div>
 </div>
