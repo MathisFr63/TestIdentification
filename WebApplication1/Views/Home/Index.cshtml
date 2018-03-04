@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Easy Bill";
 }
+<link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 
 @*Éléments affichés lorsque l'utilisateur n'est pas connecté*@
 @if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -10,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS dependencies -->
     <link rel="stylesheet" href="~/Content/theme.css">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
     <!-- Script: Make my navbar transparent when the document is scrolled to top -->
     <script src="~/Scripts/navbar-ontop.js"></script>
     <!-- Script: Animated entrance -->
@@ -214,18 +215,61 @@
     @*Éléments affichés lorsque l'utilisateur est connecté*@
 else
 {
+    <link rel="stylesheet" href="~/Content/Site.css">
+
+    <div class="panel panel-container">
+        <div class="row">
+            <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="panel panel-teal panel-widget border-right">
+                    <div class="row no-padding">
+                        <em class="fa fa-xl fa-clipboard color-blue"></em>
+                        <div class="large">@ViewBag.NbDevis</div>
+                        <div class="text-muted">Devis réalisés</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="panel panel-blue panel-widget border-right">
+                    <div class="row no-padding">
+                        <em class="fa fa-xl fa-shopping-cart color-orange"></em>
+                        <div class="large">@ViewBag.NbFactures</div>
+                        <div class="text-muted">Devis facturés</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="panel panel-orange panel-widget border-right">
+                    <div class="row no-padding">
+                        <em class="fa fa-xl fa-boxes color-teal"></em>
+                        <div class="large">@ViewBag.NbProdSold</div>
+                        <div class="text-muted">Produits vendus</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="panel panel-red panel-widget ">
+                    <div class="row no-padding">
+                        <em class="fa fa-xl fa-euro-sign color-red"></em>
+                        <div class="large">@ViewBag.CA</div>
+                        <div class="text-muted">Chiffre d'affaire</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="py-5 section-secondary" id="schedule">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-white text-center" style="color:red">Historique</h1>
+                    <h1 class=" text-center titreRouge">Historique</h1>
                 </div>
             </div>
+            <hr />
             <div class="row text-left">
                 <div class="p-4 col-lg-4 col-md-6 animate-in-left">
                     <div class="card text-dark">
                         <div class="card-block text-center card-primary p-2">
-                            <h2>Devis</h2>
                             <p class="lead" style="color:dimgray">Vos derniers devis</p>
                         </div>
                         <ul class="list-group list-group-flush">
@@ -246,7 +290,6 @@ else
                 <div class="p-4 col-lg-4 col-md-6 animate-in-down">
                     <div class="card text-dark">
                         <div class="card-block text-center card-primary p-2">
-                            <h2>Factures</h2>
                             <p class="lead" style="color:dimgray">Vos dernières factures</p>
                         </div>
                         <ul class="list-group list-group-flush">
@@ -267,7 +310,6 @@ else
                 <div class="p-4 col-lg-4 animate-in-right">
                     <div class="card text-dark">
                         <div class="card-block text-center p-2">
-                            <h2>Produits</h2>
                             <p class="lead" style="color:dimgray">Vos derniers produits créés</p>
                         </div>
                         <ul class="list-group list-group-flush">
@@ -288,4 +330,5 @@ else
             </div>
         </div>
     </div>
+    
 }

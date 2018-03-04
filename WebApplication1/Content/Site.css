@@ -215,3 +215,119 @@ b{
     max-height: 11rem;
     min-width:500px;
 }
+
+.titreRouge{
+    color:red;
+}
+
+.panel-container {
+    padding-top: 20px;
+}
+
+.panel {
+    border: 0;
+}
+
+.no-padding {
+    padding: 0;
+    margin: 0;
+}
+
+.panel .border-top, .panel .border-right, .panel .border-bottom, .panel .border-left {
+    border-color: #e9ecf2;
+}
+
+.border-right {
+    border-right: 1px solid #dadbda;
+}
+
+.panel-widget {
+    padding: 10px 0;
+    position: relative;
+    box-shadow: none;
+    border-radius: 0;
+    background: none;
+    text-align: center;
+    color: #333;
+}
+
+.panel-teal {
+    background: #1ebfae;
+    color: #fff;
+}
+
+.panel {
+    border: 0;
+}
+
+.panel-widget {
+    padding: 10px 0;
+    position: relative;
+    box-shadow: none;
+    border-radius: 0;
+    background: none;
+    text-align: center;
+    color: #333;
+}
+
+.panel-teal {
+    background: #1ebfae;
+    color: #fff;
+}
+
+.panel-widget .large {
+    color: #373b45;
+    font-size: 3em;
+}
+
+.large {
+    font-size: 2em;
+}
+
+.panel-widget .text-muted {
+    margin-top: -6px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.text-muted {
+    color: #c5c7cc;
+}
+.panel .border-top, .panel .border-right, .panel .border-bottom, .panel .border-left {
+    border-color: #e9ecf2;
+}
+
+.border-right {
+    border-right: 1px solid #dadbda;
+}
+
+.panel-widget {
+    padding: 10px 0;
+    position: relative;
+    box-shadow: none;
+    border-radius: 0;
+    background: none;
+    text-align: center;
+    color: #333;
+}
+
+.fa-xl {
+    font-size: 2em;
+}
+
+.color-blue {
+    color: #30a5ff;
+}
+
+.color-orange {
+    color: #ffb53e;
+}
+
+.color-teal {
+    color: #1ebfae;
+}
+
+.color-red {
+    color: #f9243f;
+}

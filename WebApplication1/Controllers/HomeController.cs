@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.Controllers
 {
@@ -29,7 +30,9 @@ namespace WebApplication1.Controllers
                 ViewBag.NbDevis = ListDevis.Count();
 
                 var ListFactures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+                ListFactures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
                 ListFactures = ListFactures.OrderByDescending(s => s.Date).ToList();
+
                 ViewBag.listeFactures = ListFactures.Take(6);
                 ViewBag.NbFactures = ListFactures.Count();
 
@@ -37,7 +40,10 @@ namespace WebApplication1.Controllers
                 ListProduits.Reverse();
                 ViewBag.listeProduits = ListProduits.Take(6);
                 ViewBag.NbProduits = ListProduits.Count();
+                
+                ViewBag.NbProdSold = ListFactures.Sum(f => f.Produits.Sum(p => p.Quantite));
 
+                ViewBag.CA = ListFactures.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
             }
             
             return View();
