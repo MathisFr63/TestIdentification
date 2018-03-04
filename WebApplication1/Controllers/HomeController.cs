@@ -76,7 +76,8 @@ namespace WebApplication1.Controllers
                             dico.Add(dp.Nom, dp.Quantite);
                     }
                 }
-                ViewBag.ProduitPlusVendu = dico.OrderByDescending(p => p.Value).First().Key;
+                if (dico.Count > 0)
+                    ViewBag.ProduitPlusVendu = dico.OrderByDescending(p => p.Value).First().Key;
             }
 
             return View();

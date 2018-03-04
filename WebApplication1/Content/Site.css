@@ -144,6 +144,7 @@ textarea {
 /*** MultiSelect checkbox ***/
 .multiselect {
     width: 200px;
+    float: left;
 }
 
 .selectBox {

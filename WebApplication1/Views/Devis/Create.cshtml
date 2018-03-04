@@ -17,9 +17,8 @@
         </a>
     </p>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="form-horizontal">
-
             <h3>Informations règlement:</h3>
             <hr />
             @*Div permettant de remplir l'objet du devis*@
@@ -39,7 +38,7 @@
             @*Div permettant d'ajouter un commentaire au devis*@
             <div class="form-group">
                 @Html.LabelFor(model => model.Devis.Commentaire)<br />
-                @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS"} )
+                @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS" })
                 @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
             </div>
 
@@ -48,25 +47,26 @@
             <hr />
 
             @*Div permettant de sélectionner les produits à ajouter au devis ainsi que définir la quantité voulue*@
-            <div class="multiselect">
-                <div class="selectBox" onclick="showCheckboxes()">
-                    <select>
-                        <option>Selectionnez un produit</option>
-                    </select>
-                    <div class="overSelect"></div>
+            <div class="form-group col-md-12">
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                        <select>
+                            <option>Selectionnez un produit</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxes">
+                        @foreach (var item in Model.Produits)
+                        {
+                            <label>
+                                <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
+                            </label>
+                        }
+                    </div>
                 </div>
-                <div id="checkboxes">
-                    @foreach (var item in Model.Produits)
-                    {
-                        <label>
-                            <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
-                        </label>
-                    }
-                </div>
+
+                <div id="articles" class="col-md-6"></div>
             </div>
-
-            <div id="articles"></div>
-
             <br />
 
             @*Bouton permettant de valider la création du devis*@
