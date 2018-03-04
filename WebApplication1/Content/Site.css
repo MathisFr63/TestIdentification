@@ -89,7 +89,7 @@ input, select, textarea {
 }
 
 
-.fondGradientGris {
+#fondGradientGris {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+65,e1e1e1+81,f6f6f6+100 */
     background: rgb(255,255,255); /* Old browsers */
     background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* FF3.6-15 */
@@ -330,4 +330,42 @@ b{
 
 .color-red {
     color: #f9243f;
+}
+
+.easypiechart-panel {
+    text-align: center;
+    padding: 1px 0;
+    margin-bottom: 20px;
+}
+
+.easypiechart {
+    position: relative;
+    text-align: center;
+    width: 120px;
+    height: 120px;
+    margin: 20px auto 10px auto;
+}
+
+#easypiechart-blue .percent {
+    color: #30a5ff;
+}
+
+.easypiechart .percent {
+    display: block;
+    position: absolute;
+    font-size: 26px;
+    top: 38px;
+    width: 120px;
+}
+
+#easypiechart-orange .percent {
+    color: #ffb53e;
+}
+
+#easypiechart-teal .percent {
+    color: #1ebfae;
+}
+
+#easypiechart-red .percent {
+    color: #ef4040;
 }

@@ -39,13 +39,52 @@ namespace WebApplication1.Controllers
                 var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
                 ListProduits.Reverse();
                 ViewBag.listeProduits = ListProduits.Take(6);
+
+
                 ViewBag.NbProduits = ListProduits.Count();
-                
+
+                // nb produits vendu au total
                 ViewBag.NbProdSold = ListFactures.Sum(f => f.Produits.Sum(p => p.Quantite));
 
+                // CA total
                 ViewBag.CA = ListFactures.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
+
+                var listDevisRecent = ListDevis.Where(d => d.Date.AddMonths(1) > DateTime.Today);
+
+                // calcul CA du mois
+                var listFacturesRecentes = ListFactures.Where(d => d.Date.AddMonths(1) > DateTime.Today);
+                ViewBag.CAduMois = listFacturesRecentes.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
+
+                // nb devis récent
+                ViewBag.NbDevisRecent = listDevisRecent.Count();
+
+                // % de devis concrétisés
+                if (ViewBag.NbDevis > 0)
+                    ViewBag.DevisConcret = ViewBag.NbFactures * 100 / ViewBag.NbDevis;
+                else
+                    ViewBag.DevisConcret = 0;
+
+                // calcul du produit le plus vendu du mois
+                List<DonneeProduit> max = new List<DonneeProduit>();
+                foreach (Facture f in listFacturesRecentes)
+                {
+
+                    f.Produits.OrderByDescending(p => p.Quantite);
+                    max.Add(f.Produits.First());
+                }
+                max.OrderBy(p => p.Quantite);
+                if (max.Count() > 0)
+                {
+                    ViewBag.ProduitPlusVendu = max.First();
+                    ViewBag.ProduitPlusV=1;
+                }
+                else
+                {
+                    ViewBag.ProduitPlusV = 0;
+                }
+
             }
-            
+
             return View();
         }
 

@@ -258,77 +258,131 @@ else
         </div>
     </div>
 
-    <div class="py-5 section-secondary" id="schedule">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class=" text-center titreRouge">Historique</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class=" text-center">Vos chiffres des 30 derniers jours</h1>
+        </div>
+        <hr />
+        <div class="col-xs-6 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <h4>Devis concrétisés</h4>
+                    <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">@ViewBag.DevisConcret%</span></div>
                 </div>
             </div>
-            <hr />
-            <div class="row text-left">
-                <div class="p-4 col-lg-4 col-md-6 animate-in-left">
-                    <div class="card text-dark">
-                        <div class="card-block text-center card-primary p-2">
-                            <p class="lead" style="color:dimgray">Vos derniers devis</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @if (ViewBag.NbDevis == 0)
-                            {
-                                <li class="list-group-item">Vous n'avez aucun devis</li>
-                            }
-                            else
-                            {
-                                foreach (var item in ViewBag.listeDevis)
-                                {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Devis", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
-                                }
-                            }
-                        </ul>
-                    </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <h4>Devis réalisés</h4>
+                    <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">@ViewBag.NbDevisRecent</span></div>
                 </div>
-                <div class="p-4 col-lg-4 col-md-6 animate-in-down">
-                    <div class="card text-dark">
-                        <div class="card-block text-center card-primary p-2">
-                            <p class="lead" style="color:dimgray">Vos dernières factures</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @if (ViewBag.NbFactures == 0)
-                            {
-                                <li class="list-group-item">Vous n'avez aucune facture</li>
-                            }
-                            else
-                            {
-                                foreach (var item in ViewBag.listeFactures)
-                                {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Factures", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
-                                }
-                            }
-                        </ul>
-                    </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <h4>Produit du mois</h4>
+                    @if (ViewBag.ProduitPlusV == 0)
+                    {
+                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">Aucun produit</span></div>
+                    }
+                    else
+                    {
+                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">@ViewBag.ProduitPlusVendu.Nom</span></div>
+                    }
                 </div>
-                <div class="p-4 col-lg-4 animate-in-right">
-                    <div class="card text-dark">
-                        <div class="card-block text-center p-2">
-                            <p class="lead" style="color:dimgray">Vos derniers produits créés</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @if (ViewBag.NbProduits == 0)
-                            {
-                                <li class="list-group-item">Vous n'avez aucun produit</li>
-                            }
-                            else
-                            {
-                                foreach (var item in ViewBag.listeProduits)
-                                {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Nom</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
-                                }
-                            }
-                        </ul>
-                    </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <h4>Chiffre d'affaire</h4>
+                    <div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">+ @ViewBag.CAduMois €</span></div>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <hr />
+
+        <div class="py-5 section-secondary" id="schedule">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class=" text-center titreRouge">Historique</h1>
+                    </div>
+                </div>
+                <hr />
+                <div class="row text-left">
+                    <div class="p-4 col-lg-4 col-md-6 animate-in-left">
+                        <div class="card text-dark">
+                            <div class="card-block text-center card-primary p-2">
+                                <p class="lead" style="color:dimgray">Vos derniers devis</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if (ViewBag.NbDevis == 0)
+                                {
+                                    <li class="list-group-item">Vous n'avez aucun devis</li>
+                                }
+                                else
+                                {
+                                    foreach (var item in ViewBag.listeDevis)
+                                    {
+                                        <li class="list-group-item"><a href=@Url.Action("Details", "Devis", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-4 col-lg-4 col-md-6 animate-in-down">
+                        <div class="card text-dark">
+                            <div class="card-block text-center card-primary p-2">
+                                <p class="lead" style="color:dimgray">Vos dernières factures</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if (ViewBag.NbFactures == 0)
+                                {
+                                    <li class="list-group-item">Vous n'avez aucune facture</li>
+                                }
+                                else
+                                {
+                                    foreach (var item in ViewBag.listeFactures)
+                                    {
+                                        <li class="list-group-item"><a href=@Url.Action("Details", "Factures", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-4 col-lg-4 animate-in-right">
+                        <div class="card text-dark">
+                            <div class="card-block text-center p-2">
+                                <p class="lead" style="color:dimgray">Vos derniers produits créés</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if (ViewBag.NbProduits == 0)
+                                {
+                                    <li class="list-group-item">Vous n'avez aucun produit</li>
+                                }
+                                else
+                                {
+                                    foreach (var item in ViewBag.listeProduits)
+                                    {
+                                        <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Nom</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+
+
 }
