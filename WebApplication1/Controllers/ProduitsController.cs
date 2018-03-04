@@ -36,16 +36,16 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentSort = sortOrder;
 
 
-            var listeTrie = listProduit.OrderBy(s => s.Nom);
+            var listeTrie = listProduit.OrderBy(s => s.Libelle);
             
 
             switch (sortOrder)
             {
                 case "objetAZ":
-                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
                     break;
                 case "objetZA":
-                    listeTrie = listeTrie.OrderByDescending(s => s.Nom);
+                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
                     break;
                 case "prixFaibleFort":
                     listeTrie = listeTrie.OrderBy(s => s.PrixHT);
@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
                     listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
                     break;
                 default:
-                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
                     break;
             }
 
@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
 
             if (!string.IsNullOrEmpty(searchstring))
             {
-                return View(listeTrie.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.Where(s => s.Libelle.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
@@ -97,7 +97,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // Méthode permettant d'ajouter un produit à la liste des produits de l'utilisateur après avoir rempli les champs de la page de création.
-        public ActionResult Create([Bind(Include = "ID, Nom, Commentaire, PrixHT, Reduction, TVA, Type")] Produit produit)
+        public ActionResult Create([Bind(Include = "ID, Libelle, Commentaire, PrixHT, Reduction, TVA, Type")] Produit produit)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +135,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditPost(int id)
         {
             var produit = db.Produits.Find(id);
-            if (TryUpdateModel(produit, "", new string[] { "Nom", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
+            if (TryUpdateModel(produit, "", new string[] { "Libelle", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
             {
                 try
                 {

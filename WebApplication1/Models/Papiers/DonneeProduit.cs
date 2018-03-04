@@ -49,7 +49,7 @@
         /// <param name="produit">Produit dont on veut stocker les données au moment T</param>
         public DonneeProduit(Produit produit) : this()
         {
-            Nom = produit.Nom;
+            Nom = produit.Libelle;
             Commentaire = produit.Commentaire;
             PrixHT = produit.PrixHT;
             Reduction = produit.Reduction;

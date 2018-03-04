@@ -102,7 +102,7 @@ namespace WebApplication1.Controllers
                 for (int i = 4; i < keys.Length; i++)
                 {
                     var name = keys[i];
-                    var produit = db.Produits.First(p => p.Nom == name);
+                    var produit = db.Produits.First(p => p.Libelle == name);
 
                     db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0]))
                                         {

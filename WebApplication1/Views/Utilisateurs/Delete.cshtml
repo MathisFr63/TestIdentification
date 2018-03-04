@@ -1,22 +1,32 @@
-﻿@model WebApplication1.Models.Account.Utilisateur
+﻿@*Vue permettant la suppression d'un utilisateur*@
+@model WebApplication1.Models.Account.Utilisateur
 @{
     ViewBag.Title = "Delete";
 }
 <br />
 <p>
+    @*Bouton de retour*@
     <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
-<h3>Are you sure you want to delete this?</h3>
+<h3>Voulez-vous vraiment supprimer cet utilisateur ?</h3>
+
+@*Div permettant d'afficher les détails de l'utilisateurs*@
 <div>
     <h4>Utilisateur</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Mail</dt>
+
+        @*Afficage de l'identifiant (adresse e-mail) de l'utilisateur allant être supprimé*@
+        <dt>
+            @Html.LabelFor(model => model.ID)
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.ID)
         </dd>
+
+        @*Affichage du mot de passe (crypté) de l'utilsateur allant être supprimé*@
         <dt>
             @Html.DisplayNameFor(model => model.MotDePasse)
         </dt>
@@ -24,6 +34,8 @@
             @Html.DisplayFor(model => model.MotDePasse)
         </dd>
     </dl>
+
+    @*Bouton permettant de valider la suppression de l'utilissateur*@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Papiers.Produit
+﻿@*Vue permettant d'afficher les détails d'un produit*@
+@model WebApplication1.Models.Papiers.Produit
 
 @{
     ViewBag.Title = "Details";
@@ -6,19 +7,24 @@
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-secondary btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
+    @*Bouton de modification*@
     <a href=@Url.Action("Edit","Produits",new { id = Model.ID }) class="btn btn-secondary btn-lg">
         <span class="glyphicon glyphicon-pencil" />
     </a>
 </p>
 
-<h2>@Html.DisplayFor(model => model.Nom)</h2>
+@*Affichage du Libelle*@
+<h2>@Html.DisplayFor(model => model.Libelle)</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
+
+        @*Affichage du commentaire*@
         <dt>
             @Html.DisplayNameFor(model => model.Commentaire)
         </dt>
@@ -27,6 +33,7 @@
             @Html.DisplayFor(model => model.Commentaire)
         </dd>
 
+        @*Affichage du prix hors taxes*@
         <dt>
             @Html.DisplayNameFor(model => model.PrixHT)
         </dt>
@@ -35,6 +42,7 @@
             @Html.DisplayFor(model => model.PrixHT)
         </dd>
 
+        @*Affichage de la réduction*@
         <dt>
             @Html.DisplayNameFor(model => model.Reduction)
         </dt>
@@ -43,6 +51,7 @@
             @Html.DisplayFor(model => model.Reduction)
         </dd>
 
+        @*Affichage du taux de TVA du produit*@
         <dt>
             @Html.DisplayNameFor(model => model.TVA)
         </dt>
@@ -51,6 +60,7 @@
             @Html.DisplayFor(model => model.TVA)
         </dd>
 
+        @*Affichage du type du produit (bien / service)*@
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>

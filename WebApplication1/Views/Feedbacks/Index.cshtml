@@ -21,7 +21,7 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "recherche par sujet" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default">avancee</button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default">Avancée</button>
                 </div>
             }
         </form>
@@ -49,7 +49,7 @@
         <th>Email</th>
         <th>Sujet</th>
         <th>Commentaire</th>
-        <th>Etat</th>
+        <th>IsResolved</th>
         <th></th>
     </tr>
     @*Pour chaque feedback, affichage du nom de l'utilisateur, de son identifiant, du sujet du feedback, du commentaire lui étant lié et de son état*@
@@ -80,7 +80,7 @@
 
             @*Affichage de l'état du feedback*@
             <td>
-                @Html.DisplayFor(modelItem => item.Etat)
+                @item.IsResolved
             </td>
             <td>
                 <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn btn-info">

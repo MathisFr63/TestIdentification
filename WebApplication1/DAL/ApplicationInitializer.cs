@@ -41,13 +41,13 @@ namespace WebApplication1.DAL
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
 
             // Ajout de produits.
-            var produit1 = new Produit { PrixHT = 90, Reduction = 0, TVA = 2, Type = TypeService.Bien, Nom = "Radiateur", Commentaire = "Radiateur milieu de gamme", UtilisateurID = "Mathieu.RAVEL@etu.uca.fr" };
+            var produit1 = new Produit { PrixHT = 90, Reduction = 0, TVA = 2, Type = TypeService.Bien, Libelle = "Radiateur", Commentaire = "Radiateur milieu de gamme", UtilisateurID = "Mathieu.RAVEL@etu.uca.fr" };
             var produits = new List<Produit>
             {
                 produit1,
-                new Produit { PrixHT = 10, Reduction = 0, TVA = 3, Type = TypeService.Bien, Nom = "Joint de culasse", Commentaire = "Petites pièces d'un moteur", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" },
-                new Produit { PrixHT = 20, Reduction = 15, TVA = 5, Type = TypeService.Bien, Nom = "Opium", Commentaire = "Latex qu'exsude le pavot somnifère", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" },
-                new Produit { PrixHT = 7, Reduction = 7, TVA = 7, Type = TypeService.Bien, Nom = "Boules de cristal", Commentaire = "Drago Ball Z", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" }
+                new Produit { PrixHT = 10, Reduction = 0, TVA = 3, Type = TypeService.Bien, Libelle = "Joint de culasse", Commentaire = "Petites pièces d'un moteur", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" },
+                new Produit { PrixHT = 20, Reduction = 15, TVA = 5, Type = TypeService.Bien, Libelle = "Opium", Commentaire = "Latex qu'exsude le pavot somnifère", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" },
+                new Produit { PrixHT = 7, Reduction = 7, TVA = 7, Type = TypeService.Bien, Libelle = "Boules de cristal", Commentaire = "Drago Ball Z", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr" }
             };
             produits.ForEach(p => context.Produits.Add(p));
 
@@ -61,7 +61,7 @@ namespace WebApplication1.DAL
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>
             {
-                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problèmes Feedbacks", Etat = "En cours"}
+                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problèmes Feedbacks", IsResolved = false}
             };
             feedbacks.ForEach(f => context.Feedbacks.Add(f));
 

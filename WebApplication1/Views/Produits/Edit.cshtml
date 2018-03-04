@@ -1,15 +1,18 @@
-﻿@model WebApplication1.Models.Papiers.Produit
+﻿@*Vue permettant la modification du produit*@
+@model WebApplication1.Models.Papiers.Produit
 
 @{
     ViewBag.Title = "Edit";
 }
 <br/>
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 
+@*Formulaire permettant de modifier les champs voulus*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -18,16 +21,19 @@
         <h4>Modifier un Produit</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*Champs caché afin de stocker l'identifiant du produit*@
         @Html.HiddenFor(model => model.ID)
 
+        @*Div permettant de modifier le libelle*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Libelle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Libelle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Libelle, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        @*Div permettant de modifier le prix hors taxes*@
         <div class="form-group">
             @Html.LabelFor(model => model.PrixHT, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -36,6 +42,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier la réduction*@
         <div class="form-group">
             @Html.LabelFor(model => model.Reduction, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -44,6 +51,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le taux de TVA*@
         <div class="form-group">
             @Html.LabelFor(model => model.TVA, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -52,6 +60,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le type (bien / service)*@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -60,6 +69,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le commentaire*@
         <div class="form-group">
             @Html.LabelFor(model => model.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -68,8 +78,7 @@
             </div>
         </div>
         
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @*Bouton permettant de valider la modification du produit*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Sauvegarder" class="btn btn-default btn-secondary" />

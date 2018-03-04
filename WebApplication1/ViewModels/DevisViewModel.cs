@@ -64,7 +64,7 @@ namespace WebApplication1.ViewModels
         public DevisViewModel(List<Produit> listArticles)
         {
             Produits = new List<SelectListItem>();
-            listArticles.ForEach(a => Produits.Add(new SelectListItem { Text = a.Nom, Value = a.ID.ToString() }));
+            listArticles.ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
         }
     }
 }

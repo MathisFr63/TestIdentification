@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@*Vue permettant d'afficher le menu*@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,26 +9,36 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/site")
+
+    @*Icône de l'application*@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 
+@*Menu*@
 <body id="fondGradientGris">
+    @*Si l'utilisateur est connecté, affichage du menu*@
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
+
+                @*Div contenant le titre du menu avec le nom de l'application pour l'instant change en fonction de la taille*@
                 <div class="sidebar-header titre" id="sidebarCollapse">
                     <h3>Easy Bill</h3>
                     <strong>EB</strong>
                 </div>
+
+                @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
                 <ul class="list-unstyled components">
+                    @*Élément pour afficher le tableau de bord*@
                     <li>
                         <a href=@Url.Action("Index", "Home")>
                             <i class="glyphicon glyphicon-home"></i>Tableau de bord
                         </a>
                     </li>
 
+                    @*Si l'utilisateur est un administrateur, éléments pour la gestion des utilisateurs*@
                     @{
                         var db = new WebApplication1.DAL.ApplicationContext();
                         if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
@@ -37,21 +48,23 @@
                                     <i class="glyphicon glyphicon-star"></i>Utilisateurs
                                 </a>
                             </li>
-                            }
-
                         }
 
-                    @*<li>
-                        <a href="#entrepriseSubmenu" data-toggle="collapse">
-                            <i class="glyphicon glyphicon-user"></i>
-                            Entreprises
-                        </a>
-                        <ul class="collapse list-unstyled" id="entrepriseSubmenu">
-                            <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
-                            <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
-                        </ul>
-                    </li>*@
+                    }
 
+                    @*Élément pour la gestion des entrerprises (clients / fournisseurs)*@
+                    @*<li>
+                            <a href="#entrepriseSubmenu" data-toggle="collapse">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Entreprises
+                            </a>
+                            <ul class="collapse list-unstyled" id="entrepriseSubmenu">
+                                <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
+                                <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
+                            </ul>
+                        </li>*@
+
+                    @*Sous-menu pour la gestion des documents (devis / factures)*@
                     <li>
                         <a href="#papierSubmenu" data-toggle="collapse">
                             <i class="glyphicon glyphicon-file"></i>
@@ -63,16 +76,19 @@
                         </ul>
                     </li>
 
+                    @*Élément pour la gestion des produits*@
                     <li>
                         <a href=@Url.Action("Index", "Produits")>
                             <i class="glyphicon glyphicon-tags"></i>
                             Produits
                         </a>
                     </li>
-
                 </ul>
 
+                @*Liste contenant les différents éléments du menu concernant les informations de l'application*@
                 <ul class="list-unstyled components">
+
+                    @*Si l'utilisateur est un utilisateur basique : élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
                     {
                         <li>
@@ -82,6 +98,8 @@
                             </a>
                         </li>
                     }
+
+                    @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
                         <li>
@@ -91,20 +109,27 @@
                             </a>
                         </li>
                     }
+
+                    @*Élément permettant d'accéder à la section "À propos" (informations sur l'application)*@
                     <li>
                         <a href=@Url.Action("About", "Home")>
                             <i class="glyphicon glyphicon-info-sign"></i>
                             A propos
                         </a>
                     </li>
-                 </ul>
+                </ul>
 
+                @*Liste contenant les différents éléments du menu concernant l'utilisateur*@
                 <ul class="list-unstyled userinfo">
+
+                    @*Élément permettant à l'utilisateur d'accéder aux détails de son compte (et sûrement plus tard à ses paramètres)*@
                     <li>
                         <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name.Replace('.', '~') })>
                             @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Prénom
                         </a>
                     </li>
+
+                    @*Élément permettant à l'utilisateur de se déconnecter*@
                     <li>
                         <a class="btn-primary btn_deco" href=@Url.Action("Deconnexion", "Login")>
                             <span class="glyphicon glyphicon-off"></span> <e>Déconnection</e>
