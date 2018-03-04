@@ -9,6 +9,7 @@ using System.Data.Entity.Infrastructure;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
 using WebApplication1.ViewModels;
+using Rotativa;
 
 namespace WebApplication1.Controllers
 {
@@ -240,6 +241,24 @@ namespace WebApplication1.Controllers
                 db.Dispose();
 
             base.Dispose(disposing);
+        }
+
+        public ActionResult Print(int id)
+        {
+            var devis = db.Devis.Find(id);
+
+            return new ViewAsPdf("DevisToPdf", devis);
+        }
+
+        public ActionResult DevisToPdf(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var devis = db.Devis.Find(id);
+
+            if (devis == null) return HttpNotFound();
+
+            return View(devis);
         }
     }
 }
