@@ -108,9 +108,9 @@ namespace WebApplication1.Controllers
             var feedback = db.Feedbacks.Find(id);
 
             if (feedback == null) return HttpNotFound();
-            
-            if (feedback.Etat == "En cours") feedback.Etat = "Résolu";
-            else feedback.Etat = "En cours";
+
+            feedback.IsResolved = !feedback.IsResolved;
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

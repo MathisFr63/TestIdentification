@@ -61,7 +61,7 @@ namespace WebApplication1.DAL
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>
             {
-                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problèmes Feedbacks", Etat = "En cours"}
+                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problèmes Feedbacks", IsResolved = false}
             };
             feedbacks.ForEach(f => context.Feedbacks.Add(f));
 

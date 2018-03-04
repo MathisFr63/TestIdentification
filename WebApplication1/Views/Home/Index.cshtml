@@ -321,7 +321,7 @@ else
                             {
                                 foreach (var item in ViewBag.listeProduits)
                                 {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Nom</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
+                                    <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Libelle</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
                                 }
                             }
                         </ul>
