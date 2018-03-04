@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication1.Models.Papiers.Produit>
+﻿@*Vue permettant d'afficher la liste des produits de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Produit>
 @using PagedList.Mvc;
 
 @{
@@ -7,8 +8,11 @@
 
 <h2 class="titreIndex">Vos produits</h2>
 
+@*Navbar permettant de trier et de faire une recherche sur la liste des produits.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
+
+        @*Formulaire permettant de rechercher un produit*@
         <form class="navbar-form navbar-left" method="get" role="search">
             @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
             {
@@ -22,6 +26,7 @@
             }
         </form>
 
+        @*Div permettant de trier les produits par nom ou prix*@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -33,6 +38,8 @@
                         <li>@Html.ActionLink("Prix ↓", "Index", new { sortOrder = "prixFortFaible", searchString = ViewBag.CurrentFilter as string })</li>
                     </ul>
                 </li>
+
+                @*Bouton permettant d'accéder à la page de création d'un produit*@
                 <li>
                     <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
@@ -42,38 +49,54 @@
 </nav>
 <br />
 
+Affichage de la liste des produits
 <table class="table">
     <tr>
         <th>Nom</th>
         <th>Commentaire</th>
         <th>PrixHT</th>
         @*<th>Reduction</th>
-    <th>TVA</th>*@
+            <th>TVA</th>*@
         <th>Type</th>
         <th></th>
     </tr>
 
+    @*Pour chaque produit, afficher son libelle, commentaire, prix hors taxes /*, réduction, taux de TVA*/ , et type*@
+    @*En plus, à droite de chaque produit, affichage de 3 boutons permettant de modifier, afficher les détails, ou supprimer le produit*@
     @foreach (var item in Model)
     {
         <tr>
+            @*Affichage du libelle*@
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+                @Html.DisplayFor(modelItem => item.Libelle)
             </td>
+
+            @*Affichage du commentaire*@
             <td>
                 @Html.DisplayFor(modelItem => item.Commentaire)
             </td>
+
+            @*Affichage du prix hors taxes*@
             <td>
                 @Html.DisplayFor(modelItem => item.PrixHT) €
             </td>
+
+            @*Affichage de la réduction*@
             @*<td>
-                @Html.DisplayFor(modelItem => item.Reduction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TVA)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Reduction)
+                </td>
+
+                Affichage du taux de TVA
+                <td>
+                    @Html.DisplayFor(modelItem => item.TVA)
+                </td>*@
+
+            @*Affichage du type (bien / service)*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
+
+            @*Affichage des boutons*@
             <td>
                 <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />
@@ -93,17 +116,18 @@
 
 <br />
 
+@*Partie permettant d'afficher et de se diriger sur les différentes pages s'il y en a plusieurs*@
 @if (!Model.PageCount.Equals(1))
 {
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-    new
-    {
-        page,
-        sortOrder = ViewBag.CurrentSort,
-        currentFilter = ViewBag.CurrentFilter,
+              new
+              {
+                  page,
+                  sortOrder = ViewBag.CurrentSort,
+                  currentFilter = ViewBag.CurrentFilter,
 
-    }))
+              }))
     </div>
 }

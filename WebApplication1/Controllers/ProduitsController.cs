@@ -36,16 +36,16 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentSort = sortOrder;
 
 
-            var listeTrie = listProduit.OrderBy(s => s.Nom);
+            var listeTrie = listProduit.OrderBy(s => s.Libelle);
             
 
             switch (sortOrder)
             {
                 case "objetAZ":
-                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
                     break;
                 case "objetZA":
-                    listeTrie = listeTrie.OrderByDescending(s => s.Nom);
+                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
                     break;
                 case "prixFaibleFort":
                     listeTrie = listeTrie.OrderBy(s => s.PrixHT);
@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
                     listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
                     break;
                 default:
-                    listeTrie = listeTrie.OrderBy(s => s.Nom);
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
                     break;
             }
 
@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
 
             if (!string.IsNullOrEmpty(searchstring))
             {
-                return View(listeTrie.Where(s => s.Nom.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.Where(s => s.Libelle.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }

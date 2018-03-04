@@ -1,15 +1,20 @@
-﻿@model IEnumerable<WebApplication1.Models.Account.Utilisateur>
+﻿@*Vue permettant à un administrateur d'afficher la liste de tous les utilisateurs de l'application*@
+@model IEnumerable<WebApplication1.Models.Account.Utilisateur>
 
 
 @{
     ViewBag.Title = "Utilisateurs";
 }
 <p>
+    @*Bouton permettant d'accéder à la page de création d'un utilisateur*@
     <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-plus" />
     </a>
 </p>
+
+@*Affichage de la liste des utilisateurs*@
 <table class="table">
+    @*Affichage de l'entête de chaque colonne dans le tableau*@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ID)
@@ -28,24 +33,38 @@
         </th>
         <th></th>
     </tr>
+
+    @*Pour chaque utilisateur, afficher son identifiant (adresse e-mail), mot de passe (crypté), prénom, nom, type*@
+    @*En plus, à droite de chaque utilisateur, affichage de 3 boutons permettant de modifier, afficher les détails et supprimer l'utilisateur*@
     @foreach (var item in Model)
     {
         <tr>
+            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
             <td>
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
+
+            @*Affichage du mot de passe de l'utilisateur*@
             <td>
                 @Html.DisplayFor(modelItem => item.MotDePasse)
             </td>
+
+            @*Affichage du prénom de l'utilisateur*@
             <td>
                 @Html.DisplayFor(modelItem => item.Prénom)
             </td>
+
+            @*Affichage du nom de l'utilisateur*@
             <td>
                 @Html.DisplayFor(modelItem => item.Nom)
             </td>
+
+            @*Affichage du type de l'utilisateur*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
+
+            @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
             <td>
                 <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />

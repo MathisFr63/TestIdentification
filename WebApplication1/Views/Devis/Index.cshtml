@@ -38,6 +38,8 @@
                         <li>@Html.ActionLink("Date ↓", "Index", new { sortOrder = "dateOldNew", searchString = ViewBag.CurrentFilter as string })</li>
                     </ul>
                 </li>
+
+                @*Bouton permettant d'accéder à la page de création d'un devis*@
                 <li>
                     <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Devis")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>

@@ -1,16 +1,19 @@
-﻿@model WebApplication1.Models.Account.Utilisateur
+﻿@*Vue permettant la modification d'un utilisateur*@
+@model WebApplication1.Models.Account.Utilisateur
 @{
     ViewBag.Title = "Edit";
 }
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
 <h2>Modifier le client</h2>
 
+@*Formulaire permettant de modifier les champs voulus*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -19,6 +22,8 @@
         <h4>Utilisateur</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
         <div class="form-group">
             @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -26,6 +31,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le nom de l'utilisateur*@
         <div class="form-group">
             @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -34,6 +40,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le prénom de l'utilisateur*@
         <div class="form-group">
             @Html.LabelFor(model => model.Prénom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -42,6 +49,7 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le type de l'utilisateur*@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
             <div class="col-md-10">
@@ -49,6 +57,7 @@
             </div>
         </div>
 
+        @*Bouton permettant de valider les modifications faites sur l'utilisateur*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

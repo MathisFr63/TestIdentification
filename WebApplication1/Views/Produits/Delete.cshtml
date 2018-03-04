@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.Papiers.Produit
+﻿@*Vue permettant de supprimer un produit*@
+@model WebApplication1.Models.Papiers.Produit
 
 @{
     ViewBag.Title = "Delete";
@@ -6,10 +7,13 @@
 
 <br />
 <p>
+    @*Bouton de retour*@
     <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-secondary btn-lg">
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
 </p>
+
+@*Div permettant d'afficher les détails et de supprimer le produit*@
 <div class="py-5">
     <div class="container">
         <div class="row">
@@ -18,15 +22,20 @@
                 <h3>Etes vous sûr de vouloir supprimer ce produit ?</h3>
                 <div>
                     <hr />
+
+                    @*Affichage des détails du produit avant sa suppression*@
                     <dl class="dl-horizontal">
+
+                        @*Affichage du Libelle*@
                         <dt>
-                            @Html.DisplayNameFor(model => model.Nom)
+                            @Html.DisplayNameFor(model => model.Libelle)
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.Nom)
+                            @Html.DisplayFor(model => model.Libelle)
                         </dd>
 
+                        @*Affichage du commentaire*@
                         <dt>
                             @Html.DisplayNameFor(model => model.Commentaire)
                         </dt>
@@ -35,6 +44,7 @@
                             @Html.DisplayFor(model => model.Commentaire)
                         </dd>
 
+                        @*Affichage du prix hors taxes*@
                         <dt>
                             @Html.DisplayNameFor(model => model.PrixHT)
                         </dt>
@@ -42,7 +52,8 @@
                         <dd>
                             @Html.DisplayFor(model => model.PrixHT)
                         </dd>
-
+                        
+                        @*Affichage du montant de la réduction*@
                         <dt>
                             @Html.DisplayNameFor(model => model.Reduction)
                         </dt>
@@ -51,6 +62,7 @@
                             @Html.DisplayFor(model => model.Reduction)
                         </dd>
 
+                        @*Affichage du taux de TVA*@
                         <dt>
                             @Html.DisplayNameFor(model => model.TVA)
                         </dt>
@@ -59,6 +71,7 @@
                             @Html.DisplayFor(model => model.TVA)
                         </dd>
 
+                        @*Affichage du type (bien ou service)*@
                         <dt>
                             @Html.DisplayNameFor(model => model.Type)
                         </dt>
@@ -70,7 +83,7 @@
                     </dl>
 
 
-
+                    @*Bouton permettant de valider la suppression du produit*@
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()

@@ -9,7 +9,7 @@
         public int ID { get; private set; }
 
         // Nom du produit
-        public string Nom { get; set; }
+        public string Libelle { get; set; }
 
         // Commentaire lié au produit afin d'ajouter une description supplémentaire
         public string Commentaire { get; set; }
@@ -41,7 +41,7 @@
         /// <returns>string contenant les informations du produit</returns>
         public override string ToString()
         {
-            return Nom;
+            return Libelle;
         }
     }
 }
