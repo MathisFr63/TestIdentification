@@ -285,13 +285,13 @@ else
             <div class="panel panel-default">
                 <div class="panel-body easypiechart-panel">
                     <h4>Produit du mois</h4>
-                    @if (ViewBag.ProduitPlusV == 0)
+                    @if (ViewBag.ProduitPlusVendu == null)
                     {
                         <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">Aucun produit</span></div>
                     }
                     else
                     {
-                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">@ViewBag.ProduitPlusVendu.Nom</span></div>
+                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">@ViewBag.ProduitPlusVendu</span></div>
                     }
                 </div>
             </div>

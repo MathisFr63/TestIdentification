@@ -65,24 +65,18 @@ namespace WebApplication1.Controllers
                     ViewBag.DevisConcret = 0;
 
                 // calcul du produit le plus vendu du mois
-                List<DonneeProduit> max = new List<DonneeProduit>();
+                Dictionary<string, int> dico = new Dictionary<string, int>();
                 foreach (Facture f in listFacturesRecentes)
                 {
-
-                    f.Produits.OrderByDescending(p => p.Quantite);
-                    max.Add(f.Produits.First());
+                    foreach (DonneeProduit dp in f.Produits)
+                    {
+                        if (dico.ContainsKey(dp.Nom))
+                            dico[dp.Nom] += dp.Quantite;
+                        else
+                            dico.Add(dp.Nom, dp.Quantite);
+                    }
                 }
-                max.OrderBy(p => p.Quantite);
-                if (max.Count() > 0)
-                {
-                    ViewBag.ProduitPlusVendu = max.First();
-                    ViewBag.ProduitPlusV=1;
-                }
-                else
-                {
-                    ViewBag.ProduitPlusV = 0;
-                }
-
+                ViewBag.ProduitPlusVendu = dico.OrderByDescending(p => p.Value).First().Key;
             }
 
             return View();
