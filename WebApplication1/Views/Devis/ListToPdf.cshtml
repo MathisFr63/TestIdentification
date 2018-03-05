@@ -1,0 +1,65 @@
+﻿@*Vue permettant l'affichage des devis de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
+@using PagedList.Mvc;
+
+@{
+    Layout = null;
+    ViewBag.Title = "ListtoPdf";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<h2 class="titreIndex">
+    Vos Devis
+</h2>
+<body>
+
+    @*Affichage de la liste des devis*@
+    <table class="table">
+        <tr>
+            <th>Objet</th>
+            <th>Date</th>
+            <th>Valide</th>
+            @*<th>Commentaire</th>
+                <th>Monnaie</th>*@
+            <th>Produits</th>
+            <th></th>
+        </tr>
+        @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
+        @*En plus, ajouter à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valide)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Commentaire)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Monnaie)
+                    </td>*@
+                <td>
+                    @foreach (var a in item.Produits)
+                {
+                        @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                        @Html.DisplayFor(elt => a.Quantite); <br />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+</body>

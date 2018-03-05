@@ -73,7 +73,8 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(devis);
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // GET: Devis/Create
@@ -247,7 +248,9 @@ namespace WebApplication1.Controllers
         {
             var devis = db.Devis.Find(id);
 
-            return new ViewAsPdf("DevisToPdf", devis);
+            return new ViewAsPdf("DevisToPdf", new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
+            { Devis = devis });
         }
 
         public ActionResult DevisToPdf(int? id)
@@ -257,8 +260,90 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+        }
 
-            return View(devis);
+        //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
+        public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+
+            if (searchstring != null) page = 1;
+            else searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+            var listeTrie = ListDevis.OrderBy(s => s.Objet);
+
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+                case "objetZA":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
+                    break;
+                case "dateOldNew":
+                    listeTrie = ListDevis.OrderBy(s => s.Date);
+                    break;
+                case "dateNewOld":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(searchstring))
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
+            return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList((page ?? 1), 15));
+        }
+
+        public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+
+            if (searchstring != null) page = 1;
+            else searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+            var listeTrie = ListDevis.OrderBy(s => s.Objet);
+
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+                case "objetZA":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
+                    break;
+                case "dateOldNew":
+                    listeTrie = ListDevis.OrderBy(s => s.Date);
+                    break;
+                case "dateNewOld":
+                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    listeTrie = ListDevis.OrderBy(s => s.Objet);
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(searchstring))
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
+            return View(listeTrie.ToPagedList((page ?? 1), 15));
         }
     }
 }

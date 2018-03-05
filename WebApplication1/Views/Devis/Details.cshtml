@@ -1,5 +1,5 @@
 ﻿@*Vue permettant d'afficher les détails d'un devis*@
-@model WebApplication1.Models.Papiers.Devis
+@model WebApplication1.ViewModels.DevisProduitViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -12,11 +12,11 @@
         <span class="glyphicon glyphicon-arrow-left" />
     </a>
     @*Bouton permettant d'accéder à la modification du devis*@
-    <a href=@Url.Action("Edit","Devis",new { id = Model.ID }) class="btn btn-info btn-lg">
+    <a href=@Url.Action("Edit","Devis",new { id = Model.Devis.ID }) class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-pencil" />
     </a>
-
-    <a title="Imprimer" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.ID }) class="btn btn-info btn-lg">Imprimer</a>
+    @*Bouton permettant de créer un pdf à par devis*@
+    <a title="Imprimer" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.Devis.ID }) class="btn btn-info btn-lg">Imprimer</a>
 </p>
 
 @*Div permettant d'afficher les détails du devis*@
@@ -24,27 +24,27 @@
     <div class="container">
         <div class="row">
             @*<div class="col-md-6">
-                <p class="lead">Client : @Html.DisplayFor(model => model.EntrepriseID)</p>
-            </div>*@
+                    <p class="lead">Client : @Html.DisplayFor(model => model.EntrepriseID)</p>
+                </div>*@
             @*Div permettant d'afficher l'objet du devis*@
             <div class="col-md-6">
-                <p class="lead">Objet : @Html.DisplayFor(model => model.Objet)</p>
+                <p class="lead">Objet : @Html.DisplayFor(model => model.Devis.Objet)</p>
             </div>
             @*Div permettant d'afficher la date de création du devis*@
             <div class="col-md-6">
-                <p class="lead">Date : @Html.DisplayFor(model => model.Date)</p>
+                <p class="lead">Date : @Html.DisplayFor(model => model.Devis.Date)</p>
             </div>
             @*Div permettant d'afficher si le devis est valide ou non*@
             <div class="col-md-6">
-                <p class="lead">Validité : @Html.DisplayFor(model => model.Valide)</p>
+                <p class="lead">Validité : @Html.DisplayFor(model => model.Devis.Valide)</p>
             </div>
             @*Div permettant d'afficher le commentaire lié au devis*@
             <div class="col-md-6">
-                <p class="lead">Commentaire : @Html.DisplayFor(model => model.Commentaire)</p>
+                <p class="lead">Commentaire : @Html.DisplayFor(model => model.Devis.Commentaire)</p>
             </div>
             @*Div permettant d'afficher la monnaie utilisée par le devis*@
             <div class="col-md-6">
-                <p class="lead">Monnaie : @Html.DisplayFor(model => model.Monnaie)</p>
+                <p class="lead">Monnaie : @Html.DisplayFor(model => model.Devis.Monnaie)</p>
             </div>
         </div>
     </div>

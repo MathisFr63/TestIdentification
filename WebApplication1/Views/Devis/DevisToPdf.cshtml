@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Papiers.Devis
+﻿@model WebApplication1.ViewModels.DevisProduitViewModel
 @{
     Layout = null;
     ViewBag.Title = "pdf";
@@ -10,9 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/site")
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 <body>
@@ -20,25 +17,75 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    <p class="lead">Objet : @Html.DisplayFor(model => model.Objet)</p>
+                    <h1>Easy Bill</h1>
+                    <p>Adresse de l'entreprise utilisateur</p>
                 </div>
+                <div class="col-xs-6" style="text-align: right">
+                    <h2>Facture</h2>
+                </div>
+            </div>
+            
+            <hr />
+            
+            <div class="row">
                 <div class="col-xs-6">
-                    <p class="lead">Date : @Html.DisplayFor(model => model.Date)</p>
+                    <h3>Facturer à</h3>
+                    <p>Nom du client</p>
+                    <p>14 route de la Sauvetat</p>
+                    <p>Plauzat - 63730</p>
                 </div>
+                <div class="col-xs-6" style="text-align: right">
+                    <p><strong>Facture n° :</strong> @Model.Devis.ID</p>
+                    <p><strong>Date :</strong> @Model.Devis.Date</p>
+                    <p><strong>Echéance :</strong> @Model.Devis.Date.AddDays(30) </p>
+                </div>
+            </div>
+            
+            <hr />
+
+            <div class="row">
                 <div class="col-xs-6">
-                    <p class="lead">Validité : @Html.DisplayFor(model => model.Valide)</p>
+                    <p>Objet : @Html.DisplayFor(model => model.Devis.Objet)</p>
+                    <p>Commentaire : @Html.DisplayFor(model => model.Devis.Commentaire)</p>
+                    <p>Monnaie : @Html.DisplayFor(model => model.Devis.Monnaie)</p>
                 </div>
-                <div class="col-xs-6">
-                    <p class="lead">Commentaire : @Html.DisplayFor(model => model.Commentaire)</p>
-                </div>
-                <div class="col-xs-6">
-                    <p class="lead">Monnaie : @Html.DisplayFor(model => model.Monnaie)</p>
-                </div>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>Article</th>
+                        <th>Commentaire</th>
+                        <th>Prix HT</th>
+                        <th>Quantité</th>
+                        <th>Montant total</th>
+                    </tr>
+                    @foreach (var item in Model.ProduitsSelected)
+                    {
+                        <tr>
+                            <td class="col-xs-3">
+                                <p>@item.Nom</p>
+                            </td>
+                            <td class="col-xs-4">
+                                <p>@item.Commentaire</p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.PrixHT</p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.Quantite</p>
+                            </td>
+                            <td class="col-xs-2">
+                                <p>
+                                    @{var a = item.Quantite * item.PrixHT;}
+                                    @a
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
     </div>
-    <!-- Bootstrap Js CDN -->
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
 </body>
 </html>
