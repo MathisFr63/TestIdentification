@@ -1,12 +1,9 @@
 ﻿@*Vue permettant d'afficher les détails d'un utilisateurs*@
 @model WebApplication1.Models.Account.Utilisateur
-
 @{
     ViewBag.Title = "Details";
 }
-
 <br />
-
 @if (Model.Type == 0)
 {
     <p>
@@ -16,50 +13,41 @@
         </a>
     </p>
 }
-
 <br />
-
 @*Affichage de : "Informations sur <Prénom> <Nom> :"*@
+<button type="submit">Mon profil</button>
 <h3 class="">Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom) :</h3>
-
 <br />
 <br />
-
 @*Affichages des informations de l'utilsateur*@
 <div class="py-5">
     <div class="container">
         <div class="row">
-            
+
             @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
             </div>
-
             @*Affichage du prénom de l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom)</p>
             </div>
-
             @*Affichage du nom de l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
             </div>
-
             @*Affichage du type de l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Vous êtes @Html.DisplayFor(model => model.Type)</p>
             </div>
-
             @*Affichage du nombre de devis réalisés par l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Vous avez réalisé @ViewBag.NbDevis devis.</p>
             </div>
-
             @*Affichage du nombre de factures réalisés par l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Vous avez facturé @ViewBag.NbFactures devis.</p>
             </div>
-
             @*Affichage du nombre de produits possédant l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Vous avez une liste de @ViewBag.NbProduits produits.</p>

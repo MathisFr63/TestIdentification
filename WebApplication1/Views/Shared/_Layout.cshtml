@@ -89,20 +89,22 @@
                 <ul class="list-unstyled components">
 
                     @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    <li>
-                        <a href=@Url.Action("Contact", "Home")>
-                            <i class="glyphicon glyphicon-send"></i>
-                            Retour utilisateur
-                        </a>
-                    </li>
-
+                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
+                    {
+                        <li>
+                            <a href=@Url.Action("Contact", "Home")>
+                                <i class="glyphicon glyphicon-send"></i>
+                                Retour utilisateur
+                            </a>
+                        </li>
+                    }
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
-                                <i class="glyphicon glyphicon-envelope"></i>
-                                Feedbacks
+                                <i class="glyphicon glyphicon-send"></i>
+                                Retour utilisateur
                             </a>
                         </li>
                     }

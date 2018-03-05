@@ -310,6 +310,7 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Home\BadUserTypeError.cshtml" />
     <Content Include="Views\Devis\DevisToPdf.cshtml" />
+    <Content Include="Views\Feedbacks\Create.cshtml" />
     <Content Include="Views\Devis\ListToPdf.cshtml" />
   </ItemGroup>
   <ItemGroup>

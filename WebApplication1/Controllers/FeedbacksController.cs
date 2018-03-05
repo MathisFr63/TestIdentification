@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using PagedList;
 using WebApplication1.DAL;
@@ -46,6 +47,57 @@ namespace WebApplication1.Controllers
             }
             else
                 return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        // GET: Feedbacks/Create
+        // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
+        public ActionResult Create()
+        {
+            return View();
+        }
+        
+        // POST: Feedbacks/Create
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // Méthode permettant à l'utilisateur d'ajouter le devis qu'il vient de créer sur la page create (get) si le model est valide.
+        public ActionResult Create(Feedback feedback)
+        {
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
+                EnableSsl = true
+            };
+
+            MailMessage mail = new MailMessage
+            {
+                From = new MailAddress(feedback.UtilisateurID, "Feedback Easybill"),
+                IsBodyHtml = true,
+                Subject = feedback.userName + ": " + feedback.Subject,
+                Body = feedback.Comment,
+                Priority = MailPriority.High
+            };
+            mail.To.Add("afiacrocus@gmail.com");
+            smtp.Send(mail);
+
+            MailMessage mail2 = new MailMessage
+            {
+                From = new MailAddress("afiacrocus@gmail.com", "Résumé Feedback Easybill"),
+                IsBodyHtml = true,
+                Subject = "Votre Feedback: " + feedback.Subject,
+                Body = "Le commentaire suivant a été transmis à notre équipe et sera traiter dès que possible : <br/><br/>" + feedback.Comment + "<br/><br/>Nous vous remercions pour votre commentaire. <br/>Cordialement, l'équipe d'EasyBill.",
+                Priority = MailPriority.High
+            };
+            mail2.To.Add(feedback.UtilisateurID);
+            smtp.Send(mail2);
+
+            feedback.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+            db.Feedbacks.Add(feedback);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Feedbacks/Details/5

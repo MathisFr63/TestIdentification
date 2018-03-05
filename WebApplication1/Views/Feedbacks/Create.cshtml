@@ -1,4 +1,4 @@
-@*Vue permettant l'envoi d'un feedback par un utilisateur de l'application*@
+ï»¿@*Vue permettant l'envoi d'un feedback par un utilisateur de l'application*@
 @model WebApplication1.Models.Account.Feedback
 
 @{
@@ -7,7 +7,7 @@
 
 <h2>Faites nous parvenir vos remarques !</h2>
 
-@*Formulaire permettant d'indiquer l'identifiant de l'utilisateur, le sujet du feedback, ainsi que le commentaire qui lui est lié*@
+@*Formulaire permettant d'indiquer l'identifiant de l'utilisateur, le sujet du feedback, ainsi que le commentaire qui lui est liÃ©*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -21,23 +21,21 @@
         @Html.LabelFor(m => m.Subject)
         @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @required = "required" })
 
-        @*Champs caché permettant de stocker le nom de l'utilisateur afin de l'utiliser ensuite*@
+        @*Champs cachÃ© permettant de stocker le nom de l'utilisateur afin de l'utiliser ensuite*@
         @Html.HiddenFor(m => m.userName)
 
 
-        @*Modification du commentaire / message lié au feedback*@
+        @*Modification du commentaire / message liÃ© au feedback*@
         @Html.LabelFor(m => m.Comment)
         @Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @cols = 80, @rows = 10 })
-        
-        <button type="submit" value="Contact" class="btn btn-secondary">Envoyer</button>
+        <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
     </div>
-
 }
 
-@*Script permettant l'utilisation de l'outil de modification de la forme du message lié au feedback*@
+@*Script permettant l'utilisation de l'outil de modification de la forme du message liÃ© au feedback*@
 <script src="~/scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
 
-@*Script permettant de modifier l'outil de modification de la forme du message lié au feedback*@
+@*Script permettant de modifier l'outil de modification de la forme du message liÃ© au feedback*@
 <script type="text/javascript">
     // Initialize your tinyMCE Editor with your preferred options
     tinyMCE.init({
@@ -73,7 +71,7 @@
             var nom = "";
                 if (user != null)
                 {
-                    prenom = user.Prénom;
+                    prenom = user.PrÃ©nom;
                     nom = user.Nom;
                 }
             }
