@@ -15,7 +15,7 @@
     <a href=@Url.Action("Edit","Devis",new { id = Model.Devis.ID }) class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-pencil" />
     </a>
-
+    @*Bouton permettant de créer un pdf à par devis*@
     <a title="Imprimer" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.Devis.ID }) class="btn btn-info btn-lg">Imprimer</a>
 </p>
 
