@@ -73,7 +73,8 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(devis);
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // GET: Devis/Create
@@ -247,7 +248,9 @@ namespace WebApplication1.Controllers
         {
             var devis = db.Devis.Find(id);
 
-            return new ViewAsPdf("DevisToPdf", devis);
+            return new ViewAsPdf("DevisToPdf", new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
+            { Devis = devis });
         }
 
         public ActionResult DevisToPdf(int? id)
@@ -257,8 +260,8 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-
-            return View(devis);
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
     }
 }
