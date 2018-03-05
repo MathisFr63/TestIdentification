@@ -215,6 +215,10 @@
     @*Éléments affichés lorsque l'utilisateur est connecté*@
 else
 {
+    <h2 class="titreIndex">
+        Utilisateurs
+    </h2>
+
     <link rel="stylesheet" href="~/Content/Site.css">
 
     <div class="panel panel-container">
@@ -287,7 +291,7 @@ else
                     <h4>Produit du mois</h4>
                     @if (ViewBag.ProduitPlusVendu == null)
                     {
-                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">Aucun produit</span></div>
+                        <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span style="font-size:large" class="percent">Aucun produit vendu</span></div>
                     }
                     else
                     {
@@ -381,7 +385,7 @@ else
         </div>
     </div>
 
-        <hr />
+    <hr />
 
 
 

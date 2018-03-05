@@ -45,7 +45,7 @@
                         {
                             <li>
                                 <a href=@Url.Action("Index", "Utilisateurs")>
-                                    <i class="glyphicon glyphicon-star"></i>Utilisateurs
+                                    <i class="glyphicon glyphicon-user"></i>Utilisateurs
                                 </a>
                             </li>
                         }
@@ -88,16 +88,13 @@
                 @*Liste contenant les différents éléments du menu concernant les informations de l'application*@
                 <ul class="list-unstyled components">
 
-                    @*Si l'utilisateur est un utilisateur basique : élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
-                    {
-                        <li>
-                            <a href=@Url.Action("Contact", "Home")>
-                                <i class="glyphicon glyphicon-send"></i>
-                                Retour utilisateur
-                            </a>
-                        </li>
-                    }
+                    @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
+                    <li>
+                        <a href=@Url.Action("Contact", "Home")>
+                            <i class="glyphicon glyphicon-send"></i>
+                            Retour utilisateur
+                        </a>
+                    </li>
 
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
                     @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
@@ -142,13 +139,13 @@
                 @RenderBody()
             </div>
         </div>
-    }
-    else
-    {
-        <div>
-            @RenderBody()
-        </div>
-    }
+                        }
+                        else
+                        {
+                            <div>
+                                @RenderBody()
+                            </div>
+                        }
 
 
     <!-- jQuery CDN -->
