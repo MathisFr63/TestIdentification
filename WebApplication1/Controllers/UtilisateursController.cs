@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -25,11 +26,56 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs
         [Authorize]
         // Méthode permettant d'afficher la liste des utilisateurs de l'application si l'utilisateur courant est un administrateur.
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type == TypeUtilisateur.Administrateur)
-                return View(db.Utilisateurs.ToList());
+            {
+                var users = db.Utilisateurs.ToList();
+
+                if (searchstring != null) page = 1;
+                else searchstring = currentFilter;
+
+                ViewBag.CurrentFilter = searchstring;
+                ViewBag.CurrentSort = sortOrder;
+
+                var usersTrie = users.OrderBy(s => s.ID);
+
+                switch (sortOrder)
+                {
+                    case "mailAZ":
+                        usersTrie = users.OrderBy(s => s.ID);
+                        break;
+                    case "mailZA":
+                        usersTrie = users.OrderByDescending(s => s.ID);
+                        break;
+                    case "nomAZ":
+                        usersTrie = users.OrderBy(s => s.Nom);
+                        break;
+                    case "nomZA":
+                        usersTrie = users.OrderByDescending(s => s.Nom);
+                        break;
+                    case "prénomAZ":
+                        usersTrie = users.OrderBy(s => s.Prénom);
+                        break;
+                    case "prénomZA":
+                        usersTrie = users.OrderByDescending(s => s.Prénom);
+                        break;
+                    case "typeAdmin":
+                        usersTrie = users.OrderBy(s => s.Type);
+                        break;
+                    case "typeBasique":
+                        usersTrie = users.OrderByDescending(s => s.Type);
+                        break;
+                    default:
+                        usersTrie = users.OrderBy(s => s.ID);
+                        break;
+                }
+
+                if (!String.IsNullOrEmpty(searchstring))
+                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
+                return View(usersTrie.ToPagedList((page ?? 1), 15));
+            }
             return RedirectToAction("BadUserTypeError", "Home");
         }
 
@@ -53,14 +99,14 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
         public ActionResult Details(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~","."))
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
-            
+
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).ToList();
             ViewBag.NbDevis = ListDevis.Count();
             var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
@@ -128,8 +174,8 @@ namespace WebApplication1.Controllers
         public ActionResult EditPost(string id)
         {
             var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
-            if (TryUpdateModel(utilisateur, new string[] { "Nom", "Prénom", "Type"}))
-                {
+            if (TryUpdateModel(utilisateur, new string[] { "Nom", "Prénom", "Type" }))
+            {
                 try
                 {
                     db.SaveChanges();

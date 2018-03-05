@@ -5,12 +5,58 @@
 @{
     ViewBag.Title = "Utilisateurs";
 }
-<p>
-    @*Bouton permettant d'accéder à la page de création d'un utilisateur*@
+
+<h2 class="titreIndex">
+    Utilisateurs
+</h2>
+
+@*<p>
     <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
         <span class="glyphicon glyphicon-plus" />
     </a>
-</p>
+</p>*@
+
+@*Navbar permettant de trier et de faire une recherche sur la liste des devis.*@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <form class="navbar-form navbar-left" method="get" role="search">
+            @using (Html.BeginForm("Index", "Devis", FormMethod.Get))
+            {
+                <div class="form-group">
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                </div>
+            }
+        </form>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
+                    <ul class="dropdown-menu dropdown-menu-default trie">
+                        <li>@Html.ActionLink("Mail ↑", "Index", new { sortOrder = "mailAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Mail ↓", "Index", new { sortOrder = "mailZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Nom ↑", "Index", new { sortOrder = "nomAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Nom ↓", "Index", new { sortOrder = "nomZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Prénom ↑", "Index", new { sortOrder = "prénomAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Prénom ↓", "Index", new { sortOrder = "prénomZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Type ↑", "Index", new { sortOrder = "typeAdmin", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Type ↓", "Index", new { sortOrder = "typeBasique", searchString = ViewBag.CurrentFilter as string })</li>
+                    </ul>
+                </li>
+
+                @*Bouton permettant d'accéder à la page de création d'un Utilisateur*@
+                <li>
+                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Utilisateurs")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 @*Affichage de la liste des utilisateurs*@
 <table class="table">
