@@ -1,0 +1,77 @@
+﻿@*Vue permettant l'affichage des feedbacks envoyés aux administrateurs*@
+@model PagedList.IPagedList<WebApplication1.Models.Account.Feedback>
+
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Liste Feedbacks";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+    <h2 class="titreIndex">
+        Les Feedbacks
+    </h2>
+
+    @*Affichage de la liste des feedbacks*@
+    <table class="table">
+        <tr>
+            <th>Mail</th>
+            <th>Adresse e-mail</th>
+            <th>Sujet</th>
+            <th>Commentaire</th>
+            <th>Résolu ?</th>
+            <th></th>
+        </tr>
+        @*Pour chaque feedback, affichage du nom de l'utilisateur, de son identifiant, du sujet du feedback, du commentaire lui étant lié et de son état*@
+        @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier l'état, afficher les détails et supprimer le feedback*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*Affichage du nom de l'utilisateur ayant envoyé le feedback*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.userName)
+                </td>
+
+                @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UtilisateurID)
+                </td>
+
+                @*Affichage du sujet du feedback*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+
+                @*Affichage du commentaire lié au feedback*@
+                <td>
+                    <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
+                    @*@Html.DisplayFor(modelItem => item.Comment)*@
+                </td>
+
+                @*Affichage de l'état du feedback*@
+                <td>
+                    @if (item.IsResolved)
+                {
+                        <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

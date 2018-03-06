@@ -1,0 +1,67 @@
+﻿@*Vue permettant l'affichage des factures de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Facture>
+
+
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Liste Factures";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+<h2 class="titreIndex">
+    Vos factures
+</h2>
+
+@*Affichage de la liste des factures*@
+<table class="table">
+    <tr>
+        <th>Objet</th>
+        <th>Date</th>
+        @*<th>Commentaire</th>
+            <th>Monnaie</th>*@
+        <th>Produits</th>
+        <th>Relances</th>
+        <th>Reglement</th>
+        <th></th>
+    </tr>
+
+    @*Pour chaque facture, affichage de l'objet, de la date de création, de la liste des produits(et de leur quantité), du nombre de relances et du type de règlement*@
+    @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @foreach (var a in item.Produits)
+                {
+                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                    @Html.DisplayFor(elt => a.Quantite); <br />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relances)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reglement)
+            </td>
+        </tr>
+    }
+
+</table>
+</body>
+</html>

@@ -24,6 +24,7 @@
                     <button type="submit" title="Recherche Basique" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" title="Annuler la Recherche" value="cancel" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <a title="Imprimer la liste des Factures" target="_blank" href=@Url.Action("PrintList", "Factures") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
         </form>
@@ -90,8 +91,9 @@
             </td>
             <td>
                 <a title="Details" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-print" />
+                    <span class="glyphicon glyphicon-file" />
                 </a>
+                <a title="Imprimer la Facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
             </td>
         </tr>
     }

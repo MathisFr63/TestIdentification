@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using PagedList;
 using WebApplication1.DAL;
 using WebApplication1.Models.Account;
+using Rotativa;
 
 namespace WebApplication1.Controllers
 {
@@ -165,6 +166,89 @@ namespace WebApplication1.Controllers
 
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Print(int id)
+        {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var feedback = db.Feedbacks.Find(id);
+
+            if (feedback == null) return HttpNotFound();
+
+            return new ViewAsPdf("FeedbackToPdf", feedback);
+        }
+
+        public ActionResult FeedBackToPdf(int? id)
+        {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var feedback = db.Feedbacks.Find(id);
+
+            if (feedback == null) return HttpNotFound();
+
+            return View(feedback);
+        }
+
+        //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
+        public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            List<Feedback> listTrie = new List<Feedback>();
+
+            //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
+            var ListFeedbacks = db.Feedbacks.ToList();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                return View(ListFeedbacks.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return new ViewAsPdf("ListToPdf", ListFeedbacks.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            List<Feedback> listTrie = new List<Feedback>();
+
+            //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
+            var ListFeedbacks = db.Feedbacks.ToList();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                return View(ListFeedbacks.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            else
+                return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -185,6 +186,127 @@ namespace WebApplication1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            return new ViewAsPdf("ProduitToPdf", produit);
+        }
+
+        public ActionResult ProduitToPdf(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            return View(produit);
+        }
+
+        //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
+        public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+
+            var listeTrie = listProduit.OrderBy(s => s.Libelle);
+
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
+                    break;
+                case "objetZA":
+                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
+                    break;
+                case "prixFaibleFort":
+                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
+                    break;
+                case "prixFortFaible":
+                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
+                    break;
+                default:
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
+                    break;
+            }
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!string.IsNullOrEmpty(searchstring))
+            {
+                return View(listeTrie.Where(s => s.Libelle.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+
+            if (searchstring != null)
+                page = 1;
+            else
+                searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+
+            var listeTrie = listProduit.OrderBy(s => s.Libelle);
+
+
+            switch (sortOrder)
+            {
+                case "objetAZ":
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
+                    break;
+                case "objetZA":
+                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
+                    break;
+                case "prixFaibleFort":
+                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
+                    break;
+                case "prixFortFaible":
+                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
+                    break;
+                default:
+                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
+                    break;
+            }
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+
+            if (!string.IsNullOrEmpty(searchstring))
+            {
+                return View(listeTrie.Where(s => s.Libelle.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+            }
+            return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
     }
 }

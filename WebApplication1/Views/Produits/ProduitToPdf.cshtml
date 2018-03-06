@@ -1,0 +1,75 @@
+﻿@*Vue permettant d'afficher les détails d'un produit*@
+@model WebApplication1.Models.Papiers.Produit
+
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Produit";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+    @*Affichage du Libelle*@
+    <h2>@Html.DisplayFor(model => model.Libelle)</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+
+            @*Affichage du commentaire*@
+            <dt>
+                @Html.DisplayNameFor(model => model.Commentaire)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Commentaire)
+            </dd>
+
+            @*Affichage du prix hors taxes*@
+            <dt>
+                @Html.DisplayNameFor(model => model.PrixHT)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PrixHT)
+            </dd>
+
+            @*Affichage de la réduction*@
+            <dt>
+                @Html.DisplayNameFor(model => model.Reduction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Reduction)
+            </dd>
+
+            @*Affichage du taux de TVA du produit*@
+            <dt>
+                @Html.DisplayNameFor(model => model.TVA)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TVA)
+            </dd>
+
+            @*Affichage du type du produit (bien / service)*@
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+
+        </dl>
+    </div>
+</body>
+</html>

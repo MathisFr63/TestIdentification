@@ -38,37 +38,37 @@
                             <form>
                                 @*Div permettant de saisir l'adresse e-mail*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Utilisateur.ID)
+                                    @Html.LabelFor(model => model.Utilisateur.ID)*
                                     @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Utilisateur.ID, null, new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de saisir le mot de passe*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.motDePasse)<br />
+                                    @Html.LabelFor(model => model.motDePasse)*<br />
                                     @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control my-2", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.motDePasse, null, new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de confirmer le mot de passe saisi au dessus*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.confirmation)<br />
+                                    @Html.LabelFor(model => model.confirmation)*<br />
                                     @Html.PasswordFor(model => model.confirmation, new { @class = "form-control my-2", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.confirmation, null, new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de saisir le nom*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Utilisateur.Nom)<br />
+                                    @Html.LabelFor(model => model.Utilisateur.Nom)*<br />
                                     @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
                                 </div>
 
                                 @*Div permettant de saisir le prénom*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Utilisateur.Prénom)<br />
+                                    @Html.LabelFor(model => model.Utilisateur.Prénom)*<br />
                                     @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
                                 </div>
-
+                                <p>(*) : Champs obligatoires</p>
                                 @*Bouton permettant de s'inscrire lorsque tous les champs ont été saisis*@
                                 <button type="submit" class="btn btn-secondary my-2">S'inscrire</button>
                             </form>

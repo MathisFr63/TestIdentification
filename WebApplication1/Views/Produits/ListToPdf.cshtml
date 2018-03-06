@@ -1,0 +1,73 @@
+﻿@*Vue permettant d'afficher la liste des produits de l'utilisateur*@
+@model PagedList.IPagedList<WebApplication1.Models.Papiers.Produit>
+
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Liste Produits";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+
+    <h2 class="titreIndex">Vos produits</h2>
+
+    @*Affichage de la liste des produits*@
+    <table class="table">
+        <tr>
+            <th>Nom</th>
+            <th>Commentaire</th>
+            <th>PrixHT</th>
+            @*<th>Reduction</th>
+                <th>TVA</th>*@
+            <th>Type</th>
+            <th></th>
+        </tr>
+
+        @*Pour chaque produit, afficher son libelle, commentaire, prix hors taxes /*, réduction, taux de TVA*/ , et type*@
+        @*En plus, à droite de chaque produit, affichage de 3 boutons permettant de modifier, afficher les détails, ou supprimer le produit*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*Affichage du libelle*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Libelle)
+                </td>
+
+                @*Affichage du commentaire*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Commentaire)
+                </td>
+
+                @*Affichage du prix hors taxes*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrixHT) €
+                </td>
+
+                @*Affichage de la réduction*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Reduction)
+                    </td>
+
+                    Affichage du taux de TVA
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TVA)
+                    </td>*@
+
+                @*Affichage du type (bien / service)*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

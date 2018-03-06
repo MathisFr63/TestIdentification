@@ -1,0 +1,81 @@
+﻿@*Vue permettant à un administrateur d'afficher la liste de tous les utilisateurs de l'application*@
+@model IEnumerable<WebApplication1.Models.Account.Utilisateur>
+
+@{
+    Layout = null;
+    ViewBag.Title = "ListToPdf";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+    <h2 class="titreIndex">
+        Utilisateurs
+    </h2>
+
+    @*Affichage de la liste des utilisateurs*@
+    <table class="table">
+        @*Affichage de l'entête de chaque colonne dans le tableau*@
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotDePasse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prénom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+
+        @*Pour chaque utilisateur, afficher son identifiant (adresse e-mail), mot de passe (crypté), prénom, nom, type*@
+        @*En plus, à droite de chaque utilisateur, affichage de 3 boutons permettant de modifier, afficher les détails et supprimer l'utilisateur*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+
+                @*Affichage du mot de passe de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotDePasse)
+                </td>
+
+                @*Affichage du prénom de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prénom)
+                </td>
+
+                @*Affichage du nom de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+
+                @*Affichage du type de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+
+                @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
+            </tr>
+        }
+    </table>
+</body>
+</html>

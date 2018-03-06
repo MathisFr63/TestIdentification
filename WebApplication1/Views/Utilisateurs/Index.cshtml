@@ -29,6 +29,7 @@
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <a title="Imprimer la liste des utilisateurs" target="_blank" href=@Url.Action("PrintList", "Utilisateurs") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
         </form>
@@ -51,7 +52,7 @@
 
                 @*Bouton permettant d'accéder à la page de création d'un Utilisateur*@
                 <li>
-                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Utilisateurs")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button type="reset" value="cancel" title="Créer un nouveau Utilisateur" onclick="location.href='@Url.Action("Create", "Utilisateurs")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -112,13 +113,14 @@
 
             @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
             <td>
-                <a href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                <a title="Modifier l'utilisateur" href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
-                <a href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-print" />
+                <a title="Détails de l'utilisateur'" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-file" />
                 </a>
-                <a href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
+                <a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
                     <span class="glyphicon glyphicon-trash" />
                 </a>
             </td>

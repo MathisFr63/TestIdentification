@@ -1,0 +1,132 @@
+﻿@model WebApplication1.ViewModels.FactureProduitViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Facture";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h1>Easy Bill</h1>
+                    <p>Adresse de l'entreprise utilisateur</p>
+                </div>
+                <div class="col-xs-6" style="text-align: right">
+                    <h2>Facture</h2>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3>Facturer à</h3>
+                    <p>Nom du client</p>
+                    <p>14 route de la Sauvetat</p>
+                    <p>Plauzat - 63730</p>
+                </div>
+                <div class="col-xs-6" style="text-align: right">
+                    <p><strong>Facture n° :</strong> @Model.Facture.ID</p>
+                    <p><strong>Date :</strong> @Model.Facture.Date</p>
+                    <p><strong>Echéance :</strong> @Model.Facture.Date.AddDays(30) </p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <p>Objet : @Html.DisplayFor(model => model.Facture.Objet)</p>
+                    <p>Commentaire : @Html.DisplayFor(model => model.Facture.Commentaire)</p>
+                    <p>Monnaie : @Html.DisplayFor(model => model.Facture.Monnaie)</p>
+                </div>
+            </div>
+
+            <div class="row">
+                @{
+                    var total = 0.0;
+                    var totalTTC = 0.0;
+                }
+                <table class="table">
+                    <tr>
+                        <th>Article</th>
+                        <th>Commentaire</th>
+                        <th>Prix HT</th>
+                        <th>Quantité</th>
+                        <th>Montant total</th>
+                        <th>TVA</th>
+                        <th>Montant TTC</th>
+                    </tr>
+                    @foreach (var item in Model.ProduitsSelected)
+                    {
+                        <tr>
+                            <td>
+                                <p>@item.Nom</p>
+                            </td>
+                            <td>
+                                <p>@item.Commentaire</p>
+                            </td>
+                            <td>
+                                <p>@item.PrixHT</p>
+                            </td>
+                            <td>
+                                <p>@item.Quantite</p>
+                            </td>
+                            <td>
+                                <p>
+                                    @{
+                                    var montant = item.Quantite * item.PrixHT;
+                                    total += montant;
+                                }
+                                @montant €
+                            </p>
+                        </td>
+                        <td class="col-xs-1">
+                            <p>@item.TVA</p>
+                        </td>
+                        <td class="col-xs-2">
+                            <p>
+                                @{
+                                var prix = (item.Quantite * item.PrixHT);
+                                var montantTTC = prix + prix * item.TVA / 100.0;
+                                totalTTC += montantTTC;
+                            }
+                            @montantTTC €
+                    </td>
+                </tr>
+                                }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <p><strong>Total</strong></p>
+                        </td>
+                        <td>
+                            <p>HT</p>
+                        </td>
+                        <td>
+                            <p>@total €</p>
+                        </td>
+                        <td>
+                            <p>TTC</p>
+                        </td>
+                        <td>
+                            <p>@totalTTC €</p>
+                        </td>
+                    </tr>
+                </table>
+                <p style="font-size: 1.5em; text-align: right;"><strong>Montant facture :</strong> @totalTTC €</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

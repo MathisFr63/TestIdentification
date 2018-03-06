@@ -1,0 +1,49 @@
+﻿@*Vue permettant d'afficher les détails du feedback*@
+@model WebApplication1.Models.Account.Feedback
+
+@{
+    Layout = null;
+    ViewBag.Title = "PDF Feedback";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @*Icône de l'application*@
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body>
+    @*Div permettant d'afficher les détails du feedback*@
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+
+                @*Affichage du sujet du feedback*@
+                <div class="col-md-6">
+                    <p class="lead">Sujet : @Html.DisplayFor(model => model.Subject)</p>
+                </div>
+
+                @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
+                <div class="col-md-6">
+                    <p class="lead">Mail : @Html.DisplayFor(model => model.UtilisateurID)</p>
+                </div>
+
+                @*Affichage du commentaire lié au feedback*@
+                <div class="col-md-6">
+                    <p class="lead">Commentaire : @Html.DisplayFor(model => model.Comment)</p>
+                </div>
+
+                @*Affichage de l'état du feedback*@
+                <div class="col-md-6">
+                    @*<p class="lead">Etat : @Html.DisplayFor(model => model.Etat)</p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.ViewModels.DevisProduitViewModel
 @{
     Layout = null;
-    ViewBag.Title = "pdf";
+    ViewBag.Title = "PDF Devis";
 }
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
                     <p>Adresse de l'entreprise utilisateur</p>
                 </div>
                 <div class="col-xs-6" style="text-align: right">
-                    <h2>Facture</h2>
+                    <h2>Devis</h2>
                 </div>
             </div>
             
@@ -29,15 +29,14 @@
             
             <div class="row">
                 <div class="col-xs-6">
-                    <h3>Facturer à</h3>
                     <p>Nom du client</p>
                     <p>14 route de la Sauvetat</p>
                     <p>Plauzat - 63730</p>
                 </div>
                 <div class="col-xs-6" style="text-align: right">
-                    <p><strong>Facture n° :</strong> @Model.Devis.ID</p>
+                    <p><strong>Devis n° :</strong> @Model.Devis.ID</p>
                     <p><strong>Date :</strong> @Model.Devis.Date</p>
-                    <p><strong>Echéance :</strong> @Model.Devis.Date.AddDays(30) </p>
+                    <p><strong>Valide jusqu'au :</strong> @Model.Devis.Date.AddDays(30) </p>
                 </div>
             </div>
             
@@ -122,7 +121,7 @@
                         </td>
                     </tr>
                 </table>
-                <p style="font-size: 1.5em; text-align: right;"><strong>Montant facture :</strong> @totalTTC €</p>
+                <p style="font-size: 1.5em; text-align: right;"><strong>Montant :</strong> @totalTTC €</p>
             </div>
         </div>
     </div>

@@ -190,6 +190,7 @@
     <Compile Include="Models\Entite\TypeTelephone.cs" />
     <Compile Include="Models\Account\TypeUtilisateur.cs" />
     <Compile Include="Models\Account\Utilisateur.cs" />
+    <Compile Include="ViewModels\FactureProduitViewModel.cs" />
     <Compile Include="ViewModels\UtilisateurViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\UtilisateurViewModelConnection.cs" />
@@ -312,6 +313,14 @@
     <Content Include="Views\Devis\DevisToPdf.cshtml" />
     <Content Include="Views\Feedbacks\Create.cshtml" />
     <Content Include="Views\Devis\ListToPdf.cshtml" />
+    <Content Include="Views\Utilisateurs\ListToPdf.cshtml" />
+    <Content Include="Views\Utilisateurs\UtilisateurToPdf.cshtml" />
+    <Content Include="Views\Factures\ListToPdf.cshtml" />
+    <Content Include="Views\Factures\FactureToPdf.cshtml" />
+    <Content Include="Views\Produits\ProduitToPdf.cshtml" />
+    <Content Include="Views\Produits\ListToPdf.cshtml" />
+    <Content Include="Views\Feedbacks\ListToPdf.cshtml" />
+    <Content Include="Views\Feedbacks\FeedbackToPdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

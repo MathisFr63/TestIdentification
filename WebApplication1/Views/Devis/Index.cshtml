@@ -92,9 +92,10 @@
                 <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
-                <a title="Imprimer" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
+                <a title="Détails" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-file" />
                 </a>
+                <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
                 <a title="Supprimer" href=@Url.Action("Delete", "Devis", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-trash" />
                 </a>

@@ -22,6 +22,7 @@
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <a title="Imprimer la liste des Produits" target="_blank" href=@Url.Action("PrintList", "Produits") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
         </form>
@@ -102,8 +103,9 @@ Affichage de la liste des produits
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
                 <a title="Imprimer" href=@Url.Action("Details", "Produits", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-print" />
+                    <span class="glyphicon glyphicon-file" />
                 </a>
+                <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
                 <a title="Supprimer" href=@Url.Action("Delete", "Produits", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-trash" />
                 </a>
