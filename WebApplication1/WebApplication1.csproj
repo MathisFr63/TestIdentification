@@ -164,6 +164,7 @@
     <Compile Include="Controllers\FournisseursController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ParametresController.cs" />
     <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Controllers\UtilisateursController.cs" />
     <Compile Include="DAL\ApplicationContext.cs" />
@@ -173,6 +174,8 @@
     </Compile>
     <Compile Include="Models\Account\AdresseMail.cs" />
     <Compile Include="Models\Account\Feedback.cs" />
+    <Compile Include="Models\Account\Parametre.cs" />
+    <Compile Include="Models\Account\Theme.cs" />
     <Compile Include="Models\Entite\Lieu.cs" />
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
@@ -321,6 +324,7 @@
     <Content Include="Views\Produits\ListToPdf.cshtml" />
     <Content Include="Views\Feedbacks\ListToPdf.cshtml" />
     <Content Include="Views\Feedbacks\FeedbackToPdf.cshtml" />
+    <Content Include="Views\Parametres\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

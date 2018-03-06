@@ -1,4 +1,5 @@
 ﻿@*Vue permettant d'afficher les détails d'un utilisateurs*@
+
 @model WebApplication1.Models.Account.Utilisateur
 @{
     ViewBag.Title = "Details";
@@ -49,6 +50,7 @@
             @*Affichage du nom de l'utilisateur*@
             <div class="col-md-6">
                 <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
+
             </div>
             @*Affichage du prénom de l'utilisateur*@
             <div class="col-md-6">
