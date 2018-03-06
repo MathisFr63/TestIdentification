@@ -64,16 +64,13 @@
     @*Affichage de l'entête de chaque colonne dans le tableau*@
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MotDePasse)
+            @Html.DisplayNameFor(model => model.Nom)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Prénom)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nom)
+            @Html.DisplayNameFor(model => model.ID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Type)
@@ -86,14 +83,9 @@
     @foreach (var item in Model)
     {
         <tr>
-            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
+            @*Affichage du nom de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-
-            @*Affichage du mot de passe de l'utilisateur*@
-            <td>
-                @Html.DisplayFor(modelItem => item.MotDePasse)
+                @Html.DisplayFor(modelItem => item.Nom)
             </td>
 
             @*Affichage du prénom de l'utilisateur*@
@@ -101,9 +93,9 @@
                 @Html.DisplayFor(modelItem => item.Prénom)
             </td>
 
-            @*Affichage du nom de l'utilisateur*@
+            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+                @Html.DisplayFor(modelItem => item.ID)
             </td>
 
             @*Affichage du type de l'utilisateur*@
@@ -127,3 +119,37 @@
         </tr>
     }
 </table>
+
+
+
+<div id="lapopup">
+    <!-- popup content start || copy this to the end of the file-->
+    <div class="popupWindow">
+        <div class="popup_txt">
+            Voulez-vous supprimer cet utilisateur définitivement ?
+        </div>
+        <div class="popup_img">
+            <img src="yes.png" class="popup_img_yes" />
+            <img src="no.png" class="popup_img_no" />
+        </div>
+    </div>
+</div>  <!-- popup content ends -->
+
+<script>
+
+    $(document).ready(function () {
+        $(".btn-suppr").click(function () {
+            $('#lapopup').toggleClass('popup');
+        });
+
+    $( ".popup_img_yes" ).click(function() {
+                $( ".popup" ).fadeOut( 1200 );
+  });
+
+  $( ".popup_img_no" ).click(function() {
+                window.open("https://www.google.com","_self");
+  });
+
+});
+
+</script>

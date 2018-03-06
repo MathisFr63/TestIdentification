@@ -5,13 +5,20 @@
     ViewBag.Title = "Edit";
 }
 
+
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index","Devis")>Liste devis</a>
+    </li>
+    <li class="breadcrumb-item active">Modifier devis</li>
+</ul>
+
+@*titre de la partie*@
+<h2 class="titreCRUD">Modifier le devis</h2>
+<hr class="separer" />
 <br />
-<p>
-    @*Bouton de retour*@
-    <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
+
 
 @*Formulaire permettant de modifier les champs voulus*@
 @using (Html.BeginForm())
@@ -19,8 +26,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Devis</h4>
-        <hr />
         @*Div permettant de stocker l'identifiant du devis (sans l'afficher) afin de pouvoir l'utiliser ensuite*@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Devis.ID)

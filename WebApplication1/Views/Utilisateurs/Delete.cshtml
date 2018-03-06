@@ -3,13 +3,15 @@
 @{
     ViewBag.Title = "Delete";
 }
-<br />
-<p>
-    @*Bouton de retour*@
-    <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
+
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index", "Utilisateurs")>Liste utilisateurs</a>
+    </li>
+    <li class="breadcrumb-item active">Supprimer utilisateur</li>
+</ul>
+
 <h3>Voulez-vous vraiment supprimer cet utilisateur ?</h3>
 
 @*Div permettant d'afficher les détails de l'utilisateurs*@

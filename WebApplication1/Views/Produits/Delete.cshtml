@@ -5,13 +5,13 @@
     ViewBag.Title = "Delete";
 }
 
-<br />
-<p>
-    @*Bouton de retour*@
-    <a title="Retour" href=@Url.Action("Index","Produits") class="btn btn-secondary btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index", "Produits")>Liste produits</a>
+    </li>
+    <li class="breadcrumb-item active">Supprimer produit</li>
+</ul>
 
 @*Div permettant d'afficher les détails et de supprimer le produit*@
 <div class="py-5">

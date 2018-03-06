@@ -4,58 +4,95 @@
     ViewBag.Title = "Details";
 }
 
-    <br />
-    @if (Model.Type == 0)
-    {
-        <p>
-            @*Bouton de retour*@
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index", "Utilisateurs")>Liste utilisateurs</a>
+    </li>
+    <li class="breadcrumb-item active">Informations utilisateur</li>
+</ul>
+
+@*Affichage de : "Informations sur <Prénom> <Nom> :"*@
+<div>
+    
+    <ul style="list-style: none; display:block; float: right!important;">
+        <li><a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">Imprimer</a></li>
+        <li>
             <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-pencil" />
             </a>
-        </p>
-    }
-    <br />
-    @*Affichage de : "Informations sur <Prénom> <Nom> :"*@
-    <button type="submit">Mon profil</button>
-    <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">Imprimer</a>
-    <h3 class="">Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom) :</h3>
-    <br />
-    <br />
-    @*Affichages des informations de l'utilsateur*@
-    <div class="py-5">
-        <div class="container">
-            <div class="row">
+        </li>
+    </ul>
+    <h2  class="titreCRUD">
+        Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom)
+    </h2>
+</div>
 
-                @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
-                </div>
-                @*Affichage du prénom de l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom)</p>
-                </div>
-                @*Affichage du nom de l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
-                </div>
-                @*Affichage du type de l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Vous êtes @Html.DisplayFor(model => model.Type)</p>
-                </div>
-                @*Affichage du nombre de devis réalisés par l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Vous avez réalisé @ViewBag.NbDevis devis.</p>
-                </div>
-                @*Affichage du nombre de factures réalisés par l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Vous avez facturé @ViewBag.NbFactures devis.</p>
-                </div>
-                @*Affichage du nombre de produits possédant l'utilisateur*@
-                <div class="col-md-6">
-                    <p class="lead">Vous avez une liste de @ViewBag.NbProduits produits.</p>
-                </div>
+<hr class="separer" />
+<br />
+
+@if (Model.Type == 0)
+{
+    <p>
+        @*Bouton de retour*@
+        <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-pencil" />
+        </a>
+    </p>
+}
+<br />
+
+@*Affichages des informations de l'utilsateur*@
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            @*Affichage du nom de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
+            </div>
+            @*Affichage du prénom de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom)</p>
+            </div>
+            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
+            </div>
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Statut : @Html.DisplayFor(model => model.Type)</p>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+<br />
+
+<div class="row">
+    @*Affichage du nombre de devis réalisés par l'utilisateur*@
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Devis réalisés</h4>
+                <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">@ViewBag.NbDevis</span></div>
+            </div>
+        </div>
+    </div>
+    @*Affichage du nombre de factures réalisés par l'utilisateur*@
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Factures réalisées</h4>
+                <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">@ViewBag.NbFactures</span></div>
+            </div>
+        </div>
+    </div>
+    @*Affichage du nombre de produits possédant l'utilisateur*@
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Nombre de produits</h4>
+                <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">@ViewBag.NbProduits</span></div>
+            </div>
+        </div>
+    </div>
+</div>

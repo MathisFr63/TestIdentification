@@ -3,13 +3,15 @@
 @{
     ViewBag.Title = "Delete";
 }
-<br />
-<p>
-    @*Bouton de retour*@
-    <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
+
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index","Devis")>Liste devis</a>
+    </li>
+    <li class="breadcrumb-item active">Supprimer devis</li>
+</ul>
+
 <h3>Voulez-vous supprimer ce devis ?</h3>
 @*Div permettant d'afficher les détails avant de le supprimer*@
 <div>

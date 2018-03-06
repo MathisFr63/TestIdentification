@@ -4,14 +4,15 @@
     ViewBag.Title = "Edit";
 }
 
-<br />
-<p>
-    @*Bouton de retour*@
-    <a href=@Url.Action("Index","Utilisateurs") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
-<h2>Modifier le client</h2>
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index", "Utilisateurs")>Liste utilisateurs</a>
+    </li>
+    <li class="breadcrumb-item active">Modifier utilisateur</li>
+</ul>
+
+
 
 @*Formulaire permettant de modifier les champs voulus*@
 @using (Html.BeginForm())
@@ -19,8 +20,10 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Utilisateur</h4>
-        <hr />
+        <h2 class="titreCRUD">Modifier l'utilisateur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom)</h2>
+        <hr class="separer" />
+        <br />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
@@ -61,7 +64,7 @@
         @*Bouton permettant de valider les modifications faites sur l'utilisateur*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default btn-secondary py-3" />
             </div>
         </div>
     </div>

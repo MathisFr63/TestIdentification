@@ -9,13 +9,19 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    
+    @*Chemin de retour*@
+    <ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+        <li class="breadcrumb-item">
+            <a href=@Url.Action("Index","Devis")>Liste devis</a>
+        </li>
+        <li class="breadcrumb-item active">Créer devis</li>
+    </ul>
+
+    //titre de la partie
+    <h2 class="titreCRUD">Créer un devis</h2>
+    <hr class="separer" />
     <br />
-    <p>
-        @*Bouton de retour*@
-        <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-arrow-left" />
-        </a>
-    </p>
 
     <div class="col-md-12">
         <div class="form-horizontal">

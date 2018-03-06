@@ -6,19 +6,21 @@
 }
 
 
-<p>
-    @*Bouton de retour*@
-    <a title="Retour" href=@Url.Action("Index","Devis") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-</p>
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index","Devis")>Liste devis</a>
+    </li>
+    <li class="breadcrumb-item active">Facturer devis</li>
+</ul>
 
-<h2>Facturer</h2>
+@*titre de la partie*@
+<h2 class="titreCRUD">Facturer le devis</h2>
+<hr class="separer" />
+<br />
 
 @*Div permettant d'afficher les détails du devis avant de le facturer*@
 <div>
-    <h4>Facturer</h4>
-    <hr />
     <dl class="dl-horizontal">
         @*Affichage de l'objet du devis*@
         <dt>
