@@ -1,0 +1,79 @@
+﻿@model WebApplication1.Models.Account.Parametre
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Paramètre</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*Champs caché afin de stocker l'identifiant du produit*@
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="col-md-6">
+            @*Div permettant de modifier le libelle*@
+            <label class="control-label">Durée de la validité d'un devis</label>
+            <div>
+                @Html.EditorFor(model => model.DureeValiditeDevis, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DureeValiditeDevis, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de modifier le prix hors taxes*@
+            <label class="control-label">Nombre de relance d'une facture</label>
+            <div>
+                @Html.EditorFor(model => model.NbRelanceFacture, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NbRelanceFacture, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de modifier la réduction*@
+            <label class="control-label">Thème</label>
+            <div>
+                @Html.EnumDropDownListFor(model => model.Theme, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de modifier le taux de TVA*@
+            <label class="control-label">Nombre d'éléments affiché pour chaque page</label>
+            <div>
+                @Html.EditorFor(model => model.NbElementPage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NbElementPage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            @*Div permettant de modifier le type (bien / service)*@
+            <label class="control-label">Text par defaut pour les retours utilisateur</label>
+            <div>
+                @Html.EditorFor(model => model.DefaultTextFeedback, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
+            </div>
+
+            @*    <p class="lead">Text par defaut pour les retours utilisateur : @Html.Raw(HttpUtility.HtmlDecode(Model.DefaultTextFeedback))</p>*@
+            @*Div permettant de modifier le commentaire*@
+            <label class="control-label">Nombre de jour pour les statistiques</label>
+            <div>
+                @Html.EditorFor(model => model.NbJourStat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NbJourStat, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de modifier le commentaire*@
+            <label class="control-label">Taille de l'hitstorique</label>
+            <div>
+                @Html.EditorFor(model => model.TailleHistorique, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TailleHistorique, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Bouton permettant de valider la modification du produit*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Sauvegarder" class="btn btn-default btn-secondary" />
+            </div>
+        </div>
+    </div>
+}

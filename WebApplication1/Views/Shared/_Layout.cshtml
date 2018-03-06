@@ -24,10 +24,18 @@
             <nav id="sidebar">
 
                 @*Div contenant le titre du menu avec le nom de l'application pour l'instant change en fonction de la taille*@
-                <div class="sidebar-header titre" id="sidebarCollapse">
-                    <h3>Easy Bill</h3>
-                    <strong>EB</strong>
-                </div>
+                
+                <ul class="list-unstyled components">
+                    <li class="sidebar-header titre" id="sidebarCollapse">
+                        <h3>Easy Bill</h3>
+                        <strong>EB</strong>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Index", "Parametres")>
+                            <i class="glyphicon glyphicon-cog"></i>Paramètres
+                        </a>
+                    </li>
+                </ul>
 
                 @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
                 <ul class="list-unstyled components">

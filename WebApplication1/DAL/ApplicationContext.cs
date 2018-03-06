@@ -22,6 +22,8 @@ namespace WebApplication1.DAL
 
         // Liste des utilisateurs de l'application.
         public DbSet<Utilisateur> Utilisateurs { get; set; }
+        // Liste de tous les Paramètres des utilisateurs.
+        public DbSet<Parametre> Parametres { get; set; }
         // Liste des adresses mails s'étant abonnées aux newsletters.
         public DbSet<AdresseMail> AdressesMail { get; set; }
         // Liste des devis de tous les utilisateurs.
@@ -74,7 +76,10 @@ namespace WebApplication1.DAL
         /// <returns>string: Identifiant de l'utilisateur créé</returns>
         public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type)
         {
-            var user = new Utilisateur(mail, motDePasse, nom, prenom, type);
+            var param = new Parametre();
+            Parametres.Add(param);
+
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, param);
             Utilisateurs.Add(user);
 
             SaveChanges();

@@ -49,6 +49,8 @@ namespace WebApplication1.Models.Account
         public string codeRecup { get; set; }
 
 
+        public int ParametreID { get; set; }
+
         //public virtual ICollection<Entreprise> Entreprises { get; set; }
 
         /// <summary>
@@ -72,13 +74,16 @@ namespace WebApplication1.Models.Account
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
 
-        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type)
+        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type, Parametre parametre)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
             this.Prénom = prenom;
             this.Nom = nom;
             this.Type = type;
+
+            this.ParametreID = parametre.ID;
+            parametre.DefaultTextFeedback += $"<p>{prenom} {nom}</p>";
         }
     }
 }
