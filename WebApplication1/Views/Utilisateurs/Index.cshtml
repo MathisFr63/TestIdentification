@@ -11,10 +11,10 @@
 </h2>
 
 @*<p>
-    <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-plus" />
-    </a>
-</p>*@
+        <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-plus" />
+        </a>
+    </p>*@
 
 @*Navbar permettant de trier et de faire une recherche sur la liste des devis.*@
 <nav class="navbar navbar-default">
@@ -112,9 +112,12 @@
                     <span class="glyphicon glyphicon-file" />
                 </a>
                 <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
-                <a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                 <button title="Supprimer l'utilisateur'" class="btn btn-info deleteButton" onclick='togglePopup("@item.Nom", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
-                </a>
+                </button>
+                @*<a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                    <span class="glyphicon glyphicon-trash" />
+                </a>*@
             </td>
         </tr>
     }
@@ -122,34 +125,40 @@
 
 
 
-<div id="lapopup">
-    <!-- popup content start || copy this to the end of the file-->
-    <div class="popupWindow">
-        <div class="popup_txt">
-            Voulez-vous supprimer cet utilisateur définitivement ?
-        </div>
-        <div class="popup_img">
-            <img src="yes.png" class="popup_img_yes" />
-            <img src="no.png" class="popup_img_no" />
+<div class="popup">
+    <div class="popDisplay">
+        <!-- popup content start || copy this to the end of the file-->
+        <div class="popupWindow">
+            <p class="popup_txt">
+                Supprimer définitivement :
+            </p>
+            <p class="popup_txt" id="popup_txt"></p>
+            <div class="popup_img">
+                <form class="col-md-6" method="post" id="formUser">
+                    @Html.AntiForgeryToken()
+                    <button src="yes.png" class="popup_img_yes">Oui</button>
+                    <input value="Delete" type="hidden"/>
+                </form>
+                <button src="no.png" class="popup_img_no">Non</button>
+            </div>
         </div>
     </div>
 </div>  <!-- popup content ends -->
 
-<script>
-
+<script type="text/javascript">
     $(document).ready(function () {
-        $(".btn-suppr").click(function () {
-            $('#lapopup').toggleClass('popup');
+        $(".popup_img_yes").click(function () {
+            $(".popup").fadeOut(600);
         });
 
-    $( ".popup_img_yes" ).click(function() {
-                $( ".popup" ).fadeOut( 1200 );
-  });
+        $(".popup_img_no").click(function () {
+            $(".popup").fadeOut(600);
+        });
+    });
 
-  $( ".popup_img_no" ).click(function() {
-                window.open("https://www.google.com","_self");
-  });
-
-});
-
+    function togglePopup(name, id) {
+        $(".popup").fadeIn(600);
+        document.getElementById("popup_txt").innerHTML = name;
+        document.getElementById("formUser").action = "/Utilisateurs/Delete/" + id.replace(/\./g, "~");
+    }
 </script>
