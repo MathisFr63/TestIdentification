@@ -5,6 +5,6 @@
     /// </summary>
     public enum TypeUtilisateur
     {
-        Administrateur, Enregistré, Inconnu
+        SA, Administrateur, Client, Prospect, EnAttente
     }
 }

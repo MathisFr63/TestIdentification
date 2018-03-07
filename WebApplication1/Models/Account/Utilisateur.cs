@@ -42,12 +42,21 @@ namespace WebApplication1.Models.Account
             }
         }
 
+        // Liste des numéros de téléphone de l'utilisateur
+        public List<Telephone> Telephones { get; set; }
+
+        // Lieu de l'utilisateur
+        public Lieu Lieu{ get; set; }
+
+        public Civilite Civilite;
+
+        public string otherInfo { get; set; }
+
         // Type de l'utilisateur (Administrateur ou enregistré).
         public TypeUtilisateur Type { get; set; }
 
         [Display(Name = "Code de récupération")]
         public string codeRecup { get; set; }
-
 
         public int ParametreID { get; set; }
 
@@ -73,14 +82,17 @@ namespace WebApplication1.Models.Account
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
-
-        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type, Parametre parametre)
+        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type, List<Telephone> telephones, Lieu lieu, Civilite civilite, Parametre parametre, string otherInfo)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
             this.Prénom = prenom;
             this.Nom = nom;
             this.Type = type;
+            this.Telephones = telephones;
+            this.Lieu = lieu;
+            this.Civilite = civilite;
+            this.otherInfo = otherInfo;
 
             this.ParametreID = parametre.ID;
             parametre.DefaultTextFeedback += $"<p>{prenom} {nom}</p>";

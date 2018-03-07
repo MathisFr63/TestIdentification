@@ -19,12 +19,14 @@
     @*Si l'utilisateur est connecté, affichage du menu*@
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
+        var db = new WebApplication1.DAL.ApplicationContext();
+        var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
 
                 @*Div contenant le titre du menu avec le nom de l'application pour l'instant change en fonction de la taille*@
-                
+
                 <ul class="list-unstyled components">
                     <li class="sidebar-header titre" id="sidebarCollapse">
                         <h3>Easy Bill</h3>
@@ -48,8 +50,7 @@
 
                     @*Si l'utilisateur est un administrateur, éléments pour la gestion des utilisateurs*@
                     @{
-                        var db = new WebApplication1.DAL.ApplicationContext();
-                        if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == 0)
+                        if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
                         {
                             <li>
                                 <a href=@Url.Action("Index", "Utilisateurs")>
@@ -97,7 +98,7 @@
                 <ul class="list-unstyled components">
 
                     @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Enregistré)
+                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Prospect || type == WebApplication1.Models.Account.TypeUtilisateur.Prospect)
                     {
                         <li>
                             <a href=@Url.Action("Contact", "Home")>
@@ -107,7 +108,7 @@
                         </li>
                     }
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
-                    @if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
+                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
@@ -149,13 +150,13 @@
                 @RenderBody()
             </div>
         </div>
-                        }
-                        else
-                        {
-                            <div>
-                                @RenderBody()
-                            </div>
-                        }
+    }
+    else
+    {
+        <div>
+            @RenderBody()
+        </div>
+    }
 
 
     <!-- jQuery CDN -->

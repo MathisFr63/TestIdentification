@@ -112,7 +112,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Print(int id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Facture facture = db.Factures.Find(id);
 

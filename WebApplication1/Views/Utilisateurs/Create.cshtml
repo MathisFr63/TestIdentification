@@ -25,58 +25,129 @@
     <br />
 
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @*Div permettant de saisir l'identifiant (adresse e-mail) de l'utilisateur*@
-        <div class="container">
-            <div class="row">
-                <div class="form-group">
+    @*Div permettant de saisir l'identifiant (adresse e-mail) de l'utilisateur*@
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })*
+                    @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Utilisateur.ID, "", new { @class = "text-danger" })
+                </div>
+
+                @*Div permettant de saisir le mot de passe de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label" })*
+                    @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
+                </div>
+
+                @*Div permettant de confirmer le mot de passe de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label" })*
+                    @Html.PasswordFor(model => model.confirmation, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.confirmation, "", new { @class = "text-danger" })
+                </div>
+
+                @*Div permettant de saisir le nom de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.Nom, htmlAttributes: new { @class = "control-label" })*
+                    @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @*@Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })*@
+                </div>
+
+                @*Div permettant de saisir le prénom de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.Prénom, htmlAttributes: new { @class = "control-label" })*
+                    @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                </div>
+
+                @*Div permettant de saisir le type de l'utilisateur (basique / admin)*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })*
+                    @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
+                </div>
+
+                @*Div permettant de saisir le téléphone de l'utilisateur*@
+                <div>
+                    @*<h2>Téléphones</h2>*@
+
+                    @*Div permettant de saisir le numéro de téléphone de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })*
-                        @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                        @Html.ValidationMessageFor(model => model.Utilisateur.ID, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Numéro, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Telephones.First().Numéro, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
 
-                    @*Div permettant de saisir le mot de passe de l'utilisateur*@
+                    @*Div permettant de saisir le préfixe du téléphone de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label" })*
-                        @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control", @required = "required" } )
-                        @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Préfixe, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Telephones.First().Préfixe, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
 
-                    @*Div permettant de confirmer le mot de passe de l'utilisateur*@
+                    @*Div permettant de saisir le type du téléphone de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label" })*
-                        @Html.PasswordFor(model => model.confirmation, new { @class = "form-control", @required = "required" } )
-                        @Html.ValidationMessageFor(model => model.confirmation, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Type, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EnumDropDownListFor(x => x.Utilisateur.Telephones.First().Type, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    </div>
+                </div>
+
+                @*Div permettant de saisir le lieu de l'utilisateur*@
+                <div>
+                    @*<h2>Lieu</h2>*@
+
+                    @*Div permettant de saisir l'adresse du lieu de l'utilisateur*@
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.Utilisateur.Lieu.Adresse, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Lieu.Adresse, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
 
-                    @*Div permettant de saisir le nom de l'utilisateur*@
+                    @*Div permettant de saisir le complément du lieu de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.Utilisateur.Nom, htmlAttributes: new { @class = "control-label" })*
-                        @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                        @*@Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })*@
+                        @Html.LabelFor(model => model.Utilisateur.Lieu.Complement, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Lieu.Complement, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
 
-                    @*Div permettant de saisir le prénom de l'utilisateur*@
+                    @*Div permettant de saisir le code postal du lieu de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.Utilisateur.Prénom, htmlAttributes: new { @class = "control-label" })*
-                        @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.LabelFor(model => model.Utilisateur.Lieu.CodePostal, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Lieu.CodePostal, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
 
-                    @*Div permettant de saisir le type de l'utilisateur (basique / admin)*@
+                    @*Div permettant de saisir la ville du lieu de l'utilisateur*@
                     <div class="col-md-10">
-                        @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })*
-                        @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
+                        @Html.LabelFor(model => model.Utilisateur.Lieu.Ville, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Lieu.Ville, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
 
-
+                    @*Div permettant de saisir le pays du lieu de l'utilisateur*@
                     <div class="col-md-10">
-                        <br />
-                        <p>(*) : Champs obligatoires</p>
-                        <input type="submit" value="Créer" class="btn btn-default btn-secondary" />
+                        @Html.LabelFor(model => model.Utilisateur.Lieu.Pays, htmlAttributes: new { @class = "control-label" })*
+                        @Html.EditorFor(model => model.Utilisateur.Lieu.Pays, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                     </div>
+                </div>
+
+                @*Div permettant de saisir la civilité de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.Civilite, htmlAttributes: new { @class = "control-label" })*
+                    @Html.EnumDropDownListFor(x => x.Utilisateur.Civilite, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                </div>
+
+                @*Div permettant de saisir la civilité de l'utilisateur*@
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Utilisateur.otherInfo, htmlAttributes: new { @class = "control-label" })*
+                    @Html.TextAreaFor(model => model.Utilisateur.otherInfo, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                </div>
+
+
+
+                <div class="col-md-10">
+                    <br />
+                    <p>(*) : Champs obligatoires</p>
+                    <input type="submit" value="Créer" class="btn btn-default btn-secondary" />
                 </div>
             </div>
         </div>
+    </div>
 }

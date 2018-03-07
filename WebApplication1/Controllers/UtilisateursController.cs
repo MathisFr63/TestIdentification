@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type == TypeUtilisateur.Administrateur)
+            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
                 var users = db.Utilisateurs.ToList();
 
@@ -100,7 +100,8 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
         public ActionResult Details(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if ((type != TypeUtilisateur.Administrateur || type != TypeUtilisateur.SA) && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -122,7 +123,8 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page de création d'un utilisateur si l'utilisateur courant est un administrateur.
         public ActionResult Create()
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
                 return RedirectToAction("BadUserTypeError", "Home");
             return View();
         }
@@ -141,7 +143,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, vm.Utilisateur.Telephones, vm.Utilisateur.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
@@ -153,7 +155,8 @@ namespace WebApplication1.Controllers
         // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
         public ActionResult Edit(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name)
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -194,7 +197,9 @@ namespace WebApplication1.Controllers
         // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
         public ActionResult Delete(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            var type2 = db.ObtenirUtilisateur(id).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.Administrateur || type2 == TypeUtilisateur.SA)
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -213,6 +218,23 @@ namespace WebApplication1.Controllers
         // Méthode appelée lorsque l'utilisateur souhaite réelement supprimer l'utilisateur sélectionné (lui même s'il n'est pas administrateur).
         public ActionResult DeleteConfirmed(string id)
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home");
+
+            if (type2 == TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.SA)
+            {
+                ViewBag.erreurMessage = "Vous ne pouvez pas supprimer d'administrateur !";
+                return RedirectToAction("Index");
+            }
+
+            if (id == HttpContext.User.Identity.Name)
+            {
+                ViewBag.erreurMessage = "Vous ne pouvez pas vous supprimer !";
+                return RedirectToAction("Index");
+            }
+
             db.Utilisateurs.Remove(db.Utilisateurs.Find(id.Replace('~', '.')));
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -227,8 +249,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult Print(string id)
         {
-
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -248,7 +270,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult UtilisateurToPdf(string id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -269,7 +292,7 @@ namespace WebApplication1.Controllers
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type == TypeUtilisateur.Administrateur)
+            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
                 var users = db.Utilisateurs.ToList();
 
@@ -323,7 +346,7 @@ namespace WebApplication1.Controllers
         {
 
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type == TypeUtilisateur.Administrateur)
+            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
                 var users = db.Utilisateurs.ToList();
 

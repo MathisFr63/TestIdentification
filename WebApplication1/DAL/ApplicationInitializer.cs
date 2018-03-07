@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Entite;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.DAL
@@ -41,14 +42,28 @@ namespace WebApplication1.DAL
             parametres.ForEach(p => context.Parametres.Add(p));
             context.SaveChanges();
 
+            // Construction de plusieurs téléphones
+            Telephone tel1 = new Telephone("0602393655", "+33", TypeTelephone.Portable);
+            Telephone tel2 = new Telephone("0473836373", "+33", TypeTelephone.Fixe);
+            Telephone tel3 = new Telephone("0602393652", "+33", TypeTelephone.Portable);
+            Telephone tel4 = new Telephone("0473836377", "+33", TypeTelephone.Fixe);
+
+            // Construction de plusieurs lieux
+            Lieu lieu1 = new Lieu("10 Rue de la Maugagnade", null, "63370", "Lempdes", "France");
+            Lieu lieu2 = new Lieu("8 Rue des Granges", null, "63370", "Lempdes", "France");
+            Lieu lieu3 = new Lieu("10 Rue de la Paix", null, "63800", "Cournon d'Auvergne", "France");
+            Lieu lieu4 = new Lieu("7 Avenue Blaise Pascal", null, "63170", "Aubière", "France");
+            Lieu lieu5 = new Lieu("59 Avenue du Radiateur", null, "63170", "Aubière", "France");
+
             // Ajout d'utilisateurs.
             var utilisateurs = new List<Utilisateur>
             {
-                new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root", "FRIZOT", "Mathis",TypeUtilisateur.Administrateur, parametres[0]),
-                new Utilisateur("Flavio.RANCHON@etu.uca.fr", "Flavio", "RANCHON", "Flavio",TypeUtilisateur.Enregistré, parametres[1]),
-                new Utilisateur("Mathieu.RAVEL@etu.uca.fr", "Mathieu", "RAVEL", "Mathieu", TypeUtilisateur.Enregistré, parametres[2]),
-                new Utilisateur("Aurelien.BERGER2@etu.uca.fr", "Aurélien", "BERGER", "Aurélien",TypeUtilisateur.Enregistré, parametres[3]),
-                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo",TypeUtilisateur.Enregistré, parametres[4])
+                new Utilisateur{Nom = "Admin", Prénom = "Admin", ID = "admin", MotDePasse = "admin".GetHashCode(), Type = TypeUtilisateur.SA},
+                new Utilisateur("Mathis.FRIZOT@etu.uca.fr", "root", "FRIZOT", "Mathis",TypeUtilisateur.Administrateur, new List<Telephone>{tel1, tel2 }, lieu1, Civilite.Homme, parametres[0], null),
+                new Utilisateur("Flavio.RANCHON@etu.uca.fr", "Flavio", "RANCHON", "Flavio",TypeUtilisateur.EnAttente, new List<Telephone>{tel3, tel4 }, lieu2, Civilite.Homme, parametres[1], null),
+                new Utilisateur("Mathieu.RAVEL@etu.uca.fr", "Mathieu", "RAVEL", "Mathieu", TypeUtilisateur.EnAttente, new List<Telephone>{tel1, tel3 }, lieu3, Civilite.Homme, parametres[2], null),
+                new Utilisateur("Aurelien.BERGER2@etu.uca.fr", "Aurélien", "BERGER", "Aurélien",TypeUtilisateur.EnAttente, new List<Telephone>{tel4, tel2 }, lieu4, Civilite.Homme, parametres[3], null),
+                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo",TypeUtilisateur.EnAttente, new List<Telephone>{tel1, tel4 }, lieu5, Civilite.Homme, parametres[4], null)
             };
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
 

@@ -25,7 +25,7 @@
             {
                 <div class="form-group">
 
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Adresse e-mail" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
@@ -59,6 +59,8 @@
     </div>
 </nav>
 
+<p class="text-danger">@ViewBag.erreurMessage</p>
+
 @*Affichage de la liste des utilisateurs*@
 <table class="table">
     @*Affichage de l'entête de chaque colonne dans le tableau*@
@@ -85,22 +87,22 @@
         <tr>
             @*Affichage du nom de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+            @Html.DisplayFor(modelItem => item.Nom)
             </td>
 
             @*Affichage du prénom de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.Prénom)
+            @Html.DisplayFor(modelItem => item.Prénom)
             </td>
 
             @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.ID)
+            @Html.DisplayFor(modelItem => item.ID)
             </td>
 
             @*Affichage du type de l'utilisateur*@
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.Type)
             </td>
 
             @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
@@ -112,12 +114,12 @@
                     <span class="glyphicon glyphicon-file" />
                 </a>
                 <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
-                 <button title="Supprimer l'utilisateur'" class="btn btn-info deleteButton" onclick='togglePopup("@item.Nom", "@item.ID")'>
+                <button title="Supprimer l'utilisateur'" class="btn btn-info deleteButton" onclick='togglePopup("@item.Nom", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
                 </button>
                 @*<a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-trash" />
-                </a>*@
+                        <span class="glyphicon glyphicon-trash" />
+                    </a>*@
             </td>
         </tr>
     }
@@ -137,7 +139,7 @@
                 <form class="col-md-6" method="post" id="formUser">
                     @Html.AntiForgeryToken()
                     <button src="yes.png" class="popup_img_yes">Oui</button>
-                    <input value="Delete" type="hidden"/>
+                    <input value="Delete" type="hidden" />
                 </form>
                 <button src="no.png" class="popup_img_no">Non</button>
             </div>

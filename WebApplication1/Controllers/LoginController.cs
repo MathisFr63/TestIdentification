@@ -61,7 +61,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.Enregistré);
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, vm.Utilisateur.Telephones, vm.Utilisateur.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
                     FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
@@ -69,7 +69,7 @@ namespace WebApplication1.Controllers
             }
             return View(vm);
         }
-
+        
         // Méthode permettant à l'utilisateur de se déconnecter.
         public ActionResult Deconnexion()
         {

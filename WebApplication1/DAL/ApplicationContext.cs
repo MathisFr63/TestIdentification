@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Entite;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.DAL
@@ -74,12 +76,12 @@ namespace WebApplication1.DAL
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
         /// <returns>string: Identifiant de l'utilisateur créé</returns>
-        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type)
+        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, List<Telephone> telephones, Lieu lieu, Civilite civilite, string otherInfo)
         {
             var param = new Parametre();
             Parametres.Add(param);
 
-            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, param);
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, telephones, lieu, civilite, param, otherInfo);
             Utilisateurs.Add(user);
 
             SaveChanges();

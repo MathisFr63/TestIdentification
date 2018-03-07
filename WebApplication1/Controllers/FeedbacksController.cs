@@ -172,7 +172,7 @@ namespace WebApplication1.Controllers
         {
             if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
 
