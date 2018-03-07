@@ -13,22 +13,17 @@
     <li class="breadcrumb-item active">Informations utilisateur</li>
 </ul>
 
+
 @*Affichage de : "Informations sur <Prénom> <Nom> :"*@
-<div>
+<div class="titrepartie">
     
-    <ul style="list-style: none; display:block; float: right!important;">
-        <li><a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">Imprimer</a></li>
-        <li>
-            <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">
-                <span class="glyphicon glyphicon-pencil" />
-            </a>
-        </li>
+    <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
+        <li><a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-secondary btn-lg"><span class="glyphicon glyphicon-print" /></a></li>
     </ul>
-    <h2  class="titreCRUD">
+    <h2 style="display:block;"  class="titreCRUD">
         Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom)
     </h2>
 </div>
-
 <hr class="separer" />
 <br />
 

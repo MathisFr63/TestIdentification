@@ -16,7 +16,7 @@
     @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
 
-@*Sinon, affichage de la page de connexion*@
+    @*Sinon, affichage de la page de connexion*@
 else
 {
     //Formulaire permettant à l'utilisateur de saisir ses identifiant et mot de passe afin de se connecter
@@ -43,13 +43,7 @@ else
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            @*Affichage de l'erreur si il y en a une*@
-                            @if (ViewBag.erreur != null)
-                            {
-                                <div class="alert alert-danger">
-                                    <strong>Warning !</strong> @ViewBag.erreur
-                                </div>
-                            }
+
 
                             <h1>Connectez-vous</h1>
                             <p class="text-white">Nous sommes ravis de vous revoir</p>
@@ -71,6 +65,14 @@ else
 
                                 @*Lien permettant à un utilisateur de récupérer son mot de passe s'il l'a perdu ou qu'il souhaite le modifier*@
                                 @Html.ActionLink("Mot de passe oublié ?", "RecoverMDP", "Login", null, new { @class = "my-3 text-white" })<br />
+
+                                @*Affichage de l'erreur si il y en a une*@
+                                @if (ViewBag.erreur != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        <strong>Warning !</strong> @ViewBag.erreur
+                                    </div>
+                                }
 
                                 @*Bouton permettant d'essayer de se connecter*@
                                 <button type="submit" class="btn btn-secondary my-2">Connection</button>

@@ -65,7 +65,9 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Objet)
+                <a title="Détails" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="detail">
+                    @Html.DisplayFor(modelItem => item.Objet)
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -90,9 +92,6 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                <a title="Details" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-file" />
-                </a>
                 <a title="Imprimer la Facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
             </td>
         </tr>

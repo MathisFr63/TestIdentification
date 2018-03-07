@@ -9,3 +9,5 @@
 WebApplication1/Views/Home/Index.cshtml
 WebApplication1/Views/Home/Index.cshtml
 WebApplication1/Views/Home/Index.cshtml
+WebApplication1/App_Data/ApplicationContext.mdf
+WebApplication1/App_Data/ApplicationContext_log.ldf
