@@ -177,16 +177,24 @@ namespace WebApplication1.Controllers
         // Méthode permettant à un administrateur de modifier les données de l'utilisateur sélectionné et dont l'id est passé dans l'url après avoir modifié les valeurs sur la page de modification.
         public ActionResult EditPost(UtilisateurViewModelConnection userVM)
         {
-            var utilisateur = db.Utilisateurs.Find(userVM.Utilisateur.ID.Replace('~', '.'));
+            if (ModelState.IsValid || userVM.motDePasse == null)
+            {
+                var utilisateur = db.Utilisateurs.Find(userVM.Utilisateur.ID.Replace('~', '.'));
 
-            utilisateur.Nom = userVM.Utilisateur.Nom;
-            utilisateur.Prénom = userVM.Utilisateur.Prénom;
-            utilisateur.Type = userVM.Utilisateur.Type;
-            if (userVM.motDePasse != null && userVM.confirmation != null && userVM.motDePasse == userVM.confirmation)
-                utilisateur.MotDePasse = userVM.motDePasse.GetHashCode();
+                utilisateur.Nom = userVM.Utilisateur.Nom;
+                utilisateur.Prénom = userVM.Utilisateur.Prénom;
+                utilisateur.Type = userVM.Utilisateur.Type;
+                if (userVM.motDePasse != null && userVM.confirmation != null && userVM.motDePasse == userVM.confirmation)
+                {
+                    utilisateur.MotDePasse = userVM.motDePasse.GetHashCode();
+                    db.SaveChanges();
+                    return RedirectToAction("Deconnexion", "Login");
+                }
 
-            db.SaveChanges();
-            return RedirectToAction("Index");
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(userVM);
         }
 
         // GET: Utilisateurs/Delete/5

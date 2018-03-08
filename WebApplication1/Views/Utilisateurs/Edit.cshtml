@@ -61,23 +61,28 @@
             </div>
         </div>
 
-        @*Div permettant de modifier le type de l'utilisateur*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        @*Div permettant de modifier le type de l'utilisateur*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.confirmation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
+        @*Si l'utilisateur modifie ses propres informations, il peut modifier son mot de passes*@
+        @if (Model.Utilisateur.ID == HttpContext.Current.User.Identity.Name)
+        {
+            @*Div permettant de modifier le mot de passe de l'utilisateur*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+
+            @*Div permettant de confirmer le nouveau mot de passe de l'utilisateur*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.confirmation, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.confirmation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
 
         @*Bouton permettant de valider les modifications faites sur l'utilisateur*@
         <div class="form-group">
