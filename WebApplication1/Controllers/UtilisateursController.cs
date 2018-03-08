@@ -155,13 +155,16 @@ namespace WebApplication1.Controllers
         // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
         public ActionResult Edit(string id)
         {
-            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name)
+            var typeUserCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            if (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
+
+            if (typeUserCourant != TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name || (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id))
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
