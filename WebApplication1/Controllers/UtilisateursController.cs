@@ -166,7 +166,7 @@ namespace WebApplication1.Controllers
             if (utilisateur == null)
                 return HttpNotFound();
 
-            return View(utilisateur);
+            return View(new UtilisateurViewModelConnection { Utilisateur = utilisateur });
         }
 
         // POST: Utilisateurs/Edit/5
@@ -175,22 +175,18 @@ namespace WebApplication1.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         // Méthode permettant à un administrateur de modifier les données de l'utilisateur sélectionné et dont l'id est passé dans l'url après avoir modifié les valeurs sur la page de modification.
-        public ActionResult EditPost(string id)
+        public ActionResult EditPost(UtilisateurViewModelConnection userVM)
         {
-            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
-            if (TryUpdateModel(utilisateur, new string[] { "Nom", "Prénom", "Type" }))
-            {
-                try
-                {
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (RetryLimitExceededException)
-                {
-                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
-                }
-            }
-            return View(utilisateur);
+            var utilisateur = db.Utilisateurs.Find(userVM.Utilisateur.ID.Replace('~', '.'));
+
+            utilisateur.Nom = userVM.Utilisateur.Nom;
+            utilisateur.Prénom = userVM.Utilisateur.Prénom;
+            utilisateur.Type = userVM.Utilisateur.Type;
+            if (userVM.motDePasse != null && userVM.confirmation != null && userVM.motDePasse == userVM.confirmation)
+                utilisateur.MotDePasse = userVM.motDePasse.GetHashCode();
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Utilisateurs/Delete/5

@@ -95,7 +95,13 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Message = "Your contact page.";
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            return View(user != null ? new Feedback(user.ID, user.Nom + " " + user.Prénom) : new Feedback());
+            if (user != null)
+            {
+                ViewBag.Param = db.Parametres.Find(user.ParametreID).DefaultTextFeedback;
+                return View(new Feedback(user.ID, user.Nom + " " + user.Prénom));
+            }
+
+            return View(new Feedback());
         }
 
         [HttpPost]

@@ -98,7 +98,7 @@
                 <ul class="list-unstyled components">
 
                     @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Prospect || type == WebApplication1.Models.Account.TypeUtilisateur.Prospect)
+                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Prospect || type == WebApplication1.Models.Account.TypeUtilisateur.Client)
                     {
                         <li>
                             <a href=@Url.Action("Contact", "Home")>

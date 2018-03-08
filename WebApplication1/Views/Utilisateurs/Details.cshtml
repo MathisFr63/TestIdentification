@@ -16,26 +16,23 @@
 
 @*Affichage de : "Informations sur <Prénom> <Nom> :"*@
 <div class="titrepartie">
-    
+
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li><a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-secondary btn-lg"><span class="glyphicon glyphicon-print" /></a></li>
     </ul>
-    <h2 style="display:block;"  class="titreCRUD">
+    <h2 style="display:block;" class="titreCRUD">
         Informations sur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom)
     </h2>
 </div>
 <hr class="separer" />
 <br />
 
-@if (Model.Type == 0)
-{
-    <p>
-        @*Bouton de retour*@
-        <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-pencil" />
-        </a>
-    </p>
-}
+<p>
+    @*Bouton de retour*@
+    <a href=@Url.Action("Edit", "Utilisateurs", new { id = Model.ID.Replace('.', '~') }) class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil" />
+    </a>
+</p>
 <br />
 
 @*Affichages des informations de l'utilsateur*@

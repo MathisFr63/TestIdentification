@@ -1,5 +1,5 @@
 ﻿@*Vue permettant la modification d'un utilisateur*@
-@model WebApplication1.Models.Account.Utilisateur
+@model WebApplication1.ViewModels.UtilisateurViewModelConnection
 @{
     ViewBag.Title = "Edit";
 }
@@ -20,7 +20,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2 class="titreCRUD">Modifier l'utilisateur @Html.DisplayFor(model => model.Prénom) @Html.DisplayFor(model => model.Nom)</h2>
+        <h2 class="titreCRUD">Modifier l'utilisateur @Html.DisplayFor(model => model.Utilisateur.Prénom) @Html.DisplayFor(model => model.Utilisateur.Nom)</h2>
         <hr class="separer" />
         <br />
 
@@ -28,36 +28,54 @@
 
         @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
         <div class="form-group">
-            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Utilisateur.Nom, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @*Div permettant de modifier le nom de l'utilisateur*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Utilisateur.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Utilisateur.Nom, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @*Div permettant de modifier le prénom de l'utilisateur*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Prénom, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Utilisateur.Prénom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                @Html.ValidationMessageFor(model => model.Prénom, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Utilisateur.Prénom, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @*Div permettant de modifier le type de l'utilisateur*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+            @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
+            </div>
+        </div>
+
+        @*Div permettant de modifier le type de l'utilisateur*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Div permettant de modifier le type de l'utilisateur*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.confirmation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
             </div>
         </div>
 

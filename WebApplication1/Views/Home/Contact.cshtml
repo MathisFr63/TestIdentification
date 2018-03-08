@@ -66,25 +66,13 @@
 
     setTimeout(function () {
         initialize();
-    }, 100);
+    }, 200);
 
     //Fonction permettant d'initialiser le corps du message avec Boujour, Cordialement, et le nom de l'utilisateur envoyant le feedback
     function initialize() {
-        @{
-                var user = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
-            var prenom = "";
-            var nom = "";
-                if (user != null)
-                {
-                    prenom = user.Prénom;
-                    nom = user.Nom;
-                }
-            }
-            var top = "<p>Bonjour,</p>" +
-                      "<br/>" +
-                      "<p>Cordialement,</p>" +
-                      "<p>@prenom @nom</p>";
-
-            tinymce.get("Comment").setContent(top);
+        var text = "<p>Hey !</p>";
+        var myText = "@Server.HtmlDecode(ViewBag.Param)";
+        alert(myText);
+        tinymce.get("Comment").setContent(text);
     }
 </script>
