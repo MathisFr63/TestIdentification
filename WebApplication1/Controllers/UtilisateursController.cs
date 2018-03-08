@@ -187,6 +187,7 @@ namespace WebApplication1.Controllers
                 utilisateur.Nom = userVM.Utilisateur.Nom;
                 utilisateur.Prénom = userVM.Utilisateur.Prénom;
                 utilisateur.Type = userVM.Utilisateur.Type;
+                utilisateur.Lieu = userVM.Utilisateur.Lieu;
                 if (userVM.motDePasse != null && userVM.confirmation != null && userVM.motDePasse == userVM.confirmation)
                 {
                     utilisateur.MotDePasse = userVM.motDePasse.GetHashCode();

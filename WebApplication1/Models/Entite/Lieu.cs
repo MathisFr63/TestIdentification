@@ -28,6 +28,9 @@ namespace WebApplication1.Models.Account
         // Pays correspondant au lieu
         public string Pays { get; set; }
 
+        //Identifiant de l'utilisateur auquel est lié le lieu
+        //public string UtilisateurID { get; set; }
+
 
         /// <summary>
         /// Constructeur par défaut d'un lieu
@@ -51,6 +54,7 @@ namespace WebApplication1.Models.Account
             this.CodePostal = cp;
             this.Ville = ville;
             this.Pays = pays;
+            //this.UtilisateurID = utilisateurID;
         }
     }
 }

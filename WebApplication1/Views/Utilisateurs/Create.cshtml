@@ -134,7 +134,7 @@
                     @Html.EnumDropDownListFor(x => x.Utilisateur.Civilite, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                 </div>
 
-                @*Div permettant de saisir la civilité de l'utilisateur*@
+                @*Div permettant à l'utilisateur de saisir des informations supplémentaires*@
                 <div class="col-md-10">
                     @Html.LabelFor(model => model.Utilisateur.otherInfo, htmlAttributes: new { @class = "control-label" })*
                     @Html.TextAreaFor(model => model.Utilisateur.otherInfo, new { htmlAttributes = new { @class = "form-control", @required = "required" } })

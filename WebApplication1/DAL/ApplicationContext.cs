@@ -38,6 +38,8 @@ namespace WebApplication1.DAL
         public DbSet<Produit> Produits { get; set; }
         // Liste de tous les feebacks reçus.
         public DbSet<Feedback> Feedbacks { get; set; }
+        // Liste des lieux de tous les utilisateurs.
+        public DbSet<Lieu> Lieux { get; set; }
 
         // Méthode appelée lors de la création du modèle afin de supprimer les tables ayant le même nom.
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

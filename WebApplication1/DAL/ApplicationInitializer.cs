@@ -49,11 +49,21 @@ namespace WebApplication1.DAL
             Telephone tel4 = new Telephone("0473836377", "+33", TypeTelephone.Fixe);
 
             // Construction de plusieurs lieux
-            Lieu lieu1 = new Lieu("10 Rue de la Maugagnade", null, "63370",            "Lempdes", "France");
-            Lieu lieu2 = new Lieu("8 Rue des Granges",       null, "63370",            "Lempdes", "France");
-            Lieu lieu3 = new Lieu("10 Rue de la Paix",       null, "63800", "Cournon d'Auvergne", "France");
-            Lieu lieu4 = new Lieu("7 Avenue Blaise Pascal",  null, "63170",            "Aubière", "France");
-            Lieu lieu5 = new Lieu("59 Avenue du Radiateur",  null, "63170",            "Aubière", "France");
+            Lieu lieu1 = new Lieu("10 Rue de la Maugagnade", null, "63370", "Lempdes", "France"/*, "Mathis.FRIZOT@etu.uca.fr"*/);
+            Lieu lieu2 = new Lieu("8 Rue des Granges", null, "63370", "Lempdes", "France"/*, "Flavio.RANCHON@etu.uca.fr"*/);
+            Lieu lieu3 = new Lieu("10 Rue de la Paix", null, "63800", "Cournon d'Auvergne", "France"/*, "Mathieu.RAVEL@etu.uca.fr"*/);
+            Lieu lieu4 = new Lieu("7 Avenue Blaise Pascal", null, "63170", "Aubière", "France"/*, "Aurelien.BERGER2@etu.uca.fr"*/);
+            Lieu lieu5 = new Lieu("59 Avenue du Radiateur", null, "63170", "Aubière", "France"/*, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"*/);
+
+            //var lieux = new List<Lieu>
+            //{
+            //    lieu1,
+            //    lieu2,
+            //    lieu3,
+            //    lieu4,
+            //    lieu5
+            //};
+            //lieux.ForEach(l => context.Lieux.Add(l));
 
             // Ajout d'utilisateurs.
             var utilisateurs = new List<Utilisateur>
