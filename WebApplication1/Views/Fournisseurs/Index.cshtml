@@ -12,7 +12,7 @@
             {
                 <div class="form-group">
 
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Objet", @class = "searchBar" })
                     <button type="submit" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" onclick="location.href='@Url.Action("Index", "Fournisseurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                 </div>

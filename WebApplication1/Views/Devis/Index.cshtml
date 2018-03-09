@@ -19,7 +19,7 @@
             {
                 <div class="form-group">
 
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Objet", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>

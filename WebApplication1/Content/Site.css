@@ -471,3 +471,13 @@ input[type=submit] {
     padding-left: 30px;
     padding-right: 30px;
 }
+
+.searchBar {
+    color: #555555;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    height: 3.40rem;
+    padding: 6px 12px;
+}
+
