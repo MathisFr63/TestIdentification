@@ -23,22 +23,25 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user != null)
             {
+                var param = db.Parametres.Find(user.ParametreID);
+                ViewBag.Stats = param.NbJourStat;
+
                 var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
                 ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
                 ListDevis = ListDevis.OrderByDescending(s => s.Date).ToList();
-                ViewBag.listeDevis = ListDevis.Take(6);
+                ViewBag.listeDevis = ListDevis.Take(param.TailleHistorique);
                 ViewBag.NbDevis = ListDevis.Count();
 
                 var ListFactures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
                 ListFactures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
                 ListFactures = ListFactures.OrderByDescending(s => s.Date).ToList();
 
-                ViewBag.listeFactures = ListFactures.Take(6);
+                ViewBag.listeFactures = ListFactures.Take(param.TailleHistorique);
                 ViewBag.NbFactures = ListFactures.Count();
 
                 var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
                 ListProduits.Reverse();
-                ViewBag.listeProduits = ListProduits.Take(6);
+                ViewBag.listeProduits = ListProduits.Take(param.TailleHistorique);
 
 
                 ViewBag.NbProduits = ListProduits.Count();
@@ -49,10 +52,10 @@ namespace WebApplication1.Controllers
                 // CA total
                 ViewBag.CA = ListFactures.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
 
-                var listDevisRecent = ListDevis.Where(d => d.Date.AddMonths(1) > DateTime.Today);
+                var listDevisRecent = ListDevis.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today);
 
                 // calcul CA du mois
-                var listFacturesRecentes = ListFactures.Where(d => d.Date.AddMonths(1) > DateTime.Today);
+                var listFacturesRecentes = ListFactures.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today);
                 ViewBag.CAduMois = listFacturesRecentes.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
 
                 // nb devis récent
@@ -97,7 +100,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user != null)
             {
-                ViewBag.Param = db.Parametres.Find(user.ParametreID).DefaultTextFeedback;
+                ViewBag.Param = db.Parametres.Find(user.ParametreID).DefaultTextFeedback.Replace("\r\n", "_");
                 return View(new Feedback(user.ID, user.Nom + " " + user.Prénom));
             }
 

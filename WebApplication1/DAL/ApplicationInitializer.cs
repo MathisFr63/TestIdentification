@@ -10,7 +10,7 @@ namespace WebApplication1.DAL
     /// Classe permettant l'initialisation de la base de données avec des données en dures lorsque le model change afin de faire des tests sur l'application sans recréer les données à chaque fois.
     /// </summary>
     //public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
-    public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
+    public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         /// <summary>
         /// Méthode permettant d'initialiser la base de données.
@@ -70,7 +70,7 @@ namespace WebApplication1.DAL
             {
                 new Utilisateur("admin", "admin", "Admin", "Admin", TypeUtilisateur.SA, new List<Telephone>{ tel1, tel4 }, lieu4, Civilite.Homme, parametres[0], null),
                 new Utilisateur("Mathis.FRIZOT@etu.uca.fr",                "root",          "FRIZOT",   "Mathis", TypeUtilisateur.Administrateur, new List<Telephone>{tel1, tel2 }, lieu1, Civilite.Femme, parametres[1], null),
-                new Utilisateur("Flavio.RANCHON@etu.uca.fr",             "Flavio",         "RANCHON",   "Flavio",      TypeUtilisateur.EnAttente, new List<Telephone>{tel3, tel4 }, lieu2, Civilite.Homme, parametres[2], null),
+                new Utilisateur("Flavio.RANCHON@etu.uca.fr",             "Flavio",         "RANCHON",   "Flavio",      TypeUtilisateur.Client, new List<Telephone>{tel3, tel4 }, lieu2, Civilite.Homme, parametres[2], null),
                 new Utilisateur("Mathieu.RAVEL@etu.uca.fr",             "Mathieu",           "RAVEL",  "Mathieu",      TypeUtilisateur.EnAttente, new List<Telephone>{tel1, tel3 }, lieu3, Civilite.Homme, parametres[3], null),
                 new Utilisateur("Aurelien.BERGER2@etu.uca.fr",         "Aurélien",          "BERGER", "Aurélien",      TypeUtilisateur.EnAttente, new List<Telephone>{tel4, tel2 }, lieu4, Civilite.Homme, parametres[4], null),
                 new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo",      TypeUtilisateur.EnAttente, new List<Telephone>{tel1, tel4 }, lieu5, Civilite.Homme, parametres[5], null)

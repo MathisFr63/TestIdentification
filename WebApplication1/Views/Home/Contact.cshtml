@@ -31,7 +31,7 @@
         @*Modification du commentaire / message lié au feedback*@
         @Html.LabelFor(m => m.Comment)
         @Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @cols = 80, @rows = 10 })
-        
+
         <button type="submit" value="Contact" class="btn btn-secondary">Envoyer</button>
     </div>
 
@@ -66,13 +66,14 @@
 
     setTimeout(function () {
         initialize();
-    }, 200);
+    }, 500);
 
     //Fonction permettant d'initialiser le corps du message avec Boujour, Cordialement, et le nom de l'utilisateur envoyant le feedback
     function initialize() {
-        var text = "<p>Hey !</p>";
-        var myText = "@Server.HtmlDecode(ViewBag.Param)";
-        alert(myText);
-        tinymce.get("Comment").setContent(text);
+        var myText = "";
+        "@ViewBag.Param".split("_").forEach(function (e) {
+            myText += "<p>" + e + "</p>";
+        })
+        tinymce.get("Comment").setContent(myText);
     }
 </script>

@@ -17,55 +17,55 @@
 
         <div class="col-md-6">
             @*Div permettant de modifier le libelle*@
-            <label class="control-label">Durée de la validité d'un devis</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Durée de la validité d'un devis</label>
                 @Html.EditorFor(model => model.DureeValiditeDevis, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DureeValiditeDevis, "", new { @class = "text-danger" })
             </div>
 
             @*Div permettant de modifier le prix hors taxes*@
-            <label class="control-label">Nombre de relance d'une facture</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Nombre de relance d'une facture</label>
                 @Html.EditorFor(model => model.NbRelanceFacture, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NbRelanceFacture, "", new { @class = "text-danger" })
             </div>
 
             @*Div permettant de modifier la réduction*@
-            <label class="control-label">Thème</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Thème</label>
                 @Html.EnumDropDownListFor(model => model.Theme, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
             </div>
 
             @*Div permettant de modifier le taux de TVA*@
-            <label class="control-label">Nombre d'éléments affiché pour chaque page</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Nombre d'éléments affiché pour chaque page</label>
                 @Html.EditorFor(model => model.NbElementPage, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NbElementPage, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="col-md-6">
-            @*Div permettant de modifier le type (bien / service)*@
-            <label class="control-label">Text par defaut pour les retours utilisateur</label>
-            <div>
-                @Html.EditorFor(model => model.DefaultTextFeedback, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
-            </div>
-
             @*    <p class="lead">Text par defaut pour les retours utilisateur : @Html.Raw(HttpUtility.HtmlDecode(Model.DefaultTextFeedback))</p>*@
             @*Div permettant de modifier le commentaire*@
-            <label class="control-label">Nombre de jour pour les statistiques</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Nombre de jour pour les statistiques</label>
                 @Html.EditorFor(model => model.NbJourStat, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NbJourStat, "", new { @class = "text-danger" })
             </div>
 
             @*Div permettant de modifier le commentaire*@
-            <label class="control-label">Taille de l'hitstorique</label>
-            <div>
+            <div class="form-group">
+                <label class="control-label">Taille de l'historique</label>
                 @Html.EditorFor(model => model.TailleHistorique, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TailleHistorique, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de modifier le type (bien / service)*@
+            <div class="form-group">
+                <label class="control-label">Text par defaut pour les retours utilisateur</label>
+                @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
+                @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
             </div>
         </div>
 
