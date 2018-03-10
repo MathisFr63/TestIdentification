@@ -26,9 +26,16 @@ namespace WebApplication1.Controllers
         public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
 
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
-            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+            ListDevis.ForEach(devis =>
+            {
+                devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
+                devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
+            });
+
+            db.SaveChanges();
 
             if (searchstring != null) page = 1;
             else searchstring = currentFilter;
@@ -59,8 +66,8 @@ namespace WebApplication1.Controllers
             }
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-            return View( listeTrie.ToPagedList((page ?? 1), 15) );
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+            return View( listeTrie.ToPagedList((page ?? 1), param.NbElementPage) );
         }
 
         // GET: Devis/Details/5
@@ -268,6 +275,7 @@ namespace WebApplication1.Controllers
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
 
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
             ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
@@ -301,14 +309,14 @@ namespace WebApplication1.Controllers
             }
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-            return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList((page ?? 1), 15));
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+            return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
-
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
 
             var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
             ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
@@ -342,8 +350,8 @@ namespace WebApplication1.Controllers
             }
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-            return View(listeTrie.ToPagedList((page ?? 1), 15));
+                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+            return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
     }
 }

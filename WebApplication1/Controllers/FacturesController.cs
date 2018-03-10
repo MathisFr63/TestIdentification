@@ -29,6 +29,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
@@ -64,7 +65,7 @@ namespace WebApplication1.Controllers
             }
 
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
@@ -75,13 +76,18 @@ namespace WebApplication1.Controllers
 
         // GET: Factures/Details/5
         // Méthode permettant grâce à l'accès par l'url d'afficher les détails de la facture sélectionnée
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, bool? erreurRelance)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Facture facture = db.Factures.Find(id);
 
             if (facture == null) return HttpNotFound();
+
+            if (erreurRelance != null && erreurRelance == true)
+            {
+                ViewBag.ErreurRelance = true;
+            }
 
             return View(facture);
         }
@@ -95,11 +101,15 @@ namespace WebApplication1.Controllers
             Facture facture = db.Factures.Find(id);
 
             if (facture == null) return HttpNotFound();
+            var param = db.Parametres.Find(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ParametreID);
+            if (facture.Relances < param.NbRelanceFacture)
+            {
+                facture.Relances++;
+                db.SaveChanges();
+               return RedirectToAction("Index");
+            }
 
-            facture.Relances++;
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id, @erreurRelance = true });
         }
 
         protected override void Dispose(bool disposing)
@@ -136,6 +146,7 @@ namespace WebApplication1.Controllers
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
@@ -171,7 +182,7 @@ namespace WebApplication1.Controllers
             }
 
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
@@ -183,6 +194,7 @@ namespace WebApplication1.Controllers
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
@@ -218,7 +230,7 @@ namespace WebApplication1.Controllers
             }
 
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))

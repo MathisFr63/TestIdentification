@@ -17,6 +17,67 @@ namespace WebApplication1.Controllers
     {
         private ApplicationContext db = new ApplicationContext();
 
+        private void ChargerDevis(Utilisateur user, Parametre param)
+        {
+            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+            ListDevis = ListDevis.OrderByDescending(s => s.Date).ToList();
+
+            ViewBag.listeDevis = ListDevis.Take(param.TailleHistorique);
+            ViewBag.NbDevis = ListDevis.Count();
+            ViewBag.NbDevisRecent = ListDevis.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today).Count();
+
+            // % de devis concrétisés
+            if (ViewBag.NbDevis > 0)
+                ViewBag.DevisConcret = ViewBag.NbFactures * 100 / ViewBag.NbDevis;
+            else
+                ViewBag.DevisConcret = 0;
+        }
+
+        private IEnumerable<Facture> ChargerFacture(Utilisateur user, Parametre param)
+        {
+            var ListFactures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+            ListFactures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
+            ListFactures = ListFactures.OrderByDescending(s => s.Date).ToList();
+
+            ViewBag.listeFactures = ListFactures.Take(param.TailleHistorique);
+            ViewBag.NbFactures = ListFactures.Count();
+            ViewBag.NbProdSold = ListFactures.Sum(f => f.Produits.Sum(p => p.Quantite));
+            ViewBag.CA = ListFactures.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
+
+            var a = ListFactures.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today);
+
+            ViewBag.CAduMois = a.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
+
+            return a;
+        }
+
+        private void ChargerProduit(Utilisateur user, Parametre param)
+        {
+            var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
+            ListProduits.Reverse();
+            ViewBag.listeProduits = ListProduits.Take(param.TailleHistorique);
+            ViewBag.NbProduits = ListProduits.Count();
+        }
+
+        private void ProduitLePlusVendu(IEnumerable<Facture> listFacturesRecentes)
+        {
+            // calcul du produit le plus vendu du mois
+            var dico = new Dictionary<string, int>();
+            foreach (var facture in listFacturesRecentes)
+            {
+                foreach (var dp in facture.Produits)
+                {
+                    if (dico.ContainsKey(dp.Nom))
+                        dico[dp.Nom] += dp.Quantite;
+                    else
+                        dico.Add(dp.Nom, dp.Quantite);
+                }
+            }
+            if (dico.Count > 0)
+                ViewBag.ProduitPlusVendu = dico.OrderByDescending(p => p.Value).First().Key;
+        }
+
         // Méthode permettant l'affichage de la page d'accueil.
         public ActionResult Index()
         {
@@ -26,61 +87,13 @@ namespace WebApplication1.Controllers
                 var param = db.Parametres.Find(user.ParametreID);
                 ViewBag.Stats = param.NbJourStat;
 
-                var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
-                ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
-                ListDevis = ListDevis.OrderByDescending(s => s.Date).ToList();
-                ViewBag.listeDevis = ListDevis.Take(param.TailleHistorique);
-                ViewBag.NbDevis = ListDevis.Count();
+                var listFacturesRecentes = ChargerFacture(user, param);
 
-                var ListFactures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
-                ListFactures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
-                ListFactures = ListFactures.OrderByDescending(s => s.Date).ToList();
+                ChargerDevis(user, param);
 
-                ViewBag.listeFactures = ListFactures.Take(param.TailleHistorique);
-                ViewBag.NbFactures = ListFactures.Count();
+                ChargerProduit(user, param);
 
-                var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
-                ListProduits.Reverse();
-                ViewBag.listeProduits = ListProduits.Take(param.TailleHistorique);
-
-
-                ViewBag.NbProduits = ListProduits.Count();
-
-                // nb produits vendu au total
-                ViewBag.NbProdSold = ListFactures.Sum(f => f.Produits.Sum(p => p.Quantite));
-
-                // CA total
-                ViewBag.CA = ListFactures.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
-
-                var listDevisRecent = ListDevis.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today);
-
-                // calcul CA du mois
-                var listFacturesRecentes = ListFactures.Where(d => d.Date.AddDays(param.NbJourStat) > DateTime.Today);
-                ViewBag.CAduMois = listFacturesRecentes.Sum(f => f.Produits.Sum(p => p.PrixHT * p.Quantite));
-
-                // nb devis récent
-                ViewBag.NbDevisRecent = listDevisRecent.Count();
-
-                // % de devis concrétisés
-                if (ViewBag.NbDevis > 0)
-                    ViewBag.DevisConcret = ViewBag.NbFactures * 100 / ViewBag.NbDevis;
-                else
-                    ViewBag.DevisConcret = 0;
-
-                // calcul du produit le plus vendu du mois
-                Dictionary<string, int> dico = new Dictionary<string, int>();
-                foreach (Facture f in listFacturesRecentes)
-                {
-                    foreach (DonneeProduit dp in f.Produits)
-                    {
-                        if (dico.ContainsKey(dp.Nom))
-                            dico[dp.Nom] += dp.Quantite;
-                        else
-                            dico.Add(dp.Nom, dp.Quantite);
-                    }
-                }
-                if (dico.Count > 0)
-                    ViewBag.ProduitPlusVendu = dico.OrderByDescending(p => p.Value).First().Key;
+                ProduitLePlusVendu(listFacturesRecentes);
             }
 
             return View();

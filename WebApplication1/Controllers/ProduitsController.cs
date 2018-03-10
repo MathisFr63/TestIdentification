@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(string sortOrder, string searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
@@ -59,7 +60,7 @@ namespace WebApplication1.Controllers
                     break;
             }
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!string.IsNullOrEmpty(searchstring))
@@ -220,6 +221,7 @@ namespace WebApplication1.Controllers
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
@@ -253,7 +255,7 @@ namespace WebApplication1.Controllers
                     break;
             }
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!string.IsNullOrEmpty(searchstring))
@@ -266,6 +268,7 @@ namespace WebApplication1.Controllers
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
@@ -299,7 +302,7 @@ namespace WebApplication1.Controllers
                     break;
             }
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!string.IsNullOrEmpty(searchstring))

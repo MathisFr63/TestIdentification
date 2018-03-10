@@ -1,14 +1,9 @@
 ﻿using PagedList;
 using Rotativa;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Account;
@@ -32,6 +27,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
+                var param = db.Parametres.Find(user.ParametreID);
                 var users = db.Utilisateurs.ToList();
 
                 if (searchstring != null) page = 1;
@@ -74,8 +70,8 @@ namespace WebApplication1.Controllers
                 }
 
                 if (!String.IsNullOrEmpty(searchstring))
-                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-                return View(usersTrie.ToPagedList((page ?? 1), 15));
+                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+                return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
             return RedirectToAction("BadUserTypeError", "Home");
         }
@@ -302,6 +298,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
+                var param = db.Parametres.Find(user.ParametreID);
                 var users = db.Utilisateurs.ToList();
 
                 if (searchstring != null) page = 1;
@@ -344,8 +341,8 @@ namespace WebApplication1.Controllers
                 }
 
                 if (!String.IsNullOrEmpty(searchstring))
-                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-                return new ViewAsPdf("ListToPdf", usersTrie.ToPagedList((page ?? 1), 15));
+                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+                return new ViewAsPdf("ListToPdf", usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
             return RedirectToAction("BadUserTypeError", "Home");
         }
@@ -356,6 +353,7 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
             {
+                var param = db.Parametres.Find(user.ParametreID);
                 var users = db.Utilisateurs.ToList();
 
                 if (searchstring != null) page = 1;
@@ -398,8 +396,8 @@ namespace WebApplication1.Controllers
                 }
 
                 if (!String.IsNullOrEmpty(searchstring))
-                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), 15));
-                return View(usersTrie.ToPagedList((page ?? 1), 15));
+                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+                return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
             return RedirectToAction("BadUserTypeError", "Home");
         }

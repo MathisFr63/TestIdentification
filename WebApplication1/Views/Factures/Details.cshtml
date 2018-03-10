@@ -95,3 +95,9 @@
 
 @*Bouton permettant de relancer la facture*@
 <a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="btn btn-secondary">Relancer</a>
+@if (ViewBag.ErreurRelance != null && ViewBag.ErreurRelance == true)
+{
+    <script type="text/javascript">
+        alert("Nombre de relance déjà au maximum");
+    </script>
+}

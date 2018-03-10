@@ -24,9 +24,13 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des feedbacks des utilisateurs de l'application.
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
-            List<Feedback> listTrie = new List<Feedback>();
+
+            var param = db.Parametres.Find(user.ParametreID);
+
+            var listTrie = new List<Feedback>();
 
             //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
@@ -39,7 +43,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
@@ -197,9 +201,12 @@ namespace WebApplication1.Controllers
         //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
-            List<Feedback> listTrie = new List<Feedback>();
+
+            var param = db.Parametres.Find(user.ParametreID);
+            var listTrie = new List<Feedback>();
 
             //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
@@ -212,7 +219,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
@@ -225,9 +232,12 @@ namespace WebApplication1.Controllers
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type != TypeUtilisateur.Administrateur)
                 return RedirectToAction("BadUserTypeError", "Home");
-            List<Feedback> listTrie = new List<Feedback>();
+
+            var param = db.Parametres.Find(user.ParametreID);
+            var listTrie = new List<Feedback>();
 
             //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
@@ -240,7 +250,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.CurrentFilter = searchstring;
 
-            int pageSize = 15;
+            int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
