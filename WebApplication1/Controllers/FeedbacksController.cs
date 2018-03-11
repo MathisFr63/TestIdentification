@@ -59,14 +59,20 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
         public ActionResult Create()
         {
-            return View();
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user != null)
+            {
+                ViewBag.Param = db.Parametres.Find(user.ParametreID).DefaultTextFeedback.Replace("\r\n", "_");
+                return View(new Feedback(user.ID, user.Nom + " " + user.Prénom));
+            }
+            return View(new Feedback());
         }
-        
+
         // POST: Feedbacks/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         // Méthode permettant à l'utilisateur d'ajouter le devis qu'il vient de créer sur la page create (get) si le model est valide.
         public ActionResult Create(Feedback feedback)
         {

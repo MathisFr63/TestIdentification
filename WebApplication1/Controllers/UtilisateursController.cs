@@ -97,7 +97,8 @@ namespace WebApplication1.Controllers
         public ActionResult Details(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if ((type != TypeUtilisateur.Administrateur || type != TypeUtilisateur.SA) && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var userType = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
+            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -202,7 +203,7 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            var type2 = db.ObtenirUtilisateur(id).Type;
+            var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.Administrateur || type2 == TypeUtilisateur.SA)
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
@@ -254,7 +255,8 @@ namespace WebApplication1.Controllers
         public ActionResult Print(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var userType = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
+            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
