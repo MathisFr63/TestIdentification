@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentSort = sortOrder;
 
             var listeTrie = ListDevis.OrderBy(s => s.Objet);
-            
+
 
             switch (sortOrder)
             {
@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
-            return View( listeTrie.ToPagedList((page ?? 1), param.NbElementPage) );
+            return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
         // GET: Devis/Details/5
@@ -81,7 +81,8 @@ namespace WebApplication1.Controllers
             if (devis == null) return HttpNotFound();
 
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
+            { Devis = devis });
         }
 
         // GET: Devis/Create
@@ -114,9 +115,9 @@ namespace WebApplication1.Controllers
                     var produit = db.Produits.First(p => p.Libelle == name);
 
                     db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0]))
-                                        {
-                                            DevisID = vm.Devis.ID
-                                        });
+                    {
+                        DevisID = vm.Devis.ID
+                    });
                 }
 
                 db.SaveChanges();
@@ -135,8 +136,9 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, 
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
+            { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -150,37 +152,29 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
             devis.Produits = new List<DonneeProduit>();
 
-            var donneeProduit = db.DonneeProduit;
+            db.DonneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(dp => db.DonneeProduit.Remove(dp));
 
-            donneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(dp => donneeProduit.Remove(dp));
-
-            var keys = Request.Form.AllKeys;
+            var form = Request.Form;
+            var keys = form.AllKeys;
             for (int i = 5; i < keys.Length; i++)
             {
                 var name = keys[i];
-                var produit = db.DonneeProduit.First(p => p.Nom == name);
+                var produit = db.Produits.First(p => p.Libelle == name);
 
-                db.DonneeProduit.Add(new DonneeProduit(produit){
-                    Quantite = int.Parse(Request.Form.GetValues(keys[i])[0]), 
-                    DevisID = devis.ID 
+                db.DonneeProduit.Add(new DonneeProduit(produit)
+                {
+                    Quantite = int.Parse(form.GetValues(keys[i])[0]),
+                    DevisID = devis.ID
                 });
             }
 
-            if (TryUpdateModel(devis, "", new string[] { "Objet", "Commentaire", "Monnaie" }))
-            {
-                try
-                {
-                    devis.Date = DateTime.Now;
-                    devis.Valide = true;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (RetryLimitExceededException)
-                {
-                    ModelState.AddModelError("", "Impossible d'enregistrer les modifications. Réessayez et si le problème persiste, consultez votre administrateur système.");
-                }
-            }
-            return View(devis);
+            devis.Objet = form.GetValues(keys[2])[0];
+            devis.Monnaie = (TypeMonnaie) Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
+            devis.Commentaire = form.GetValues(keys[4])[0];
+            devis.Date = DateTime.Now;
+            devis.Valide = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Devis/Delete/5
@@ -268,7 +262,8 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
+            { Devis = devis });
         }
 
         //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis

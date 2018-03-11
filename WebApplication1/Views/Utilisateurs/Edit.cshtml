@@ -27,96 +27,94 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-            @Html.ValidationMessageFor(model => model.Utilisateur.Nom, "", new { @class = "text-danger" })
-        </div>
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
 
     @*Div permettant de modifier le nom de l'utilisateur*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.Utilisateur.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-            @Html.ValidationMessageFor(model => model.Utilisateur.Nom, "", new { @class = "text-danger" })
-        </div>
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.Nom, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Utilisateur.Nom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
 
     @*Div permettant de modifier le prénom de l'utilisateur*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.Utilisateur.Prénom, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-            @Html.ValidationMessageFor(model => model.Utilisateur.Prénom, "", new { @class = "text-danger" })
-        </div>
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.Prénom, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
 
     @*Div permettant de modifier le type de l'utilisateur*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
-        </div>
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
+        @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
     </div>
+
+    <hr class="separerEdit" />
 
     @*Div permettant de modifier le lieu de l'utilisateur*@
+    @*<h2>Lieu</h2>*@
+
+    @*Div permettant de modifier l'adresse du lieu de l'utilisateur*@
     <div>
-        @*<h2>Lieu</h2>*@
-
-        @*Div permettant de modifier l'adresse du lieu de l'utilisateur*@
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.Utilisateur.Lieu.Adresse, htmlAttributes: new { @class = "control-label" })*
-            @Html.EditorFor(model => model.Utilisateur.Lieu.Adresse, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-        </div>
-
-        @*Div permettant de modifier le complément du lieu de l'utilisateur*@
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.Utilisateur.Lieu.Complement, htmlAttributes: new { @class = "control-label" })*
-            @Html.EditorFor(model => model.Utilisateur.Lieu.Complement, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-
-        @*Div permettant de modifier le code postal du lieu de l'utilisateur*@
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.Utilisateur.Lieu.CodePostal, htmlAttributes: new { @class = "control-label" })*
-            @Html.EditorFor(model => model.Utilisateur.Lieu.CodePostal, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-        </div>
-
-        @*Div permettant de modifier la ville du lieu de l'utilisateur*@
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.Utilisateur.Lieu.Ville, htmlAttributes: new { @class = "control-label" })*
-            @Html.EditorFor(model => model.Utilisateur.Lieu.Ville, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-        </div>
-
-        @*Div permettant de modifier le pays du lieu de l'utilisateur*@
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.Utilisateur.Lieu.Pays, htmlAttributes: new { @class = "control-label" })*
-            @Html.EditorFor(model => model.Utilisateur.Lieu.Pays, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-        </div>
+        @Html.LabelFor(model => model.Lieu.Adresse, htmlAttributes: new { @class = "control-label" })*
+        @Html.EditorFor(model => model.Lieu.Adresse, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
+
+    @*Div permettant de modifier le complément du lieu de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Lieu.Complement, htmlAttributes: new { @class = "control-label" })*
+        @Html.EditorFor(model => model.Lieu.Complement, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    @*Div permettant de modifier le code postal du lieu de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Lieu.CodePostal, htmlAttributes: new { @class = "control-label" })*
+        @Html.EditorFor(model => model.Lieu.CodePostal, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+    </div>
+
+    @*Div permettant de modifier la ville du lieu de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Lieu.Ville, htmlAttributes: new { @class = "control-label" })*
+        @Html.EditorFor(model => model.Lieu.Ville, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+    </div>
+
+    @*Div permettant de modifier le pays du lieu de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Lieu.Pays, htmlAttributes: new { @class = "control-label" })*
+        @Html.EditorFor(model => model.Lieu.Pays, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+    </div>
+
+    <hr class="separerEdit" />
+    
+    <a onclick="addNumero();">Add</a>
+
+    <div id="telephones"></div>
+
+    @foreach (var item in Model.Utilisateur.Telephones)
+    {
+        <script type="text/javascript">
+            addNumero("@item.Numéro");
+        </script>
+    }   
 
 
 
     @*Si l'utilisateur modifie ses propres informations, il peut modifier son mot de passes*@
     @if (Model.Utilisateur.ID == HttpContext.Current.User.Identity.Name)
     {
+        <hr class="separerEdit" />
+
         @*Div permettant de modifier le mot de passe de l'utilisateur*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.motDePasse, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
-            </div>
+        <div>
+            @Html.LabelFor(model => model.motDePasse, htmlAttributes: new { @class = "control-label" })
+            @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control" })
         </div>
 
         @*Div permettant de confirmer le nouveau mot de passe de l'utilisateur*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.confirmation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.confirmation, "", new { @class = "text-danger" })
-            </div>
+        <div>
+            @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label" })
+            @Html.PasswordFor(model => model.confirmation, new { @class = "form-control" })
         </div>
     }
 

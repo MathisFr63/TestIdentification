@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using System.Net.Mail;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using WebApplication1.DAL;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Entite;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
@@ -33,17 +35,15 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur de se connecter après avoir rentrer son identifiant et son mot de passe
         public ActionResult Index(UtilisateurViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            var utilisateur = db.Authentifier(viewModel.Utilisateur.ID, viewModel.motDePasse);
+            if (utilisateur != null)
             {
-                var utilisateur = db.Authentifier(viewModel.Utilisateur.ID, viewModel.motDePasse);
-                if (utilisateur != null)
-                {
-                    FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
-                    return Redirect("/");
-                }
-                ViewBag.erreur = "Adresse e-mail et/ou mot de passe incorrect(s)";
-                ModelState.AddModelError("Utilisateur.ID", "Adresse e-mail et/ou mot de passe incorrect(s)");
+                FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
+                return Redirect("/");
             }
+            ViewBag.erreur = "Adresse e-mail et/ou mot de passe incorrect(s)";
+            ModelState.AddModelError("Utilisateur.ID", "Adresse e-mail et/ou mot de passe incorrect(s)");
+            
             return View("Index", viewModel);
         }
 
@@ -57,16 +57,14 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur de s'inscrire après avoir rempli toutes les cases correctement.
         public ActionResult CreateUser(UtilisateurViewModelConnection vm)
         {
-            if (ModelState.IsValid)
+            if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
             {
-                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
-                {
-                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, vm.Utilisateur.Telephones, vm.Utilisateur.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
-                    FormsAuthentication.SetAuthCookie(id, false);
-                    return Redirect("/");
-                }
-                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
+                //Lieu non défini
+                string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                FormsAuthentication.SetAuthCookie(id, false);
+                return Redirect("/");
             }
+            ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             return View(vm);
         }
         

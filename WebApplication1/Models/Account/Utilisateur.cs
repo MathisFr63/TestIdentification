@@ -43,10 +43,10 @@ namespace WebApplication1.Models.Account
         }
 
         // Liste des numéros de téléphone de l'utilisateur
-        public List<Telephone> Telephones { get; set; }
+        public ICollection<Telephone> Telephones { get; set; }
 
         // Lieu de l'utilisateur
-        public Lieu Lieu{ get; set; }
+        public int LieuID { get; set; }
 
         public Civilite Civilite;
 
@@ -82,17 +82,17 @@ namespace WebApplication1.Models.Account
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
-        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, TypeUtilisateur type, List<Telephone> telephones, Lieu lieu, Civilite civilite, Parametre parametre, string otherInfo)
+        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, ICollection<Telephone> telephones, TypeUtilisateur type, Lieu lieu, Civilite civilite, Parametre parametre, string otherInfo)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
             this.Prénom = prenom;
             this.Nom = nom;
             this.Type = type;
-            this.Telephones = telephones;
-            this.Lieu = lieu;
+            this.LieuID = lieu.ID;
             this.Civilite = civilite;
             this.otherInfo = otherInfo;
+            this.Telephones = telephones;
 
             this.ParametreID = parametre.ID;
             parametre.DefaultTextFeedback += $"<p>{prenom} {nom}</p>";
