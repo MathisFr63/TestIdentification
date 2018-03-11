@@ -13,19 +13,21 @@
     <li class="breadcrumb-item active">Information devis</li>
 </ul>
 
-@*titre de la partie*@
-<h2 class="titreCRUD">Informations sur le devis</h2>
+@*Affichage de : "Informations sur <Prénom> <Nom> :"*@
+<div class="titrepartie">
+
+    <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
+        <li>
+            <a title="Modifier le devis" href=@Url.Action("Edit", "Devis", new { id = Model.Devis.ID}) class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></a>
+            <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.Devis.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+        </li>
+    </ul>
+    <h2 style="display:block;" class="titreCRUD">
+        Informations sur le devis
+    </h2>
+</div>
 <hr class="separer" />
 <br />
-
-<p>
-    @*Bouton permettant d'accéder à la modification du devis*@
-    <a href=@Url.Action("Edit","Devis",new { id = Model.Devis.ID }) class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-pencil" />
-    </a>
-    @*Bouton permettant de créer un pdf à par devis*@
-    <a title="Imprimer" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.Devis.ID }) class="btn btn-info btn-lg">Imprimer</a>
-</p>
 
 @*Div permettant d'afficher les détails du devis*@
 <div class="py-5">

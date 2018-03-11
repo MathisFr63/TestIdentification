@@ -5,14 +5,29 @@
     ViewBag.Title = "Details";
 }
 
+
+@*Chemin de retour*@
+<ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+    <li class="breadcrumb-item">
+        <a href=@Url.Action("Index","Feedbacks")>Liste feedbacks</a>
+    </li>
+    <li class="breadcrumb-item active">Information feedback</li>
+</ul>
+
+@*Affichage de : "Informations sur <Prénom> <Nom> :"*@
+<div class="titrepartie">
+
+    <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
+        <li>
+            <a title="Imprimer le feedback" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+        </li>
+    </ul>
+    <h2 style="display:block;" class="titreCRUD">
+        Informations sur le feedback
+    </h2>
+</div>
+<hr class="separer" />
 <br />
-<p>
-    @*Bouton de retour*@
-    <a title="Retour" href=@Url.Action("Index","Feedbacks") class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-arrow-left" />
-    </a>
-    <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = Model.ID}) class="btn btn-info btn-lg">Imprimer</a>
-</p>
 
 @*Div permettant d'afficher les détails du feedback*@
 <div class="py-5">

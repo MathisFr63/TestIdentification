@@ -6,9 +6,7 @@
     ViewBag.Title = "Feedback";
 }
 
-<h2 class="titreIndex">
-    Les Feedbacks
-</h2>
+
 
 @*Navbar permettant de trier et de faire une recherche sur la liste des feedbacks.*@
 <nav class="navbar navbar-default">
@@ -18,17 +16,17 @@
             @using (Html.BeginForm("Index", "Feedbacks", FormMethod.Get))
             {
                 <div class="form-group">
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "recherche par sujet" })
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "recherche par sujet", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default">Avancée</button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Feedbacks" target="_blank" href=@Url.Action("PrintList", "Feedbacks") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
         </form>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default">
@@ -38,7 +36,7 @@
                     </ul>
                 </li>
                 <li>
-                    <button type="reset" value="cancel" title="Créer un Nouveau Feedback" onclick="location.href='@Url.Action("Create", "Feedbacks")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button type="reset" value="cancel" title="Créer un Nouveau Feedback" onclick="location.href='@Url.Action("Create", "Feedbacks")'" class="btn button-green"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -63,22 +61,22 @@
         <tr>
             @*Affichage du nom de l'utilisateur ayant envoyé le feedback*@
             <td>
-                @Html.DisplayFor(modelItem => item.userName)
+                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })>@Html.DisplayFor(modelItem => item.userName)</a>
             </td>
 
             @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
             <td>
-                @Html.DisplayFor(modelItem => item.UtilisateurID)
+                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })>@Html.DisplayFor(modelItem => item.UtilisateurID)</a>
             </td>
 
             @*Affichage du sujet du feedback*@
             <td>
-                @Html.DisplayFor(modelItem => item.Subject)
+                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Subject)</a>
             </td>
 
             @*Affichage du commentaire lié au feedback*@
             <td>
-                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
+                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })><p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p></a>
                 @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
 
@@ -86,11 +84,11 @@
             <td>
                 @if (item.IsResolved)
                 {
-                    <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-ok" style="color:green;display: flex;justify-content: center;" aria-hidden="true"></span>
                 }
                 else
                 {
-                    <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-remove" style="color:red;display: flex;justify-content: center;" aria-hidden="true"></span>
                 }
 
             </td>
@@ -98,13 +96,10 @@
                 <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn btn-info">
                     <span class="glyphicon glyphicon-check" />
                 </a>
-                <a title="Imprimer" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-file" />
-                </a>
-                <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
-                <a title="Supprimer" href=@Url.Action("Delete", "Feedbacks", new { id = item.ID }) class="btn btn-info">
+                <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Subject", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
-                </a>
+                </button>
             </td>
         </tr>
     }
@@ -117,12 +112,45 @@
 {
     <div class="text-center">
 
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-                                                      new
-                                                      {
-                                                          page,
-                                                          sortOrder = ViewBag.CurrentSort,
-                                                          currentFilter = ViewBag.CurrentFilter
-                                                      }))
+        @Html.PagedListPager(Model, page => Url.Action("Index",new{page,sortOrder = ViewBag.CurrentSort,currentFilter = ViewBag.CurrentFilter}))
     </div>
 }
+
+
+
+
+<div class="popup">
+    <div class="popDisplay">
+        <!-- popup content start || copy this to the end of the file-->
+        <div class="popupWindow">
+            <div class="popupDiv">
+                <div style="display:flex;"><p class="confirm-message text-lg">Voulez-vous vraiment supprimer &nbsp;</p> <p class="text-lg" id="popup_txt"></p><p class="text-lg">&nbsp; ?</p></div>
+                <div class="buttons">
+                    <form method="post" id="formUser">
+                        @Html.AntiForgeryToken()
+                        <button class="button button-green button-confirm">Confimer</button>
+                    </form>
+                    <button class="button button-delete button-cancel" type="button">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  <!-- popup content ends -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".button-confirm").click(function () {
+            $(".popup").fadeOut(600);
+        });
+
+        $(".button-cancel").click(function () {
+            $(".popup").fadeOut(600);
+        });
+    });
+
+    function togglePopup(name, id) {
+        $(".popup").fadeIn(600);
+        document.getElementById("popup_txt").innerHTML = name;
+        document.getElementById("formUser").action = "/Feedbacks/Delete/" + id;
+    }
+</script>

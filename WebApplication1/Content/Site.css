@@ -201,7 +201,7 @@ b {
 }
 
     .trie li a:hover {
-        background-color: #EF0C1A;
+        background-color: #ff6b70;
     }
 
 .titreIndex {
@@ -417,9 +417,10 @@ input[type=submit] {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: rgba(3,3,3,0.8);
+    background-color: rgba(206, 129, 158, 0.93);
     display: none;
 }
+
 .popDisplay {
     width: 100%;
     height: 100%;
@@ -429,24 +430,24 @@ input[type=submit] {
 }
 
 .popupWindow {
-    background-color: white;
+    /*background-color: white;*/
     margin: auto;
-    width: 500px;
+    width: 700px;
     height: 200px;
-    text-align: center;
-    -moz-border-radius: 50px 50px / 50px 50px;
-    border-radius: 50px 50px / 50px 50px;
-    box-shadow: 10px 10px 5px #000;
+    /*text-align: center;*/
+    /*-moz-border-radius: 50px 50px / 50px 50px;*/
+    /*border-radius: 50px 50px / 50px 50px;*/
+    /*box-shadow: 10px 10px 5px #000;*/
     display: flex;
     flex-direction: column;
     justify-content: space-around
 }
 
-.popup_txt {
+/*.popup_txt {
     font-size: 26px;
     font-weight: bold;
     color: red;
-}
+}*/
 
 .popup_img {
     margin: 10px;
@@ -482,3 +483,101 @@ input[type=submit] {
     padding: 6px 12px;
 }
 
+
+
+
+
+.popupDiv {
+    background-color: transparent;
+    color: white;
+}
+
+.text-lg {
+    font-size: 110%;
+    color: white;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+}
+
+.button-green {
+    color: #fff;
+    background-color: #06d6a0;
+}
+
+    .button-green:hover {
+        color: #fff;
+        background-color: #06d6a0;
+        box-shadow: 2px 2px 2px #10a57e;
+    }
+
+.button-delete {
+    color: #fff;
+    background-color: #ff6b70;
+}
+
+    .button-delete:hover {
+        color: #fff;
+        background-color: #ff6b70;
+        box-shadow: 2px 2px 2px #ba0606;
+    }
+
+.button-orange {
+    color: #fff;
+    background-color: #ffcc56;
+}
+
+    .button-orange:hover {
+        color: #fff;
+        background-color: #ffcc56;
+        box-shadow: 2px 2px 2px rgba(190, 131, 0, 0.8784313725490196);
+    }
+
+.button-blue {
+    color: #fff;
+    background-color: #70cdff;
+}
+
+    .button-blue:hover {
+        color: #fff;
+        background-color: #70cdff;
+        box-shadow: 2px 2px 2px rgba(0, 155, 190, 0.8784313725490196);
+    }
+
+.button {
+    display: inline-block;
+    /*color: rgba(4,5,8,0.54);*/
+    color: white;
+    font-weight: bold;
+    line-height: 1em;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    margin: 0em 0.6em 0em 0em;
+    padding: 12px 21px;
+    /*background: #e0e0e0;*/
+    border: none;
+    border-radius: 2px;
+    white-space: nowrap;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.1s ease, background-color 0.1s ease, box-shadow 0.24s ease;
+    will-change: color, background, transform, box-shadow;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+.buttons {
+    display: flex;
+}
+
+select {
+    border-radius: 6px;
+    padding: 7px;
+}
+
+
+    select option, option:hover {
+        background-color: #ff5c5c;
+        color: white;
+    }

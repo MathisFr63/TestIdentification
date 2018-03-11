@@ -30,7 +30,7 @@
         </form>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
@@ -92,7 +92,7 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                <a title="Imprimer la Facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
+                <a title="Imprimer la Facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
             </td>
         </tr>
     }

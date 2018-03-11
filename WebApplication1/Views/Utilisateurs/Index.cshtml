@@ -25,7 +25,7 @@
             {
                 <div class="form-group">
 
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Adresse e-mail", @class= "searchBar" })
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Adresse e-mail", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
@@ -35,7 +35,7 @@
         </form>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
@@ -52,7 +52,7 @@
 
                 @*Bouton permettant d'accéder à la page de création d'un Utilisateur*@
                 <li>
-                    <button type="reset" value="cancel" title="Créer un nouveau Utilisateur" onclick="location.href='@Url.Action("Create", "Utilisateurs")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button type="reset" value="cancel" title="Créer un nouveau Utilisateur" onclick="location.href='@Url.Action("Create", "Utilisateurs")'" class="btn  button-green"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -87,34 +87,31 @@
         <tr>
             @*Affichage du nom de l'utilisateur*@
             <td>
-            @Html.DisplayFor(modelItem => item.Nom)
+                <a class="detail" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') })>@Html.DisplayFor(modelItem => item.Nom)</a>
             </td>
 
             @*Affichage du prénom de l'utilisateur*@
             <td>
-            @Html.DisplayFor(modelItem => item.Prénom)
+                <a class="detail" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') })>@Html.DisplayFor(modelItem => item.Prénom)</a>
             </td>
 
             @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
             <td>
-            @Html.DisplayFor(modelItem => item.ID)
+                <a class="detail" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') })>@Html.DisplayFor(modelItem => item.ID)</a>
             </td>
 
             @*Affichage du type de l'utilisateur*@
             <td>
-            @Html.DisplayFor(modelItem => item.Type)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
 
             @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
             <td>
-                <a title="Modifier l'utilisateur" href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
+                <a title="Modifier l'utilisateur" href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn button-orange">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
-                <a title="Détails de l'utilisateur'" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-file" />
-                </a>
-                <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
-                <button title="Supprimer l'utilisateur'" class="btn btn-info deleteButton" onclick='togglePopup("@item.Nom", "@item.ID")'>
+                <a title="Imprimer l'utilisateur" target="_blank" href=@Url.Action("Print", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Supprimer l'utilisateur'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Nom", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
                 </button>
                 @*<a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
@@ -131,17 +128,15 @@
     <div class="popDisplay">
         <!-- popup content start || copy this to the end of the file-->
         <div class="popupWindow">
-            <p class="popup_txt">
-                Supprimer définitivement :
-            </p>
-            <p class="popup_txt" id="popup_txt"></p>
-            <div class="popup_img">
-                <form class="col-md-6" method="post" id="formUser">
-                    @Html.AntiForgeryToken()
-                    <button src="yes.png" class="popup_img_yes">Oui</button>
-                    <input value="Delete" type="hidden" />
-                </form>
-                <button src="no.png" class="popup_img_no">Non</button>
+            <div class="popupDiv">
+                <div style="display:flex;"><p class="confirm-message text-lg">Voulez-vous vraiment supprimer &nbsp;</p> <p class="text-lg" id="popup_txt"></p><p class="text-lg">&nbsp; ?</p></div>
+                <div class="buttons">
+                    <form method="post" id="formUser">
+                        @Html.AntiForgeryToken()
+                        <button class="button button-green button-confirm">Confimer</button>
+                    </form>
+                        <button class="button button-delete button-cancel" type="button">Annuler</button>
+                </div>
             </div>
         </div>
     </div>
@@ -149,11 +144,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".popup_img_yes").click(function () {
+        $(".button-confirm").click(function () {
             $(".popup").fadeOut(600);
         });
 
-        $(".popup_img_no").click(function () {
+        $(".button-cancel").click(function () {
             $(".popup").fadeOut(600);
         });
     });

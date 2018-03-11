@@ -29,7 +29,7 @@
 
         @*Div permettant de trier les produits par nom ou prix*@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
@@ -42,7 +42,7 @@
 
                 @*Bouton permettant d'accéder à la page de création d'un produit*@
                 <li>
-                    <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button type="reset" value="cancel" title="Créer un Nouveau Produit" onclick="location.href='@Url.Action("Create", "Produits")'" class="btn button-green"><i class="glyphicon glyphicon-plus"></i></button>
                 </li>
             </ul>
         </div>
@@ -69,12 +69,12 @@
         <tr>
             @*Affichage du libelle*@
             <td>
-                @Html.DisplayFor(modelItem => item.Libelle)
+                <a class="detail" href=@Url.Action("Details", "Produits", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Libelle)</a>
             </td>
 
             @*Affichage du commentaire*@
             <td>
-                @Html.DisplayFor(modelItem => item.Commentaire)
+                <a class="detail" href=@Url.Action("Details", "Produits", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Commentaire)</a>
             </td>
 
             @*Affichage du prix hors taxes*@
@@ -99,16 +99,13 @@
 
             @*Affichage des boutons*@
             <td>
-                <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn btn-info">
+                <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn button-orange">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
-                <a title="Imprimer" href=@Url.Action("Details", "Produits", new { id = item.ID }) class="btn btn-info">
-                    <span class="glyphicon glyphicon-file" />
-                </a>
-                <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn btn-info"><span class="glyphicon glyphicon-print" /></a>
-                <a title="Supprimer" href=@Url.Action("Delete", "Produits", new { id = item.ID }) class="btn btn-info">
+                <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Libelle", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
-                </a>
+                </button>
             </td>
         </tr>
     }
@@ -133,3 +130,41 @@
               }))
     </div>
 }
+
+
+
+<div class="popup">
+    <div class="popDisplay">
+        <!-- popup content start || copy this to the end of the file-->
+        <div class="popupWindow">
+            <div class="popupDiv">
+                <div style="display:flex;"><p class="confirm-message text-lg">Voulez-vous vraiment supprimer &nbsp;</p> <p class="text-lg" id="popup_txt"></p><p class="text-lg">&nbsp; ?</p></div>
+                <div class="buttons">
+                    <form method="post" id="formUser">
+                        @Html.AntiForgeryToken()
+                        <button class="button button-green button-confirm">Confimer</button>
+                    </form>
+                    <button class="button button-delete button-cancel" type="button">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  <!-- popup content ends -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".button-confirm").click(function () {
+            $(".popup").fadeOut(600);
+        });
+
+        $(".button-cancel").click(function () {
+            $(".popup").fadeOut(600);
+        });
+    });
+
+    function togglePopup(name, id) {
+        $(".popup").fadeIn(600);
+        document.getElementById("popup_txt").innerHTML = name;
+        document.getElementById("formUser").action = "/Produits/Delete/" + id;
+    }
+</script>
