@@ -58,8 +58,12 @@ function addNumero(value) {
         value = "";
     var b = '<div id="' + nb + '">' +
         '<label> Numéro </label>' +
+        '<div style="display:flex;">' +
         '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" required="required" type="text" value="' + value + '">' +
-        '<a onclick="removeNumero(this.parentNode);">Remove</a>' +
+        '<button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">'+
+        '<i class="glyphicon glyphicon-remove"></i >'+
+        '</button>'+
+        '</div>' +
         '</div>';
     $("#telephones").append(b);
     nb++;
