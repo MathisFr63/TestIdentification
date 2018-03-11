@@ -152,7 +152,7 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
             devis.Produits = new List<DonneeProduit>();
 
-            db.DonneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(dp => db.DonneeProduit.Remove(dp));
+            db.DonneeProduit.RemoveRange(db.DonneeProduit.Where(dp => dp.DevisID == id));
 
             var form = Request.Form;
             var keys = form.AllKeys;
@@ -196,9 +196,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.DonneeProduit.Where(DP => DP.DevisID == id).ToList().ForEach(DP => db.DonneeProduit.Remove(DP));
-            db.SaveChanges();
-
+            db.DonneeProduit.RemoveRange(db.DonneeProduit.Where(DP => DP.DevisID == id));
             db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
 

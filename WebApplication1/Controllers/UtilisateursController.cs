@@ -267,7 +267,10 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
 
-            db.Utilisateurs.Remove(db.Utilisateurs.Find(id.Replace('~', '.')));
+            var user = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            db.Telephones.RemoveRange(db.Telephones.Where(t => t.UtilisateurID == user.ID));
+            db.Utilisateurs.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
