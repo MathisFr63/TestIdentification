@@ -7,6 +7,7 @@ using System.Net;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Entite;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
@@ -73,7 +74,7 @@ namespace WebApplication1.Controllers
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
                 return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return RedirectToAction("BadUserTypeError", "Home");
+            return RedirectToAction("Details", new { id = user.ID.Replace(".", "~") });
         }
 
         // Méthode permettant à l'utilisateur d'accèder à la page de connexion.
@@ -140,7 +141,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, vm.Utilisateur.Telephones, vm.Utilisateur.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, null, new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
@@ -166,7 +167,9 @@ namespace WebApplication1.Controllers
             if (utilisateur == null)
                 return HttpNotFound();
 
-            return View(new UtilisateurViewModelConnection { Utilisateur = utilisateur });
+            utilisateur.Telephones = db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList();
+
+            return View(new UtilisateurViewModelConnection { Utilisateur = utilisateur, Lieu = db.Lieux.Find(utilisateur.LieuID) });
         }
 
         // POST: Utilisateurs/Edit/5
@@ -181,10 +184,34 @@ namespace WebApplication1.Controllers
             {
                 var utilisateur = db.Utilisateurs.Find(userVM.Utilisateur.ID.Replace('~', '.'));
 
+                db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList().ForEach(t => db.Telephones.Remove(t));
+
+                var form = Request.Form;
+                var keys = form.AllKeys;
+
+                for (int i = 10; keys[i] != "motDePasse"; i++)
+                {
+                    var name = keys[i];
+
+                    db.Telephones.Add(new Telephone()
+                    {
+                        Numéro = form.GetValues(name)[0],
+                        UtilisateurID = utilisateur.ID
+                    });
+                }
+
+
                 utilisateur.Nom = userVM.Utilisateur.Nom;
                 utilisateur.Prénom = userVM.Utilisateur.Prénom;
                 utilisateur.Type = userVM.Utilisateur.Type;
-                utilisateur.Lieu = userVM.Utilisateur.Lieu;
+
+                var lieu = db.Lieux.Find(utilisateur.LieuID);
+                lieu.Adresse = userVM.Lieu.Adresse;
+                lieu.CodePostal = userVM.Lieu.CodePostal;
+                lieu.Complement = userVM.Lieu.Complement;
+                lieu.Pays = userVM.Lieu.Pays;
+                lieu.Ville = userVM.Lieu.Ville;
+
                 if (userVM.motDePasse != null && userVM.confirmation != null && userVM.motDePasse == userVM.confirmation)
                 {
                     utilisateur.MotDePasse = userVM.motDePasse.GetHashCode();

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using WebApplication1.Models.Account;
+using WebApplication1.Models.Entite;
 
 namespace WebApplication1.ViewModels
 {
@@ -18,6 +19,9 @@ namespace WebApplication1.ViewModels
         // Mot de passe de l'utilisateur a créer
         [DisplayName("Mot de passe")]
         [Required(ErrorMessage = "Le mot de passe est requis")]
+
+        public Lieu Lieu { get; set; }
+
         public string motDePasse { get; set; }
         // Booléen permettant de savoir si l'utilisateur est authentifié ou non
         public bool Authentifie { get; set; }

@@ -85,12 +85,10 @@
         @*Script permettant de sélectionner la quantité voulue pour chaque produit du devis*@
         @foreach (var item in Model.ProduitsSelected)
         {
-            <text>
-                <script type="text/javascript">
-                    toggleArticleEdit("@item.Nom", @item.Quantite);
-                    document.getElementById("@item.Nom input").checked = true;
-                </script>
-            </text>
+            <script type="text/javascript">
+                toggleArticleEdit("@item.Nom", @item.Quantite);
+                document.getElementById("@item.Nom input").checked = true;
+            </script>
         }
 
         @*Bouton permettant de valider la modification du devis (sauvegarder les modification) ou de facturer le devis*@

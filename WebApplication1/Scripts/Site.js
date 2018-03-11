@@ -50,3 +50,21 @@ function toggleArticleEdit(name, quantite) {
         a.remove();
     }
 }
+
+var nb = 0;
+
+function addNumero(value) {
+    if (!value)
+        value = "";
+    var b = '<div id="' + nb + '">' +
+        '<label> Numéro </label>' +
+        '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" required="required" type="text" value="' + value + '">' +
+        '<a onclick="removeNumero(this.parentNode);">Remove</a>' +
+        '</div>';
+    $("#telephones").append(b);
+    nb++;
+}
+
+function removeNumero(elt) {
+    elt.remove();
+}

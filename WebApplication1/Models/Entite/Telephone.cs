@@ -8,6 +8,8 @@
         // Identifiant permettant d'identifier le téléphone dans la base de données.
         public int ID { get; private set; }
 
+        public string UtilisateurID { get; set; }
+
         // Type de téléphone
         public TypeTelephone Type { get; set; }
 

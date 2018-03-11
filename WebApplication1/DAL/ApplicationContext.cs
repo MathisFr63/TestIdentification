@@ -40,6 +40,8 @@ namespace WebApplication1.DAL
         public DbSet<Feedback> Feedbacks { get; set; }
         // Liste des lieux de tous les utilisateurs.
         public DbSet<Lieu> Lieux { get; set; }
+        // Liste des telephones de tous les utilisateurs.
+        public DbSet<Telephone> Telephones { get; set; }
 
         // Méthode appelée lors de la création du modèle afin de supprimer les tables ayant le même nom.
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -78,12 +80,16 @@ namespace WebApplication1.DAL
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
         /// <returns>string: Identifiant de l'utilisateur créé</returns>
-        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, List<Telephone> telephones, Lieu lieu, Civilite civilite, string otherInfo)
+        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, ICollection<Telephone> telephones, Lieu lieu, Civilite civilite, string otherInfo)
         {
             var param = new Parametre();
             Parametres.Add(param);
+            SaveChanges();
 
-            var user = new Utilisateur(mail, motDePasse, nom, prenom, type, telephones, lieu, civilite, param, otherInfo);
+            Lieux.Add(lieu);
+            SaveChanges();
+
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, telephones, type, lieu, civilite, param, otherInfo);
             Utilisateurs.Add(user);
 
             SaveChanges();

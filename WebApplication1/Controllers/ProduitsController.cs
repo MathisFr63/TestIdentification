@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // Méthode permettant d'ajouter un produit à la liste des produits de l'utilisateur après avoir rempli les champs de la page de création.
-        public ActionResult Create([Bind(Include = "ID, Libelle, Commentaire, PrixHT, Reduction, TVA, Type")] Produit produit)
+        public ActionResult Create(Produit produit)
         {
             if (ModelState.IsValid)
             {

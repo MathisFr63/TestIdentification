@@ -398,6 +398,11 @@ b {
     border: 0;
     box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
+.separerEdit {
+    height: 2px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
 
 .titreCRUD {
     padding-left: 3%;
