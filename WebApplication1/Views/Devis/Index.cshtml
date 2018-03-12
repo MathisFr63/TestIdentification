@@ -105,13 +105,12 @@
             </td>
             <td>
                 @{
-                    var somme = (double)0;
+                    double somme = 0;
                     foreach (var p in item.Produits)
                     {
                         somme += p.PrixHT * p.Quantite;
                     }
                     <p>@somme €</p>
-
                 }
 
             </td>

@@ -168,9 +168,11 @@ namespace WebApplication1.Controllers
         }
 
         // Méthode appelée lorsque l'utilisateur n'a pas le bon type (s'il n'est pas administrateur par exemple) afin d'afficher une page d'erreur lui précisant.
-        public ActionResult BadUserTypeError(string message)
+        public ActionResult BadUserTypeError(string message, string method, string control)
         {
             ViewBag.errorMessage = message;
+            ViewBag.Method = method;
+            ViewBag.Controller = control;
             return View();
         }
     }

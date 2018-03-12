@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
 
@@ -117,7 +117,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -133,7 +133,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -168,7 +168,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -185,7 +185,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -199,7 +199,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -214,7 +214,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
             var listTrie = new List<Feedback>();
@@ -245,7 +245,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
             var listTrie = new List<Feedback>();

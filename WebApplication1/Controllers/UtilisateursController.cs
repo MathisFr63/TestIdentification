@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var userType = db.ObtenirUtilisateur(id).Type;
             if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
@@ -124,7 +124,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             return View();
         }
 
@@ -158,8 +158,9 @@ namespace WebApplication1.Controllers
             var typeUserCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var utilisateur = db.Utilisateurs.Find(id);
 
-            if (typeUserCourant != TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name || (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id) || (utilisateur.Type == TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA))
-                return RedirectToAction("BadUserTypeError", "Home");
+            if (typeUserCourant != TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name || (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id) || (utilisateur.Type == TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name))
+                return RedirectToAction("BadUserTypeError", "Home", new { @message = "", @method = "Index", @control = "Home" });
+
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -234,7 +235,7 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.Administrateur || type2 == TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Utilisateurs" });
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -255,7 +256,7 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Utilisateurs" });
 
             if (type2 == TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.SA)
             {
@@ -289,7 +290,7 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var userType = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
             if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
-                return RedirectToAction("BadUserTypeError", "Home");
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
@@ -310,8 +311,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
-                return RedirectToAction("BadUserTypeError", "Home");
-
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
@@ -378,7 +378,7 @@ namespace WebApplication1.Controllers
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
                 return new ViewAsPdf("ListToPdf", usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return RedirectToAction("BadUserTypeError", "Home");
+            return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
         }
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
@@ -433,7 +433,7 @@ namespace WebApplication1.Controllers
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
                 return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return RedirectToAction("BadUserTypeError", "Home");
+            return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
         }
     }
 }
