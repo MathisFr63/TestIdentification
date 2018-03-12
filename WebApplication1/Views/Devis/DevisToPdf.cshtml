@@ -65,6 +65,7 @@
                         <th>Quantité</th>
                         <th>Montant total</th>
                         <th>TVA</th>
+                        <th>Réduction</th>
                         <th>Montant TTC</th>
                     </tr>
                     @foreach (var item in Model.ProduitsSelected)
@@ -93,10 +94,13 @@
                         <td class="col-xs-1">
                             <p>@item.TVA</p>
                         </td>
+                        <td class="col-xs-1">
+                            <p>@item.Reduction</p>
+                        </td>
                         <td class="col-xs-2">
                             <p>@{
                                 var prix = (item.Quantite * item.PrixHT);
-                                var montantTTC = prix + prix * item.TVA / 100.0;
+                                var montantTTC = prix + prix * item.TVA / 100.0 - item.Reduction;
                                 totalTTC += montantTTC;
                                 }
                                 @montantTTC €

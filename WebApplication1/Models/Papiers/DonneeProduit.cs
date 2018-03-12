@@ -25,13 +25,13 @@
         public string Commentaire { get; set; }
 
         // Prix hors taxe du produit
-        public int PrixHT { get; set; }
+        public double PrixHT { get; set; }
 
         // Réduction ajoutée au prix du produit
-        public int Reduction { get; set; }
+        public double Reduction { get; set; }
 
         // Montant de TVA a ajouté au prix du produit.
-        public int TVA { get; set; }
+        public double TVA { get; set; }
 
         // Type de service du produit
         public TypeService Type { get; set; }
