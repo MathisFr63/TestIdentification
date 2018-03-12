@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models.Papiers
+﻿using System;
+
+namespace WebApplication1.Models.Papiers
 {
     /// <summary>
     /// Classe représentant les données d'une facture
@@ -25,7 +27,7 @@
         public Facture(Devis devis)
         {
             Objet = devis.Objet;
-            Date = devis.Date;
+            Date = DateTime.Now;
             Commentaire = devis.Commentaire;
             Monnaie = devis.Monnaie;
             Produits = devis.Produits;

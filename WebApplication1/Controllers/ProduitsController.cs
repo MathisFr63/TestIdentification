@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+            var listProduit = db.Produits.ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -103,7 +103,6 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                produit.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
                 db.Produits.Add(produit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -222,7 +221,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+            var listProduit = db.Produits.ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -269,7 +268,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == user.ID).ToList();
+            var listProduit = db.Produits.ToList();
 
             if (searchstring != null)
                 page = 1;
