@@ -513,7 +513,19 @@ input[type=submit] {
         color: #fff;
         background-color: #06d659;
         box-shadow: 2px 2px 2px #10a57e;
+        
     }
+
+.button-bluedark {
+    background-color: #5468f1;
+    color: white;
+}
+    .button-bluedark:hover {
+        color: #fff;
+        background-color: #5468f1;
+        box-shadow: 2px 2px 2px #37449f;
+    }
+
 
 .button-delete {
     color: #fff;
