@@ -85,11 +85,8 @@
                     @Html.DisplayFor(modelItem => item.Monnaie)
                 </td>*@
             <td>
-                @foreach (var a in item.Produits)
                 @if (item.Produits.Count() >= 3)
                 {
-                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                    @Html.DisplayFor(elt => a.Quantite); <br />
 
                     <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, ...</p>
                 }
