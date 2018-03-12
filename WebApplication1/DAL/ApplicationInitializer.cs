@@ -79,7 +79,7 @@ namespace WebApplication1.DAL
                 new List<Telephone>{ new Telephone("0602393652", "+33", TypeTelephone.Portable) { UtilisateurID = "Flavio.RANCHON@etu.uca.fr" } },
                 new List<Telephone>{ new Telephone("0473836377", "+33", TypeTelephone.Fixe) { UtilisateurID = "Mathieu.RAVEL@etu.uca.fr" } },
                 new List<Telephone>{ new Telephone("0771271298", "+33", TypeTelephone.Portable) { UtilisateurID = "Aurelien.BERGER2@etu.uca.fr" } },
-                new List<Telephone>{ new Telephone("0473836377", "+33", TypeTelephone.Fixe) { UtilisateurID = "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr" } }
+                new List<Telephone>{ new Telephone("0473836377", "+33", TypeTelephone.Fixe) { UtilisateurID = "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr" } },
                 new List<Telephone>{ new Telephone("0705063254", "+33", TypeTelephone.Portable) { UtilisateurID = "Jean.DUPONT@etu.uca.fr" } },
                 new List<Telephone>{ new Telephone("0496582365", "+33", TypeTelephone.Fixe) { UtilisateurID = "Jacques.DUTREUIL@etu.uca.fr" } },
                 new List<Telephone>{ new Telephone("0452698712", "+33", TypeTelephone.Fixe) { UtilisateurID = "Marc.MARTIN@etu.uca.fr" } },
@@ -96,7 +96,7 @@ namespace WebApplication1.DAL
                 new Utilisateur("Flavio.RANCHON@etu.uca.fr",             "Flavio",         "RANCHON",   "Flavio", telephones[2],         TypeUtilisateur.Client, lieux[2], Civilite.Homme, parametres[2], null, false),
                 new Utilisateur("Mathieu.RAVEL@etu.uca.fr",             "Mathieu",           "RAVEL",  "Mathieu", telephones[3],      TypeUtilisateur.EnAttente, lieux[3], Civilite.Homme, parametres[3], null, false),
                 new Utilisateur("Aurelien.BERGER2@etu.uca.fr",         "Aurélien",          "BERGER", "Aurélien", telephones[4],      TypeUtilisateur.EnAttente, lieux[4], Civilite.Homme, parametres[4], null, true),
-                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo", telephones[5],      TypeUtilisateur.EnAttente, lieux[5], Civilite.Homme, parametres[5], null, false)
+                new Utilisateur("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr", "Bernardo", "PEREIRA AUGUSTO", "Bernardo", telephones[5],      TypeUtilisateur.EnAttente, lieux[5], Civilite.Homme, parametres[5], null, false),
                 new Utilisateur("Jean.DUPONT@etu.uca.fr",         "Jean",          "DUPONT", "Jean", telephones[6],      TypeUtilisateur.EnAttente, lieux[6], Civilite.Homme, parametres[6], null, false),
                 new Utilisateur("Jacques.DUTREUIL@etu.uca.fr",         "Jacques",          "DUTREUIL", "Jacques", telephones[7],      TypeUtilisateur.Prospect, lieux[7], Civilite.Homme, parametres[7], null, false),
                 new Utilisateur("Marc.MARTIN@etu.uca.fr",         "Marc",          "MARTIN", "Marc", telephones[8],      TypeUtilisateur.EnAttente, lieux[8], Civilite.Homme, parametres[8], null, false),
