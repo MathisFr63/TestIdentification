@@ -17,6 +17,14 @@ namespace WebApplication1.Models.Papiers
         // Date de création du document
         public DateTime Date { get; set; }
 
+        public string DateString
+        {
+            get
+            {
+                return String.Format("{0:d/M/yyyy HH:mm}", Date);
+            }
+        }
+
         // Commentaire lié au document afin de mieux l'identifier.
         public string Commentaire { get; set; }
 
