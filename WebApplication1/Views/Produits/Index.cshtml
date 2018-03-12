@@ -21,9 +21,32 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Nom", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Produits" target="_blank" href=@Url.Action("PrintList", "Produits") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
+                <script type="text/javascript">
+                    function avancée() {
+                        document.getElementById("listAvancée").style.display = "block";
+                    }
+                </script>
+                <ul style="display: none;" id="listAvancée">
+                    <li>
+                        <label>Nom</label>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <label>Commentaire</label>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <label>PrixHT</label>
+                        <input type="text" />
+                    </li>
+                    <li>
+                        <label>Type</label>
+                        <input type="text" />
+                    </li>
+                </ul>
             }
         </form>
 
