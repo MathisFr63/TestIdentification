@@ -113,13 +113,27 @@ namespace WebApplication1.DAL
             var produit4 = new Produit { PrixHT = 52, Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Pelle", Commentaire = "Outils de chantier de haute qualité" };
             var produit5 = new Produit { PrixHT = 159, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "AirPods", Commentaire = "Écouteurs bluetooth de la marque Apple" };
             var produit6 = new Produit { PrixHT = 1329, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "iPhone X", Commentaire = "Dernier smartphone de la marque à la pomme" };
-            var produit7 = new Produit { PrixHT = 959, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Samsung Galaxy S9", Commentaire = "Dernier smartphone de la marque Samsung" };
+            var produit7 = new Produit { PrixHT = 959, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Samsung Galaxy S9+", Commentaire = "Dernier smartphone de la marque Samsung" };
             var produit8 = new Produit { PrixHT = 5999, Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Q9 2018 75\"(190cm)", Commentaire = "TV QLED Samsung 2018 | Q Contraste | HDR 2000 | Mode Ambiant | Connexion invisible" };
             var produit9 = new Produit { PrixHT = 55.90, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Wiko Goa", Commentaire = "4 Go Double SIM blanc" };
-            var produit10 = new Produit { PrixHT = 5518.98, Reduction = , TVA = 20, Type = TypeService.Bien, Libelle = "MacBook Pro 15 pouces - Gris sidéral - 2017",
-                Commentaire = "Touch Bar et Touch ID | Processeur Intel Core i7 quadricœur de 7e génération à 2,9 GHz(Turbo Boost jusqu’à 3, 9 GHz) | 16 Go de mémoire LPDDR3 à 2 133 MHz | SSD de 512 Go | Radeon Pro 560 avec 4 Go de mémoire | Quatre ports Thunderbolt 3 | Clavier rétroéclairé - Français" };
-            var produit11 = new Produit { PrixHT = 15926.99, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "iMac Pro",
-                Commentaire = "Intel Xeon W 18 cœurs à 2,3 GHz, Turbo Boost jusqu’à 4,3 GHz | 128 Go de mémoire ECC DDR4 à 2 666 MHz | SSD de 4 To | Radeon Pro Vega 64 avec 16 Go de mémoire HBM2 | Magic Mouse 2 + Magic Trackpad 2 - Gris sidéral | Kit de montage VESA pour iMac Pro - Gris sidéral | Magic Keyboard avec pavé numérique - Français - Gris sidéral | Final Cut Pro X" };
+            var produit10 = new Produit
+            {
+                PrixHT = 5518.98,
+                Reduction = 0,
+                TVA = 20,
+                Type = TypeService.Bien,
+                Libelle = "MacBook Pro 15 pouces - Gris sidéral - 2017",
+                Commentaire = "Touch Bar et Touch ID | Processeur Intel Core i7 quadricœur de 7e génération à 2,9 GHz(Turbo Boost jusqu’à 3, 9 GHz) | 16 Go de mémoire LPDDR3 à 2 133 MHz | SSD de 512 Go | Radeon Pro 560 avec 4 Go de mémoire | Quatre ports Thunderbolt 3 | Clavier rétroéclairé - Français"
+            };
+            var produit11 = new Produit
+            {
+                PrixHT = 15926.99,
+                Reduction = 0,
+                TVA = 20,
+                Type = TypeService.Bien,
+                Libelle = "iMac Pro",
+                Commentaire = "Intel Xeon W 18 cœurs à 2,3 GHz, Turbo Boost jusqu’à 4,3 GHz | 128 Go de mémoire ECC DDR4 à 2 666 MHz | SSD de 4 To | Radeon Pro Vega 64 avec 16 Go de mémoire HBM2 | Magic Mouse 2 + Magic Trackpad 2 - Gris sidéral | Kit de montage VESA pour iMac Pro - Gris sidéral | Magic Keyboard avec pavé numérique - Français - Gris sidéral | Final Cut Pro X"
+            };
             var produit12 = new Produit { PrixHT = 29.89, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Pampers - Active Fit Premium Protection", Commentaire = "Couches, taille 5 : 11-23 kg (paquet de 68)" };
 
             var produits = new List<Produit>
@@ -142,10 +156,35 @@ namespace WebApplication1.DAL
             //Ajout de devis.
             var devis = new List<Devis>
             {
-                new Devis("Installation radiateur", "Installation d'un radiateur neuf à la place d'un radiateur défectueux", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit1, 1)}, "Mathis.FRIZOT@etu.uca.fr")
+                new Devis("Installation radiateur", "Installation d'un radiateur neuf à la place d'un radiateur défectueux", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit1, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("Achat de matériel informatique", "Achat de matériel informatique et installation dans les nouveaux locaux", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit10, 1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("Devis pour 3 Wiko Goa et 86 packs de couches pampers", "", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit9, 3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
+                new Devis("Devis pour un joint de culasse", "Réparation du moteur défectueux et changement du joint de culasse", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit2, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("Devis pour un robient", "Installation d'un robinet neuf", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("Devis pour un joint de culasse et un robinet", "Réparation du moteur défectueux et changement du joint de culasse +  installation d'un robinet neuf", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit2, 1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("45 packs de couches", "Devis pour 45 packs de couches", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("12 Wiko Goa", "Achat de téléphones portables pour les employés de l'entreprise", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit9, 12)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("4 Pelles", "Achats de 4 pelles pour remplacer les anciennes", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit4, 4)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis("12 TV QLED 2018", "Achat de télévisions pour les employés", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit8, 12)}, "Mathis.FRIZOT@etu.uca.fr"),
             };
             devis.ForEach(d => context.Devis.Add(d));
 
+
+            // Ajout des factures
+            var facture = new List<Facture>
+            {
+                new Facture(devis[0], TypeReglement.Carte),
+                new Facture(devis[1], TypeReglement.Cheque),
+                new Facture(devis[2], TypeReglement.CryptoMonnaie),
+                new Facture(devis[3], TypeReglement.Liquide),
+                new Facture(devis[4], TypeReglement.Paypal),
+                new Facture(devis[6], TypeReglement.Carte),
+                new Facture(devis[8], TypeReglement.Cheque),
+                new Facture(devis[9], TypeReglement.Paypal),
+            };
+            facture.ForEach(f => context.Factures.Add(f));
+
+            
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>
             {
