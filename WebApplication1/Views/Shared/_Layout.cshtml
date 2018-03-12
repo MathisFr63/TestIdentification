@@ -108,7 +108,7 @@
                         </li>
                     }
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
-                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
+                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
