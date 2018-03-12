@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, null, new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, null, new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
@@ -225,9 +225,27 @@ namespace WebApplication1.Controllers
             return View(userVM);
         }
 
-        // GET: Utilisateurs/Delete/5
-        // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
-        public ActionResult Delete(string id)
+        public ActionResult CheckSubscribe(string id)
+        {
+            
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type == TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            if (user == null) return HttpNotFound();
+
+            user.subscribe=!user.subscribe;
+
+            db.SaveChanges();
+            return RedirectToAction("Details","Utilisateurs",new { id=user.ID.Replace('.', '~') });
+
+        }
+
+            // GET: Utilisateurs/Delete/5
+            // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
+            public ActionResult Delete(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;

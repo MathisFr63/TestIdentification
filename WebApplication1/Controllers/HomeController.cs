@@ -173,5 +173,39 @@ namespace WebApplication1.Controllers
             ViewBag.errorMessage = message;
             return View();
         }
+
+        public ActionResult Newsletter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Newsletter(Newsletter n)
+        {
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
+                EnableSsl = true
+            };
+            List<Utilisateur> users=db.GetAllUsers();
+            //List<String> mails=db.getAllMail();
+            foreach (Utilisateur u in users)
+            {
+                if (u.subscribe) { 
+                    MailMessage mail = new MailMessage
+                    {
+                        From = new MailAddress(u.ID, "Newsletter Easybill"),
+                        IsBodyHtml = true,
+                        Subject = n.Objet+" | Newsletter EasyBill",
+                        Body = n.Contenu,
+                        Priority = MailPriority.High
+                    };
+                    mail.To.Add(u.ID);
+                    smtp.Send(mail);
+                }
+            }
+            return View();
+        }
     }
 }

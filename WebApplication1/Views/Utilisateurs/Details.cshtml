@@ -5,6 +5,8 @@
     ViewBag.Title = "Details";
 }
 
+
+
 @*Chemin de retour*@
 <ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
     <li class="breadcrumb-item">
@@ -86,4 +88,27 @@
             </div>
         </div>
     </div>
+    <br/>
+    <br/>
+    @{
+        var db = new WebApplication1.DAL.ApplicationContext();
+        var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+        if (type != WebApplication1.Models.Account.TypeUtilisateur.Administrateur && type != WebApplication1.Models.Account.TypeUtilisateur.SA)
+        {
+            if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).subscribe==false)
+            {
+
+                <p>S'abonner ?</p>
+            }
+            else
+            {
+                <p>Se désabonner ?</p>
+            }
+            <a title="Check" href=@Url.Action("CheckSubscribe", "Utilisateurs") class="btn btn-info">
+                <span class="glyphicon glyphicon-check" />
+            </a>
+        }
+
+
+    }
 </div>

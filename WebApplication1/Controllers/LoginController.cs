@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
             {
                 //Lieu non défini
-                string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo,false);
                 FormsAuthentication.SetAuthCookie(id, false);
                 return Redirect("/");
             }
