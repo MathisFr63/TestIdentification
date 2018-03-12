@@ -10,7 +10,7 @@ namespace WebApplication1.DAL
     /// Classe permettant l'initialisation de la base de données avec des données en dures lorsque le model change afin de faire des tests sur l'application sans recréer les données à chaque fois.
     /// </summary>
     //public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
-    public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
+    public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         /// <summary>
         /// Méthode permettant d'initialiser la base de données.

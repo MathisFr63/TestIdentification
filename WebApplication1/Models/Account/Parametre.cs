@@ -17,7 +17,7 @@ namespace WebApplication1.Models.Account
         public int NbJourStat { get; set; }
         public int TailleHistorique { get; set; }
 
-        public Parametre() : this(30, 3, Theme.Clear, 15, $"<p>Bonjour,</p><br/><p>Cordialement,</p>", 30, 6)
+        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6)
         {
         }
 
