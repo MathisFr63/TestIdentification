@@ -82,8 +82,13 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+  
             if (user != null)
             {
+                if (user.Type == TypeUtilisateur.EnAttente)
+                {
+                    return Redirect("/Home/Attente");
+                }
                 var param = db.Parametres.Find(user.ParametreID);
                 ViewBag.Stats = param.NbJourStat;
 
@@ -171,6 +176,11 @@ namespace WebApplication1.Controllers
         public ActionResult BadUserTypeError(string message)
         {
             ViewBag.errorMessage = message;
+            return View();
+        }
+
+        public ActionResult Attente()
+        {
             return View();
         }
     }

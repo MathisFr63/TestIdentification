@@ -187,6 +187,7 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return new ViewAsPdf("ListToPdf", listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             else
                 return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList(pageNumber, pageSize));
         }
