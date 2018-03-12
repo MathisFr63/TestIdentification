@@ -36,7 +36,7 @@ namespace WebApplication1.ViewModels
         public DevisProduitViewModel(string id)
         {
             Produits = new List<SelectListItem>();
-            db.Produits.Where(p => p.UtilisateurID == id).ToList().ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
+            db.Produits.ToList().ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
         }
 
         /// <summary>

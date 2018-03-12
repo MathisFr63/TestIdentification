@@ -17,6 +17,14 @@ namespace WebApplication1.Models.Papiers
         // Date de création du document
         public DateTime Date { get; set; }
 
+        public string DateString
+        {
+            get
+            {
+                return String.Format("{0:d/M/yyyy HH:mm}", Date);
+            }
+        }
+
         // Commentaire lié au document afin de mieux l'identifier.
         public string Commentaire { get; set; }
 
@@ -47,7 +55,7 @@ namespace WebApplication1.Models.Papiers
         public Document(string objet, string commentaire, TypeMonnaie monnaie, ICollection<DonneeProduit> produits, string utilisateurID)
         {
             Objet = objet;
-            Date = DateTime.Today;
+            Date = DateTime.Now;
             Commentaire = commentaire;
             Monnaie = monnaie;
             Produits = produits;

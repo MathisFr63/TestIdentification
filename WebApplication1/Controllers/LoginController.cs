@@ -39,6 +39,10 @@ namespace WebApplication1.Controllers
             if (utilisateur != null)
             {
                 FormsAuthentication.SetAuthCookie(utilisateur.ID.ToString(), false);
+                if(utilisateur.Type == TypeUtilisateur.EnAttente)
+                {
+                    return Redirect("/Home/Attente");
+                }
                 return Redirect("/");
             }
             ViewBag.erreur = "Adresse e-mail et/ou mot de passe incorrect(s)";
@@ -62,6 +66,10 @@ namespace WebApplication1.Controllers
                 //Lieu non défini
                 string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
                 FormsAuthentication.SetAuthCookie(id, false);
+                if (vm.Utilisateur.Type == TypeUtilisateur.EnAttente)
+                {
+                    return Redirect("/Home/Attente");
+                }
                 return Redirect("/");
             }
             ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");

@@ -33,21 +33,37 @@
                         <h3>Easy Bill</h3>
                         <strong>EB</strong>
                     </li>
-                    <li>
-                        <a href=@Url.Action("Index", "Parametres")>
-                            <i class="glyphicon glyphicon-cog"></i>Paramètres
-                        </a>
-                    </li>
+                    @{ 
+                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                        {
+                            <li>
+                                <a href=@Url.Action("Index", "Parametres")>
+                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
 
                 @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
                 <ul class="list-unstyled components">
                     @*Élément pour afficher le tableau de bord*@
+                @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                {
                     <li>
                         <a href=@Url.Action("Index", "Home")>
                             <i class="glyphicon glyphicon-home"></i>Tableau de bord
                         </a>
                     </li>
+                }
+                else
+                {
+                    <li>
+                        <a href=@Url.Action("Attente", "Home")>
+                            <i class="glyphicon glyphicon-home"></i>Acceuil
+                        </a>
+                    </li>
+                }
 
                     @*Si l'utilisateur est un administrateur, éléments pour la gestion des utilisateurs*@
                     @{
@@ -75,31 +91,34 @@
                         </li>*@
 
                     @*Sous-menu pour la gestion des documents (devis / factures)*@
-                    <li>
-                        <a href="#papierSubmenu" data-toggle="collapse">
-                            <i class="glyphicon glyphicon-file"></i>
-                            Documents
-                        </a>
-                        <ul class="collapse list-unstyled" id="papierSubmenu">
-                            <li><a href=@Url.Action("Index", "Devis")>Devis</a></li>
-                            <li><a href=@Url.Action("Index", "Factures")>Factures</a></li>
-                        </ul>
-                    </li>
+                    @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                    {
+                        <li>
+                            <a href="#papierSubmenu" data-toggle="collapse">
+                                <i class="glyphicon glyphicon-file"></i>
+                                Documents
+                            </a>
+                            <ul class="collapse list-unstyled" id="papierSubmenu">
+                                <li><a href=@Url.Action("Index", "Devis")>Devis</a></li>
+                                <li><a href=@Url.Action("Index", "Factures")>Factures</a></li>
+                            </ul>
+                        </li>
 
-                    @*Élément pour la gestion des produits*@
-                    <li>
-                        <a href=@Url.Action("Index", "Produits")>
-                            <i class="glyphicon glyphicon-tags"></i>
-                            Produits
-                        </a>
-                    </li>
+                        @*Élément pour la gestion des produits*@
+                        <li>
+                            <a href=@Url.Action("Index", "Produits")>
+                                <i class="glyphicon glyphicon-tags"></i>
+                                Produits
+                            </a>
+                        </li>
+                    }
                 </ul>
 
                 @*Liste contenant les différents éléments du menu concernant les informations de l'application*@
                 <ul class="list-unstyled components">
 
                     @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Prospect || type == WebApplication1.Models.Account.TypeUtilisateur.Client)
+                    @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA))
                     {
                         <li>
                             <a href=@Url.Action("Contact", "Home")>

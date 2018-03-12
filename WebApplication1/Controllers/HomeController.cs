@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
 
         private void ChargerProduit(Utilisateur user, Parametre param)
         {
-            var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
+            var ListProduits = db.Produits.ToList();
             ListProduits.Reverse();
             ViewBag.listeProduits = ListProduits.Take(param.TailleHistorique);
             ViewBag.NbProduits = ListProduits.Count();
@@ -82,8 +82,13 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+  
             if (user != null)
             {
+                if (user.Type == TypeUtilisateur.EnAttente)
+                {
+                    return Redirect("/Home/Attente");
+                }
                 var param = db.Parametres.Find(user.ParametreID);
                 ViewBag.Stats = param.NbJourStat;
 
@@ -173,6 +178,11 @@ namespace WebApplication1.Controllers
             ViewBag.errorMessage = message;
             ViewBag.Method = method;
             ViewBag.Controller = control;
+            return View();
+        }
+
+        public ActionResult Attente()
+        {
             return View();
         }
     }
