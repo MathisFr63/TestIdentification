@@ -59,6 +59,7 @@
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
         <th>Produits</th>
+        <th>Prix HT</th>
         <th></th>
     </tr>
     @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
@@ -85,19 +86,52 @@
                 </td>*@
             <td>
                 @foreach (var a in item.Produits)
+                @if (item.Produits.Count() >= 3)
                 {
                     @Html.DisplayFor(elt => a.Nom); <i>=></i>
                     @Html.DisplayFor(elt => a.Quantite); <br />
+
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, ...</p>
                 }
+                else if (item.Produits.Count() < 3 && item.Produits.Count() > 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom</p>
+                }
+                else if (item.Produits.Count() == 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom</p>
+                }
+                else
+                {
+                    <p>Aucun produit</p>
+                }
+            </td>
+            <td>
+                @{
+                    var somme = 0;
+                    foreach (var p in item.Produits)
+                    {
+                        somme += p.PrixHT * p.Quantite;
+                    }
+                    <p>@somme</p>
+
+                }
+
             </td>
             <td>
                 <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn button-orange">
                     <span class="glyphicon glyphicon-pencil" />
                 </a>
+<<<<<<< HEAD
                 <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn button-blue">
                     <span class="glyphicon glyphicon-print" />
                 </a>
                 <button title="Supprimer devis" class="btn button-delete deleteButton" onclick='togglePopup("@item.Objet", "@item.ID")'>
+=======
+
+                <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Objet", "@item.ID")'>
+>>>>>>> 051da055788e4482c1774851880030f9c3c12bc0
                     <span class="glyphicon glyphicon-trash" />
                 </button>
                 <button title="Facturer devis" value="Facturer" class="btn button-cancel" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
@@ -105,7 +139,7 @@
                 </button>
             </td>
         </tr>
-    }
+                    }
 </table>
 
 <br />
