@@ -327,11 +327,8 @@
     <Content Include="Views\Feedbacks\ListToPdf.cshtml" />
     <Content Include="Views\Feedbacks\FeedbackToPdf.cshtml" />
     <Content Include="Views\Parametres\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Home\Newsletter.cshtml" />
-=======
     <Content Include="Views\Home\Attente.cshtml" />
->>>>>>> 682feb442b75f3333e157fd9fd6ff1ab67b10412
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
