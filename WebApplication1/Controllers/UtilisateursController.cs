@@ -111,7 +111,7 @@ namespace WebApplication1.Controllers
             ViewBag.NbDevis = ListDevis.Count();
             var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
             ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == utilisateur.ID).ToList();
+            var listProduit = db.Produits.ToList();
             ViewBag.NbProduits = listProduit.Count();
 
             return View(utilisateur);
@@ -298,7 +298,7 @@ namespace WebApplication1.Controllers
             ViewBag.NbDevis = ListDevis.Count();
             var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
             ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == utilisateur.ID).ToList();
+            var listProduit = db.Produits.ToList();
             ViewBag.NbProduits = listProduit.Count();
 
             return new ViewAsPdf("UtilisateurToPdf", utilisateur);
@@ -319,7 +319,7 @@ namespace WebApplication1.Controllers
             ViewBag.NbDevis = ListDevis.Count();
             var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
             ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.Where(p => p.UtilisateurID == utilisateur.ID).ToList();
+            var listProduit = db.Produits.ToList();
             ViewBag.NbProduits = listProduit.Count();
 
             return View(utilisateur);

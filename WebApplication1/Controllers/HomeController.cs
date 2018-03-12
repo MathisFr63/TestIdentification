@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
 
         private void ChargerProduit(Utilisateur user, Parametre param)
         {
-            var ListProduits = db.Produits.Where(produit => produit.UtilisateurID == user.ID).ToList();
+            var ListProduits = db.Produits.ToList();
             ListProduits.Reverse();
             ViewBag.listeProduits = ListProduits.Take(param.TailleHistorique);
             ViewBag.NbProduits = ListProduits.Count();
