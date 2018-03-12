@@ -16,7 +16,7 @@
 </head>
 
 @*Menu*@
-<body id="fondGradientGris">
+<body>
     @*Si l'utilisateur est connecté, affichage du menu*@
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
@@ -171,15 +171,28 @@
                     </li>
                 </ul>
             </nav>
-            <div id="content">
-                <br />
-                @RenderBody()
-            </div>
+            @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Clear)
+            {
+                <div id="content" class="fondGradientGris">
+                    <br />
+                    @RenderBody()
+                </div>
+            }
+            else
+            {
+                <div id="content" class="themeDark">
+                    <br />
+                    @RenderBody()
+                </div>
+            }
+
+
+
         </div>
     }
     else
     {
-        <div>
+        <div class="fondGradientGris">
             @RenderBody()
         </div>
     }

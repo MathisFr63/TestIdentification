@@ -55,6 +55,35 @@
             <div class="col-md-6">
                 <p class="lead">Statut : @Html.DisplayFor(model => model.Type)</p>
             </div>
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Adresse : @ViewBag.lieu.Adresse</p>
+            </div>
+            @if (ViewBag.lieu.Complement == "")
+            {
+                @*Affichage du type de l'utilisateur*@
+                <div class="col-md-6">
+                    <p class="lead">Complement : @ViewBag.lieu.Complement</p>
+                </div>
+            }
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Ville : @ViewBag.lieu.Ville</p>
+            </div>
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Code postale : @ViewBag.lieu.CodePostal</p>
+            </div>
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Pays : @ViewBag.lieu.Pays</p>
+            </div>
+            @foreach (var t in Model.Telephones)
+            {
+                <div class="col-md-6">
+                    <p class="lead">Telephone : @t.Préfixe @t.Numéro</p>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -88,14 +117,14 @@
             </div>
         </div>
     </div>
-    <br/>
-    <br/>
+    <br />
+    <br />
     @{
         var db = new WebApplication1.DAL.ApplicationContext();
         var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
         if (type != WebApplication1.Models.Account.TypeUtilisateur.Administrateur && type != WebApplication1.Models.Account.TypeUtilisateur.SA)
         {
-            if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).subscribe==false)
+            if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).subscribe == false)
             {
 
                 <p>S'abonner ?</p>

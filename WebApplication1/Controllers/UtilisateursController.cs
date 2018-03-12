@@ -105,6 +105,10 @@ namespace WebApplication1.Controllers
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
+            ViewBag.lieu = db.Lieux.Find(utilisateur.LieuID);
+
+            utilisateur.Telephones = db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList();
+
             if (utilisateur == null)
                 return HttpNotFound();
 
