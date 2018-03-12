@@ -90,8 +90,9 @@ namespace WebApplication1.Controllers
                     return Redirect("/Home/Attente");
                 }
                 var param = db.Parametres.Find(user.ParametreID);
-                ViewBag.Stats = param.NbJourStat;
 
+                ViewBag.Stats = param.NbJourStat;
+            
                 var listFacturesRecentes = ChargerFacture(user, param);
 
                 ChargerDevis(user, param);

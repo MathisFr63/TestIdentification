@@ -89,13 +89,15 @@ input, select, textarea {
     }
 
 
-#fondGradientGris {
+.fondGradientGris {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f5f6f6+0,dddfe3+98,dddfe3+99,dbdce2+102 */
     background: rgb(245,246,246); /* Old browsers */
     background: -moz-linear-gradient(-45deg, rgba(245,246,246,1) 0%, rgba(221,223,227,1) 98%, rgba(221,223,227,1) 99%, rgba(219,220,226,1) 102%); /* FF3.6-15 */
     background: -webkit-linear-gradient(-45deg, rgba(245,246,246,1) 0%,rgba(221,223,227,1) 98%,rgba(221,223,227,1) 99%,rgba(219,220,226,1) 102%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(135deg, rgba(245,246,246,1) 0%,rgba(221,223,227,1) 98%,rgba(221,223,227,1) 99%,rgba(219,220,226,1) 102%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#dbdce2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .deroulant {
@@ -505,12 +507,12 @@ input[type=submit] {
 
 .button-green {
     color: #fff;
-    background-color: #06d659;
+    background-color: #06d6a0;
 }
 
     .button-green:hover {
         color: #fff;
-        background-color: #06d659;
+        background-color: #06d6a0;
         box-shadow: 2px 2px 2px #10a57e;
     }
 
