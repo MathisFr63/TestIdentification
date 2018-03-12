@@ -24,7 +24,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    <h3>Informations devis:</h3>
+    <hr />
     <div class="form-horizontal">
         @*Div permettant de stocker l'identifiant du devis (sans l'afficher) afin de pouvoir l'utiliser ensuite*@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -94,8 +95,9 @@
         @*Bouton permettant de valider la modification du devis (sauvegarder les modification) ou de facturer le devis*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sauvegarder" class="btn btn-default btn-primary" />
+                <input type="submit" value="Sauvegarder" class="button button-red" />
             </div>
         </div>
     </div>
+    <br /><br />
 }
