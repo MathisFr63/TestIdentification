@@ -76,3 +76,11 @@ function addNumero(value, prefixe) {
 function removeNumero(elt) {
     elt.remove();
 }
+
+function avancée() {
+    var div = document.getElementById("listAvancée");
+    if (div.style.display == "none")
+        div.style.display = "table-row";
+    else
+        div.style.display = "none";
+}

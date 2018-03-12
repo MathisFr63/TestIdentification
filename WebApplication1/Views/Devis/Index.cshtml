@@ -14,15 +14,15 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
-        <form class="navbar-form navbar-left" method="get" role="search">
+        @*Formulaire permettant de rechercher un devis*@
+        <form class="navbar-form navbar-left" method="get" role="search" action="/Devis/Index">
             @using (Html.BeginForm("Index", "Devis", FormMethod.Get))
             {
                 <div class="form-group">
-
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Objet", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Devis" target="_blank" href=@Url.Action("PrintList", "Devis") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -52,6 +52,31 @@
 
 @*Affichage de la liste des devis*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Devis", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="TotalHT" placeholder="Total HT" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     <tr>
         <th>Objet</th>
         <th>Date</th>
@@ -127,7 +152,7 @@
                 </button>
             </td>
         </tr>
-       }
+    }
 </table>
 
 <br />
