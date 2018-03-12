@@ -10,6 +10,14 @@
 @*Formulaire permettant d'indiquer l'identifiant de l'utilisateur, le sujet du feedback, ainsi que le commentaire qui lui est lié*@
 @using (Html.BeginForm())
 {
+    @*Chemin de retour*@
+    <ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
+        <li class="breadcrumb-item">
+            <a href=@Url.Action("Index","Feedbacks")>Liste Feedbacks</a>
+        </li>
+        <li class="breadcrumb-item active">Créer feedback</li>
+    </ul>
+ 
     @Html.AntiForgeryToken()
     <div>
         <br />
@@ -28,7 +36,8 @@
         @*Modification du commentaire / message lié au feedback*@
         @Html.LabelFor(m => m.Comment)
         @Html.TextAreaFor(m => m.Comment, new { @class = "form-control tinymce", @cols = 80, @rows = 10 })
-        <button type="submit" value="Create" class="btn btn-secondary">Envoyer</button>
+        <br />
+        <button type="submit" value="Create" class="button button-red">Envoyer</button>
     </div>
 }
 

@@ -16,7 +16,7 @@ function toggleArticle(name) {
             '<td class="col-md-4">' +
             '<label>Quantité</label>' +
             '<br />' +
-            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="">' +
+            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="1" value="1" require>' +
             '</td>' +
             '</tr>' +
             '</table>';
@@ -53,17 +53,21 @@ function toggleArticleEdit(name, quantite) {
 
 var nb = 0;
 
-function addNumero(value) {
+function addNumero(value, prefixe) {
     if (!value)
         value = "";
+    if (!prefixe)
+        prefixe = "+33";
     var b = '<div id="' + nb + '">' +
-        '<label> Numéro </label>' +
-        '<div style="display:flex;">' +
-        '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" required="required" type="text" value="' + value + '">' +
-        '<button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">'+
-        '<i class="glyphicon glyphicon-remove"></i >'+
-        '</button>'+
-        '</div>' +
+            '<div style="display:flex;">' +
+                '<div style="display: flex;">' +
+                    '<input class="form-control text-box single-line" style= "width: 50px" type= "text" value= "' + prefixe + '" name="prefixe' + nb + '" required>' +
+                    '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" type="text" value="' + value + '" required>' +
+                '</div>' +
+                '<button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">' +
+                    '<i class="glyphicon glyphicon-remove"></i >' +
+                '</button>' +
+            '</div>' +
         '</div>';
     $("#telephones").append(b);
     nb++;

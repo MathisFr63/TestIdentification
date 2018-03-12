@@ -4,7 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Paramètre</h2>
+@*titre de la partie*@
+<h2 class="titreCRUD">Paramètre</h2>
+<hr class="separer" />
+<br />
 
 @using (Html.BeginForm())
 {
@@ -72,7 +75,7 @@
         @*Bouton permettant de valider la modification du produit*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sauvegarder" class="btn btn-default btn-secondary" />
+                <input type="submit" value="Sauvegarder" class="button btn-secondary" />
             </div>
         </div>
     </div>

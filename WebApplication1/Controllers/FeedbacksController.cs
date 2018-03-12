@@ -25,8 +25,8 @@ namespace WebApplication1.Controllers
         public ActionResult Index(String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
 
@@ -115,8 +115,9 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher les détails du feedback sélectionné.
         public ActionResult Details(int? id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -130,8 +131,9 @@ namespace WebApplication1.Controllers
         // Méthode permettat grâce à l'accès par l'url d'afficher les détails du feedback sélectionné afin de vérifier si l'administrateur souhaite le supprimer.
         public ActionResult Delete(int? id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -164,8 +166,9 @@ namespace WebApplication1.Controllers
         // Méthode permettant de modifier l'état du feedback sélectionné afin de préciser si le feedback est résolu ou en cours.
         public ActionResult Check(int? id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -180,8 +183,9 @@ namespace WebApplication1.Controllers
 
         public ActionResult Print(int id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -193,8 +197,9 @@ namespace WebApplication1.Controllers
 
         public ActionResult FeedBackToPdf(int? id)
         {
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var feedback = db.Feedbacks.Find(id);
@@ -208,8 +213,8 @@ namespace WebApplication1.Controllers
         public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
             var listTrie = new List<Feedback>();
@@ -239,8 +244,8 @@ namespace WebApplication1.Controllers
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type != TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var param = db.Parametres.Find(user.ParametreID);
             var listTrie = new List<Feedback>();

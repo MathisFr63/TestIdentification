@@ -1,8 +1,17 @@
 ﻿@*Vue permettant d'afficher une erreur lorsque le type de l'utilisateur n'est pas le bon pour accéder à certaines fonctionnalités*@
 @{
     ViewBag.Title = "BadUserTypeError";
+
+    var method = ViewBag.Method;
+    var controller = ViewBag.Controller;
+    if (!method)
+        method = "Index";
+    if (!controller)
+        controller = "Home";
 }
 
 <h2>Erreur</h2>
+
+<a href="/@controller/@method">Retour</a>
 
 <p>Vous devez posséder un compte administrateur pour avoir accès à cette fonctionnalité</p>

@@ -29,7 +29,7 @@
             <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
-                    <ul class="dropdown-menu dropdown-menu-default">
+                    <ul class="dropdown-menu dropdown-menu-default trie">
                         <li style="background-color: white;">@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
                         <li style="background-color: white;">@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
                         <li style="background-color: white;"><a href="#">Nb factures</a></li>
@@ -93,7 +93,7 @@
 
             </td>
             <td>
-                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn btn-info">
+                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-check" />
                 </a>
                 <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>

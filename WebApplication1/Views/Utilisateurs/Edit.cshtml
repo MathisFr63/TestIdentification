@@ -45,10 +45,23 @@
     </div>
 
     @*Div permettant de modifier le type de l'utilisateur*@
-    <div>
-        @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
-        @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control" })
-    </div>
+    @if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.SA)
+    {
+        <div>
+            @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
+            @{
+                var selectList = Enum.GetValues(typeof(WebApplication1.Models.Account.TypeUtilisateur))
+                        .Cast<WebApplication1.Models.Account.TypeUtilisateur>()
+                        .Where(e => e != WebApplication1.Models.Account.TypeUtilisateur.SA && e != WebApplication1.Models.Account.TypeUtilisateur.EnAttente)
+                        .Select(e => new SelectListItem
+                        {
+                            Value = e.ToString(),
+                            Text = e.ToString()
+                        });
+            }
+            @Html.DropDownListFor(m => m.Utilisateur.Type, selectList, new { @class = "form-control" })
+        </div>
+    }
 
     <hr class="separerEdit" />
 
@@ -91,14 +104,16 @@
         <i class="glyphicon glyphicon-plus"></i>
     </button>
 
-    <div id="telephones"></div>
+    <div id="telephones">
+        <h2>Numéros</h2>
+    </div>
 
     @foreach (var item in Model.Utilisateur.Telephones)
     {
         <script type="text/javascript">
-            addNumero("@item.Numéro");
+            addNumero("@item.Numéro", "@item.Préfixe");
         </script>
-    }   
+    }
 
 
 
@@ -119,12 +134,9 @@
             @Html.PasswordFor(model => model.confirmation, new { @class = "form-control" })
         </div>
     }
-
+    <hr class="separerEdit" />
     @*Bouton permettant de valider les modifications faites sur l'utilisateur*@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default btn-secondary py-3" />
-        </div>
-    </div>
+    <input type="submit" value="Sauvegarder" class="button button-orange" />
 </div>
+<br /><br />
 }

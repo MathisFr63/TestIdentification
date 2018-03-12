@@ -15,19 +15,19 @@
         public string Commentaire { get; set; }
 
         // Prix hors taxe du produit
-        public int PrixHT { get; set; }
+        public double PrixHT { get; set; }
 
         // Réduction à ajouter au prix du produit
-        public int Reduction { get; set; }
+        public double Reduction { get; set; }
 
         // Montant de TVA à ajouter au prix du produit
-        public int TVA { get; set; }
+        public double TVA { get; set; }
 
         // Type de service lié au produit
         public TypeService Type { get; set; }
 
         // Identifiant de l'utilisateur auquel appartient le produit.
-        public string UtilisateurID { get; set; }
+        //public string UtilisateurID { get; set; }
 
         // Prix final du produit sans la TVA
         //public int Prixfinal { get; set; } Prix calculé

@@ -98,7 +98,7 @@ namespace WebApplication1.Models.Account
             this.subscribe = subscribe;
 
             this.ParametreID = parametre.ID;
-            parametre.DefaultTextFeedback += $"<p>{prenom} {nom}</p>";
+            parametre.DefaultTextFeedback += $"{prenom} {nom}";
         }
     }
 }
