@@ -97,9 +97,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher les données de l'utilisateur sélectionné et dont l'id est passé dans l'url si l'utilisateur courant est un administrateur.
         public ActionResult Details(string id)
         {
+            id = id.Replace("~", ".");
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            var userType = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
-            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var userType = db.ObtenirUtilisateur(id).Type;
+            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
                 return RedirectToAction("BadUserTypeError", "Home");
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
@@ -153,12 +154,11 @@ namespace WebApplication1.Controllers
         // Méthode permettant à un administrateur d'accéder à la page de modification des données de l'utilisateur sélectionné dont l'id est passé dans l'url.
         public ActionResult Edit(string id)
         {
+            id = id.Replace('~', '.');
             var typeUserCourant = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+            var utilisateur = db.Utilisateurs.Find(id);
 
-            if (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
-
-            if (typeUserCourant != TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name || (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id))
+            if (typeUserCourant != TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA && id != HttpContext.User.Identity.Name || (utilisateur.Type == TypeUtilisateur.SA && HttpContext.User.Identity.Name != id) || (utilisateur.Type == TypeUtilisateur.Administrateur && typeUserCourant != TypeUtilisateur.SA))
                 return RedirectToAction("BadUserTypeError", "Home");
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -189,13 +189,15 @@ namespace WebApplication1.Controllers
                 var form = Request.Form;
                 var keys = form.AllKeys;
 
-                for (int i = 10; keys[i] != "motDePasse"; i++)
+                for (int i = 10; i<keys.Length && keys[i] != "motDePasse"; i+=2)
                 {
-                    var name = keys[i];
+                    var prefixe = keys[i];
+                    var name = keys[i+1];
 
                     db.Telephones.Add(new Telephone()
                     {
                         Numéro = form.GetValues(name)[0],
+                        Préfixe = form.GetValues(prefixe)[0],
                         UtilisateurID = utilisateur.ID
                     });
                 }

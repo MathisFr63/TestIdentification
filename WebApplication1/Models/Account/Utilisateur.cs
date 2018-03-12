@@ -95,7 +95,7 @@ namespace WebApplication1.Models.Account
             this.Telephones = telephones;
 
             this.ParametreID = parametre.ID;
-            parametre.DefaultTextFeedback += $"<p>{prenom} {nom}</p>";
+            parametre.DefaultTextFeedback += $"{prenom} {nom}";
         }
     }
 }
