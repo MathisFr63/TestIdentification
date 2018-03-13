@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using Rotativa;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -72,9 +73,36 @@ namespace WebApplication1.Controllers
 
                 if (!String.IsNullOrEmpty(searchstring))
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+
                 return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return RedirectToAction("Details", new { id = user.ID.Replace(".", "~") });
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult RechercheAvancee(string Nom, string Prénom, string Mail, string Type, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
+            {
+                var param = db.Parametres.Find(user.ParametreID);
+                IEnumerable<Utilisateur> myListTrier = db.Utilisateurs.ToList();
+
+                if (Nom != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.Nom.ToUpper().Contains(Nom.ToUpper()));
+
+                if (Prénom != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.Prénom.ToUpper().Contains(Prénom.ToUpper()));
+
+                if (Mail != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.ID.ToUpper().Contains(Mail.ToUpper()));
+
+                if (Enum.TryParse<TypeUtilisateur>(Type, out var type))
+                    myListTrier = myListTrier.Where(u => u.Type == type);
+
+                return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // Méthode permettant à l'utilisateur d'accèder à la page de connexion.

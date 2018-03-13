@@ -26,6 +26,7 @@ namespace WebApplication1.Models.Account
         public string UtilisateurID { get; set; }
 
         //public string userName { get; }
+        [Display(Name = "Identité")]
         public string userName { get; set; }
 
 

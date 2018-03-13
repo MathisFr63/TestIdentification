@@ -23,7 +23,7 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                     <button type="submit" title="Recherche Basique" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" title="Annuler la Recherche" value="cancel" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Factures" target="_blank" href=@Url.Action("PrintList", "Factures") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -48,6 +48,31 @@
 
 @*Affichage de la liste des factures*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Factures", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Relance" placeholder="Relance" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Reglement" placeholder="Reglement" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     <tr>
         <th>Objet</th>
         <th>Date</th>
