@@ -84,7 +84,7 @@
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
         <th>Produits</th>
-        <th>Total HT</th>
+        <th>Total TTC</th>
         <th></th>
     </tr>
     @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
@@ -133,11 +133,12 @@
                     double somme = 0;
                     foreach (var p in item.Produits)
                     {
-                        somme += p.PrixHT * p.Quantite;
+                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                        double reduc = PrixTTC * p.Reduction / 100;
+                        somme += PrixTTC * p.Quantite - reduc;
                     }
-                    <p>@somme €</p>
+                    <p>@String.Format("  {0:F2}", somme) €</p>
                 }
-
             </td>
             <td>
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">

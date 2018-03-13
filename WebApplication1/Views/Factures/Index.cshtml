@@ -54,6 +54,7 @@
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
         <th>Produits</th>
+        <th>Prix TTC</th>
         <th>Relances</th>
         <th>Reglement</th>
         <th></th>
@@ -79,10 +80,34 @@
                     @Html.DisplayFor(modelItem => item.Monnaie)
                 </td>*@
             <td>
-                @foreach (var a in item.Produits)
+                @if (item.Produits.Count() >= 3)
                 {
-                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                    @Html.DisplayFor(elt => a.Quantite); <br />
+
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, @item.Produits.ToList()[2].Nom, ...</p>
+                }
+                else if (item.Produits.Count() < 3 && item.Produits.Count() > 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom</p>
+                }
+                else if (item.Produits.Count() == 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom</p>
+                }
+                else
+                {
+                    <p>Aucun produit</p>
+                }
+            </td>
+            <td>
+                @{
+                    double somme = 0;
+                    foreach (var p in item.Produits)
+                    {
+                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                        double reduc = PrixTTC * p.Reduction / 100;
+                        somme += PrixTTC * p.Quantite - reduc;
+                    }
+                    <p>@String.Format("  {0:F2}", somme) €</p>
                 }
             </td>
             <td>

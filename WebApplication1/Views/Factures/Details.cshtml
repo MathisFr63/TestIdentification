@@ -14,15 +14,21 @@
 </ul>
 
 
+@*titre partie*@
+<div class="titrepartie">
 
-@*titre de la partie*@
-<h2 class="titreCRUD">Informations sur la facture</h2>
+    <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
+        <li>
+            <a title="Imprimer la facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = Model.ID }) class="btn button-blue btn-lg"><span class="glyphicon glyphicon-print" /></a>
+        </li>
+    </ul>
+    <h2 style="display:block;" class="titreCRUD">
+        Informations sur la facture
+    </h2>
+</div>
 <hr class="separer" />
 <br />
 
-<p>
-    <a title="Imprimer" target="_blank" href=@Url.Action("Print", "Factures", new { id = Model.ID }) class="btn btn-info btn-lg">Imprimer</a>
-</p>
 
 @*Div permettant l'affichage des détails de la facture*@
 <div>
@@ -89,12 +95,15 @@
         <dd>
             @Html.DisplayFor(model => model.Reglement)
         </dd>
-
+        <dd>
+            <br />
+            @*Bouton permettant de relancer la facture*@
+            <a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="button button-red">Relancer</a>
+        </dd>
     </dl>
 </div>
 
-@*Bouton permettant de relancer la facture*@
-<a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="btn btn-secondary">Relancer</a>
+
 @if (ViewBag.ErreurRelance != null && ViewBag.ErreurRelance == true)
 {
     <script type="text/javascript">

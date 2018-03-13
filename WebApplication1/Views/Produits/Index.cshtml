@@ -79,7 +79,7 @@
     <tr>
         <th>Libelle</th>
         <th>Commentaire</th>
-        <th>PrixHT</th>
+        <th>PrixTTC</th>
         @*<th>Reduction</th>
             <th>TVA</th>*@
         <th>Type</th>
@@ -98,12 +98,16 @@
 
             @*Affichage du commentaire*@
             <td style="width:500px;">
-                <a class="detail" href=@Url.Action("Details", "Produits", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Commentaire)</a>
+                @Html.DisplayFor(modelItem => item.Commentaire)
             </td>
 
             @*Affichage du prix hors taxes*@
+            @{
+                double PrixTTC = item.PrixHT + item.PrixHT * item.TVA / 100;
+                double prixFinal = PrixTTC - PrixTTC * item.Reduction / 100;
+            }
             <td>
-                @Html.DisplayFor(modelItem => item.PrixHT) €
+                @String.Format("  {0:F2}", prixFinal) €
             </td>
 
             @*Affichage de la réduction*@
