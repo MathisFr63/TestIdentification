@@ -61,18 +61,18 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur de s'inscrire après avoir rempli toutes les cases correctement.
         public ActionResult CreateUser(UtilisateurViewModelConnection vm)
         {
-            if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
+            if (ModelState.IsValid)
             {
-                //Lieu non défini
-                string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo,false);
-                FormsAuthentication.SetAuthCookie(id, false);
-                if (vm.Utilisateur.Type == TypeUtilisateur.EnAttente)
+                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    return Redirect("/Home/Attente");
+                    //Lieu non défini
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+                    FormsAuthentication.SetAuthCookie(id, false);
+                    return Redirect("/");
                 }
-                return Redirect("/");
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
+                return View(vm);
             }
-            ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             return View(vm);
         }
         

@@ -168,13 +168,11 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'administrateur de créer un utilisateur après avoir instancié les données sur la page de création.
         public ActionResult Create(UtilisateurViewModelConnection vm)
         {
-            //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-            //return RedirectToAction("BadUserTypeError", "Home");
             if (ModelState.IsValid)
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, null, new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
