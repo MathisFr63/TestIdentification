@@ -74,7 +74,7 @@
                     @foreach (var item in Model.Produits)
                     {
                         <label>
-                            <input type="checkbox" onclick="toggleArticle('@item.Text')" id='@item.Text input' />@item.Text
+                            <input type="checkbox" onclick="toggleArticleEdit('@item.Text')" id='@item.Text input' />@item.Text
                         </label>
                     }
                 </div>

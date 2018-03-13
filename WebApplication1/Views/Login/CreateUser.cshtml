@@ -42,22 +42,21 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Utilisateur.ID)*
                                     @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                    @Html.ValidationMessageFor(model => model.Utilisateur.ID, "", new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de saisir le mot de passe de l'utilisateur*@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.motDePasse)*
                                     @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control my-2", @required = "required" })
-                                    @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de confirmer le mot de passe de l'utilisateur*@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.confirmation, htmlAttributes: new { @class = "control-label" })*
                                     @Html.PasswordFor(model => model.confirmation, new { @class = "form-control my-2", @required = "required" })
-                                    @Html.ValidationMessageFor(model => model.confirmation, "", new { @class = "text-danger" })
                                 </div>
+
+                                <br /><hr /><br />
 
                                 @*Div permettant de saisir le nom de l'utilisateur*@
                                 <div class="form-group">
@@ -71,34 +70,29 @@
                                     @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
                                 </div>
 
-                                @*Div permettant de saisir le type de l'utilisateur (basique / admin)*@
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })*
-                                    @Html.EnumDropDownListFor(x => x.Utilisateur.Type, new { @class = "form-control my-2" })
-                                </div>
+                                <br /><hr /><br />
 
                                 @*Div permettant de saisir le téléphone de l'utilisateur*@
                                 <div>
                                     @*<h2>Téléphones</h2>*@
+                                    
+                                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="addNumero();" class="btn button-green">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                    </button>
 
-                                    @*Div permettant de saisir le numéro de téléphone de l'utilisateur*@
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Numéro, htmlAttributes: new { @class = "control-label" })*
-                                        @Html.EditorFor(model => model.Utilisateur.Telephones.First().Numéro, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
+                                    <div id="telephones">
+                                        <h2>Numéros</h2>
                                     </div>
 
-                                    @*Div permettant de saisir le préfixe du téléphone de l'utilisateur*@
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Préfixe, htmlAttributes: new { @class = "control-label" })*
-                                        @Html.EditorFor(model => model.Utilisateur.Telephones.First().Préfixe, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
-                                    </div>
-
-                                    @*Div permettant de saisir le type du téléphone de l'utilisateur*@
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Utilisateur.Telephones.First().Type, htmlAttributes: new { @class = "control-label" })*<br /><br />
-                                        @Html.EnumDropDownListFor(x => x.Utilisateur.Telephones.First().Type, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })<br /><br />
-                                    </div>
+                                    @foreach (var item in Model.Utilisateur.Telephones)
+                                    {
+                                        <script type="text/javascript">
+                                            addNumero("@item.Numéro", "@item.Préfixe");
+                                        </script>
+                                    }
                                 </div>
+
+                                <br /><hr /><br />
 
                                 @*Div permettant de saisir le lieu de l'utilisateur*@
                                 <div>
@@ -112,7 +106,7 @@
 
                                     @*Div permettant de saisir le complément du lieu de l'utilisateur*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Lieu.Complement, htmlAttributes: new { @class = "control-label" })*
+                                        @Html.LabelFor(model => model.Lieu.Complement, htmlAttributes: new { @class = "control-label" })
                                         @Html.EditorFor(model => model.Lieu.Complement, new { htmlAttributes = new { @class = "form-control my-2" } })
                                     </div>
 
@@ -143,7 +137,7 @@
 
                                 @*Div permettant à l'utilisateur de saisir des informations supplémentaires*@
                                 <div class="form-group">
-                                    Autres informations* <br />
+                                    <p>Autres informations</p>
                                     @Html.TextAreaFor(model => model.Utilisateur.otherInfo, new { @class = "form-control my-2" })
                                 </div>
 

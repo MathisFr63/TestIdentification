@@ -84,15 +84,17 @@ namespace WebApplication1.DAL
         {
             var param = new Parametre();
             Parametres.Add(param);
-            SaveChanges();
 
             Lieux.Add(lieu);
             SaveChanges();
 
             var user = new Utilisateur(mail, motDePasse, nom, prenom, telephones, type, lieu, civilite, param, otherInfo, subscribe);
             Utilisateurs.Add(user);
-
             SaveChanges();
+
+            Telephones.AddRange(telephones);
+            SaveChanges();
+
             return user.ID;
         }
 

@@ -76,7 +76,7 @@ namespace WebApplication1.Controllers
 
                 return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return RedirectToAction("Details", new { @id = user.ID.Replace(".", "~") });
         }
 
         public ActionResult RechercheAvancee(string Nom, string Prénom, string Mail, string Type, int? page)
@@ -220,17 +220,15 @@ namespace WebApplication1.Controllers
                 var form = Request.Form;
                 var keys = form.AllKeys;
 
-                for (int i = 10; i<keys.Length && keys[i] != "motDePasse"; i+=2)
+                for (int i = 1; i<keys.Length && keys[i].Contains("prefixe"); i++)
                 {
-                    var prefixe = keys[i];
-                    var name = keys[i+1];
-
                     db.Telephones.Add(new Telephone()
                     {
-                        Numéro = form.GetValues(name)[0],
-                        Préfixe = form.GetValues(prefixe)[0],
+                        Préfixe = form.GetValues(keys[i])[0],
+                        Numéro = form.GetValues(keys[i+1])[0],
                         UtilisateurID = utilisateur.ID
                     });
+                    i++;
                 }
 
 

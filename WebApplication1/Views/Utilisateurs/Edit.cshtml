@@ -25,7 +25,7 @@
     <br />
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        
     @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
     <div>
         @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })
@@ -45,7 +45,11 @@
     </div>
 
     @*Div permettant de modifier le type de l'utilisateur*@
-    @if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.SA)
+    @{
+        var type = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(HttpContext.Current.User.Identity.Name).Type;
+    }
+    @if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.SA && (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur 
+                                                                                        || type == WebApplication1.Models.Account.TypeUtilisateur.SA))
     {
         <div>
             @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
@@ -60,6 +64,14 @@
                         });
             }
             @Html.DropDownListFor(m => m.Utilisateur.Type, selectList, new { @class = "form-control" })
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
+            @Html.DisplayFor(model => model.Utilisateur.Type, new { @class = "control-label" })
+            @Html.HiddenFor(model => model.Utilisateur.Type)
         </div>
     }
 

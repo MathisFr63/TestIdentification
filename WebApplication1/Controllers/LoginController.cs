@@ -54,7 +54,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page d'inscription.
         public ActionResult CreateUser()
         {
-            return View();
+            var userVMC = new UtilisateurViewModelConnection();
+            userVMC.Utilisateur = new Utilisateur();
+            userVMC.Utilisateur.Telephones = new List<Telephone>();
+            return View(userVMC);
         }
 
         [HttpPost]
@@ -65,8 +68,19 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    //Lieu non défini
-                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+                    var telephones = new List<Telephone>();
+                    for (int i = 6; i < Request.Form.AllKeys.Length && Request.Form.AllKeys[i] != "Lieu.Adresse"; i += 2)
+                    {
+                        telephones.Add(new Telephone()
+                        {
+                            Numéro = Request.Form.GetValues(Request.Form.AllKeys[i + 1])[0],
+                            Préfixe = Request.Form.GetValues(Request.Form.AllKeys[i])[0],
+                            UtilisateurID = vm.Utilisateur.ID
+                        });
+                    }
+
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+
                     FormsAuthentication.SetAuthCookie(id, false);
                     return Redirect("/");
                 }
