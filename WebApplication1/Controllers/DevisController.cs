@@ -83,7 +83,7 @@ namespace WebApplication1.Controllers
             });
 
             if ( Objet != string.Empty )
-                myListTrier = myListTrier.OrderBy(s => s.Objet).Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
+                myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
 
             if ( DateTime.TryParse(Date, out var date) )
                 myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
@@ -93,7 +93,7 @@ namespace WebApplication1.Controllers
 
             if (Produit != null)
                 myListTrier = myListTrier.Where(d => {
-                    return d.Produits.ToList().Any(x => x.Nom.Contains(Produit));
+                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
                 });
 
             if (int.TryParse(TotalHT, out var totalHT))

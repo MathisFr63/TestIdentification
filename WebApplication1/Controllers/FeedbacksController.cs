@@ -30,10 +30,6 @@ namespace WebApplication1.Controllers
 
             var param = db.Parametres.Find(user.ParametreID);
 
-            var listTrie = new List<Feedback>();
-
-            //var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            //var ListFeedbacks = db.Feedbacks.Where(feedback => feedback.UtilisateurID == user.ID).ToList();
             var ListFeedbacks = db.Feedbacks.ToList();
 
             if (searchstring != null)
@@ -47,13 +43,39 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-            {
                 return View(ListFeedbacks.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            }
-            else
-                return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
+
+            return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult RechercheAvancee(string Nom, string Mail, string Sujet, string Commentaire, string Résolu, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
+
+            var param = db.Parametres.Find(user.ParametreID);
+
+            IEnumerable<Feedback> myListTrier = db.Feedbacks.ToList();
+
+            if (Nom != string.Empty)
+                myListTrier = myListTrier.Where(s => s.userName.ToUpper().Contains(Nom.ToUpper()));
+
+            if (Mail != string.Empty)
+                myListTrier = myListTrier.Where(s => s.UtilisateurID.ToUpper().Contains(Mail.ToUpper()));
+
+            if (Sujet != string.Empty)
+                myListTrier = myListTrier.Where(s => s.Subject.ToUpper().Contains(Sujet.ToUpper()));
+
+            if (Commentaire != string.Empty)
+                myListTrier = myListTrier.Where(s => s.Comment.ToUpper().Contains(Commentaire.ToUpper()));
+
+            if (bool.TryParse(Résolu, out var resolu))
+                myListTrier = myListTrier.Where(s => s.IsResolved == resolu);
+
+            return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+        }
 
         // GET: Feedbacks/Create
         // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
