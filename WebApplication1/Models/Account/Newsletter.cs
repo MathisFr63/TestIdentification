@@ -8,8 +8,8 @@ namespace WebApplication1.Models.Account
     /// </summary>
     public class Newsletter
     {
-        public string Objet;
-        public string Contenu;
+        public string Objet { get; set; }
+        public string Contenu { get; set; }
 
         public Newsletter() {}
 

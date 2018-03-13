@@ -40,14 +40,14 @@
                             <form>
                                 @*Div permettant de saisir l'identifiant (adresse e-mail) de l'utilisateur*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Utilisateur.ID)
+                                    @Html.LabelFor(model => model.Utilisateur.ID)*
                                     @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Utilisateur.ID, "", new { @class = "text-danger" })
                                 </div>
 
                                 @*Div permettant de saisir le mot de passe de l'utilisateur*@
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.motDePasse)
+                                    @Html.LabelFor(model => model.motDePasse)*
                                     @Html.PasswordFor(model => model.motDePasse, new { @class = "form-control my-2", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.motDePasse, "", new { @class = "text-danger" })
                                 </div>
