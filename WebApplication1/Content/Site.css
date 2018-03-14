@@ -508,33 +508,39 @@ input[type=submit] {
 .button-green {
     color: #fff;
     background-color: #06d6a0;
+    border-color: #06d6a0;
 }
 
     .button-green:hover {
         color: #fff;
         background-color: #06d6a0;
+        border-color: #06d6a0;
         box-shadow: 2px 2px 2px #10a57e;
     }
 
 .button-bluedark {
     background-color: #5468f1;
     color: white;
+    border-color: #5468f1;
 }
 
     .button-bluedark:hover {
         color: #fff;
         background-color: #5468f1;
+        border-color: #5468f1;
         box-shadow: 2px 2px 2px #37449f;
     }
 
 .button-red {
     background-color: #e7262d;
     color: white;
+    border-color: #e7262d;
 }
 
     .button-red:hover {
         color: #fff;
         background-color: #e7262d;
+        border-color: #e7262d;
         box-shadow: 2px 2px 2px #ba0606;
     }
 
@@ -542,33 +548,39 @@ input[type=submit] {
 .button-delete {
     color: #fff;
     background-color: #ff6b70;
+    border-color: #ff6b70;
 }
 
     .button-delete:hover {
         color: #fff;
         background-color: #ff6b70;
+        border-color: #ff6b70;
         box-shadow: 2px 2px 2px #ba0606;
     }
 
 .button-orange {
     color: #fff;
+    border-color: #ffcc56;
     background-color: #ffcc56;
 }
 
     .button-orange:hover {
         color: #fff;
         background-color: #ffcc56;
+        border-color: #ffcc56;
         box-shadow: 2px 2px 2px rgba(190, 131, 0, 0.8784313725490196);
     }
 
 .button-blue {
     color: #fff;
     background-color: #70cdff;
+    border-color: #70cdff;
 }
 
     .button-blue:hover {
         color: #fff;
         background-color: #70cdff;
+        border-color: #70cdff;
         box-shadow: 2px 2px 2px rgba(0, 155, 190, 0.8784313725490196);
     }
 
@@ -614,5 +626,25 @@ input[type=submit] {
 
 .themeDark {
     background-color: #323943;
-    color: white;
+    color: #DCE1E1;
 }
+
+
+    .themeDark input, .themeDark textarea, .themeDark select, .themeDark button {
+        background-color: #9D9D9D;
+        border-color: #9D9D9D;
+        color: white;
+    }
+
+    .themeDark p, .themeDark b, .themeDark h4 {
+        color: whitesmoke;
+    }
+
+    .themeDark h1 {
+        color: #dd3232;
+    }
+
+    .themeDark nav {
+        background-color: #61666e;
+        border-radius: 3px;
+    }

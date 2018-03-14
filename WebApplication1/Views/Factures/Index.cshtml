@@ -24,7 +24,7 @@
                     <button type="submit" title="Recherche Basique" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" title="Annuler la Recherche" value="cancel" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
-                    <a title="Imprimer la liste des Factures" target="_blank" href=@Url.Action("PrintList", "Factures") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
+                    <button title="Imprimer la liste des factures" target="_blank" onclick="location.href='@Url.Action("PrintList", "Factures")'" class="btn btn-default"><span class="glyphicon glyphicon-print" /></button>
                 </div>
             }
         </form>
@@ -142,7 +142,7 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                <a title="Imprimer la Facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Imprimer le Facture" target="_blank" onclick="location.href='@Url.Action("Print", "Factures", new { id = item.ID })'" class="btn button-blue"><span class="glyphicon glyphicon-print" /></button>
             </td>
         </tr>
     }

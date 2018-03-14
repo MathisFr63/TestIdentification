@@ -24,7 +24,12 @@
         var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
         <div class="wrapper">
             <!-- Sidebar Holder -->
-            <nav id="sidebar">
+
+            <nav id="sidebar" 
+                 @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Dark)
+                 {
+                    <text>class="darkTheme"</text>
+                 }>
 
                 @*Div contenant le titre du menu avec le nom de l'application pour l'instant change en fonction de la taille*@
 
