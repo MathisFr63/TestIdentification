@@ -23,7 +23,7 @@
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
-                    <button title="Imprimer la liste des produits" target="_blank" onclick="location.href='@Url.Action("PrintList", "Produits")'" class="btn btn-default"><span class="glyphicon glyphicon-print" /></button>
+                    <a title="Imprimer la liste des Produits" target="_blank" href=@Url.Action("PrintList", "Produits") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
         </form>
@@ -128,9 +128,7 @@
             @*Affichage des boutons*@
             <td>
                 <button title="Modifier le produit" onclick="location.href='@Url.Action("Edit", "Produits", new { id = item.ID })'" class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></button>
-                <button title="Imprimer le produit" formtarget="_blank" onclick="location.href='@Url.Action("Print", "Produits", new { id = item.ID })'" class="btn button-blue"><span class="glyphicon glyphicon-print" /></button>
-
-                <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+               <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Libelle", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
                 </button>

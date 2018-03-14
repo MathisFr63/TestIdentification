@@ -630,13 +630,13 @@ input[type=submit] {
 }
 
 
-    .themeDark input, .themeDark textarea, .themeDark select, .themeDark button {
+    .themeDark .form-control, .themeDark textarea, .themeDark select, .themeDark .btn-default, .themeDark .searchBar {
         background-color: #9D9D9D;
         border-color: #9D9D9D;
         color: white;
     }
 
-    .themeDark p, .themeDark b, .themeDark h4 {
+    .themeDark p, .themeDark h4 {
         color: whitesmoke;
     }
 
@@ -648,3 +648,17 @@ input[type=submit] {
         background-color: #61666e;
         border-radius: 3px;
     }
+
+    .themeDark .panel, .themeDark .panel-widget .large {
+        background-color: #6a7184;
+        color: white;
+    }
+
+    .themeDark .list-group-item a {
+        color: #575656;
+    }
+    
+
+    /*.themeDark hr {
+        background-color: #7a7979;
+    }*/

@@ -101,7 +101,7 @@
 
             @*Affichage du commentaire lié au feedback*@
             <td>
-                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })><p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p></a>
+                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
                 @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
 
