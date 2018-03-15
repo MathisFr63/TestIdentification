@@ -82,22 +82,24 @@ namespace WebApplication1.Controllers
                 devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
             });
 
-            if ( Objet != string.Empty )
+            if (Objet != string.Empty)
                 myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
 
-            if ( DateTime.TryParse(Date, out var date) )
+            if (DateTime.TryParse(Date, out var date))
                 myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
 
-            if ( bool.TryParse(Valide, out var valide) )
+            if (bool.TryParse(Valide, out var valide))
                 myListTrier = myListTrier.Where(s => s.Valide == valide);
 
             if (Produit != null)
-                myListTrier = myListTrier.Where(d => {
+                myListTrier = myListTrier.Where(d =>
+                {
                     return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
                 });
 
             if (int.TryParse(TotalHT, out var totalHT))
-                myListTrier = myListTrier.Where(d => {
+                myListTrier = myListTrier.Where(d =>
+                {
                     double total = 0;
                     d.Produits.ToList().ForEach(x => total += x.PrixHT);
                     return total == totalHT;
@@ -115,7 +117,7 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-
+            
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
                                                     db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
             { Devis = devis });
@@ -205,7 +207,7 @@ namespace WebApplication1.Controllers
             }
 
             devis.Objet = form.GetValues(keys[2])[0];
-            devis.Monnaie = (TypeMonnaie) Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
+            devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
             devis.Commentaire = form.GetValues(keys[4])[0];
             devis.Date = DateTime.Now;
             devis.Valide = true;

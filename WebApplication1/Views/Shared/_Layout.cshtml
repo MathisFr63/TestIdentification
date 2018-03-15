@@ -38,16 +38,6 @@
                         <h3>Easy Bill</h3>
                         <strong>EB</strong>
                     </li>
-                    @{ 
-                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
-                        {
-                            <li>
-                                <a href=@Url.Action("Index", "Parametres")>
-                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
-                                </a>
-                            </li>
-                        }
-                    }
                 </ul>
 
                 @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
@@ -57,7 +47,7 @@
                 {
                     <li>
                         <a href=@Url.Action("Index", "Home")>
-                            <i class="glyphicon glyphicon-home"></i>Tableau de bord
+                            <i class="fas fa-chart-pie"></i>Tableau de bord
                         </a>
                     </li>
                 }
@@ -137,7 +127,7 @@
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
-                                <i class="glyphicon glyphicon-send"></i>
+                                <i class="fas fa-comments"></i>
                                 Retour utilisateur
                             </a>
                         </li>
@@ -156,7 +146,21 @@
                             A propos
                         </a>
                     </li>
+
+                    @{
+                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                        {
+                            <li>
+                                <a href=@Url.Action("Index", "Parametres")>
+                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
+                                </a>
+                            </li>
+                        }
+                    }
+
+
                 </ul>
+
 
                 @*Liste contenant les différents éléments du menu concernant l'utilisateur*@
                 <ul class="list-unstyled userinfo">

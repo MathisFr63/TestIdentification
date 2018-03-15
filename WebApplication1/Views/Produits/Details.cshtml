@@ -29,53 +29,59 @@
 <hr class="separer" />
 <br />
 
-<div>
-    <dl class="dl-horizontal">
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Informations produit</h2>
+    </div>
+    <div class="contact">
+        <div class="contact-item">
+            <div class="contact-label">Libellé</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
+        </div>
 
-        @*Affichage du commentaire*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">Note</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Commentaire)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
+        <div class="contact-item">
+            <div class="contact-label">Type</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+        </div>
+    </div>
+</div>
 
-        @*Affichage du prix hors taxes*@
-        <dt>
-            @Html.DisplayNameFor(model => model.PrixHT)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PrixHT) €
-        </dd>
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Tarif produit</h2>
+    </div>
+    <div class="contact">
+        <div class="contact-item">
+            <div class="contact-label">Prix unitaire HT</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.PrixHT) €</div>
+        </div>
 
-        @*Affichage de la réduction*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Reduction)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">TVA</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.TVA) %</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Reduction)
-        </dd>
+        @{ 
+            var prixTTC = Model.PrixHT + Model.PrixHT * Model.TVA / 100;
+            prixTTC = prixTTC - prixTTC * Model.Reduction / 100;
+        }
 
-        @*Affichage du taux de TVA du produit*@
-        <dt>
-            @Html.DisplayNameFor(model => model.TVA)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">Réduction</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Reduction) %</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TVA)
-        </dd>
-
-        @*Affichage du type du produit (bien / service)*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-    </dl>
+        <div class="contact-item">
+            <div class="contact-label">Prix unitaire TTC</div>
+            <div class="contact-content">@String.Format("  {0:F2}", prixTTC) €</div>
+        </div>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 ﻿@*Vue permettant d'afficher les détails d'une facture*@
-@model WebApplication1.Models.Papiers.Facture
+@model WebApplication1.ViewModels.FactureProduitViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -19,7 +19,7 @@
 
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li>
-            <a title="Imprimer la facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = Model.ID }) class="btn button-blue btn-lg"><span class="glyphicon glyphicon-print" /></a>
+            <a title="Imprimer la facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = Model.Facture.ID }) class="btn button-blue btn-lg"><span class="glyphicon glyphicon-print" /></a>
         </li>
     </ul>
     <h2 style="display:block;" class="titreCRUD">
@@ -29,78 +29,126 @@
 <hr class="separer" />
 <br />
 
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Informations facturation</h2>
+    </div>
+    <div class="contact">
+        @*<div class="contact-item contact-item-large">
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
 
-@*Div permettant l'affichage des détails de la facture*@
-<div>
-    <dl class="dl-horizontal">
-        @*Affichage de l'objet*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Objet)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">Facturée le</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.DateString)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Objet)
-        </dd>
+        <div class="contact-item">
+            <div class="contact-label">Objet de la facture</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Objet)</div>
+        </div>
 
-        @*Affichage de la date de création*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">Note</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Commentaire)</div>
+        </div>
+    </div>
+    <div class="buttons buttons-small"></div>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateString)
-        </dd>
 
-        @*Affichage du commentaire lié à la facture*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Détail produits</h2>
+    </div>
+    <div class="contact">
 
-        @*Affichage de la monnaie utilisée par la facture*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Monnaie)
-        </dt>
+        <div class="contact-item contact-item-large">
+            <div class="contact-label">Nom du produit</div>
+            <div class="contact-content">Prix HT</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Monnaie)
-        </dd>
 
-        @*Affichage de l'identifiant de l'utilisateur ayant créer le devis/ la facture*@
-        <dt>
-            @Html.DisplayNameFor(model => model.UtilisateurID)
-        </dt>
+        @{
+            foreach (var p in Model.Facture.Produits)
+            {
+                <div class="contact-item">
+                    <div class="contact-label">@p.Nom</div>
+                    <div class="contact-content">@p.PrixHT €</div>
+                </div>
+            }
+        }
+    </div>
+    <div class="buttons buttons-small"></div>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.UtilisateurID)
-        </dd>
 
-        @*Affichage du nombre de relances ayant été effectuées.*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Relances)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Relances)
-        </dd>
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Detail règlement</h2>
+    </div>
+    <div class="contact">
+        @*<div class="contact-item contact-item-large">
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
 
-        @*Affichage de la méthode de règlement utilisée pour la facture*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Reglement)
-        </dt>
+        <div class="contact-item">
+            <div class="contact-label">Monnaie utilisée</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Monnaie)</div>
+        </div>
+        @*calcul du montant total TTC*@
+        @{
 
-        <dd>
-            @Html.DisplayFor(model => model.Reglement)
-        </dd>
-        <dd>
-            <br />
-            @*Bouton permettant de relancer la facture*@
-            <a href=@Url.Action("Relancer", "Factures", new { id = Model.ID }) class="button button-red">Relancer</a>
-        </dd>
-    </dl>
+            double sommeTTC = 0;
+            double sommeHT = 0;
+            double totalReduc = 0;
+
+            foreach (var p in Model.Facture.Produits)
+            {
+                double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                double reduc = PrixTTC * p.Reduction / 100;
+                sommeTTC += PrixTTC * p.Quantite - reduc;
+                sommeHT += p.PrixHT * p.Quantite - reduc;
+                totalReduc += reduc;
+            }
+            double totalTaxe = sommeTTC - sommeHT;
+        }
+        <div class="contact-item">
+            <div class="contact-label">Prix total HT</div>
+            <div class="contact-content">@String.Format("  {0:F2}", sommeHT) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label">Prix total TTC</div>
+            <div class="contact-content">@String.Format("  {0:F2}", sommeTTC) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label">Taxe</div>
+            <div class="contact-content">@String.Format("  {0:F2}", totalTaxe) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label">Total réduction</div>
+            <div class="contact-content">@String.Format("  {0:F2}", totalReduc) €</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">Mode de règlement</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Reglement)</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">Nombre de relances</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Relances)</div>
+        </div>
+
+    </div>
+    <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
 </div>
 
 

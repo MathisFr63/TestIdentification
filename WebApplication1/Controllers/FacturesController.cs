@@ -117,7 +117,9 @@ namespace WebApplication1.Controllers
                 ViewBag.ErreurRelance = true;
             }
 
-            return View(facture);
+            return View(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.FactureID == id).ToList())
+            { Facture = facture });
         }
 
         // GET: Factures/Details/5

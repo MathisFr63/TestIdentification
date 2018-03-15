@@ -667,3 +667,53 @@ input[type=submit] {
     /*.themeDark hr {
         background-color: #7a7979;
     }*/
+
+
+
+.section {
+    padding-bottom: 2.400em;
+    padding-left: 5rem;
+}
+
+.section-header {
+    margin: 0 0 1.333em;
+}
+
+.contact {
+    margin-bottom: 12px;
+}
+
+.contact-item-large {
+    color: rgba(4,5,8,0.87);
+    font-size: 1.6rem;
+    padding: 10px 0 16px;
+    font-weight:bold;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 1.3em;
+    border-bottom: 1px solid rgba(4,5,8,0.04);
+    padding: 10px 0;
+}
+
+.contact-label {
+    color: rgba(4,5,8,0.54);
+    vertical-align: middle;
+    padding-right: 12px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    order: 1;
+}
+
+.contact-content {
+    vertical-align: middle;
+    flex-grow: 2;
+    flex-shrink: 2;
+    flex-basis: 0;
+    order: 2;
+}
