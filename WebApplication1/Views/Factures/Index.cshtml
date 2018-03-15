@@ -19,11 +19,10 @@
             @using (Html.BeginForm("Index", "Factures", FormMethod.Get))
             {
                 <div class="form-group">
-
-                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Objet", @class = "searchBar" })
                     <button type="submit" title="Recherche Basique" value="Search" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" title="Annuler la Recherche" value="cancel" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Factures")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Factures" target="_blank" href=@Url.Action("PrintList", "Factures") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -48,12 +47,38 @@
 
 @*Affichage de la liste des factures*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Factures", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Relance" placeholder="Relance" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Reglement" placeholder="Reglement" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     <tr>
         <th>Objet</th>
         <th>Date</th>
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
         <th>Produits</th>
+        <th>Prix TTC</th>
         <th>Relances</th>
         <th>Reglement</th>
         <th></th>
@@ -79,10 +104,34 @@
                     @Html.DisplayFor(modelItem => item.Monnaie)
                 </td>*@
             <td>
-                @foreach (var a in item.Produits)
+                @if (item.Produits.Count() >= 3)
                 {
-                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                    @Html.DisplayFor(elt => a.Quantite); <br />
+
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, @item.Produits.ToList()[2].Nom, ...</p>
+                }
+                else if (item.Produits.Count() < 3 && item.Produits.Count() > 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom</p>
+                }
+                else if (item.Produits.Count() == 1)
+                {
+                    <p>@item.Produits.ToList()[0].Nom</p>
+                }
+                else
+                {
+                    <p>Aucun produit</p>
+                }
+            </td>
+            <td>
+                @{
+                    double somme = 0;
+                    foreach (var p in item.Produits)
+                    {
+                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                        double reduc = PrixTTC * p.Reduction / 100;
+                        somme += PrixTTC * p.Quantite - reduc;
+                    }
+                    <p>@String.Format("  {0:F2}", somme) €</p>
                 }
             </td>
             <td>

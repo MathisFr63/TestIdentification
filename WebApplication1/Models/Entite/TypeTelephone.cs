@@ -3,6 +3,6 @@
     // Énumération permettant de désigner le type de téléphone
     public enum TypeTelephone
     {
-        Fixe, Portable
+        Portable, Fixe
     }
 }

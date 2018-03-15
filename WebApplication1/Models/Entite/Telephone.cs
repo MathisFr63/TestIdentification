@@ -21,7 +21,7 @@
             get { return numéro; }
             set
             {
-                if (value[0].Equals("0"))
+                if (value.Equals("0"))
                     numéro = value.Remove(0, 1);
                 else
                     numéro = value;

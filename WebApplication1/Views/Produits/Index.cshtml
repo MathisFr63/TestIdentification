@@ -6,7 +6,9 @@
     ViewBag.Title = "Produits";
 }
 
-<h2 class="titreIndex">Vos produits</h2>
+<h2 class="titreIndex">
+    Vos produits
+</h2>
 
 @*Navbar permettant de trier et de faire une recherche sur la liste des produits.*@
 <nav class="navbar navbar-default">
@@ -17,11 +19,10 @@
             @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
             {
                 <div class="form-group">
-
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Nom", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Produits")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Produits" target="_blank" href=@Url.Action("PrintList", "Produits") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -52,10 +53,33 @@
 
 @*Affichage de la liste des produits*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Produits", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Libelle" placeholder="Libelle" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Commentaire" placeholder="Commentaire" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="PrixHT" placeholder="PrixHT" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Type" placeholder="Type" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
+
     <tr>
-        <th>Nom</th>
+        <th>Libelle</th>
         <th>Commentaire</th>
-        <th>PrixHT</th>
+        <th>PrixTTC</th>
         @*<th>Reduction</th>
             <th>TVA</th>*@
         <th>Type</th>
@@ -73,13 +97,17 @@
             </td>
 
             @*Affichage du commentaire*@
-            <td>
-                <a class="detail" href=@Url.Action("Details", "Produits", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Commentaire)</a>
+            <td style="width:500px;">
+                @Html.DisplayFor(modelItem => item.Commentaire)
             </td>
 
             @*Affichage du prix hors taxes*@
+            @{
+                double PrixTTC = item.PrixHT + item.PrixHT * item.TVA / 100;
+                double prixFinal = PrixTTC - PrixTTC * item.Reduction / 100;
+            }
             <td>
-                @Html.DisplayFor(modelItem => item.PrixHT) €
+                @String.Format("  {0:F2}", prixFinal) €
             </td>
 
             @*Affichage de la réduction*@
@@ -99,10 +127,8 @@
 
             @*Affichage des boutons*@
             <td>
-                <a title="Modifier" href=@Url.Action("Edit", "Produits", new { id = item.ID }) class="btn button-orange">
-                    <span class="glyphicon glyphicon-pencil" />
-                </a>
-                <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Modifier le produit" onclick="location.href='@Url.Action("Edit", "Produits", new { id = item.ID })'" class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></button>
+               <a title="Imprimer le Produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Libelle", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
                 </button>

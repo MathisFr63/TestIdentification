@@ -54,25 +54,39 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page d'inscription.
         public ActionResult CreateUser()
         {
-            return View();
+            var userVMC = new UtilisateurViewModelConnection();
+            userVMC.Utilisateur = new Utilisateur();
+            userVMC.Utilisateur.Telephones = new List<Telephone>();
+            return View(userVMC);
         }
 
         [HttpPost]
         // Méthode permettant à l'utilisateur de s'inscrire après avoir rempli toutes les cases correctement.
         public ActionResult CreateUser(UtilisateurViewModelConnection vm)
         {
-            if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
+            if (ModelState.IsValid)
             {
-                //Lieu non défini
-                string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, new List<Telephone>(), new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
-                FormsAuthentication.SetAuthCookie(id, false);
-                if (vm.Utilisateur.Type == TypeUtilisateur.EnAttente)
+                if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    return Redirect("/Home/Attente");
+                    var telephones = new List<Telephone>();
+                    for (int i = 6; i < Request.Form.AllKeys.Length && Request.Form.AllKeys[i] != "Lieu.Adresse"; i += 2)
+                    {
+                        telephones.Add(new Telephone()
+                        {
+                            Numéro = Request.Form.GetValues(Request.Form.AllKeys[i + 1])[0],
+                            Préfixe = Request.Form.GetValues(Request.Form.AllKeys[i])[0],
+                            UtilisateurID = vm.Utilisateur.ID
+                        });
+                    }
+
+                    string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+
+                    FormsAuthentication.SetAuthCookie(id, false);
+                    return Redirect("/");
                 }
-                return Redirect("/");
+                ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
+                return View(vm);
             }
-            ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
             return View(vm);
         }
         

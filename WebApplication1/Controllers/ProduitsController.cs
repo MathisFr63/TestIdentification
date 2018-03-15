@@ -70,6 +70,28 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult RechercheAvancee(string Libelle, string Commentaire, string PrixHT, string Type, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
+
+            IEnumerable<Produit> myListTrier = db.Produits.ToList();
+
+            if (Libelle != string.Empty)
+                myListTrier = myListTrier.OrderBy(s => s.Libelle).Where(s => s.Libelle.ToUpper().Contains(Libelle.ToUpper()));
+
+            if (Commentaire != string.Empty)
+                myListTrier = myListTrier.Where(s => s.Commentaire.ToUpper().Contains(Commentaire.ToUpper()));
+
+            if (Enum.TryParse(Type, out TypeService searchType))
+                myListTrier = myListTrier.Where(s => s.Type == searchType);
+
+            if (int.TryParse(PrixHT, out int searchPrixHT))
+                myListTrier = myListTrier.Where(s => s.PrixHT == searchPrixHT);
+
+            return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+        }
+
         // GET: Produits/Details/5
         // Méthode pemettant grâce à l'accès par l'url d'afficher les détails du produit dont l'id est passer dans l'url.
         public ActionResult Details(int? id)

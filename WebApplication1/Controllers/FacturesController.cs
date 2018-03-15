@@ -74,6 +74,34 @@ namespace WebApplication1.Controllers
                 return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult RechercheAvancee(string Objet, string Date, string Produit, string Relance, string Reglement, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
+
+            IEnumerable<Facture> myListTrier = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+            myListTrier.ToList().ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
+
+            if (Objet != string.Empty)
+                myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
+
+            if (DateTime.TryParse(Date, out var date))
+                myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
+
+            if (Produit != null)
+                myListTrier = myListTrier.Where(d => {
+                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
+                });
+
+            if (int.TryParse(Relance, out var relance))
+                myListTrier = myListTrier.Where(d => d.Relances == relance);
+
+            if (Enum.TryParse<TypeReglement>(Reglement, out var reglement))
+                myListTrier = myListTrier.Where(d => d.Reglement == reglement);
+
+            return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+        }
+
         // GET: Factures/Details/5
         // Méthode permettant grâce à l'accès par l'url d'afficher les détails de la facture sélectionnée
         public ActionResult Details(int? id, bool? erreurRelance)
@@ -89,7 +117,9 @@ namespace WebApplication1.Controllers
                 ViewBag.ErreurRelance = true;
             }
 
-            return View(facture);
+            return View(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
+                                                    db.DonneeProduit.Where(DP => DP.FactureID == id).ToList())
+            { Facture = facture });
         }
 
         // GET: Factures/Details/5

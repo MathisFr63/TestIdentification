@@ -89,13 +89,13 @@ input, select, textarea {
     }
 
 
-#fondGradientGris {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+65,e1e1e1+81,f6f6f6+100 */
-    background: rgb(255,255,255); /* Old browsers */
-    background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 65%, rgba(225,225,225,1) 81%, rgba(246,246,246,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+.fondGradientGris {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f5f6f6+0,dddfe3+98,dddfe3+99,dbdce2+102 */
+    background: rgb(245,246,246); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(245,246,246,1) 0%, rgba(221,223,227,1) 98%, rgba(221,223,227,1) 99%, rgba(219,220,226,1) 102%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(245,246,246,1) 0%,rgba(221,223,227,1) 98%,rgba(221,223,227,1) 99%,rgba(219,220,226,1) 102%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(245,246,246,1) 0%,rgba(221,223,227,1) 98%,rgba(221,223,227,1) 99%,rgba(219,220,226,1) 102%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#dbdce2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -398,6 +398,7 @@ b {
     border: 0;
     box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
+
 .separerEdit {
     height: 2px;
     border: 0;
@@ -422,7 +423,7 @@ input[type=submit] {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: rgba(206, 129, 158, 0.93);
+    background-color: rgba(141, 96, 113, 0.93);
     display: none;
 }
 
@@ -506,59 +507,93 @@ input[type=submit] {
 
 .button-green {
     color: #fff;
-    background-color: #06d659;
+    background-color: #06d6a0;
+    border-color: #06d6a0;
 }
 
     .button-green:hover {
         color: #fff;
-        background-color: #06d659;
+        background-color: #06d6a0;
+        border-color: #06d6a0;
         box-shadow: 2px 2px 2px #10a57e;
-        
     }
 
 .button-bluedark {
     background-color: #5468f1;
     color: white;
+    border-color: #5468f1;
 }
+
     .button-bluedark:hover {
         color: #fff;
         background-color: #5468f1;
+        border-color: #5468f1;
         box-shadow: 2px 2px 2px #37449f;
+    }
+
+.button-red {
+    background-color: #e7262d;
+    color: white;
+    border-color: #e7262d;
+}
+
+    .button-red:hover {
+        color: #fff;
+        background-color: #e7262d;
+        border-color: #e7262d;
+        box-shadow: 2px 2px 2px #ba0606;
     }
 
 
 .button-delete {
     color: #fff;
     background-color: #ff6b70;
+    border-color: #ff6b70;
 }
 
     .button-delete:hover {
         color: #fff;
         background-color: #ff6b70;
+        border-color: #ff6b70;
         box-shadow: 2px 2px 2px #ba0606;
     }
 
 .button-orange {
     color: #fff;
+    border-color: #ffcc56;
     background-color: #ffcc56;
 }
 
-.button-orange:hover {
-    color: #fff;
-    background-color: #ffcc56;
-    box-shadow: 2px 2px 2px rgba(190, 131, 0, 0.8784313725490196);
-}
+    .button-orange:hover {
+        color: #fff;
+        background-color: #ffcc56;
+        border-color: #ffcc56;
+        box-shadow: 2px 2px 2px rgba(190, 131, 0, 0.8784313725490196);
+    }
 
 .button-blue {
     color: #fff;
     background-color: #70cdff;
+    border-color: #70cdff;
 }
 
-.button-blue:hover {
-    color: #fff;
-    background-color: #70cdff;
-    box-shadow: 2px 2px 2px rgba(0, 155, 190, 0.8784313725490196);
+    .button-blue:hover {
+        color: #fff;
+        background-color: #70cdff;
+        border-color: #70cdff;
+        box-shadow: 2px 2px 2px rgba(0, 155, 190, 0.8784313725490196);
+    }
+
+.button-fluo {
+    color: black;
+    background-color: whitesmoke;
 }
+
+    .button-fluo:hover {
+        color: black;
+        background-color: whitesmoke;
+        box-shadow: 2px 2px 2px #868686;
+    }
 
 .button {
     display: inline-block;
@@ -588,13 +623,97 @@ input[type=submit] {
     display: flex;
 }
 
-select {
-    border-radius: 6px;
-    padding: 7px;
+
+.themeDark {
+    background-color: rgba(17, 17, 17, 0.9019607843137255);
+    color: #DCE1E1;
 }
 
 
-    select option, option:hover {
-        background-color: #ff5c5c;
+    .themeDark .form-control, .themeDark textarea, .themeDark select, .themeDark .btn-default, .themeDark .searchBar {
+        background-color: #9D9D9D;
+        border-color: #9D9D9D;
         color: white;
     }
+
+    .themeDark p, .themeDark h4 {
+        color: whitesmoke;
+    }
+
+    .themeDark h1 {
+        color: #dd3232;
+    }
+
+    .themeDark nav {
+        background-color: #61666e;
+        border-radius: 3px;
+    }
+
+    .themeDark .panel, .themeDark .panel-widget .large {
+        background-color: #6a7184;
+        color: white;
+    }
+
+    .themeDark .list-group-item a {
+        color: #575656;
+    }
+
+    .themeDark .btn-primary {
+        background-color: #e72531;
+        border-color: #e72531;
+    }
+    
+
+    /*.themeDark hr {
+        background-color: #7a7979;
+    }*/
+
+
+
+.section {
+    padding-bottom: 2.400em;
+    padding-left: 5rem;
+}
+
+.section-header {
+    margin: 0 0 1.333em;
+}
+
+.contact {
+    margin-bottom: 12px;
+}
+
+.contact-item-large {
+    color: rgba(4,5,8,0.87);
+    font-size: 1.6rem;
+    padding: 10px 0 16px;
+    font-weight:bold;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 1.3em;
+    border-bottom: 1px solid rgba(4,5,8,0.04);
+    padding: 10px 0;
+}
+
+.contact-label {
+    color: rgba(4,5,8,0.54);
+    vertical-align: middle;
+    padding-right: 12px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    order: 1;
+}
+
+.contact-content {
+    vertical-align: middle;
+    flex-grow: 2;
+    flex-shrink: 2;
+    flex-basis: 0;
+    order: 2;
+}

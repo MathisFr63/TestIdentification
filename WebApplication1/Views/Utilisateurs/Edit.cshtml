@@ -25,7 +25,7 @@
     <br />
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        
     @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
     <div>
         @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })
@@ -44,8 +44,18 @@
         @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
 
+    @*Div permettant de modifier le prénom de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.Civilite, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Utilisateur.Civilite, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+    </div>
+
     @*Div permettant de modifier le type de l'utilisateur*@
-    @if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.SA)
+    @{
+        var type = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(HttpContext.Current.User.Identity.Name).Type;
+    }
+    @if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.SA && (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur 
+                                                                                        || type == WebApplication1.Models.Account.TypeUtilisateur.SA))
     {
         <div>
             @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
@@ -60,6 +70,14 @@
                         });
             }
             @Html.DropDownListFor(m => m.Utilisateur.Type, selectList, new { @class = "form-control" })
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
+            @Html.DisplayFor(model => model.Utilisateur.Type, new { @class = "control-label" })
+            @Html.HiddenFor(model => model.Utilisateur.Type)
         </div>
     }
 
@@ -134,12 +152,9 @@
             @Html.PasswordFor(model => model.confirmation, new { @class = "form-control" })
         </div>
     }
-
+    <hr class="separerEdit" />
     @*Bouton permettant de valider les modifications faites sur l'utilisateur*@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default btn-secondary py-3" />
-        </div>
-    </div>
+    <input type="submit" value="Sauvegarder" class="button button-orange" />
 </div>
+<br /><br />
 }

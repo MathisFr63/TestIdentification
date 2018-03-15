@@ -5,6 +5,8 @@
     ViewBag.Title = "Details";
 }
 
+
+
 @*Chemin de retour*@
 <ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
     <li class="breadcrumb-item">
@@ -12,7 +14,6 @@
     </li>
     <li class="breadcrumb-item active">Informations utilisateur</li>
 </ul>
-
 
 @*Affichage de : "Informations sur <Prénom> <Nom> :"*@
 <div class="titrepartie">
@@ -30,16 +31,19 @@
 <hr class="separer" />
 <br />
 
-<br />
 
-@*Affichages des informations de l'utilsateur*@
-<div class="py-5">
-    <div class="container">
-        <div class="row">
-            @*Affichage du nom de l'utilisateur*@
-            <div class="col-md-6">
-                <p class="lead">Nom : @Html.DisplayFor(model => model.Nom)</p>
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Informations utilisateur</h2>
+    </div>
+    <div class="contact">
+        <div class="contact-item">
+            <div class="contact-label">Nom</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Nom)</div>
+        </div>
 
+<<<<<<< HEAD
             </div>
             @*Affichage du prénom de l'utilisateur*@
             <div class="col-md-6">
@@ -59,37 +63,104 @@
             <div class="col-md-6">
                 <p class="lead">Lieu :</p>
             </div>
+=======
+        <div class="contact-item">
+            <div class="contact-label">Prénom</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Prénom)</div>
         </div>
-    </div>
-</div>
-<br />
+        <div class="contact-item">
+            <div class="contact-label">Civilité</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Civilite)</div>
+        </div>
 
-<div class="row">
-    @*Affichage du nombre de devis réalisés par l'utilisateur*@
-    <div class="col-xs-6 col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-body easypiechart-panel">
-                <h4>Devis réalisés</h4>
-                <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">@ViewBag.NbDevis</span></div>
-            </div>
-        </div>
-    </div>
-    @*Affichage du nombre de factures réalisés par l'utilisateur*@
-    <div class="col-xs-6 col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-body easypiechart-panel">
-                <h4>Factures réalisées</h4>
-                <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">@ViewBag.NbFactures</span></div>
-            </div>
-        </div>
-    </div>
-    @*Affichage du nombre de produits possédant l'utilisateur*@
-    <div class="col-xs-6 col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-body easypiechart-panel">
-                <h4>Nombre de produits</h4>
-                <div class="easypiechart" id="easypiechart-teal" data-percent="56"><span class="percent">@ViewBag.NbProduits</span></div>
-            </div>
+        <div class="contact-item">
+            <div class="contact-label">Statut</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+>>>>>>> 31b4bce4b2b42554a5fcfd1a49b20f9f42a58249
         </div>
     </div>
 </div>
+
+@*Div permettant d'afficher les détails du Facture*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Informations contact</h2>
+    </div>
+    <div class="contact">
+        @*<div class="contact-item contact-item-large">
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
+        <div class="contact-item">
+            <div class="contact-label">Mail</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.ID)</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">Adresse</div>
+            <div class="contact-content">@ViewBag.lieu.Adresse</div>
+        </div>
+
+        @if (ViewBag.lieu.Complement == "")
+            {
+            @*Affichage du type de l'utilisateur*@
+            <div class="contact-item">
+                <div class="contact-label">Adresse</div>
+                <div class="contact-content">@ViewBag.lieu.Complement</div>
+            </div>
+        }
+
+        <div class="contact-item">
+            <div class="contact-label">Code postal</div>
+            <div class="contact-content">@ViewBag.lieu.CodePostal</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">Ville</div>
+            <div class="contact-content">@ViewBag.lieu.Ville</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">Pays</div>
+            <div class="contact-content">@ViewBag.lieu.Pays</div>
+        </div>
+        
+        <br />
+        <div class="contact-item contact-item-large">
+            <div class="contact-label">Préfixe</div>
+            <div class="contact-content">Numéro</div>
+        </div>
+
+        @foreach (var t in Model.Telephones)
+            {
+            <div class="contact-item">
+                <div class="contact-label">@t.Préfixe</div>
+                <div class="contact-content">@t.Numéro</div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<br />
+@{
+    var db = new WebApplication1.DAL.ApplicationContext();
+    var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+    if (type != WebApplication1.Models.Account.TypeUtilisateur.Administrateur && type != WebApplication1.Models.Account.TypeUtilisateur.SA)
+    {
+        if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).subscribe == false)
+        {
+
+            <p>S'abonner ?</p>
+        }
+        else
+        {
+            <p>Se désabonner ?</p>
+        }
+        <a title="Check" href=@Url.Action("CheckSubscribe", "Utilisateurs") class="btn btn-info">
+            <span class="glyphicon glyphicon-check" />
+        </a>
+    }
+
+
+}

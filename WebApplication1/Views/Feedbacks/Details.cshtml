@@ -29,31 +29,35 @@
 <hr class="separer" />
 <br />
 
-@*Div permettant d'afficher les détails du feedback*@
-<div class="py-5">
-    <div class="container">
-        <div class="row">
+<div class="section">
+    <div class="contact">
+        <div class="contact-item">
+            <div class="contact-label">Envoyé par</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.UtilisateurID)</div>
+        </div>
 
-            @*Affichage du sujet du feedback*@
-            <div class="col-md-6">
-                <p class="lead">Sujet : @Html.DisplayFor(model => model.Subject)</p>
-            </div>
+        <div class="contact-item">
+            <div class="contact-label">Sujet</div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Subject)</div>
+        </div>
 
-            @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
-            <div class="col-md-6">
-                <p class="lead">Mail : @Html.DisplayFor(model => model.UtilisateurID)</p>
-            </div>
+        <div class="contact-item">
+            <div class="contact-label">Etat</div>
+            @{
+                if (Model.IsResolved)
+                {
+                    <div class="contact-content">Résolue</div>
+                }
+                else
+                {
+                    <div class="contact-content">En attente</div>
+                }
+            }
+        </div>
 
-            @*Affichage du commentaire lié au feedback*@
-            <div class="col-md-6">
-                <p class="lead">Commentaire : @Html.DisplayFor(model => model.Comment)</p>
-            </div>
-
-            @*Affichage de l'état du feedback*@
-            <div class="col-md-6">
-                <p class="lead">Etat : @Html.DisplayFor(model => model.IsResolved)</p>
-            </div>
+        <div class="contact-item">
+            <div class="contact-label">Contenu</div>
+            <div class="contact-content">@Html.Raw(HttpUtility.HtmlDecode(Model.Comment))</div>
         </div>
     </div>
 </div>
-

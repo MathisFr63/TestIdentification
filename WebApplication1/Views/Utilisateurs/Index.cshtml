@@ -10,12 +10,6 @@
     Utilisateurs
 </h2>
 
-@*<p>
-        <a href=@Url.Action("Create", "Utilisateurs") class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-plus" />
-        </a>
-    </p>*@
-
 @*Navbar permettant de trier et de faire une recherche sur la liste des devis.*@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -28,7 +22,7 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Adresse e-mail", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Utilisateurs")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des utilisateurs" target="_blank" href=@Url.Action("PrintList", "Utilisateurs") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -63,6 +57,28 @@
 
 @*Affichage de la liste des utilisateurs*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Utilisateurs", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Nom" placeholder="Nom" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Prénom" placeholder="Prénom" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Mail" placeholder="Mail" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Type" placeholder="Type" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     @*Affichage de l'entête de chaque colonne dans le tableau*@
     <tr>
         <th>

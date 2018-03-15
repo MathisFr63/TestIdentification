@@ -14,16 +14,17 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
-        <form class="navbar-form navbar-left" method="get" role="search">
+        @*Formulaire permettant de rechercher un devis*@
+        <form class="navbar-form navbar-left" method="get" role="search" action="/Devis/Index">
             @using (Html.BeginForm("Index", "Devis", FormMethod.Get))
             {
                 <div class="form-group">
-
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Objet", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Devis" target="_blank" href=@Url.Action("PrintList", "Devis") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
+
                 </div>
             }
         </form>
@@ -52,6 +53,31 @@
 
 @*Affichage de la liste des devis*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Devis", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="TotalHT" placeholder="Total HT" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     <tr>
         <th>Objet</th>
         <th>Date</th>
@@ -59,7 +85,7 @@
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
         <th>Produits</th>
-        <th>Total HT</th>
+        <th>Total TTC</th>
         <th></th>
     </tr>
     @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
@@ -88,7 +114,7 @@
                 @if (item.Produits.Count() >= 3)
                 {
 
-                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, ...</p>
+                    <p>@item.Produits.ToList()[0].Nom, @item.Produits.ToList()[1].Nom, @item.Produits.ToList()[2].Nom, ...</p>
                 }
                 else if (item.Produits.Count() < 3 && item.Produits.Count() > 1)
                 {
@@ -108,26 +134,27 @@
                     double somme = 0;
                     foreach (var p in item.Produits)
                     {
-                        somme += p.PrixHT * p.Quantite;
+                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                        double reduc = PrixTTC * p.Reduction / 100;
+                        somme += PrixTTC * p.Quantite - reduc;
                     }
-                    <p>@somme €</p>
+                    <p>@String.Format("  {0:F2}", somme) €</p>
                 }
-
             </td>
             <td>
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
-                <a title="Modifier" href=@Url.Action("Edit", "Devis", new { id = item.ID }) class="btn button-orange">
+                <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange">
                     <span class="glyphicon glyphicon-pencil" />
-                </a>
+                </button>
                 <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Objet", "@item.ID")'>
                     <span class="glyphicon glyphicon-trash" />
                 </button>
             </td>
         </tr>
-       }
+    }
 </table>
 
 <br />

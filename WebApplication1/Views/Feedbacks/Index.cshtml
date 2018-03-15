@@ -19,7 +19,7 @@
                     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "recherche par sujet", @class = "searchBar" })
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
-                    <button type="reset" value="a" title="Recherche Avancée" onclick="location.href='@Url.Action("Index", "Feedbacks")'" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
+                    <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
                     <a title="Imprimer la liste des Feedbacks" target="_blank" href=@Url.Action("PrintList", "Feedbacks") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
                 </div>
             }
@@ -46,8 +46,33 @@
 
 @*Affichage de la liste des feedbacks*@
 <table class="table">
+    @using (Html.BeginForm("RechercheAvancee", "Feedbacks", FormMethod.Get))
+    {
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Nom" placeholder="Nom" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Mail" placeholder="Mail" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Sujet" placeholder="Sujet" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Commentaire" placeholder="Commentaire" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Résolu" placeholder="Résolu" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
+    }
     <tr>
-        <th>Mail</th>
+        <th>Nom</th>
         <th>Adresse e-mail</th>
         <th>Sujet</th>
         <th>Commentaire</th>
@@ -76,7 +101,7 @@
 
             @*Affichage du commentaire lié au feedback*@
             <td>
-                <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })><p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p></a>
+                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
                 @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
 
@@ -93,7 +118,7 @@
 
             </td>
             <td>
-                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn btn-info">
+                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-check" />
                 </a>
                 <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>

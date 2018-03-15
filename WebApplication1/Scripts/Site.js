@@ -16,7 +16,7 @@ function toggleArticle(name) {
             '<td class="col-md-4">' +
             '<label>Quantité</label>' +
             '<br />' +
-            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="1" value="1" require>' +
+            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="1" require>' +
             '</td>' +
             '</tr>' +
             '</table>';
@@ -42,11 +42,17 @@ function toggleArticleEdit(name, quantite) {
             '<br />' +
             '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="' + quantite + '">' +
             '</td>' +
+            '<td class="col-md-4">' +
+            '<button type="reset" value="cancel" title="Supprimer un Produit" onclick="toggleArticleEdit(\'' + name + '\')" class="btn btn-danger">' +
+            '<i class="glyphicon glyphicon-remove"></i >' +
+            '</button>' +
+            '</td>' +
             '</tr>' +
             '</table>';
         $("#articles").append(b);
     }
     else {
+        document.getElementById(name + " input").checked = false;
         a.remove();
     }
 }
@@ -75,4 +81,12 @@ function addNumero(value, prefixe) {
 
 function removeNumero(elt) {
     elt.remove();
+}
+
+function avancée() {
+    var div = document.getElementById("listAvancée");
+    if (div.style.display == "none")
+        div.style.display = "table-row";
+    else
+        div.style.display = "none";
 }

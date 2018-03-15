@@ -70,6 +70,44 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
+        public ActionResult RechercheAvancee(string Objet, string Date, string Valide, string Produit, string TotalHT, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
+
+            IEnumerable<Devis> myListTrier = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            myListTrier.ToList().ForEach(devis =>
+            {
+                devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
+                devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
+            });
+
+            if (Objet != string.Empty)
+                myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
+
+            if (DateTime.TryParse(Date, out var date))
+                myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
+
+            if (bool.TryParse(Valide, out var valide))
+                myListTrier = myListTrier.Where(s => s.Valide == valide);
+
+            if (Produit != null)
+                myListTrier = myListTrier.Where(d =>
+                {
+                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
+                });
+
+            if (int.TryParse(TotalHT, out var totalHT))
+                myListTrier = myListTrier.Where(d =>
+                {
+                    double total = 0;
+                    d.Produits.ToList().ForEach(x => total += x.PrixHT);
+                    return total == totalHT;
+                });
+
+            return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+        }
+
         // GET: Devis/Details/5
         // Méthode permettant grâce à l'accès par l'url d'afficher les détails d'un devis de l'utilisateur grâce à son id.
         public ActionResult Details(int? id)
@@ -79,7 +117,7 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-
+            
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
                                                     db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
             { Devis = devis });
@@ -169,7 +207,7 @@ namespace WebApplication1.Controllers
             }
 
             devis.Objet = form.GetValues(keys[2])[0];
-            devis.Monnaie = (TypeMonnaie) Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
+            devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
             devis.Commentaire = form.GetValues(keys[4])[0];
             devis.Date = DateTime.Now;
             devis.Valide = true;

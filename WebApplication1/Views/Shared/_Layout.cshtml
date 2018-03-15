@@ -16,7 +16,7 @@
 </head>
 
 @*Menu*@
-<body id="fondGradientGris">
+<body>
     @*Si l'utilisateur est connecté, affichage du menu*@
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
@@ -24,7 +24,12 @@
         var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
         <div class="wrapper">
             <!-- Sidebar Holder -->
-            <nav id="sidebar">
+
+            <nav id="sidebar" 
+                 @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Dark)
+                 {
+                    <text>class="darkTheme"</text>
+                 }>
 
                 @*Div contenant le titre du menu avec le nom de l'application pour l'instant change en fonction de la taille*@
 
@@ -33,16 +38,6 @@
                         <h3>Easy Bill</h3>
                         <strong>EB</strong>
                     </li>
-                    @{ 
-                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
-                        {
-                            <li>
-                                <a href=@Url.Action("Index", "Parametres")>
-                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
-                                </a>
-                            </li>
-                        }
-                    }
                 </ul>
 
                 @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
@@ -52,7 +47,7 @@
                 {
                     <li>
                         <a href=@Url.Action("Index", "Home")>
-                            <i class="glyphicon glyphicon-home"></i>Tableau de bord
+                            <i class="fas fa-chart-pie"></i>Tableau de bord
                         </a>
                     </li>
                 }
@@ -132,8 +127,14 @@
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
-                                <i class="glyphicon glyphicon-send"></i>
+                                <i class="fas fa-comments"></i>
                                 Retour utilisateur
+                            </a>
+                        </li>
+                        <li>
+                            <a href=@Url.Action("Newsletter", "Home")>
+                                <i class="glyphicon glyphicon-send"></i>
+                                Newsletter
                             </a>
                         </li>
                     }
@@ -145,7 +146,21 @@
                             A propos
                         </a>
                     </li>
+
+                    @{
+                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                        {
+                            <li>
+                                <a href=@Url.Action("Index", "Parametres")>
+                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
+                                </a>
+                            </li>
+                        }
+                    }
+
+
                 </ul>
+
 
                 @*Liste contenant les différents éléments du menu concernant l'utilisateur*@
                 <ul class="list-unstyled userinfo">
@@ -165,15 +180,28 @@
                     </li>
                 </ul>
             </nav>
-            <div id="content">
-                <br />
-                @RenderBody()
-            </div>
+            @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Clear)
+            {
+                <div id="content" class="fondGradientGris">
+                    <br />
+                    @RenderBody()
+                </div>
+            }
+            else
+            {
+                <div id="content" class="themeDark">
+                    <br />
+                    @RenderBody()
+                </div>
+            }
+
+
+
         </div>
     }
     else
     {
-        <div>
+        <div class="fondGradientGris">
             @RenderBody()
         </div>
     }

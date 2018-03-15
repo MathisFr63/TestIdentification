@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using Rotativa;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -72,9 +73,36 @@ namespace WebApplication1.Controllers
 
                 if (!String.IsNullOrEmpty(searchstring))
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+
                 return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
             }
-            return RedirectToAction("Details", new { id = user.ID.Replace(".", "~") });
+            return RedirectToAction("Details", new { @id = user.ID.Replace(".", "~") });
+        }
+
+        public ActionResult RechercheAvancee(string Nom, string Prénom, string Mail, string Type, int? page)
+        {
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
+            {
+                var param = db.Parametres.Find(user.ParametreID);
+                IEnumerable<Utilisateur> myListTrier = db.Utilisateurs.ToList();
+
+                if (Nom != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.Nom.ToUpper().Contains(Nom.ToUpper()));
+
+                if (Prénom != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.Prénom.ToUpper().Contains(Prénom.ToUpper()));
+
+                if (Mail != string.Empty)
+                    myListTrier = myListTrier.Where(u => u.ID.ToUpper().Contains(Mail.ToUpper()));
+
+                if (Enum.TryParse<TypeUtilisateur>(Type, out var type))
+                    myListTrier = myListTrier.Where(u => u.Type == type);
+
+                return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // Méthode permettant à l'utilisateur d'accèder à la page de connexion.
@@ -104,6 +132,10 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            ViewBag.lieu = db.Lieux.Find(utilisateur.LieuID);
+
+            utilisateur.Telephones = db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList();
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -136,13 +168,11 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'administrateur de créer un utilisateur après avoir instancié les données sur la page de création.
         public ActionResult Create(UtilisateurViewModelConnection vm)
         {
-            //if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type != TypeUtilisateur.Administrateur)
-            //return RedirectToAction("BadUserTypeError", "Home");
             if (ModelState.IsValid)
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, null, new Lieu(), vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
@@ -190,17 +220,15 @@ namespace WebApplication1.Controllers
                 var form = Request.Form;
                 var keys = form.AllKeys;
 
-                for (int i = 10; i<keys.Length && keys[i] != "motDePasse"; i+=2)
+                for (int i = 1; i<keys.Length && keys[i].Contains("prefixe"); i++)
                 {
-                    var prefixe = keys[i];
-                    var name = keys[i+1];
-
                     db.Telephones.Add(new Telephone()
                     {
-                        Numéro = form.GetValues(name)[0],
-                        Préfixe = form.GetValues(prefixe)[0],
+                        Préfixe = form.GetValues(keys[i])[0],
+                        Numéro = form.GetValues(keys[i+1])[0],
                         UtilisateurID = utilisateur.ID
                     });
+                    i++;
                 }
 
 
@@ -228,9 +256,27 @@ namespace WebApplication1.Controllers
             return View(userVM);
         }
 
-        // GET: Utilisateurs/Delete/5
-        // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
-        public ActionResult Delete(string id)
+        public ActionResult CheckSubscribe(string id)
+        {
+            
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type == TypeUtilisateur.Administrateur)
+                return RedirectToAction("BadUserTypeError", "Home");
+            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+
+            if (user == null) return HttpNotFound();
+
+            user.subscribe=!user.subscribe;
+
+            db.SaveChanges();
+            return RedirectToAction("Details","Utilisateurs",new { id=user.ID.Replace('.', '~') });
+
+        }
+
+            // GET: Utilisateurs/Delete/5
+            // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
+            public ActionResult Delete(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
