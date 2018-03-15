@@ -44,6 +44,12 @@
         @Html.EditorFor(model => model.Utilisateur.Prénom, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
     </div>
 
+    @*Div permettant de modifier le prénom de l'utilisateur*@
+    <div>
+        @Html.LabelFor(model => model.Utilisateur.Civilite, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Utilisateur.Civilite, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+    </div>
+
     @*Div permettant de modifier le type de l'utilisateur*@
     @{
         var type = new WebApplication1.DAL.ApplicationContext().ObtenirUtilisateur(HttpContext.Current.User.Identity.Name).Type;

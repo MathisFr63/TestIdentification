@@ -625,7 +625,7 @@ input[type=submit] {
 
 
 .themeDark {
-    background-color: #323943;
+    background-color: rgba(17, 17, 17, 0.9019607843137255);
     color: #DCE1E1;
 }
 
@@ -656,6 +656,11 @@ input[type=submit] {
 
     .themeDark .list-group-item a {
         color: #575656;
+    }
+
+    .themeDark .btn-primary {
+        background-color: #e72531;
+        border-color: #e72531;
     }
     
 

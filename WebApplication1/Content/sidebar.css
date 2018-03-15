@@ -109,7 +109,6 @@ i, span {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #171E26;
     }
 
         #sidebar .sidebar-header strong {
@@ -259,6 +258,9 @@ a.article, a.article:hover {
     right: 0;
 }
 
+.darkTheme {
+    background-color : rgba(0,0,0,0.9) !important;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
