@@ -9,7 +9,7 @@ namespace WebApplication1.DAL
     /// <summary>
     /// Classe permettant l'initialisation de la base de données avec des données en dures lorsque le model change afin de faire des tests sur l'application sans recréer les données à chaque fois.
     /// </summary>
-    public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
+    public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
     //public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         /// <summary>
@@ -171,7 +171,10 @@ namespace WebApplication1.DAL
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>
             {
-                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problèmes Feedbacks", IsResolved = false}
+                new Feedback{Comment = "<strong>Problème</strong> lors de l'affichage des <b>feedbacks</b>, je ne les vois pas <i>apparaître</i> !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problème Feedbacks", IsResolved = false},
+                new Feedback{Comment = "La modification d'un produit ne prend pas en compte le changement du taux de TVA.", UtilisateurID = "Mathieu.RAVEL@etu.uca.fr", userName = "RAVEL Mathieu", Subject = "Problème produits", IsResolved = false},
+                new Feedback{Comment = "<strong>Problème</strong> lors de la création d'un utilisateur, une exception est levée !", UtilisateurID = "Mathis.FRIZOT@etu.uca.fr", userName = "FRIZOT Mathis", Subject = "Problème création utilisateur", IsResolved = true},
+                new Feedback{Comment = "Lors de la modification d'un devis, la quantité des produits n'est pas modifiée.", UtilisateurID = "Flavio.RANCHON@etu.uca.fr", userName = "RANCHON Flavio", Subject = "Problème modification devis", IsResolved = false}
             };
             feedbacks.ForEach(f => context.Feedbacks.Add(f));
 
