@@ -75,7 +75,6 @@
         <th>Nom</th>
         <th>Adresse e-mail</th>
         <th>Sujet</th>
-        <th>Commentaire</th>
         <th>Résolu ?</th>
         <th></th>
     </tr>
@@ -97,12 +96,6 @@
             @*Affichage du sujet du feedback*@
             <td>
                 <a class="detail" href=@Url.Action("Details", "Feedbacks", new { id = item.ID })>@Html.DisplayFor(modelItem => item.Subject)</a>
-            </td>
-
-            @*Affichage du commentaire lié au feedback*@
-            <td>
-                <p>@Html.Raw(HttpUtility.HtmlDecode(item.Comment))</p>
-                @*@Html.DisplayFor(modelItem => item.Comment)*@
             </td>
 
             @*Affichage de l'état du feedback*@
