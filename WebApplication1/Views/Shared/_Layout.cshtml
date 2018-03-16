@@ -15,18 +15,21 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 
+@{ 
+    var db = new WebApplication1.DAL.ApplicationContext();
+}
+
 @*Menu*@
 <body>
     @*Si l'utilisateur est connecté, affichage du menu*@
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
-        var db = new WebApplication1.DAL.ApplicationContext();
-        var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+        var user = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
         <div class="wrapper">
             <!-- Sidebar Holder -->
 
             <nav id="sidebar" 
-                 @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Dark)
+                 @if (db.Parametres.Find(user.ParametreID).Theme == WebApplication1.Models.Account.Theme.Dark)
                  {
                     <text>class="darkTheme"</text>
                  }>
@@ -43,50 +46,35 @@
                 @*Liste contenant les différents éléments du menu concernant la gestion des données de l'utilisateur*@
                 <ul class="list-unstyled components">
                     @*Élément pour afficher le tableau de bord*@
-                @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
-                {
-                    <li>
-                        <a href=@Url.Action("Index", "Home")>
-                            <i class="fas fa-chart-pie"></i>Tableau de bord
-                        </a>
-                    </li>
-                }
-                else
-                {
-                    <li>
-                        <a href=@Url.Action("Attente", "Home")>
-                            <i class="glyphicon glyphicon-home"></i>Acceuil
-                        </a>
-                    </li>
-                }
-
-                    @*Si l'utilisateur est un administrateur, éléments pour la gestion des utilisateurs*@
-                    @{
-                        if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
-                        {
-                            <li>
-                                <a href=@Url.Action("Index", "Utilisateurs")>
-                                    <i class="glyphicon glyphicon-user"></i>Utilisateurs
-                                </a>
-                            </li>
-                        }
-
+                    @if (!(user.Type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                    {
+                        <li>
+                            <a href=@Url.Action("Index", "Home")>
+                                <i class="fas fa-chart-pie"></i>Tableau de bord
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href=@Url.Action("Attente", "Home")>
+                                <i class="glyphicon glyphicon-home"></i>Acceuil
+                            </a>
+                        </li>
                     }
 
-                    @*Élément pour la gestion des entrerprises (clients / fournisseurs)*@
-                    @*<li>
-                            <a href="#entrepriseSubmenu" data-toggle="collapse">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Entreprises
+                    @*Si l'utilisateur est un administrateur, éléments pour la gestion des utilisateurs*@
+                    @if (user.Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                    {
+                        <li>
+                            <a href=@Url.Action("Index", "Utilisateurs")>
+                                <i class="glyphicon glyphicon-user"></i>Utilisateurs
                             </a>
-                            <ul class="collapse list-unstyled" id="entrepriseSubmenu">
-                                <li><a href=@Url.Action("Index", "Clients")>Clients</a></li>
-                                <li><a href=@Url.Action("Index", "Fournisseurs")>Fournisseurs</a></li>
-                            </ul>
-                        </li>*@
+                        </li>
+                    }
 
                     @*Sous-menu pour la gestion des documents (devis / factures)*@
-                    @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                    @if (!(user.Type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
                     {
                         <li>
                             <a href="#papierSubmenu" data-toggle="collapse">
@@ -112,18 +100,8 @@
                 @*Liste contenant les différents éléments du menu concernant les informations de l'application*@
                 <ul class="list-unstyled components">
 
-                    @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
-                    @if (!(type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA))
-                    {
-                        <li>
-                            <a href=@Url.Action("Contact", "Home")>
-                                <i class="glyphicon glyphicon-send"></i>
-                                Retour utilisateur
-                            </a>
-                        </li>
-                    }
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
-                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                    @if (user.Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>
@@ -138,6 +116,16 @@
                             </a>
                         </li>
                     }
+                    @*Élément permettant d'accéder au retour utilisateur (envoi de feedback)*@
+                    else
+                    {
+                        <li>
+                            <a href=@Url.Action("Contact", "Home")>
+                                <i class="glyphicon glyphicon-send"></i>
+                                Retour utilisateur
+                            </a>
+                        </li>
+                    }
 
                     @*Élément permettant d'accéder à la section "À propos" (informations sur l'application)*@
                     <li>
@@ -147,15 +135,13 @@
                         </a>
                     </li>
 
-                    @{
-                        if (!(type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
-                        {
-                            <li>
-                                <a href=@Url.Action("Index", "Parametres")>
-                                    <i class="glyphicon glyphicon-cog"></i>Paramètres
-                                </a>
-                            </li>
-                        }
+                    @if (!(user.Type == WebApplication1.Models.Account.TypeUtilisateur.EnAttente))
+                    {
+                        <li>
+                            <a href=@Url.Action("Index", "Parametres")>
+                                <i class="glyphicon glyphicon-cog"></i>Paramètres
+                            </a>
+                        </li>
                     }
 
 
@@ -167,8 +153,8 @@
 
                     @*Élément permettant à l'utilisateur d'accéder aux détails de son compte (et sûrement plus tard à ses paramètres)*@
                     <li>
-                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = System.Web.HttpContext.Current.User.Identity.Name.Replace('.', '~') })>
-                            @db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Prénom
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = user.Nom.Replace('.', '~') })>
+                            @user.Prénom
                         </a>
                     </li>
 
@@ -180,7 +166,7 @@
                     </li>
                 </ul>
             </nav>
-            @if (db.Parametres.Find(db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).ParametreID).Theme == WebApplication1.Models.Account.Theme.Clear)
+            @if (db.Parametres.Find(user.ParametreID).Theme == WebApplication1.Models.Account.Theme.Clear)
             {
                 <div id="content" class="fondGradientGris">
                     <br />

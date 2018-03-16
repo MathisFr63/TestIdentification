@@ -54,8 +54,7 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accéder à la page d'inscription.
         public ActionResult CreateUser()
         {
-            var userVMC = new UtilisateurViewModelConnection();
-            userVMC.Utilisateur = new Utilisateur();
+            var userVMC = new UtilisateurViewModelConnection { Utilisateur = new Utilisateur() };
             userVMC.Utilisateur.Telephones = new List<Telephone>();
             return View(userVMC);
         }

@@ -1,6 +1,8 @@
 ﻿@*Page d'accueil de l'application*@
 @{
     ViewBag.Title = "Easy Bill";
+    var db = new WebApplication1.DAL.ApplicationContext();
+    var user = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
 }
 <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 
@@ -215,6 +217,7 @@
 @*Éléments affichés lorsque l'utilisateur est connecté*@
 else
 {
+    var isAdmin = user.Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA;
     <h2 class="titreIndex color-blue">
         Tableau de bord
     </h2>
@@ -244,7 +247,16 @@ else
                     <div class="row no-padding">
                         <em class="fa fa-xl fa-boxes color-teal"></em>
                         <div class="large">@ViewBag.NbProdSold</div>
-                        <div class="text-muted">Produits vendus</div>
+                        <div class="text-muted">
+                            @if(isAdmin)
+                            {
+                                <text>Produits vendus</text>
+                            }
+                            else
+                            {
+                                <text>Produits Achetés</text>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,7 +265,16 @@ else
                     <div class="row no-padding">
                         <em class="fa fa-xl fa-euro-sign color-red"></em>
                         <div class="large">@ViewBag.CA</div>
-                        <div class="text-muted">Chiffre d'affaire</div>
+                        <div class="text-muted">
+                            @if (isAdmin)
+                            {
+                                <text>Chiffre d'affaire</text>
+                            }
+                            else
+                            {
+                                <text>Total dépensé</text>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,16 +291,16 @@ else
         <div class="col-xs-6 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body easypiechart-panel">
-                    <h4>Devis concrétisés</h4>
-                    <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">@ViewBag.DevisConcret%</span></div>
+                    <h4>Devis réalisés</h4>
+                    <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">@ViewBag.NbDevisRecent</span></div>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body easypiechart-panel">
-                    <h4>Devis réalisés</h4>
-                    <div class="easypiechart" id="easypiechart-orange" data-percent="65"><span class="percent">@ViewBag.NbDevisRecent</span></div>
+                    <h4>Devis facturés</h4>
+                    <div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">@ViewBag.DevisConcret</span></div>
                 </div>
             </div>
         </div>
@@ -301,7 +322,16 @@ else
         <div class="col-xs-6 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body easypiechart-panel">
-                    <h4>Chiffre d'affaire</h4>
+                    <h4>
+                        @if (isAdmin)
+                        {
+                            <text>Chiffre d'affaire</text>
+                        }
+                        else
+                        {
+                            <text>Total dépensé</text>
+                        }
+                    </h4>
                     <div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">+ @ViewBag.CAduMois €</span></div>
                 </div>
             </div>
@@ -319,7 +349,7 @@ else
             </div>
             <hr />
             <div class="row text-left">
-                <div class="p-4 col-lg-4 col-md-6 animate-in-left">
+                <div class="@if (isAdmin) { <text>p-4 col-lg-4 col-md-6 animate-in-left</text> } else { <text>p-6 col-lg-6 col-md-6 animate-in-left</text> }">
                     <div class="card text-dark">
                         <div class="card-block text-center card-primary p-2">
                             <p class="lead" style="color:dimgray">Vos derniers devis</p>
@@ -339,7 +369,7 @@ else
                         </ul>
                     </div>
                 </div>
-                <div class="p-4 col-lg-4 col-md-6 animate-in-down">
+                <div class="@if (isAdmin) { <text>p-4 col-lg-4 col-md-6 animate-in-down</text> } else { <text>p-6 col-lg-6 col-md-6 animate-in-down</text> }">
                     <div class="card text-dark">
                         <div class="card-block text-center card-primary p-2">
                             <p class="lead" style="color:dimgray">Vos dernières factures</p>
@@ -359,26 +389,38 @@ else
                         </ul>
                     </div>
                 </div>
-                <div class="p-4 col-lg-4 animate-in-right">
-                    <div class="card text-dark">
-                        <div class="card-block text-center p-2">
-                            <p class="lead" style="color:dimgray">Vos derniers produits créés</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @if (ViewBag.NbProduits == 0)
-                            {
-                                <li class="list-group-item">Vous n'avez aucun produit</li>
-                            }
-                            else
-                            {
-                                foreach (var item in ViewBag.listeProduits)
+                @if (isAdmin)
+                {
+                    <div class="p-4 col-lg-4 animate-in-right">
+                        <div class="card text-dark">
+                            <div class="card-block text-center p-2">
+                                <p class="lead" style="color:dimgray">
+                                    @if (isAdmin)
+                                    {
+                                        <text>Vos derniers produits créés</text>
+                                    }
+                                    else
+                                    {
+                                        <text>Vos derniers produits achetés</text>
+                                    }
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if (ViewBag.NbProduits == 0)
                                 {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Libelle</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
+                                    <li class="list-group-item">Vous n'avez aucun produit</li>
                                 }
-                            }
-                        </ul>
+                                else
+                                {
+                                    foreach (var item in ViewBag.listeProduits)
+                                    {
+                                        <li class="list-group-item"><a href=@Url.Action("Details", "Produits", new { id = item.ID })><b>@item.Libelle</b>&nbsp;–&nbsp; @item.PrixHT €</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>

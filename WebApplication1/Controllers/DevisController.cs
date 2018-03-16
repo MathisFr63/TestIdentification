@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using PagedList;
-using System.Data.Entity.Infrastructure;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
 using WebApplication1.ViewModels;
 using Rotativa;
+using WebApplication1.Models.Account;
 
 namespace WebApplication1.Controllers
 {
@@ -43,27 +43,7 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = ListDevis.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = ListDevis.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-            }
+            var listeTrie = SortOrder(ListDevis, sortOrder);
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
@@ -127,6 +107,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur d'ajouter un nouveau devis parmis sa liste grâce à l'accès par l'url.
         public ActionResult Create()
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID));
         }
 
@@ -138,45 +122,48 @@ namespace WebApplication1.Controllers
         // Méthode permettant à l'utilisateur d'ajouter le devis qu'il vient de créer sur la page create (get) si le model est valide.
         public ActionResult Create(DevisProduitViewModel vm)
         {
-            if (ModelState.IsValid)
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            vm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
+            vm.Devis.Date = DateTime.Now;
+            vm.Devis.Valide = true;
+
+            db.Devis.Add(vm.Devis);
+
+            var keys = Request.Form.AllKeys;
+            for (int i = 4; i < keys.Length; i++)
             {
-                vm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
-                vm.Devis.Date = DateTime.Now;
-                vm.Devis.Valide = true;
+                var name = keys[i];
+                var produit = db.Produits.First(p => p.Libelle == name);
 
-                db.Devis.Add(vm.Devis);
-
-                var keys = Request.Form.AllKeys;
-                for (int i = 4; i < keys.Length; i++)
+                db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0]))
                 {
-                    var name = keys[i];
-                    var produit = db.Produits.First(p => p.Libelle == name);
-
-                    db.DonneeProduit.Add(new DonneeProduit(produit, int.Parse(Request.Form.GetValues(keys[i])[0]))
-                    {
-                        DevisID = vm.Devis.ID
-                    });
-                }
-
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    DevisID = vm.Devis.ID
+                });
             }
-            return View(vm);
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Devis/Edit/5
         // Méthode permettant grâce à l'accès par l'url de modifier le devis sélectionné en passant son id dans l'url.
         public ActionResult Edit(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
 
             return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
-            { Devis = devis });
+                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -187,6 +174,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant la modification du devis sélectionné après avoir modifier les valeurs souhaitées sur la page edit (get)
         public ActionResult EditPost(int id)
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var devis = db.Devis.Find(id);
             devis.Produits = new List<DonneeProduit>();
 
@@ -219,7 +210,8 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url en passant l'id du devis d'afficher les détails de celui-ci afin de vérifier si l'utilisateur souhaite réellement le supprimer.
         public ActionResult Delete(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var devis = db.Devis.Find(id);
 
@@ -234,6 +226,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             db.DonneeProduit.RemoveRange(db.DonneeProduit.Where(DP => DP.DevisID == id));
             db.Devis.Remove(db.Devis.Find(id));
             db.SaveChanges();
@@ -317,27 +313,7 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = ListDevis.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = ListDevis.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-            }
+            var listeTrie = SortOrder(ListDevis, sortOrder);
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
@@ -358,31 +334,26 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = ListDevis.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = ListDevis.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = ListDevis.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = ListDevis.OrderBy(s => s.Objet);
-                    break;
-            }
+            var listeTrie = SortOrder(ListDevis, sortOrder);
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
             return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
+        }
+
+        private IOrderedEnumerable<Devis> SortOrder(List<Devis> ListDevis, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "objetZA":
+                    return ListDevis.OrderByDescending(s => s.Objet);
+                case "dateOldNew":
+                    return ListDevis.OrderBy(s => s.Date);
+                case "dateNewOld":
+                    return ListDevis.OrderByDescending(s => s.Date);
+            }
+
+            return ListDevis.OrderBy(s => s.Objet);
         }
     }
 }

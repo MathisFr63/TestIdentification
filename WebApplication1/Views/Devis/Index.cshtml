@@ -4,6 +4,8 @@
 
 @{
     ViewBag.Title = "Devis";
+    var type = (new WebApplication1.DAL.ApplicationContext()).ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+    var isAdmin = type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA;
 }
 
 <h2 class="titreIndex">
@@ -42,9 +44,12 @@
                 </li>
 
                 @*Bouton permettant d'accéder à la page de création d'un devis*@
-                <li>
-                    <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Devis")'" class="btn button-green"><i class="glyphicon glyphicon-plus"></i></button>
-                </li>
+                @if (isAdmin)
+                {
+                    <li>
+                        <button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="location.href='@Url.Action("Create", "Devis")'" class="btn button-green"><i class="glyphicon glyphicon-plus"></i></button>
+                    </li>
+                }
             </ul>
         </div>
     </div>
@@ -145,13 +150,16 @@
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
-                <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange">
-                    <span class="glyphicon glyphicon-pencil" />
-                </button>
                 <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
-                <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Objet", "@item.ID")'>
-                    <span class="glyphicon glyphicon-trash" />
-                </button>
+                @if (isAdmin)
+                {
+                    <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange">
+                        <span class="glyphicon glyphicon-pencil" />
+                    </button>
+                    <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Objet", "@item.ID")'>
+                        <span class="glyphicon glyphicon-trash" />
+                    </button>
+                }
             </td>
         </tr>
     }

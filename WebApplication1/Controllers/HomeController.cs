@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
 
             // % de devis concrétisés
             if (ViewBag.NbDevis > 0)
-                ViewBag.DevisConcret = ViewBag.NbFactures * 100 / ViewBag.NbDevis;
+                ViewBag.DevisConcret = ViewBag.NbFactures;
             else
                 ViewBag.DevisConcret = 0;
         }

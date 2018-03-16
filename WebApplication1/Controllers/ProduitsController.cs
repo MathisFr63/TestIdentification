@@ -3,13 +3,12 @@ using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
+using WebApplication1.Models.Account;
 using WebApplication1.Models.Papiers;
 
 namespace WebApplication1.Controllers
@@ -39,26 +38,8 @@ namespace WebApplication1.Controllers
 
 
             var listeTrie = listProduit.OrderBy(s => s.Libelle);
-            
 
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-                case "objetZA":
-                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
-                    break;
-                case "prixFaibleFort":
-                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
-                    break;
-                case "prixFortFaible":
-                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
-                    break;
-                default:
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-            }
+            listeTrie = SortOrder(listeTrie, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
@@ -97,14 +78,12 @@ namespace WebApplication1.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produit produit = db.Produits.Find(id);
+
+            var produit = db.Produits.Find(id);
             if (produit == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(produit);
         }
 
@@ -112,6 +91,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accèder à la page d'ajout d'un produit.
         public ActionResult Create()
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             return View();
         }
 
@@ -123,29 +106,30 @@ namespace WebApplication1.Controllers
         // Méthode permettant d'ajouter un produit à la liste des produits de l'utilisateur après avoir rempli les champs de la page de création.
         public ActionResult Create(Produit produit)
         {
-            if (ModelState.IsValid)
-            {
-                db.Produits.Add(produit);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return View(produit);
+            if (!ModelState.IsValid)
+                return View(produit);
+
+            db.Produits.Add(produit);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Produits/Edit/5
         // Méthode permettant grâce à l'accès par l'url d'afficher la page de modification du produit sélectionné et dont l'id et passé par l'url.
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produit produit = db.Produits.Find(id);
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+
+            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var produit = db.Produits.Find(id);
+
             if (produit == null)
-            {
                 return HttpNotFound();
-            }
             return View(produit);
         }
 
@@ -157,6 +141,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant de modifier le produit sélectionné dont l'id est passé en paramètre avec les valeurs modifiées sur la page de modification.
         public ActionResult EditPost(int id)
         {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var produit = db.Produits.Find(id);
             if (TryUpdateModel(produit, "", new string[] { "Libelle", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
             {
@@ -177,15 +165,15 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accèder à l'affichage des détails du produit sélectionné afin de vérifier si l'utilisateur veut le supprimer.
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+
+            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produit produit = db.Produits.Find(id);
+            
+            var produit = db.Produits.Find(id);
             if (produit == null)
-            {
                 return HttpNotFound();
-            }
+            
             return View(produit);
         }
 
@@ -195,7 +183,11 @@ namespace WebApplication1.Controllers
         // Mèthode permettant de supprimer le produit sélectionné de la liste des produits de l'utilisateurs après qu'il ai vérifié qu'il souhaitait le supprimer.
         public ActionResult DeleteConfirmed(int id)
         {
-            Produit produit = db.Produits.Find(id);
+            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var produit = db.Produits.Find(id);
             db.Produits.Remove(produit);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -213,28 +205,24 @@ namespace WebApplication1.Controllers
         public ActionResult Print(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produit produit = db.Produits.Find(id);
+            
+            var produit = db.Produits.Find(id);
             if (produit == null)
-            {
                 return HttpNotFound();
-            }
+            
             return new ViewAsPdf("ProduitToPdf", produit);
         }
 
         public ActionResult ProduitToPdf(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produit produit = db.Produits.Find(id);
+            
+            var produit = db.Produits.Find(id);
             if (produit == null)
-            {
                 return HttpNotFound();
-            }
+            
             return View(produit);
         }
 
@@ -256,25 +244,7 @@ namespace WebApplication1.Controllers
 
             var listeTrie = listProduit.OrderBy(s => s.Libelle);
 
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-                case "objetZA":
-                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
-                    break;
-                case "prixFaibleFort":
-                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
-                    break;
-                case "prixFortFaible":
-                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
-                    break;
-                default:
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-            }
+            listeTrie = SortOrder(listeTrie, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
@@ -303,25 +273,7 @@ namespace WebApplication1.Controllers
 
             var listeTrie = listProduit.OrderBy(s => s.Libelle);
 
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-                case "objetZA":
-                    listeTrie = listeTrie.OrderByDescending(s => s.Libelle);
-                    break;
-                case "prixFaibleFort":
-                    listeTrie = listeTrie.OrderBy(s => s.PrixHT);
-                    break;
-                case "prixFortFaible":
-                    listeTrie = listeTrie.OrderByDescending(s => s.PrixHT);
-                    break;
-                default:
-                    listeTrie = listeTrie.OrderBy(s => s.Libelle);
-                    break;
-            }
+            listeTrie = SortOrder(listeTrie, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
@@ -331,6 +283,21 @@ namespace WebApplication1.Controllers
                 return View(listeTrie.Where(s => s.Libelle.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             }
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
+        }
+
+        private IOrderedEnumerable<Produit> SortOrder(IOrderedEnumerable<Produit> listeTrie, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "objetZA":
+                    return listeTrie.OrderByDescending(s => s.Libelle);
+                case "prixFaibleFort":
+                    return listeTrie.OrderBy(s => s.PrixHT);
+                case "prixFortFaible":
+                    return listeTrie.OrderByDescending(s => s.PrixHT);
+            }
+
+            return listeTrie.OrderBy(s => s.Libelle);
         }
     }
 }

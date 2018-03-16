@@ -29,7 +29,8 @@
     @*Div permettant la modification de l'identifiant (adresse e-mail) de l'utilisateur*@
     <div>
         @Html.LabelFor(model => model.Utilisateur.ID, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.DisplayFor(model => model.Utilisateur.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.HiddenFor(Model => Model.Utilisateur.ID)
     </div>
 
     @*Div permettant de modifier le nom de l'utilisateur*@
@@ -60,14 +61,16 @@
         <div>
             @Html.LabelFor(model => model.Utilisateur.Type, htmlAttributes: new { @class = "control-label" })
             @{
-                var selectList = Enum.GetValues(typeof(WebApplication1.Models.Account.TypeUtilisateur))
+                var myEnum = Enum.GetValues(typeof(WebApplication1.Models.Account.TypeUtilisateur))
                         .Cast<WebApplication1.Models.Account.TypeUtilisateur>()
-                        .Where(e => e != WebApplication1.Models.Account.TypeUtilisateur.SA && e != WebApplication1.Models.Account.TypeUtilisateur.EnAttente)
-                        .Select(e => new SelectListItem
-                        {
-                            Value = e.ToString(),
-                            Text = e.ToString()
-                        });
+                        .Where(e => e != WebApplication1.Models.Account.TypeUtilisateur.SA);
+
+                if (Model.Utilisateur.Type != WebApplication1.Models.Account.TypeUtilisateur.EnAttente)
+                {
+                    myEnum = myEnum.Where(e => e != WebApplication1.Models.Account.TypeUtilisateur.EnAttente);
+                }
+
+                var selectList = myEnum.Select(e => new SelectListItem { Value = e.ToString(), Text = e.ToString() });
             }
             @Html.DropDownListFor(m => m.Utilisateur.Type, selectList, new { @class = "form-control" })
         </div>
