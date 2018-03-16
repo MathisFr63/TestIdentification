@@ -132,7 +132,7 @@
                                 @*Div permettant de saisir la civilité de l'utilisateur*@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Utilisateur.Civilite, htmlAttributes: new { @class = "control-label" })*<br /><br />
-                                    @Html.EnumDropDownListFor(x => x.Utilisateur.Civilite, new { htmlAttributes = new { @class = "form-control my-2", @required = "required" } })<br /><br />
+                                    @Html.EnumDropDownListFor(x => x.Utilisateur.Civilite, new { @class = "form-control my-2", @required = "required" } )<br /><br />
                                 </div>
 
                                 @*Div permettant à l'utilisateur de saisir des informations supplémentaires*@
