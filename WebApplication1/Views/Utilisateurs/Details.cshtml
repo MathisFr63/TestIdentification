@@ -43,6 +43,27 @@
             <div class="contact-content">@Html.DisplayFor(model => model.Nom)</div>
         </div>
 
+<<<<<<< HEAD
+            </div>
+            @*Affichage du prénom de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom)</p>
+            </div>
+            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
+            </div>
+            @*Affichage du type de l'utilisateur*@
+            <div class="col-md-6">
+                <p class="lead">Statut : @Html.DisplayFor(model => model.Type)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Téléphones : </p>
+            </div>
+            <div class="col-md-6">
+                <p class="lead">Lieu :</p>
+            </div>
+=======
         <div class="contact-item">
             <div class="contact-label">Prénom</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Prénom)</div>
@@ -55,6 +76,7 @@
         <div class="contact-item">
             <div class="contact-label">Statut</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+>>>>>>> 31b4bce4b2b42554a5fcfd1a49b20f9f42a58249
         </div>
     </div>
 </div>
