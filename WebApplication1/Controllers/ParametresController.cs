@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Data.Entity.Infrastructure;
 using System.Web.Mvc;
 using WebApplication1.DAL;
-using WebApplication1.Models.Account;
 
 namespace WebApplication1.Controllers
 {
@@ -32,7 +24,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index(int id)
         {
             var parametre = db.Parametres.Find(id);
-            if (TryUpdateModel(parametre, "", new string[] { "DureeValiditeDevis", "NbRelanceFacture", "Theme", "NbElementPage", "DefaultTextFeedback", "NbJourStat", "TailleHistorique" }))
+            if (TryUpdateModel(parametre, "", new string[] { "DureeValiditeDevis", "NbRelanceFacture", "Theme", "NbElementPage", "DefaultTextFeedback", "NbJourStat", "TailleHistorique", "Abonnee" }))
             {
                 try
                 {

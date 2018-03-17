@@ -60,10 +60,6 @@ namespace WebApplication1.Models.Account
 
         public int ParametreID { get; set; }
 
-        public Boolean subscribe { get; set; }
-
-        //public virtual ICollection<Entreprise> Entreprises { get; set; }
-
         /// <summary>
         /// Constructeur par défaut d'un utilisateur
         /// </summary>
@@ -84,7 +80,7 @@ namespace WebApplication1.Models.Account
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="nom">Nom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
-        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, ICollection<Telephone> telephones, TypeUtilisateur type, Lieu lieu, Civilite civilite, Parametre parametre, string otherInfo, Boolean subscribe)
+        public Utilisateur(string identifiant, string motDePasse, string nom, string prenom, ICollection<Telephone> telephones, TypeUtilisateur type, Lieu lieu, Civilite civilite, Parametre parametre, string otherInfo)
         {
             this.ID = identifiant;
             this.MotDePasse = motDePasse.GetHashCode();
@@ -95,7 +91,6 @@ namespace WebApplication1.Models.Account
             this.Civilite = civilite;
             this.otherInfo = otherInfo;
             this.Telephones = telephones;
-            this.subscribe = subscribe;
 
             this.ParametreID = parametre.ID;
             parametre.DefaultTextFeedback += $"{prenom} {nom}";

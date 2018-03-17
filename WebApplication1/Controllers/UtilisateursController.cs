@@ -38,38 +38,7 @@ namespace WebApplication1.Controllers
                 ViewBag.CurrentFilter = searchstring;
                 ViewBag.CurrentSort = sortOrder;
 
-                var usersTrie = users.OrderBy(s => s.ID);
-
-                switch (sortOrder)
-                {
-                    case "mailAZ":
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                    case "mailZA":
-                        usersTrie = users.OrderByDescending(s => s.ID);
-                        break;
-                    case "nomAZ":
-                        usersTrie = users.OrderBy(s => s.Nom);
-                        break;
-                    case "nomZA":
-                        usersTrie = users.OrderByDescending(s => s.Nom);
-                        break;
-                    case "prénomAZ":
-                        usersTrie = users.OrderBy(s => s.Prénom);
-                        break;
-                    case "prénomZA":
-                        usersTrie = users.OrderByDescending(s => s.Prénom);
-                        break;
-                    case "typeAdmin":
-                        usersTrie = users.OrderBy(s => s.Type);
-                        break;
-                    case "typeBasique":
-                        usersTrie = users.OrderByDescending(s => s.Type);
-                        break;
-                    default:
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                }
+                var usersTrie = SortOrder(users, sortOrder);
 
                 if (!String.IsNullOrEmpty(searchstring))
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
@@ -131,7 +100,7 @@ namespace WebApplication1.Controllers
             if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             ViewBag.lieu = db.Lieux.Find(utilisateur.LieuID);
 
@@ -140,12 +109,9 @@ namespace WebApplication1.Controllers
             if (utilisateur == null)
                 return HttpNotFound();
 
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbDevis = ListDevis.Count();
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.ToList();
-            ViewBag.NbProduits = listProduit.Count();
+            ViewBag.NbDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbFactures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbProduits = db.Produits.Count();
 
             return View(utilisateur);
         }
@@ -172,7 +138,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo, false);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");
@@ -213,6 +179,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid || userVM.motDePasse == null)
             {
+                int i = 1;
                 var utilisateur = db.Utilisateurs.Find(userVM.Utilisateur.ID.Replace('~', '.'));
 
                 db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList().ForEach(t => db.Telephones.Remove(t));
@@ -220,17 +187,21 @@ namespace WebApplication1.Controllers
                 var form = Request.Form;
                 var keys = form.AllKeys;
 
-                for (int i = 1; i<keys.Length && keys[i].Contains("prefixe"); i++)
+                while ( i<keys.Length)
                 {
-                    db.Telephones.Add(new Telephone()
+                    if (keys[i].Contains("prefixe"))
                     {
-                        Préfixe = form.GetValues(keys[i])[0],
-                        Numéro = form.GetValues(keys[i+1])[0],
-                        UtilisateurID = utilisateur.ID
-                    });
+                        db.Telephones.Add(new Telephone()
+                        {
+                            Préfixe = form.GetValues(keys[i])[0],
+                            Numéro = form.GetValues(keys[i + 1])[0],
+                            UtilisateurID = utilisateur.ID
+                        });
+                        i++;
+                    }
                     i++;
                 }
-
+                
 
                 utilisateur.Nom = userVM.Utilisateur.Nom;
                 utilisateur.Prénom = userVM.Utilisateur.Prénom;
@@ -256,36 +227,20 @@ namespace WebApplication1.Controllers
             return View(userVM);
         }
 
-        public ActionResult CheckSubscribe(string id)
-        {
-            
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type == TypeUtilisateur.Administrateur)
-                return RedirectToAction("BadUserTypeError", "Home");
-            if (db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-
-            if (user == null) return HttpNotFound();
-
-            user.subscribe=!user.subscribe;
-
-            db.SaveChanges();
-            return RedirectToAction("Details","Utilisateurs",new { id=user.ID.Replace('.', '~') });
-
-        }
-
-            // GET: Utilisateurs/Delete/5
-            // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
-            public ActionResult Delete(string id)
+        // GET: Utilisateurs/Delete/5
+        // Méthode permettant d'afficher les détails de l'utilisateur sélectionné et dont l'id est passé dans l'url afin de vérifier qu'il veut le supprimer.
+        public ActionResult Delete(string id)
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
+
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA || type2 == TypeUtilisateur.Administrateur || type2 == TypeUtilisateur.SA)
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Utilisateurs" });
+
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -301,6 +256,7 @@ namespace WebApplication1.Controllers
         {
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             var type2 = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
+
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Utilisateurs" });
 
@@ -338,17 +294,14 @@ namespace WebApplication1.Controllers
             if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
 
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbDevis = ListDevis.Count();
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.ToList();
-            ViewBag.NbProduits = listProduit.Count();
+            ViewBag.NbDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbFactures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbProduits = db.Produits.Count();
 
             return new ViewAsPdf("UtilisateurToPdf", utilisateur);
         }
@@ -358,17 +311,15 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
-            Utilisateur utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
 
             if (utilisateur == null)
                 return HttpNotFound();
 
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbDevis = ListDevis.Count();
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).ToList();
-            ViewBag.NbFactures = factures.Count();
-            var listProduit = db.Produits.ToList();
-            ViewBag.NbProduits = listProduit.Count();
+            ViewBag.NbDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbFactures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).Count();
+            ViewBag.NbProduits = db.Produits.Count();
 
             return View(utilisateur);
         }
@@ -387,38 +338,7 @@ namespace WebApplication1.Controllers
                 ViewBag.CurrentFilter = searchstring;
                 ViewBag.CurrentSort = sortOrder;
 
-                var usersTrie = users.OrderBy(s => s.ID);
-
-                switch (sortOrder)
-                {
-                    case "mailAZ":
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                    case "mailZA":
-                        usersTrie = users.OrderByDescending(s => s.ID);
-                        break;
-                    case "nomAZ":
-                        usersTrie = users.OrderBy(s => s.Nom);
-                        break;
-                    case "nomZA":
-                        usersTrie = users.OrderByDescending(s => s.Nom);
-                        break;
-                    case "prénomAZ":
-                        usersTrie = users.OrderBy(s => s.Prénom);
-                        break;
-                    case "prénomZA":
-                        usersTrie = users.OrderByDescending(s => s.Prénom);
-                        break;
-                    case "typeAdmin":
-                        usersTrie = users.OrderBy(s => s.Type);
-                        break;
-                    case "typeBasique":
-                        usersTrie = users.OrderByDescending(s => s.Type);
-                        break;
-                    default:
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                }
+                var usersTrie = SortOrder(users, sortOrder);
 
                 if (!String.IsNullOrEmpty(searchstring))
                     return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
@@ -429,57 +349,47 @@ namespace WebApplication1.Controllers
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
-
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
+                return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
+
+            var param = db.Parametres.Find(user.ParametreID);
+            var users = db.Utilisateurs.ToList();
+
+            if (searchstring != null) page = 1;
+            else searchstring = currentFilter;
+
+            ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+            var usersTrie = SortOrder(users, sortOrder);
+
+            if (!String.IsNullOrEmpty(searchstring))
+                return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+            return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
+        }
+
+        private IOrderedEnumerable<Utilisateur> SortOrder(List<Utilisateur> users, string sortOrder)
+        {
+            switch (sortOrder)
             {
-                var param = db.Parametres.Find(user.ParametreID);
-                var users = db.Utilisateurs.ToList();
-
-                if (searchstring != null) page = 1;
-                else searchstring = currentFilter;
-
-                ViewBag.CurrentFilter = searchstring;
-                ViewBag.CurrentSort = sortOrder;
-
-                var usersTrie = users.OrderBy(s => s.ID);
-
-                switch (sortOrder)
-                {
-                    case "mailAZ":
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                    case "mailZA":
-                        usersTrie = users.OrderByDescending(s => s.ID);
-                        break;
-                    case "nomAZ":
-                        usersTrie = users.OrderBy(s => s.Nom);
-                        break;
-                    case "nomZA":
-                        usersTrie = users.OrderByDescending(s => s.Nom);
-                        break;
-                    case "prénomAZ":
-                        usersTrie = users.OrderBy(s => s.Prénom);
-                        break;
-                    case "prénomZA":
-                        usersTrie = users.OrderByDescending(s => s.Prénom);
-                        break;
-                    case "typeAdmin":
-                        usersTrie = users.OrderBy(s => s.Type);
-                        break;
-                    case "typeBasique":
-                        usersTrie = users.OrderByDescending(s => s.Type);
-                        break;
-                    default:
-                        usersTrie = users.OrderBy(s => s.ID);
-                        break;
-                }
-
-                if (!String.IsNullOrEmpty(searchstring))
-                    return View(usersTrie.Where(s => s.ID.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
-                return View(usersTrie.ToPagedList((page ?? 1), param.NbElementPage));
+                case "mailZA":
+                    return users.OrderByDescending(s => s.ID);
+                case "nomAZ":
+                    return users.OrderBy(s => s.Nom);
+                case "nomZA":
+                    return users.OrderByDescending(s => s.Nom);
+                case "prénomAZ":
+                    return users.OrderBy(s => s.Prénom);
+                case "prénomZA":
+                    return users.OrderByDescending(s => s.Prénom);
+                case "typeAdmin":
+                    return users.OrderBy(s => s.Type);
+                case "typeBasique":
+                    return users.OrderByDescending(s => s.Type);
             }
-            return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
+
+            return users.OrderBy(s => s.ID);
         }
     }
 }

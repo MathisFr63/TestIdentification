@@ -80,7 +80,7 @@ namespace WebApplication1.DAL
         /// <param name="prenom">Prénom de l'utilisateur</param>
         /// <param name="type">Type de l'utilisateur</param>
         /// <returns>string: Identifiant de l'utilisateur créé</returns>
-        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, ICollection<Telephone> telephones, Lieu lieu, Civilite civilite, string otherInfo, System.Boolean subscribe)
+        public string AjouterUtilisateur(string mail, string motDePasse, string nom, string prenom, TypeUtilisateur type, ICollection<Telephone> telephones, Lieu lieu, Civilite civilite, string otherInfo)
         {
             var param = new Parametre();
             Parametres.Add(param);
@@ -88,7 +88,7 @@ namespace WebApplication1.DAL
             Lieux.Add(lieu);
             SaveChanges();
 
-            var user = new Utilisateur(mail, motDePasse, nom, prenom, telephones, type, lieu, civilite, param, otherInfo, subscribe);
+            var user = new Utilisateur(mail, motDePasse, nom, prenom, telephones, type, lieu, civilite, param, otherInfo);
             Utilisateurs.Add(user);
             SaveChanges();
 

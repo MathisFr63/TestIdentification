@@ -153,7 +153,7 @@
 
                     @*Élément permettant à l'utilisateur d'accéder aux détails de son compte (et sûrement plus tard à ses paramètres)*@
                     <li>
-                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = user.Nom.Replace('.', '~') })>
+                        <a class="nom" href=@Url.Action("Details", "Utilisateurs", new { id = user.ID.Replace('.', '~') })>
                             @user.Prénom
                         </a>
                     </li>
