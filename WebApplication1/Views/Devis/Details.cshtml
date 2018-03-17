@@ -44,7 +44,7 @@
 
         <div class="contact-item">
             <div class="contact-label">Créé le</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Devis.DateString)</div>
+            <div class="contact-content"> @String.Format("{0:dd MMMM yyyy}",Model.Devis.Date) à @String.Format("{0:hh:mm}",Model.Devis.Date)</div>
         </div>
 
         <div class="contact-item">

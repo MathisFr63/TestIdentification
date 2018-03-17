@@ -106,9 +106,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateString)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valide)
-            </td>
+            @if (item.Valide)
+            {
+                <td>Oui</td>
+            }
+            else
+            {
+                <td>Non</td>
+            }
+
             @*<td>
                     @Html.DisplayFor(modelItem => item.Commentaire)
                 </td>
