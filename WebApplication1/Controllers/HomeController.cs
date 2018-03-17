@@ -196,17 +196,17 @@ namespace WebApplication1.Controllers
         [ValidateInput(false)]
         public ActionResult Newsletter(Newsletter n)
         {
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+            var smtp = new SmtpClient("smtp.gmail.com", 587)
             {
                 Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
                 EnableSsl = true
             };
-            List<Utilisateur> users=db.GetAllUsers();
-            //List<String> mails=db.getAllMail();
-            foreach (Utilisateur u in users)
+            var users = db.GetAllUsers();
+            foreach (var u in users)
             {
-                if (u.subscribe) { 
-                    MailMessage mail = new MailMessage
+                var param = db.Parametres.Find(u.ParametreID);
+                if (param.Abonnee) { 
+                    var mail = new MailMessage
                     {
                         From = new MailAddress(u.ID, "Newsletter Easybill"),
                         IsBodyHtml = true,

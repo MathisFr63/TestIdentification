@@ -16,12 +16,13 @@ namespace WebApplication1.Models.Account
         public string DefaultTextFeedback { get; set; }
         public int NbJourStat { get; set; }
         public int TailleHistorique { get; set; }
+        public bool Abonnee { get; set; }
 
-        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6)
+        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6, false)
         {
         }
 
-        public Parametre(int DureeValiditeDevis, int NbRelanceFacture, Theme Theme, int NbElementPage, string DefaultTextFeedback, int NbJourStat, int TailleHistorique)
+        public Parametre(int DureeValiditeDevis, int NbRelanceFacture, Theme Theme, int NbElementPage, string DefaultTextFeedback, int NbJourStat, int TailleHistorique, bool Abonnee)
         {
             this.DureeValiditeDevis = DureeValiditeDevis;
             this.NbRelanceFacture = NbRelanceFacture;
@@ -30,6 +31,7 @@ namespace WebApplication1.Models.Account
             this.DefaultTextFeedback = DefaultTextFeedback;
             this.NbJourStat = NbJourStat;
             this.TailleHistorique = TailleHistorique;
+            this.Abonnee = Abonnee;
         }
     }
 }

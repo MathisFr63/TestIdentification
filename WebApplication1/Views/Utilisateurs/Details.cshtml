@@ -42,42 +42,20 @@
             <div class="contact-label">Nom</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Nom)</div>
         </div>
+    </div>
 
-<<<<<<< HEAD
-            </div>
-            @*Affichage du prénom de l'utilisateur*@
-            <div class="col-md-6">
-                <p class="lead">Prénom : @Html.DisplayFor(model => model.Prénom)</p>
-            </div>
-            @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
-            <div class="col-md-6">
-                <p class="lead">Mail : @Html.DisplayFor(model => model.ID)</p>
-            </div>
-            @*Affichage du type de l'utilisateur*@
-            <div class="col-md-6">
-                <p class="lead">Statut : @Html.DisplayFor(model => model.Type)</p>
-            </div>
-            <div class="col-md-6">
-                <p class="lead">Téléphones : </p>
-            </div>
-            <div class="col-md-6">
-                <p class="lead">Lieu :</p>
-            </div>
-=======
-        <div class="contact-item">
-            <div class="contact-label">Prénom</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Prénom)</div>
-        </div>
-        <div class="contact-item">
-            <div class="contact-label">Civilité</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Civilite)</div>
-        </div>
+    <div class="contact-item">
+        <div class="contact-label">Prénom</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Prénom)</div>
+    </div>
+    <div class="contact-item">
+        <div class="contact-label">Civilité</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Civilite)</div>
+    </div>
 
-        <div class="contact-item">
-            <div class="contact-label">Statut</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
->>>>>>> 31b4bce4b2b42554a5fcfd1a49b20f9f42a58249
-        </div>
+    <div class="contact-item">
+        <div class="contact-label">Statut</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
     </div>
 </div>
 
@@ -138,29 +116,5 @@
                 <div class="contact-content">@t.Numéro</div>
             </div>
         }
-
     </div>
 </div>
-
-<br />
-@{
-    var db = new WebApplication1.DAL.ApplicationContext();
-    var type = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
-    if (type != WebApplication1.Models.Account.TypeUtilisateur.Administrateur && type != WebApplication1.Models.Account.TypeUtilisateur.SA)
-    {
-        if (db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).subscribe == false)
-        {
-
-            <p>S'abonner ?</p>
-        }
-        else
-        {
-            <p>Se désabonner ?</p>
-        }
-        <a title="Check" href=@Url.Action("CheckSubscribe", "Utilisateurs") class="btn btn-info">
-            <span class="glyphicon glyphicon-check" />
-        </a>
-    }
-
-
-}

@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Index";
+    var db = new WebApplication1.DAL.ApplicationContext();
+    var user = db.ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name);
+    bool isAdmin = user.Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA;
 }
 
 @*titre de la partie*@
@@ -70,6 +73,14 @@
                 @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
                 @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
             </div>
+            <div class="form-group">
+                @if (!isAdmin)
+                {
+                    <label class="control-label">Abonnement à la newsletter</label>
+                    @Html.EditorFor(model => model.Abonnee, new { htmlAttributes = new { @class = "form-control", @style = "width: 20px; height: 20px;" } })
+                    @Html.ValidationMessageFor(model => model.Abonnee, "", new { @class = "text-danger" })
+                }
+            </div>           
         </div>
 
         @*Bouton permettant de valider la modification du produit*@
