@@ -717,3 +717,10 @@ input[type=submit] {
     flex-basis: 0;
     order: 2;
 }
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    color:white;
+    opacity:0.5;
+}
