@@ -29,6 +29,13 @@
             <hr />
             @*Div permettant de remplir l'objet du devis*@
             <div class="form-group">
+                @Html.LabelFor(model => model.Devis.UtilisateurID)
+                @Html.EditorFor(model => model.Devis.UtilisateurID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Devis.UtilisateurID, "", new { @class = "text-danger" })
+            </div>
+
+            @*Div permettant de remplir l'objet du devis*@
+            <div class="form-group">
                 @Html.LabelFor(model => model.Devis.Objet)
                 @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Devis.Objet, "", new { @class = "text-danger" })
@@ -63,11 +70,11 @@
                     </div>
                     <div id="checkboxes">
                         @foreach (var item in Model.Produits)
-                        {
-                            <label>
-                                <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
-                            </label>
-                        }
+                {
+                    <label>
+                        <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
+                    </label>
+        }
                     </div>
                 </div>
 

@@ -3,6 +3,8 @@
 
 @{
     ViewBag.Title = "Details";
+    var type = (new WebApplication1.DAL.ApplicationContext()).ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+    var isAdmin = type == WebApplication1.Models.Account.TypeUtilisateur.SA || type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur;
 }
 
 @*Chemin de retour*@
@@ -19,7 +21,7 @@
 
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li>
-            <a title="Imprimer la facture" target="_blank" href=@Url.Action("Print", "Factures", new { id = Model.Facture.ID }) class="btn button-blue btn-lg"><span class="glyphicon glyphicon-print" /></a>
+            <a title="Imprimer la facture" target="_blank" href=@Url.Action("FactureToPdf", "Factures", new { id = Model.Facture.ID }) class="btn button-blue btn-lg"><span class="glyphicon glyphicon-print" /></a>
         </li>
     </ul>
     <h2 style="display:block;" class="titreCRUD">
@@ -122,19 +124,19 @@
         }
         <div class="contact-item">
             <div class="contact-label">Prix total HT</div>
-            <div class="contact-content">@String.Format("  {0:F2}", sommeHT) €</div>
+            <div class="contact-content">@string.Format("  {0:F2}", sommeHT) €</div>
         </div>
         <div class="contact-item">
             <div class="contact-label">Prix total TTC</div>
-            <div class="contact-content">@String.Format("  {0:F2}", sommeTTC) €</div>
+            <div class="contact-content">@string.Format("  {0:F2}", sommeTTC) €</div>
         </div>
         <div class="contact-item">
             <div class="contact-label">Taxe</div>
-            <div class="contact-content">@String.Format("  {0:F2}", totalTaxe) €</div>
+            <div class="contact-content">@string.Format("  {0:F2}", totalTaxe) €</div>
         </div>
         <div class="contact-item">
             <div class="contact-label">Total réduction</div>
-            <div class="contact-content">@String.Format("  {0:F2}", totalReduc) €</div>
+            <div class="contact-content">@string.Format("  {0:F2}", totalReduc) €</div>
         </div>
 
         <div class="contact-item">
@@ -148,7 +150,10 @@
         </div>
 
     </div>
-    <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
+    @if (isAdmin)
+    {
+        <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
+    }
 </div>
 
 

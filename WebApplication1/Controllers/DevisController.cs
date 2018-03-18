@@ -27,8 +27,10 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            var ListDevis = db.Devis.ToList();
+            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
+                ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            
             ListDevis.ForEach(devis =>
             {
                 devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
@@ -55,7 +57,11 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
 
-            IEnumerable<Devis> myListTrier = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            IEnumerable<Devis> myListTrier = db.Devis.ToList();
+
+            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
+                myListTrier = myListTrier.Where(devis => devis.UtilisateurID == user.ID).ToList();
+
             myListTrier.ToList().ForEach(devis =>
             {
                 devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
@@ -98,9 +104,7 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
             
-            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
-            { Devis = devis });
+            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // GET: Devis/Create
@@ -111,7 +115,7 @@ namespace WebApplication1.Controllers
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID));
+            return View(new DevisProduitViewModel());
         }
 
         // POST: Devis/Create
@@ -129,14 +133,13 @@ namespace WebApplication1.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            vm.Devis.UtilisateurID = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID;
             vm.Devis.Date = DateTime.Now;
             vm.Devis.Valide = true;
 
             db.Devis.Add(vm.Devis);
 
             var keys = Request.Form.AllKeys;
-            for (int i = 4; i < keys.Length; i++)
+            for (int i = 5; i < keys.Length; i++)
             {
                 var name = keys[i];
                 var produit = db.Produits.First(p => p.Libelle == name);
@@ -162,8 +165,7 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+            return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
         // POST: Devis/Edit/5
@@ -277,15 +279,6 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Print(int id)
-        {
-            var devis = db.Devis.Find(id);
-
-            return new ViewAsPdf("DevisToPdf", new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
-            { Devis = devis });
-        }
-
         public ActionResult DevisToPdf(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -293,18 +286,19 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-            return View(new DevisProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.DevisID == id).ToList())
-            { Devis = devis });
+
+            return new ViewAsPdf(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
-        //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
-        public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
+        public ActionResult ListToPdf(string sortOrder, string searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
 
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+            var ListDevis = db.Devis.ToList();
+            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
+                ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+
             ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
 
             if (searchstring != null) page = 1;
@@ -315,30 +309,9 @@ namespace WebApplication1.Controllers
 
             var listeTrie = SortOrder(ListDevis, sortOrder);
 
-            if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
-            return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
-        }
-
-        public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
-        {
-            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var param = db.Parametres.Find(user.ParametreID);
-
-            var ListDevis = db.Devis.Where(devis => devis.UtilisateurID == user.ID).ToList();
-            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
-
-            if (searchstring != null) page = 1;
-            else searchstring = currentFilter;
-
-            ViewBag.CurrentFilter = searchstring;
-            ViewBag.CurrentSort = sortOrder;
-
-            var listeTrie = SortOrder(ListDevis, sortOrder);
-
-            if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
-            return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
+            if (!string.IsNullOrEmpty(searchstring))
+                return new ViewAsPdf(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+            return new ViewAsPdf(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
         private IOrderedEnumerable<Devis> SortOrder(List<Devis> ListDevis, string sortOrder)

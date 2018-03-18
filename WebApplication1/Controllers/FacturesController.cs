@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models.Papiers;
@@ -42,28 +37,7 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = factures.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = factures.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = factures.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = factures.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-            }
-
+            var listeTrie = SortOrder(factures, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
@@ -150,17 +124,6 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Print(int id)
-        {
-            //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Facture facture = db.Factures.Find(id);
-
-            if (facture == null) return HttpNotFound();
-
-            return new ViewAsPdf("FactureToPdf", new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
-        }
-
         public ActionResult FactureToPdf(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -169,56 +132,7 @@ namespace WebApplication1.Controllers
 
             if (facture == null) return HttpNotFound();
 
-            return View(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
-        }
-
-        //Methode permettant de créer un pdf à partir d'une vue html de la liste des devis
-        public ActionResult PrintList(string sortOrder, String searchstring, string currentFilter, int? page)
-        {
-            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-            var param = db.Parametres.Find(user.ParametreID);
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
-
-            factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
-
-            if (searchstring != null)
-                page = 1;
-            else
-                searchstring = currentFilter;
-
-            ViewBag.CurrentFilter = searchstring;
-            ViewBag.CurrentSort = sortOrder;
-
-            var listeTrie = factures.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = factures.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = factures.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = factures.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-            }
-
-
-            int pageSize = param.NbElementPage;
-            int pageNumber = (page ?? 1);
-
-            if (!String.IsNullOrEmpty(searchstring))
-                return new ViewAsPdf("ListToPdf", listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            else
-                return new ViewAsPdf("ListToPdf", listeTrie.ToPagedList(pageNumber, pageSize));
+            return new ViewAsPdf(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
         }
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
@@ -237,36 +151,29 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = factures.OrderBy(s => s.Objet);
-
-
-            switch (sortOrder)
-            {
-                case "objetAZ":
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-                case "objetZA":
-                    listeTrie = factures.OrderByDescending(s => s.Objet);
-                    break;
-                case "dateOldNew":
-                    listeTrie = factures.OrderBy(s => s.Date);
-                    break;
-                case "dateNewOld":
-                    listeTrie = factures.OrderByDescending(s => s.Date);
-                    break;
-                default:
-                    listeTrie = factures.OrderBy(s => s.Objet);
-                    break;
-            }
-
+            var listeTrie = SortOrder(factures, sortOrder);            
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return new ViewAsPdf(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             else
-                return View(listeTrie.ToPagedList(pageNumber, pageSize));
+                return new ViewAsPdf(listeTrie.ToPagedList(pageNumber, pageSize));
+        }
+
+        private IOrderedEnumerable<Facture> SortOrder(List<Facture> factures, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "objetZA":
+                    return factures.OrderByDescending(s => s.Objet);
+                case "dateOldNew":
+                    return factures.OrderBy(s => s.Date);
+                case "dateNewOld":
+                    return factures.OrderByDescending(s => s.Date);
+            }
+            return factures.OrderBy(s => s.Objet);
         }
     }
 }

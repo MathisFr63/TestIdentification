@@ -25,7 +25,7 @@
                     <button type="submit" value="Search" title="Recherche Basique" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                     <button type="reset" value="cancel" title="Annuler la Recherche" onclick="location.href='@Url.Action("Index", "Devis")'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
                     <button type="reset" value="a" title="Recherche Avancée" onclick="avancée();" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i></button>
-                    <a title="Imprimer la liste des Devis" target="_blank" href=@Url.Action("PrintList", "Devis") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
+                    <a title="Imprimer la liste des Devis" target="_blank" href=@Url.Action("ListToPdf", "Devis") class="btn btn-default"><span class="glyphicon glyphicon-print" /></a>
 
                 </div>
             }
@@ -150,7 +150,7 @@
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
-                <a title="Imprimer le devis" target="_blank" href=@Url.Action("Print", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 @if (isAdmin)
                 {
                     <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange">
