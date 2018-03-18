@@ -128,13 +128,9 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-<<<<<<< HEAD
             Facture facture = db.Factures.Find(id);
             ViewBag.user = db.Utilisateurs.Find(facture.UtilisateurID);
             ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
-=======
-            var facture = db.Factures.Find(id);
->>>>>>> 82d77723dfdba2d80430b0cc6098e0387130cb74
 
             if (facture == null) return HttpNotFound();
 
