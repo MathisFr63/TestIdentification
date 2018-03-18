@@ -26,8 +26,6 @@ namespace WebApplication1.DAL
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         // Liste de tous les Paramètres des utilisateurs.
         public DbSet<Parametre> Parametres { get; set; }
-        // Liste des adresses mails s'étant abonnées aux newsletters.
-        public DbSet<AdresseMail> AdressesMail { get; set; }
         // Liste des devis de tous les utilisateurs.
         public DbSet<Devis> Devis { get; set; }
         // Liste des données de chaque produit en fonction de chaque devis.
@@ -96,24 +94,6 @@ namespace WebApplication1.DAL
             SaveChanges();
 
             return user.ID;
-        }
-
-        /*public List<String> GetAllMail()
-        {
-            List<String> m; 
-            foreach( String mail in Utilisateurs.mail){
-                m.add(mail);
-            }
-            return m;
-        }*/
-
-        public List<Utilisateur> GetAllUsers()
-        {
-            List<Utilisateur> users= new List<Utilisateur>(); 
-            foreach( Utilisateur u in Utilisateurs){
-                users.Add(u);
-            }
-            return users;
         }
     }
 }

@@ -138,7 +138,7 @@ namespace WebApplication1.Controllers
             {
                 if (db.Utilisateurs.Count(u => u.ID == vm.Utilisateur.ID) == 0)
                 {
-                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+                    db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, vm.Utilisateur.Type, vm.Utilisateur.Telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.OtherInfo);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("Utilisateur.ID", "Cette adresse e-mail est déjà utilisée");

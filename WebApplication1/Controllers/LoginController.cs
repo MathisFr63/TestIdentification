@@ -87,7 +87,7 @@ namespace WebApplication1.Controllers
                 i++;
             }
 
-            string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.otherInfo);
+            string id = db.AjouterUtilisateur(vm.Utilisateur.ID, vm.motDePasse, vm.Utilisateur.Nom, vm.Utilisateur.Prénom, TypeUtilisateur.EnAttente, telephones, vm.Lieu, vm.Utilisateur.Civilite, vm.Utilisateur.OtherInfo);
 
             FormsAuthentication.SetAuthCookie(id, false);
             return Redirect("/");
@@ -120,7 +120,7 @@ namespace WebApplication1.Controllers
         public ActionResult RecoverMDPAfterLogin(Utilisateur utilisateur)
         {
             var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
-            user.codeRecup = RandomString(6);
+            user.CodeRecup = RandomString(6);
             db.SaveChanges();
 
             var smtp = new SmtpClient("smtp.gmail.com", 587)
@@ -134,7 +134,7 @@ namespace WebApplication1.Controllers
                 From = new MailAddress(user.ID, "Recuperation de mot de passe"),
                 IsBodyHtml = true,
                 Subject = "Recuperation de mot de passe",
-                Body = "Voici votre code de récupération :<p/>" + user.codeRecup + "<p/>Merci d'utiliser Easy Bill. A bientot !",
+                Body = "Voici votre code de récupération :<p/>" + user.CodeRecup + "<p/>Merci d'utiliser Easy Bill. A bientot !",
                 Priority = MailPriority.High
             };
 
@@ -151,7 +151,7 @@ namespace WebApplication1.Controllers
         {
             var user = db.Utilisateurs.FirstOrDefault(u => u.ID == utilisateur.ID);
 
-            if (user.codeRecup == utilisateur.codeRecup)                
+            if (user.CodeRecup == utilisateur.CodeRecup)                
                 return View("AfficherMotDePasse", new UtilisateurViewModelConnection {Utilisateur=user });
 
             return View("RecoverMDP");

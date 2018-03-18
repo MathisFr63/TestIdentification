@@ -18,22 +18,6 @@ namespace WebApplication1.DAL
         /// <param name="context">Contexte de l'application dans lequel on veut sauvegarder les données</param>
         protected override void Seed(ApplicationContext context)
         {
-            // Ajout d'adresses mails abonnées aux newsletters.
-            var adressesMail = new List<AdresseMail>
-            {
-                new AdresseMail("Mathis.FRIZOT@etu.uca.fr"),
-                new AdresseMail("Flavio.RANCHON@etu.uca.fr"),
-                new AdresseMail("Mathieu.RAVEL@etu.uca.fr"),
-                new AdresseMail("Aurelien.BERGER2@etu.uca.fr"),
-                new AdresseMail("Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
-                new AdresseMail("Jean.DUPONT@etu.uca.fr"),
-                new AdresseMail("Jacques.DUTREUIL@etu.uca.fr"),
-                new AdresseMail("Marc.MARTIN@etu.uca.fr"),
-                new AdresseMail("Pierre.DUTHON@etu.uca.fr"),
-                new AdresseMail("Martine.CORE@etu.uca.fr"),
-            };
-            adressesMail.ForEach(am => context.AdressesMail.Add(am));
-
             // Ajout des paramètres des utilisateurs.
             var parametres = new List<Parametre>
             {
