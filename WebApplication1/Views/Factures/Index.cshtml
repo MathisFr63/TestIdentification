@@ -4,6 +4,8 @@
 
 @{
     ViewBag.Title = "Facture";
+    var type = (new WebApplication1.DAL.ApplicationContext()).ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
+    var isAdmin = type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA;
 }
 
 <h2 class="titreIndex">
@@ -141,14 +143,16 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
-                @if (item.Relances < 3)
+                @if (isAdmin)
                 {
-                    <a title="Relancer la facture" href=@Url.Action("Relancer", "Factures", new { id = item.ID }) class="btn button-red"><span class="fas fa-sync-alt" /></a>
-                }
-                else
-                {
-                    <a title="Limite atteinte !" class="btn button-red isDisabled"><span class="fas fa-sync-alt" /></a>
-
+                    if (item.Relances < 3)
+                    {
+                        <a title="Relancer la facture" href=@Url.Action("Relancer", "Factures", new { id = item.ID }) class="btn button-red"><span class="fas fa-sync-alt" /></a>
+                    }
+                    else
+                    {
+                        <a title="Limite atteinte !" class="btn button-red isDisabled"><span class="fas fa-sync-alt" /></a>
+                    }
                 }
                 <a title="Imprimer la Facture" target="_blank" href=@Url.Action("FactureToPdf", "Factures", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
             </td>
