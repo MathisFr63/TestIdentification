@@ -29,9 +29,9 @@
             
             <div class="row">
                 <div class="col-xs-6">
-                    <p>@Model.Devis.UtilisateurID</p>
-                    <p>14 route de la Sauvetat</p>
-                    <p>Plauzat - 63730</p>
+                    <p>@ViewBag.user.Nom @ViewBag.user.Prénom</p>
+                    <p>@ViewBag.lieu.Adresse</p>
+                    <p>@ViewBag.lieu.Ville - @ViewBag.lieu.CodePostal</p>
                     <p>@Model.Devis.UtilisateurID</p>
                 </div>
                 <div class="col-xs-6" style="text-align: right">

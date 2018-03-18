@@ -284,7 +284,9 @@ namespace WebApplication1.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var devis = db.Devis.Find(id);
-            var user = db.Utilisateurs.Find(devis.UtilisateurID);
+            ViewBag.user = db.Utilisateurs.Find(devis.UtilisateurID);
+            ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
+            
 
             if (devis == null) return HttpNotFound();
 
