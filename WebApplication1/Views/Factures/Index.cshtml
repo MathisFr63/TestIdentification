@@ -141,6 +141,15 @@
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
+                @if (item.Relances < 3)
+                {
+                    <a title="Relancer la facture" href=@Url.Action("Relancer", "Factures", new { id = item.ID }) class="btn button-red"><span class="fas fa-sync-alt" /></a>
+                }
+                else
+                {
+                    <a title="Limite atteinte !" class="btn button-red isDisabled"><span class="fas fa-sync-alt" /></a>
+
+                }
                 <a title="Imprimer la Facture" target="_blank" href=@Url.Action("FactureToPdf", "Factures", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
             </td>
         </tr>

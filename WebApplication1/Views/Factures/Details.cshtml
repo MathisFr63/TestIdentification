@@ -44,7 +44,7 @@
 
         <div class="contact-item">
             <div class="contact-label">Facturée le</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Facture.DateString)</div>
+            <div class="contact-content"> @String.Format("{0:dd MMMM yyyy}", Model.Facture.Date) à @String.Format("{0:hh:mm}", Model.Facture.Date)</div>
         </div>
 
         <div class="contact-item">
