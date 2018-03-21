@@ -274,13 +274,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Create.cshtml" />
-    <Content Include="Views\Utilisateurs\Delete.cshtml" />
     <Content Include="Views\Utilisateurs\Details.cshtml" />
     <Content Include="Views\Utilisateurs\Edit.cshtml" />
     <Content Include="Views\Utilisateurs\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Devis\Create.cshtml" />
-    <Content Include="Views\Devis\Delete.cshtml" />
     <Content Include="Views\Devis\Details.cshtml" />
     <Content Include="Views\Devis\Edit.cshtml" />
     <Content Include="Views\Devis\Index.cshtml" />
@@ -293,7 +291,6 @@
     <Content Include="Views\Login\CreateUser.cshtml" />
     <Content Include="Views\Home\FeedbackSent.cshtml" />
     <Content Include="Views\Produits\Create.cshtml" />
-    <Content Include="Views\Produits\Delete.cshtml" />
     <Content Include="Views\Produits\Details.cshtml" />
     <Content Include="Views\Produits\Edit.cshtml" />
     <Content Include="Views\Produits\Index.cshtml" />
