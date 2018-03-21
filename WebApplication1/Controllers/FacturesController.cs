@@ -9,6 +9,7 @@ using WebApplication1.Models.Papiers;
 using PagedList;
 using Rotativa;
 using WebApplication1.ViewModels;
+using WebApplication1.Models.Account;
 
 namespace WebApplication1.Controllers
 {
@@ -25,7 +26,10 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+
+            var factures = db.Factures.ToList();
+            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
+                factures = factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
@@ -44,8 +48,7 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
                 return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            else
-                return View(listeTrie.ToPagedList(pageNumber, pageSize));
+            return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult RechercheAvancee(string Objet, string Date, string Produit, string Relance, string Reglement, int? page)
@@ -82,18 +85,15 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facture facture = db.Factures.Find(id);
+            var facture = db.Factures.Find(id);
 
             if (facture == null) return HttpNotFound();
 
             if (erreurRelance != null && erreurRelance == true)
-            {
                 ViewBag.ErreurRelance = true;
-            }
+            
 
-            return View(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID,
-                                                    db.DonneeProduit.Where(DP => DP.FactureID == id).ToList())
-            { Facture = facture });
+            return View(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
         }
 
         // GET: Factures/Details/5
@@ -102,7 +102,7 @@ namespace WebApplication1.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facture facture = db.Factures.Find(id);
+            var facture = db.Factures.Find(id);
 
             if (facture == null) return HttpNotFound();
             var param = db.Parametres.Find(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ParametreID);
@@ -129,18 +129,23 @@ namespace WebApplication1.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Facture facture = db.Factures.Find(id);
+            ViewBag.user = db.Utilisateurs.Find(facture.UtilisateurID);
+            ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
 
             if (facture == null) return HttpNotFound();
 
-            return new ViewAsPdf(new FactureProduitViewModel(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ID, db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
+            return new ViewAsPdf(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
         }
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-            var factures = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
 
+            var factures = db.Factures.ToList();
+            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
+                factures = factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+            
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
             if (searchstring != null)
@@ -158,8 +163,7 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(searchstring))
                 return new ViewAsPdf(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
-            else
-                return new ViewAsPdf(listeTrie.ToPagedList(pageNumber, pageSize));
+            return new ViewAsPdf(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
         private IOrderedEnumerable<Facture> SortOrder(List<Facture> factures, string sortOrder)

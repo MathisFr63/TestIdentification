@@ -201,7 +201,7 @@ namespace WebApplication1.Controllers
                 Credentials = new System.Net.NetworkCredential("afiacrocus@gmail.com", "projetTut1718"),
                 EnableSsl = true
             };
-            var users = db.GetAllUsers();
+            var users = db.Utilisateurs.ToList();
             foreach (var u in users)
             {
                 var param = db.Parametres.Find(u.ParametreID);

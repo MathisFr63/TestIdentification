@@ -50,13 +50,13 @@ namespace WebApplication1.Models.Account
 
         public Civilite Civilite;
 
-        public string otherInfo { get; set; }
+        public string OtherInfo { get; set; }
 
         // Type de l'utilisateur (Administrateur ou enregistré).
         public TypeUtilisateur Type { get; set; }
 
         [Display(Name = "Code de récupération")]
-        public string codeRecup { get; set; }
+        public string CodeRecup { get; set; }
 
         public int ParametreID { get; set; }
 
@@ -89,7 +89,7 @@ namespace WebApplication1.Models.Account
             this.Type = type;
             this.LieuID = lieu.ID;
             this.Civilite = civilite;
-            this.otherInfo = otherInfo;
+            this.OtherInfo = otherInfo;
             this.Telephones = telephones;
 
             this.ParametreID = parametre.ID;
