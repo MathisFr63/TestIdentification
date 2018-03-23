@@ -33,7 +33,14 @@
         //public int Prixfinal { get; set; } Prix calculé
 
         //Prix toutes taxes comprises du produit
-        //public int TotalTTC { get; set; } Prix calculé
+        public double TotalTTC
+        {
+            get
+            {
+                var total = PrixHT + (PrixHT * TVA / 100);
+                return total - (total * Reduction / 100);
+            }
+        }
 
         /// <summary>
         /// Méthode permettant de retranscrire les données du produit sous forme de chaîne de caractères.

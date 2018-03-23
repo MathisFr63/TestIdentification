@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
-        public ActionResult RechercheAvancee(string Objet, string Date, string Valide, string Produit, string TotalHT, int? page)
+        public ActionResult RechercheAvancee(string Objet, string Date, string Valide, string Produit, string TotalTTC, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
@@ -83,12 +83,12 @@ namespace WebApplication1.Controllers
                     return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
                 });
 
-            if (int.TryParse(TotalHT, out var totalHT))
+            if (int.TryParse(TotalTTC, out var totalTTC))
                 myListTrier = myListTrier.Where(d =>
                 {
                     double total = 0;
-                    d.Produits.ToList().ForEach(x => total += x.PrixHT);
-                    return total == totalHT;
+                    d.Produits.ToList().ForEach(x => total += x.TotalTTC);
+                    return total == totalTTC;
                 });
 
             return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));

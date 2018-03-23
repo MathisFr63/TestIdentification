@@ -102,8 +102,7 @@
                         <td class="col-xs-2">
                             <p>
                                 @{
-                                    var prix = (item.Quantite * item.PrixHT);
-                                    var montantTTC = prix + prix * item.TVA / 100.0 - item.Reduction;
+                                    var montantTTC = item.TotalTTC * item.Quantite;
                                     totalTTC += montantTTC;
                                 }
                                 @montantTTC €

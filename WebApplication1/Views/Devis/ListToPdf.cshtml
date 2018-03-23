@@ -1,6 +1,5 @@
 ﻿@*Vue permettant l'affichage des devis de l'utilisateur*@
 @model PagedList.IPagedList<WebApplication1.Models.Papiers.Devis>
-@using PagedList.Mvc;
 
 @{
     Layout = null;
@@ -15,11 +14,10 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
-<h2 class="titreIndex">
-    Vos Devis
-</h2>
 <body>
-
+    <h2 class="titreIndex">
+        Vos Devis
+    </h2>
     @*Affichage de la liste des devis*@
     <table class="table">
         <tr>
@@ -53,7 +51,7 @@
                     </td>*@
                 <td>
                     @foreach (var a in item.Produits)
-                {
+                    {
                         @Html.DisplayFor(elt => a.Nom); <i>=></i>
                         @Html.DisplayFor(elt => a.Quantite); <br />
                     }
@@ -63,3 +61,4 @@
     </table>
     <br />
 </body>
+</html>

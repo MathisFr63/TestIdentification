@@ -74,7 +74,7 @@
                 <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
             </th>
             <th>
-                <input type="text" name="TotalHT" placeholder="Total HT" class="searchBar" value="" />
+                <input type="text" name="TotalTTC" placeholder="Total TTC" class="searchBar" value="" />
             </th>
             <th>
                 <button type="submit" value="Search" class="btn button-bluedark">
@@ -145,11 +145,9 @@
                     double somme = 0;
                     foreach (var p in item.Produits)
                     {
-                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
-                        double reduc = PrixTTC * p.Reduction / 100;
-                        somme += PrixTTC * p.Quantite - reduc;
+                        somme += p.TotalTTC * p.Quantite;
                     }
-                    <p>@String.Format("  {0:F2}", somme) €</p>
+                    <p>@string.Format("  {0:F2}", somme) €</p>
                 }
             </td>
             <td>

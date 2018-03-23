@@ -74,11 +74,6 @@
             <div class="contact-content">@Html.DisplayFor(model => model.TVA) %</div>
         </div>
 
-        @{ 
-            var prixTTC = Model.PrixHT + Model.PrixHT * Model.TVA / 100;
-            prixTTC = prixTTC - prixTTC * Model.Reduction / 100;
-        }
-
         <div class="contact-item">
             <div class="contact-label">Réduction</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Reduction) %</div>
@@ -86,7 +81,7 @@
 
         <div class="contact-item">
             <div class="contact-label">Prix unitaire TTC</div>
-            <div class="contact-content">@String.Format("  {0:F2}", prixTTC) €</div>
+            <div class="contact-content">@String.Format("  {0:F2}", Model.TotalTTC) €</div>
         </div>
     </div>
 </div>

@@ -27,6 +27,16 @@
         // Prix hors taxe du produit
         public double PrixHT { get; set; }
 
+        //Prix toutes taxes comprises du produit
+        public double TotalTTC
+        {
+            get
+            {
+                var total = PrixHT + (PrixHT * TVA / 100);
+                return total - (total * Reduction / 100);
+            }
+        }
+
         // Réduction ajoutée au prix du produit
         public double Reduction { get; set; }
 
