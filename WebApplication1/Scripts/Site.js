@@ -67,7 +67,7 @@ function addNumero(value, prefixe) {
     var b = '<div id="' + nb + '">' +
             '<div style="display:flex;">' +
                 '<div style="display: flex;">' +
-                    '<input class="form-control text-box single-line" style= "width: 50px" type= "text" value= "' + prefixe + '" name="prefixe' + nb + '" required>' +
+                    '<input class="form-control text-box single-line" style= "width: 57px" type= "text" value= "' + prefixe + '" name="prefixe' + nb + '" required>' +
                     '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" type="text" value="' + value + '" required>' +
                 '</div>' +
                 '<button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">' +

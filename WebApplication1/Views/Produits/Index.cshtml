@@ -83,12 +83,12 @@
 
     <tr class="col-md-12">
         <th class="col-md-2">Libelle</th>
-        <th class="col-md-6">Commentaire</th>
+        <th class="col-md-4">Commentaire</th>
         <th class="col-md-2">PrixTTC</th>
         @*<th>Reduction</th>
             <th>TVA</th>*@
         <th class="col-md-1">Type</th>
-        <th class="col-md-1"></th>
+        <th class="col-md-2"></th>
     </tr>
 
     @*Pour chaque produit, afficher son libelle, commentaire, prix hors taxes /*, réduction, taux de TVA*/ , et type*@
@@ -102,9 +102,18 @@
             </td>
 
             @*Affichage du commentaire*@
-            <td style="width:500px;">
-                @Html.DisplayFor(modelItem => item.Commentaire)
-            </td>
+            <td>
+                
+                @if (item.Commentaire.Length > 80)
+                {
+                    @item.Commentaire.Substring(0, 80); <text> ... </text>
+                }
+                else
+                {
+                    @item.Commentaire;
+                }
+
+            </td >
 
             @*Affichage du prix hors taxes*@
             <td>
