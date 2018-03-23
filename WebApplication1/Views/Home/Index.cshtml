@@ -237,7 +237,7 @@ else
                         <em class="fa fa-xl fa-boxes color-teal"></em>
                         <div class="large">@ViewBag.NbProdSold</div>
                         <div class="text-muted">
-                            @if(isAdmin)
+                            @if (isAdmin)
                             {
                                 <text>Produits vendus</text>
                             }
@@ -324,6 +324,9 @@ else
                     <div class="easypiechart" id="easypiechart-red" data-percent="27"><span class="percent">+ @ViewBag.CAduMois €</span></div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-12">
+            <h2 class="text-center color-orange">Client du mois : @ViewBag.ClientDuMois.FullName</h2>
         </div>
     </div>
 

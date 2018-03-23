@@ -82,7 +82,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
-  
+
             if (user != null)
             {
                 if (user.Type == TypeUtilisateur.EnAttente)
@@ -92,7 +92,7 @@ namespace WebApplication1.Controllers
                 var param = db.Parametres.Find(user.ParametreID);
 
                 ViewBag.Stats = param.NbJourStat;
-            
+
                 var listFacturesRecentes = ChargerFacture(user, param);
 
                 ChargerDevis(user, param);
@@ -100,6 +100,36 @@ namespace WebApplication1.Controllers
                 ChargerProduit(user, param);
 
                 ProduitLePlusVendu(listFacturesRecentes);
+
+                //var test = db.Utilisateurs.ToList().Select(u => db.Factures.ToList().Where(f => f.UtilisateurID == u.ID).Sum(f => f.Produits.Sum(p => p.PrixHT)));
+
+                //var test2 = db.Factures.ToList().Sum(f => f.Produits.Sum(p => p.PrixHT));
+
+                double maxSommeFacture = 0;
+
+                foreach (Utilisateur u in db.Utilisateurs.ToList())
+                {
+                    if (ViewBag.ClientDuMois == null) ViewBag.ClientDuMois = u;
+
+                    double total = 0;
+                    foreach (Facture f in db.Factures.ToList().Where(f => f.UtilisateurID == u.ID && f.Date.CompareTo(DateTime.Today.AddMonths(-1)) > 0))
+                    {
+                        f.Produits = db.DonneeProduit.Where(DP => DP.FactureID == f.ID).ToList();
+                        double somme = 0;
+                        foreach (var p in f.Produits)
+                        {
+                            double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                            double reduc = PrixTTC * p.Reduction / 100;
+                            somme += PrixTTC * p.Quantite - reduc;
+                            total += somme;
+                        }
+                    }
+                    if (total > maxSommeFacture)
+                    {
+                        maxSommeFacture = total;
+                        ViewBag.ClientDuMois = u;
+                    }
+                }
             }
 
             return View();
@@ -205,12 +235,13 @@ namespace WebApplication1.Controllers
             foreach (var u in users)
             {
                 var param = db.Parametres.Find(u.ParametreID);
-                if (param.Abonnee) { 
+                if (param.Abonnee)
+                {
                     var mail = new MailMessage
                     {
                         From = new MailAddress(u.ID, "Newsletter Easybill"),
                         IsBodyHtml = true,
-                        Subject = n.Objet+" | Newsletter EasyBill",
+                        Subject = n.Objet + " | Newsletter EasyBill",
                         Body = n.Contenu,
                         Priority = MailPriority.High
                     };

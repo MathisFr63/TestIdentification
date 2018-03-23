@@ -42,6 +42,14 @@ namespace WebApplication1.Models.Account
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                return Prénom + " " + Nom;
+            }
+        }
+
         // Liste des numéros de téléphone de l'utilisateur
         public ICollection<Telephone> Telephones { get; set; }
 
