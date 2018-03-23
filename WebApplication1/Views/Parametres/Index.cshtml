@@ -16,78 +16,135 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*Champs caché afin de stocker l'identifiant du produit*@
-        @Html.HiddenFor(model => model.ID)
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*Champs caché afin de stocker l'identifiant du produit*@
+    @Html.HiddenFor(model => model.ID)
 
-        <div class="col-md-6">
-            @*Div permettant de modifier le libelle*@
-            <div class="form-group">
-                <label class="control-label">Durée de la validité d'un devis</label>
-                @Html.EditorFor(model => model.DureeValiditeDevis, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DureeValiditeDevis, "", new { @class = "text-danger" })
-            </div>
-
-            @*Div permettant de modifier le prix hors taxes*@
-            <div class="form-group">
-                <label class="control-label">Nombre de relance d'une facture</label>
-                @Html.EditorFor(model => model.NbRelanceFacture, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NbRelanceFacture, "", new { @class = "text-danger" })
-            </div>
-
-            @*Div permettant de modifier la réduction*@
-            <div class="form-group">
-                <label class="control-label">Thème</label>
-                @Html.EnumDropDownListFor(model => model.Theme, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
-            </div>
-
-            @*Div permettant de modifier le taux de TVA*@
-            <div class="form-group">
-                <label class="control-label">Nombre d'éléments affiché pour chaque page</label>
-                @Html.EditorFor(model => model.NbElementPage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NbElementPage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            @*    <p class="lead">Text par defaut pour les retours utilisateur : @Html.Raw(HttpUtility.HtmlDecode(Model.DefaultTextFeedback))</p>*@
-            @*Div permettant de modifier le commentaire*@
-            <div class="form-group">
-                <label class="control-label">Nombre de jour pour les statistiques</label>
-                @Html.EditorFor(model => model.NbJourStat, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NbJourStat, "", new { @class = "text-danger" })
-            </div>
-
-            @*Div permettant de modifier le commentaire*@
-            <div class="form-group">
-                <label class="control-label">Taille de l'historique</label>
-                @Html.EditorFor(model => model.TailleHistorique, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TailleHistorique, "", new { @class = "text-danger" })
-            </div>
-
-            @*Div permettant de modifier le type (bien / service)*@
-            <div class="form-group">
-                <label class="control-label">Text par defaut pour les retours utilisateur</label>
-                @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
-                @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @if (!isAdmin)
-                {
-                    <label class="control-label">Abonnement à la newsletter</label>
-                    @Html.EditorFor(model => model.Abonnee, new { htmlAttributes = new { @class = "form-control", @style = "width: 20px; height: 20px;" } })
-                    @Html.ValidationMessageFor(model => model.Abonnee, "", new { @class = "text-danger" })
-                }
-            </div>           
-        </div>
-
-        @*Bouton permettant de valider la modification du produit*@
+    <div class="col-md-6">
+        @*Div permettant de modifier le libelle*@
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sauvegarder" class="button btn-secondary" />
-            </div>
+            <label class="control-label">Durée de la validité d'un devis</label>
+            @Html.EditorFor(model => model.DureeValiditeDevis, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DureeValiditeDevis, "", new { @class = "text-danger" })
+        </div>
+
+        @*Div permettant de modifier le prix hors taxes*@
+        <div class="form-group">
+            <label class="control-label">Nombre de relance d'une facture</label>
+            @Html.EditorFor(model => model.NbRelanceFacture, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NbRelanceFacture, "", new { @class = "text-danger" })
+        </div>
+
+        @*Div permettant de modifier la réduction*@
+        <div class="form-group">
+            <label class="control-label">Thème</label>
+            @Html.EnumDropDownListFor(model => model.Theme, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
+        </div>
+
+        @*Div permettant de modifier le taux de TVA*@
+        <div class="form-group">
+            <label class="control-label">Nombre d'éléments affiché pour chaque page</label>
+            @Html.EditorFor(model => model.NbElementPage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NbElementPage, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="col-md-6">
+        @*    <p class="lead">Text par defaut pour les retours utilisateur : @Html.Raw(HttpUtility.HtmlDecode(Model.DefaultTextFeedback))</p>*@
+        @*Div permettant de modifier le commentaire*@
+        <div class="form-group">
+            <label class="control-label">Nombre de jour pour les statistiques</label>
+            @Html.EditorFor(model => model.NbJourStat, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NbJourStat, "", new { @class = "text-danger" })
+        </div>
+
+        @*Div permettant de modifier le commentaire*@
+        <div class="form-group">
+            <label class="control-label">Taille de l'historique</label>
+            @Html.EditorFor(model => model.TailleHistorique, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TailleHistorique, "", new { @class = "text-danger" })
+        </div>
+
+        @*Div permettant de modifier le type (bien / service)*@
+        <div class="form-group">
+            <label class="control-label">Text par defaut pour les retours utilisateur</label>
+            @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
+            @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @if (!isAdmin)
+            {
+                <label class="control-label">Abonnement à la newsletter</label>
+                @Html.EditorFor(model => model.Abonnee, new { htmlAttributes = new { @class = "form-control", @style = "width: 20px; height: 20px;" } })
+                @Html.ValidationMessageFor(model => model.Abonnee, "", new { @class = "text-danger" })
+            }
+        </div>
+    </div>
+
+    <hr class="separerEdit" />
+
+    <div class="col-md-6">
+        <h3>Devis</h3>
+        @*Div permettant de modifier les conditions générales pour un devis*@
+        <div class="form-group">
+            <label class="control-label">Conditions générales</label>
+            @Html.TextAreaFor(model => model.ConditionsGeneralesDevis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ConditionsGeneralesDevis, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le texte de fin pour un devis*@
+        <div class="form-group">
+            <label class="control-label">Texte De Fin</label>
+            @Html.TextAreaFor(model => model.TexteDeFinDevis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TexteDeFinDevis, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le pied de page pour un devis*@
+        <div class="form-group">
+            <label class="control-label">Pied de page</label>
+            @Html.TextAreaFor(model => model.FooterDevis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FooterDevis, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le texte d'introduction d'un devis*@
+        <div class="form-group">
+            <label class="control-label">Texte d'introduction</label>
+            @Html.TextAreaFor(model => model.TexteIntroductionDevis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TexteIntroductionDevis, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Facture</h3>
+        @*Div permettant de modifier les conditions générales pour une facture*@
+        <div class="form-group">
+            <label class="control-label">Conditions générales</label>
+            @Html.TextAreaFor(model => model.ConditionsGeneralesFacture, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ConditionsGeneralesFacture, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le texte de fin pour une facture*@
+        <div class="form-group">
+            <label class="control-label">Texte De Fin</label>
+            @Html.TextAreaFor(model => model.TexteDeFinFacture, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TexteDeFinFacture, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le pied de page pour une facture*@
+        <div class="form-group">
+            <label class="control-label">Pied de page</label>
+            @Html.TextAreaFor(model => model.FooterFacture, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FooterFacture, "", new { @class = "text-danger" })
+        </div>
+        @*Div permettant de modifier le texte d'introduction d'une facture*@
+        <div class="form-group">
+            <label class="control-label">Texte d'introduction</label>
+            @Html.TextAreaFor(model => model.TexteIntroductionFacture, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TexteIntroductionFacture, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @*Bouton permettant de valider la modification du produit*@
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Sauvegarder" class="button btn-secondary" />
+        </div>
+    </div>
+</div>
 }
