@@ -249,6 +249,9 @@ namespace WebApplication1.Controllers
                     smtp.Send(mail);
                 }
             }
+
+
+
             return View();
         }
     }
