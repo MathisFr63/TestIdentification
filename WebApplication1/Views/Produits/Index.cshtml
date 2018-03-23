@@ -82,9 +82,9 @@
     }
 
     <tr class="col-md-12">
-        <th class="col-md-2">Libelle</th>
-        <th class="col-md-4">Commentaire</th>
-        <th class="col-md-2">PrixTTC</th>
+        <th class="col-md-2">@Html.LabelFor(m => m.First().Libelle)</th>
+        <th class="col-md-4">@Html.LabelFor(m => m.First().Détails)</th>
+        <th class="col-md-2">@Html.LabelFor(m => m.First().TotalTTC)</th>
         @*<th>Reduction</th>
             <th>TVA</th>*@
         <th class="col-md-1">Type</th>
@@ -104,13 +104,13 @@
             @*Affichage du commentaire*@
             <td>
                 
-                @if (item.Commentaire.Length > 80)
+                @if (item.Détails.Length > 80)
                 {
-                    @item.Commentaire.Substring(0, 80); <text> ... </text>
+                    @item.Détails.Substring(0, 80); <text> ... </text>
                 }
                 else
                 {
-                    @item.Commentaire;
+                    @item.Détails;
                 }
 
             </td >

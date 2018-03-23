@@ -36,25 +36,39 @@
 
 @*Div permettant d'afficher les détails du Facture*@
 <div class="section">
-    <div class="section-header">
-        <h2 class="section-title">Informations produit</h2>
-    </div>
-    <div class="contact">
-        <div class="contact-item">
-            <div class="contact-label">Libellé</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
-        </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="section-header">
+                        <h2 class="section-title">Informations produit</h2>
+                    </div>
+                    <div class="contact">
+                        <div class="contact-item">
+                            <div class="contact-label">@Html.LabelFor(m => m.Libelle)</div>
+                            <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
+                        </div>
 
-        <div class="contact-item">
-            <div class="contact-label">Note</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Commentaire)</div>
-        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">@Html.LabelFor(m => m.Détails)</div>
+                            <div class="contact-content">@Html.DisplayFor(model => model.Détails)</div>
+                        </div>
 
-        <div class="contact-item">
-            <div class="contact-label">Type</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
-        </div>
-    </div>
+                        <div class="contact-item">
+                            <div class="contact-label">@Html.LabelFor(m => m.Type)</div>
+                            <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @* Il faut modifier ça pour que l'image prenne la place voulue ! *@
+                        <img src="@Url.Content(Model.image.FileName)" alt="Image du produit" style="max-width: 50%" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 
@@ -65,23 +79,25 @@
     </div>
     <div class="contact">
         <div class="contact-item">
-            <div class="contact-label">Prix unitaire HT</div>
+            <div class="contact-label"><strong>Prix unitaire HT</strong></div>
             <div class="contact-content">@Html.DisplayFor(model => model.PrixHT) €</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">TVA</div>
+            <div class="contact-label">@Html.LabelFor(m => m.TVA)</div>
             <div class="contact-content">@Html.DisplayFor(model => model.TVA) %</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Réduction</div>
+            <div class="contact-label">@Html.LabelFor(m => m.Reduction)</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Reduction) %</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Prix unitaire TTC</div>
+            <div class="contact-label"><strong>Prix unitaire TTC</strong></div>
             <div class="contact-content">@String.Format("  {0:F2}", Model.TotalTTC) €</div>
         </div>
     </div>
 </div>
+
+@*<img src="@Url.Content(Model.image.FileName)" alt="Image du produit" />*@

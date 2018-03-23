@@ -74,10 +74,10 @@
 
         @*Div permettant d'ajouter un commentaire au produit*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Détails, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Commentaire, new { @class = "form-control textAreaCSS" })
-                @Html.ValidationMessageFor(model => model.Commentaire, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.Détails, new { @class = "form-control textAreaCSS" })
+                @Html.ValidationMessageFor(model => model.Détails, "", new { @class = "text-danger" })
             </div>
         </div>
         <br />

@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
                 myListTrier = myListTrier.Where(s => s.Libelle.ToUpper().Contains(Libelle.ToUpper()));
 
             if (Commentaire != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Commentaire.ToUpper().Contains(Commentaire.ToUpper()));
+                myListTrier = myListTrier.Where(s => s.Détails.ToUpper().Contains(Commentaire.ToUpper()));
 
             if (Enum.TryParse(Type, out TypeService searchType))
                 myListTrier = myListTrier.Where(s => s.Type == searchType);

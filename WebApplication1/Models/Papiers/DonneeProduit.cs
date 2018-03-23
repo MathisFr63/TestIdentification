@@ -60,7 +60,7 @@
         public DonneeProduit(Produit produit) : this()
         {
             Nom = produit.Libelle;
-            Commentaire = produit.Commentaire;
+            Commentaire = produit.Détails;
             PrixHT = produit.PrixHT;
             Reduction = produit.Reduction;
             TVA = produit.TVA;
