@@ -51,7 +51,7 @@
 
         @*Div permettant la modification du commentaire lié au devis*@
         <div class="form-group">
-            @Html.LabelFor(model => model.Devis.Commentaire, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Autres informations</label>
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS" })
                 @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
@@ -63,7 +63,7 @@
         <hr />
         @*Div permettant la modification des produits que possède le devis*@
         <div class="form-group col-md-12">
-            <div class="multiselect">
+            <div class="multiselect col-md-4">
                 <div class="selectBox" onclick="showCheckboxes()">
                     <select class="form-control">
                         <option>Select an option</option>
@@ -73,23 +73,26 @@
                 <div id="checkboxes" style="display: block;">
                     @foreach (var item in Model.Produits)
                     {
-                        <label>
-                            <input type="checkbox" onclick="toggleArticleEdit('@item.Text')" id='@item.Text input' />@item.Text
-                        </label>
+                    <label>
+                        <input type="checkbox" onclick="toggleArticleEdit('@item.Libelle', 1, '@item.PrixHT', '@item.PrixHT', '@item.TVA', '@item.TotalTTC')" id='@item.Libelle input' style="margin-right: 5px;"/>@item.Libelle
+                    </label>
                     }
                 </div>
             </div>
 
-            <div id="articles" class="col-md-6"></div>
+            <div id="articles" class="col-md-8"></div>
         </div>
 
         @*Script permettant de sélectionner la quantité voulue pour chaque produit du devis*@
         @foreach (var item in Model.ProduitsSelected)
         {
-            <script type="text/javascript">
-                toggleArticleEdit("@item.Nom", @item.Quantite);
+        <script type="text/javascript">
+                @{
+                    var totalHT = item.PrixHT*item.Quantite;
+                }
+                toggleArticleEdit("@item.Nom", @item.Quantite, "@item.PrixHT", "@totalHT", "@item.TVA", "@item.TotalTTC");
                 document.getElementById("@item.Nom input").checked = true;
-            </script>
+        </script>
         }
 
         @*Bouton permettant de valider la modification du devis (sauvegarder les modification) ou de facturer le devis*@

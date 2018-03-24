@@ -60,37 +60,38 @@
 <table class="table">
     @using (Html.BeginForm("RechercheAvancee", "Devis", FormMethod.Get))
     {
-        <tr id="listAvancée" style="display: none">
-            <th>
-                <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="TotalTTC" placeholder="Total TTC" class="searchBar" value="" />
-            </th>
-            <th>
-                <button type="submit" value="Search" class="btn button-bluedark">
-                    <span class="glyphicon glyphicon-search" />
-                </button>
-            </th>
-        </tr>
+    <tr id="listAvancée" style="display: none">
+        <th>
+            <input type="text" name="Objet" placeholder="Objet" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="TotalTTC" placeholder="Total TTC" class="searchBar" value="" />
+        </th>
+        <th>
+            <button type="submit" value="Search" class="btn button-bluedark">
+                <span class="glyphicon glyphicon-search" />
+            </button>
+        </th>
+    </tr>
     }
     <tr>
         <th>Objet</th>
         <th>Date</th>
         <th>Valide</th>
         @*<th>Commentaire</th>
-            <th>Monnaie</th>*@
+          <th>Monnaie</th>*@
         <th>Produits</th>
         <th>Total TTC</th>
+        <th>Numéro</th>
         <th></th>
     </tr>
     @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
@@ -151,6 +152,12 @@
                 }
             </td>
             <td>
+                @item.Identifiant
+            </td>
+            <td>
+                <a title="Details Devis" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn button-fluo">
+                    <span class="glyphicon glyphicon-file" />
+                </a>
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
                     <span class="fas fa-cart-arrow-down" />
                 </button>

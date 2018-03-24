@@ -72,11 +72,15 @@
     <div class="section-header">
         <h2 class="section-title">Détail produits</h2>
     </div>
-    <div class="contact">
+    <div class="contact col-md-12">
 
         <div class="contact-item contact-item-large">
-            <div class="contact-label">Nom du produit</div>
-            <div class="contact-content">Prix HT</div>
+            <div class="contact-content col-md-2">Nom du produit</div>
+            <div class="contact-content col-md-2">Prix HT</div>
+            <div class="contact-content col-md-1">Quantité</div>
+            <div class="contact-content col-md-2">Total HT</div>
+            <div class="contact-content col-md-1">TVA</div>
+            <div class="contact-content col-md-2">Total TTC</div>
         </div>
 
 
@@ -85,10 +89,14 @@
             {
                 foreach (var p in Model.Facture.Produits)
                 {
-                <div class="contact-item">
-                    <div class="contact-label">@p.Nom</div>
-                    <div class="contact-content">@p.PrixHT €</div>
-                </div>
+                    <div class="contact-item contact-item-large">
+                        <div class="contact-label col-md-2">@p.Nom</div>
+                        <div class="contact-label col-md-2">@p.PrixHT €</div>
+                        <div class="contact-label col-md-1">@p.Quantite</div>
+                        <div class="contact-label col-md-2">@p.TotalHT €</div>
+                        <div class="contact-label col-md-1">@p.TVA %</div>
+                        <div class="contact-label col-md-2">@p.TotalTTC €</div>
+                    </div>
                 }
             }
         }
@@ -155,22 +163,22 @@
             <div class="contact-content">@Html.DisplayFor(model => model.Facture.Reglement)</div>
         </div>
 
-        <div class="contact-item">
+        @*<div class="contact-item">
             <div class="contact-label">Nombre de relances</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Facture.Relances)</div>
-        </div>
+        </div>*@
 
     </div>
-    @if (isAdmin)
+    @*@if (isAdmin)
     {
         <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
-    }
+    }*@
 </div>
 
 
-@if (ViewBag.ErreurRelance != null && ViewBag.ErreurRelance == true)
+@*@if (ViewBag.ErreurRelance != null && ViewBag.ErreurRelance == true)
 {
     <script type="text/javascript">
         alert("Nombre de relance déjà au maximum");
     </script>
-}
+}*@

@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult RechercheAvancee(string Objet, string Date, string Produit, string Relance, string Reglement, int? page)
+        public ActionResult RechercheAvancee(string Objet, string Date, string Produit, /*string Relance,*/ string Reglement, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
@@ -70,8 +70,8 @@ namespace WebApplication1.Controllers
                     return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
                 });
 
-            if (int.TryParse(Relance, out var relance))
-                myListTrier = myListTrier.Where(d => d.Relances == relance);
+            //if (int.TryParse(Relance, out var relance))
+                //myListTrier = myListTrier.Where(d => d.Relances == relance);
 
             if (Enum.TryParse<TypeReglement>(Reglement, out var reglement))
                 myListTrier = myListTrier.Where(d => d.Reglement == reglement);
@@ -81,7 +81,7 @@ namespace WebApplication1.Controllers
 
         // GET: Factures/Details/5
         // Méthode permettant grâce à l'accès par l'url d'afficher les détails de la facture sélectionnée
-        public ActionResult Details(int? id, bool? erreurRelance)
+        public ActionResult Details(int? id/*, bool? erreurRelance*/)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -89,8 +89,8 @@ namespace WebApplication1.Controllers
 
             if (facture == null) return HttpNotFound();
 
-            if (erreurRelance != null && erreurRelance == true)
-                ViewBag.ErreurRelance = true;
+            //if (erreurRelance != null && erreurRelance == true)
+            //    ViewBag.ErreurRelance = true;
             
 
             return View(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
@@ -98,23 +98,23 @@ namespace WebApplication1.Controllers
 
         // GET: Factures/Details/5
         // Méthode permettant d'incrémenter le nombre de relances de la facture sélectionnée si le client n'a pas encore réglé la facture.
-        public ActionResult Relancer(int? id)
-        {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //public ActionResult Relancer(int? id)
+        //{
+        //    if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var facture = db.Factures.Find(id);
+        //    var facture = db.Factures.Find(id);
 
-            if (facture == null) return HttpNotFound();
-            var param = db.Parametres.Find(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ParametreID);
-            if (facture.Relances < param.NbRelanceFacture)
-            {
-                facture.Relances++;
-                db.SaveChanges();
-               return RedirectToAction("Index");
-            }
+        //    if (facture == null) return HttpNotFound();
+        //    var param = db.Parametres.Find(db.ObtenirUtilisateur(HttpContext.User.Identity.Name).ParametreID);
+        //    if (facture.Relances < param.NbRelanceFacture)
+        //    {
+        //        facture.Relances++;
+        //        db.SaveChanges();
+        //       return RedirectToAction("Index");
+        //    }
 
-            return RedirectToAction("Details", new { id, @erreurRelance = true });
-        }
+        //    return RedirectToAction("Details", new { id, @erreurRelance = true });
+        //}
 
         protected override void Dispose(bool disposing)
         {

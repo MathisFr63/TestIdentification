@@ -20,43 +20,31 @@
 <br />
 
 @*Div permettant d'afficher les détails du devis avant de le facturer*@
-<div>
-    <dl class="dl-horizontal">
-        @*Affichage de l'objet du devis*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Objet)
-        </dt>
+<div class="contact">
+    <div class="contact-item">
+        <div class="contact-label">Objet du devis</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Objet)</div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Objet)
-        </dd>
+    <div class="contact-item">
+        <div class="contact-label">Créé le</div>
+        <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Date) à @string.Format("{0:hh:mm}", Model.Date)</div>
+    </div>
 
-        @*Affichage de la date de création du devis*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+    <div class="contact-item">
+        <div class="contact-label">Autres informations</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Commentaire)</div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateString)
-        </dd>
+    <div class="contact-item">
+        <div class="contact-label">Total HT</div>
+        <div class="contact-content">@ViewBag.totalHT</div>
+    </div>
 
-        @*Affichage du commentaire lié au devis*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Commentaire)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Commentaire)
-        </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.EntrepriseID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EntrepriseID)
-        </dd>*@
-    </dl>
+    <div class="contact-item">
+        <div class="contact-label">Total TTC</div>
+        <div class="contact-content">@ViewBag.totalTTC</div>
+    </div>
 
     @*Formulaire permettant de valider la facturation du devis ainsi que de créer la facture lié au devis*@
     @using (Html.BeginForm())
@@ -65,9 +53,10 @@
         <div class="form-horizontal">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Reglement, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+
+            <div class="contact-item">
+                <div class="contact-label">Mode de règlement</div>
+                <div class="contact-content">
                     @Html.EnumDropDownListFor(model => model.Reglement, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Reglement, "", new { @class = "text-danger" })
                 </div>

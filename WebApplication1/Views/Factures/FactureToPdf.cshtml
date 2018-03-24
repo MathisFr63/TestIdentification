@@ -13,14 +13,40 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 <body>
+    <style>
+        .en-tete {
+            width: 100%;
+            display: flex;
+            justify-content: space-between
+        }
+
+            .en-tete * {
+                display: inline-block
+            }
+
+            .en-tete div {
+                width: 33%
+            }
+
+                .en-tete div:last-child {
+                    text-align: right
+                }
+
+                .en-tete div:nth-child(2) {
+                    text-align: center
+                }
+    </style>
     <div class="py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-6">
-                    <h1>Easy Bill</h1>
+            <div class="en-tete">
+                <div>
+                    <h1>Easy Bill</h1><br />
                     <p>SuperAdmin@mail.com</p>
                 </div>
-                <div class="col-xs-6" style="text-align: right">
+                <div>
+                    <img src="~/image/logo.png" />
+                </div>
+                <div>
                     <h2>Facture</h2>
                 </div>
             </div>
@@ -70,46 +96,46 @@
                     </tr>
                     @foreach (var item in Model.ProduitsSelected)
                     {
-                    <tr>
-                        <td>
-                            <p>@item.Nom</p>
-                        </td>
-                        <td>
-                            <p>@item.Commentaire</p>
-                        </td>
-                        <td>
-                            <p>@item.PrixHT</p>
-                        </td>
-                        <td>
-                            <p>@item.Quantite</p>
-                        </td>
-                        <td>
-                            <p>
-                                @{
-                                    var montant = item.Quantite * item.PrixHT;
-                                    total += montant;
-                                }
-                                @montant €
-                            </p>
-                        </td>
-                        <td class="col-xs-1">
-                            <p>@item.TVA</p>
-                        </td>
-                        <td class="col-xs-1">
-                            <p>@item.Reduction</p>
-                        </td>
-                        <td class="col-xs-2">
-                            <p>
-                                @{
-                                    var prix = (item.Quantite * item.PrixHT);
-                                    var montantTTC = prix + prix * item.TVA / 100.0 - item.Reduction;
-                                    totalTTC += montantTTC;
-                                }
-                                @montantTTC €
-                            </p>
-                        </td>
-                    </tr>
-                     }
+                        <tr>
+                            <td>
+                                <p>@item.Nom</p>
+                            </td>
+                            <td>
+                                <p>@item.Commentaire</p>
+                            </td>
+                            <td>
+                                <p>@item.PrixHT</p>
+                            </td>
+                            <td>
+                                <p>@item.Quantite</p>
+                            </td>
+                            <td>
+                                <p>
+                                    @{
+                                        var montant = item.Quantite * item.PrixHT;
+                                        total += montant;
+                                    }
+                                    @montant €
+                                </p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.TVA</p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.Reduction</p>
+                            </td>
+                            <td class="col-xs-2">
+                                <p>
+                                    @{
+                                        var prix = (item.Quantite * item.PrixHT);
+                                        var montantTTC = prix + prix * item.TVA / 100.0 - item.Reduction;
+                                        totalTTC += montantTTC;
+                                    }
+                                    @montantTTC €
+                                </p>
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <td></td>
                         <td></td>

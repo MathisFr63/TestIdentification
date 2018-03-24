@@ -232,6 +232,7 @@
     <Content Include="image\iMacPro.png" />
     <Content Include="image\iphoneX.png" />
     <Content Include="image\joint_de_culasse.png" />
+    <Content Include="image\logo.png" />
     <Content Include="image\macbook_pro.png" />
     <Content Include="image\pampers.png" />
     <Content Include="image\pelle.png" />

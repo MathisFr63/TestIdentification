@@ -18,7 +18,7 @@ namespace WebApplication1.ViewModels
         public Devis Devis { get; set; }
         public DonneeProduit DonneeProduit { get; set; }
         // Liste des produits sélectionnés afin de les ajouter au devis
-        public List<SelectListItem> Produits { get; set; }
+        public List<Produit> Produits { get; set; }
         // Liste des données produits que l'on souhaite ajouter au devis
         public List<DonneeProduit> ProduitsSelected { get; set; }
 
@@ -27,8 +27,7 @@ namespace WebApplication1.ViewModels
         /// </summary>
         public DevisProduitViewModel()
         {
-            Produits = new List<SelectListItem>();
-            db.Produits.ToList().ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
+            Produits = db.Produits.ToList();//.ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
         }
 
         /// <summary>

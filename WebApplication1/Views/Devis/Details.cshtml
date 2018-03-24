@@ -20,11 +20,11 @@
 
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li>
-            <a title="Facturer le devis" href=@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID}) class="btn button-bluedark"><span class="fas fa-cart-arrow-down" /></a>
+            <a title="Facturer le devis" href=@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID }) class="btn button-bluedark"><span class="fas fa-cart-arrow-down" /></a>
             <a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = Model.Devis.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
             @if (isAdmin)
             {
-                <a title="Modifier le devis" href=@Url.Action("Edit", "Devis", new { id = Model.Devis.ID}) class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></a>
+                <a title="Modifier le devis" href=@Url.Action("Edit", "Devis", new { id = Model.Devis.ID }) class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></a>
             }
         </li>
     </ul>
@@ -65,16 +65,14 @@
         <div class="contact-item">
             <div class="contact-label">Validité</div>
             <div class="contact-content">
-                @{
-                if (Model.Devis.Valide)
+                @if (Model.Devis.Valide)
                 {
                     <text>Oui</text>
-            }
-            else
-            {
-                <text>Non</text>
-        }
                 }
+                else
+                {
+                    <text>Non</text>
+                }   
             </div>
 
         </div>
@@ -94,23 +92,34 @@
     <div class="section-header">
         <h2 class="section-title">Detail produits</h2>
     </div>
-    <div class="contact"> 
+    <div class="contact col-md-12"> 
 
         <div class="contact-item contact-item-large">
-            <div class="contact-label">Nom du produit</div>
-            <div class="contact-content">Prix HT</div>
+            <div class="contact-content col-md-2">Nom du produit</div>
+            <div class="contact-content col-md-2">Prix HT</div>
+            <div class="contact-content col-md-1">Quantité</div>
+            <div class="contact-content col-md-2">Total HT</div>
+            <div class="contact-content col-md-1">TVA</div>
+            <div class="contact-content col-md-2">Total TTC</div>
         </div>
 
 
         @{
-          foreach (var p in Model.Devis.Produits)
+            if (Model.Devis.Produits != null)
             {
-                <div class="contact-item">
-                    <div class="contact-label">@p.Nom</div>
-                    <div class="contact-content">@p.PrixHT €</div>
-                </div>
+                foreach (var p in Model.Devis.Produits)
+                {
+                    <div class="contact-item contact-item-large">
+                        <div class="contact-label col-md-2">@p.Nom</div>
+                        <div class="contact-label col-md-2">@p.PrixHT €</div>
+                        <div class="contact-label col-md-1">@p.Quantite</div>
+                        <div class="contact-label col-md-2">@p.TotalHT €</div>
+                        <div class="contact-label col-md-1">@p.TVA %</div>
+                        <div class="contact-label col-md-2">@p.TotalTTC €</div>
+                    </div>
+                }
             }
-            }
+        }
     </div>
     <div class="buttons buttons-small"></div>
 </div>
@@ -139,13 +148,16 @@
             double sommeHT = 0;
             double totalReduc = 0;
 
-            foreach (var p in Model.Devis.Produits)
+            if (Model.Devis.Produits != null)
             {
-                double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
-                double reduc = PrixTTC * p.Reduction / 100;
-                sommeTTC += PrixTTC * p.Quantite - reduc;
-                sommeHT += p.PrixHT * p.Quantite - reduc;
-                totalReduc += reduc;
+                foreach (var p in Model.Devis.Produits)
+                {
+                    double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                    double reduc = PrixTTC * p.Reduction / 100;
+                    sommeTTC += PrixTTC * p.Quantite - reduc;
+                    sommeHT += p.PrixHT * p.Quantite - reduc;
+                    totalReduc += reduc;
+                }
             }
             double totalTaxe = sommeTTC - sommeHT;
         }

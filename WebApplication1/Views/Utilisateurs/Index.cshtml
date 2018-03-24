@@ -125,6 +125,9 @@
 
                 @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
                 <td>
+                    <a title="Details l'utilisateur" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn button-bluedark">
+                        <span class="glyphicon glyphicon-file" />
+                    </a>
                     <a title="Modifier l'utilisateur" href=@Url.Action("Edit", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn button-orange">
                         <span class="glyphicon glyphicon-pencil" />
                     </a>
@@ -132,9 +135,6 @@
                     <button title="Supprimer l'utilisateur'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Nom", "@item.Prénom", "@item.ID")'>
                         <span class="glyphicon glyphicon-trash" />
                     </button>
-                    @*<a title="Supprimer l'utilisateur'" href=@Url.Action("Delete", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn btn-info">
-                            <span class="glyphicon glyphicon-trash" />
-                        </a>*@
                 </td>
             </tr>
         }

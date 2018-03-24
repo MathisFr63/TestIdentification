@@ -8,10 +8,12 @@ namespace WebApplication1.Models.Papiers
     public class Facture : Document
     {
         // Nombre de relances de la facture (au bout de 3 relances, des poursuites peuvent être engagées) désigne le nombre de fois que la facture a été retransmise car l'entreprise n'avait pas payée.
-        public int Relances { get; set; }
+        //public int Relances { get; set; }
 
         // Type de réglement de la facture
         public TypeReglement Reglement { get; set; }
+
+        public bool IsPayed { get; set; } 
 
         /// <summary>
         /// Constructeur par défaut d'une facture
@@ -34,7 +36,7 @@ namespace WebApplication1.Models.Papiers
             UtilisateurID = devis.UtilisateurID;
             string da = string.Format("{0:yyyyMM}", DateTime.Now);
             Identifiant = $"F{da}{string.Format("{0:0000}", nbFactureDuMois + 1)}";
-            Relances = 0;
+            //Relances = 0;
         }
 
         /// <summary>

@@ -3,20 +3,45 @@
     checkboxes.style.display = (checkboxes.style.display == "block") ? "none" : "block";
 }
 
-function toggleArticle(name) {
+function toggleArticle(name, quantite, prixHT, totalHT, TVA, totalTTC) {
     var a = document.getElementById(name);
     if (!a) {
         var b = '<table class="table" id="' + name + '">' +
             '<tr>' +
-            '<td class="col-md-4">' +
-            '<label>Article</label>' +
+            '<td class="col-md-2">' +
+            '<label>Libelle</label>' +
             '<br />' +
             '<p>' + name + '</p>' +
             '</td>' +
-            '<td class="col-md-4">' +
+            '<td class="col-md-2">' +
             '<label>Quantité</label>' +
             '<br />' +
-            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="1" require>' +
+            '<input onchange="change(this,\'' + name + '\',' + prixHT + ',' + TVA + '); " class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="' + quantite + '">' +
+            '</td>' +
+            '<td class="col-md-2">' +
+            '<label>Prix HT</label>' +
+            '<br />' +
+            '<p> ' + prixHT + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-2">' +
+            '<label>Total HT</label>' +
+            '<br />' +
+            '<p id="totalHT' + name + '">' + totalHT + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-1">' +
+            '<label>TVA</label>' +
+            '<br />' +
+            '<p>' + TVA + ' %</p>' +
+            '</td>' +
+            '<td class="col-md-2">' +
+            '<label>Total TTC</label>' +
+            '<br />' +
+            '<p id="totalTTC' + name + '">' + totalTTC + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-1">' +
+            '<button type="reset" value="cancel" title="Supprimer un Produit" onclick="toggleArticleEdit(\'' + name + '\')" class="btn btn-danger">' +
+            '<i class="glyphicon glyphicon-trash"></i >' +
+            '</button>' +
             '</td>' +
             '</tr>' +
             '</table>';
@@ -27,24 +52,52 @@ function toggleArticle(name) {
     }
 }
 
-function toggleArticleEdit(name, quantite) {
+function change(input, name, prixHT, TVA) {
+    var total = input.value * prixHT;
+    var totalTTC = total + total * TVA / 100;
+
+    document.getElementById("totalHT" + name).innerHTML = total;
+    document.getElementById("totalTTC" + name).innerHTML = totalTTC;
+}
+
+function toggleArticleEdit(name, quantite, prixHT, totalHT, TVA, totalTTC) {
     var a = document.getElementById(name);
     if (!a) {
         var b = '<table class="table" id="' + name + '">' +
             '<tr>' +
-            '<td class="col-md-4">' +
-            '<label>Article</label>' +
+            '<td class="col-md-2">' +
+            '<label>Libelle</label>' +
             '<br />' +
             '<p>' + name + '</p>' +
             '</td>' +
-            '<td class="col-md-4">' +
+            '<td class="col-md-2">' +
             '<label>Quantité</label>' +
             '<br />' +
-            '<input class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="' + quantite + '">' +
+            '<input onchange="change(this,\'' + name + '\',' + prixHT + ',' + TVA + '); " class="form-control text-box single-line" data-val="true" data-val-number="The field Int32 must be a number." data-val-required="Le champ Int32 est requis." name="' + name + '" type="number" min="0" value="' + quantite + '">' +
             '</td>' +
-            '<td class="col-md-4">' +
+            '<td class="col-md-2">' +
+            '<label>Prix HT</label>' +
+            '<br />' +
+            '<p> ' + prixHT + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-2">' +
+            '<label>Total HT</label>' +
+            '<br />' +
+            '<p id="totalHT' + name + '">' + totalHT + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-1">' +
+            '<label>TVA</label>' +
+            '<br />' +
+            '<p>' + TVA + ' %</p>' +
+            '</td>' +
+            '<td class="col-md-2">' +
+            '<label>Total TTC</label>' +
+            '<br />' +
+            '<p id="totalTTC' + name + '">' + totalTTC + ' €</p>' +
+            '</td>' +
+            '<td class="col-md-1">' +
             '<button type="reset" value="cancel" title="Supprimer un Produit" onclick="toggleArticleEdit(\'' + name + '\')" class="btn btn-danger">' +
-            '<i class="glyphicon glyphicon-remove"></i >' +
+            '<i class="glyphicon glyphicon-trash"></i >' +
             '</button>' +
             '</td>' +
             '</tr>' +

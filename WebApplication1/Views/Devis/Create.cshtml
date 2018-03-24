@@ -50,18 +50,18 @@
 
             @*Div permettant d'ajouter un commentaire au devis*@
             <div class="form-group">
-                @Html.LabelFor(model => model.Devis.Commentaire)<br />
+                <label>Autres informations</label><br />
                 @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS" })
                 @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
             </div>
 
             <br />
-            <h3>Informations articles:</h3>
+            <h3>Informations produits:</h3>
             <hr />
 
             @*Div permettant de sélectionner les produits à ajouter au devis ainsi que définir la quantité voulue*@
             <div class="form-group col-md-12">
-                <div class="multiselect">
+                <div class="multiselect col-md-4">
                     <div class="selectBox" onclick="showCheckboxes()">
                         <select class="form-control">
                             <option>Selectionnez un produit</option>
@@ -70,15 +70,15 @@
                     </div>
                     <div id="checkboxes">
                         @foreach (var item in Model.Produits)
-                {
-                    <label>
-                        <input type="checkbox" onclick="toggleArticle('@item.Text')" />@item.Text
-                    </label>
-        }
+                        {
+                        <label>
+                            <input type="checkbox" onclick="toggleArticle('@item.Libelle', 1, '@item.PrixHT', '@item.PrixHT', '@item.TVA', '@item.TotalTTC')" style="margin-right: 5px;"/>@item.Libelle
+                        </label>
+                        }
                     </div>
                 </div>
 
-                <div id="articles" class="col-md-6"></div>
+                <div id="articles" class="col-md-8"></div>
             </div>
             <br />
 

@@ -136,13 +136,17 @@ namespace WebApplication1.Controllers
             vm.Devis.Date = DateTime.Now;
             vm.Devis.Valide = true;
 
-            var nbMois = db.Devis.Where(f => f.Date.Year == DateTime.Now.Year && f.Date.Month == DateTime.Now.Month).ToList().Count;
+            var nbMois = 0;
+            var lastDevis = db.Devis.OrderByDescending(f => f.Date).FirstOrDefault();
+            if (lastDevis != null && lastDevis.Date.Year == DateTime.Now.Year && lastDevis.Date.Month == DateTime.Now.Month)
+                nbMois = int.Parse(lastDevis.Identifiant.Substring(lastDevis.Identifiant.Length - 4));
+
             vm.Devis.Identifiant = $"D{string.Format("{0:yyyyMM}", DateTime.Now)}{string.Format("{0:0000}", nbMois + 1)}";
 
             db.Devis.Add(vm.Devis);
 
             var keys = Request.Form.AllKeys;
-            for (int i = 5; i < keys.Length; i++)
+            for (int i = 4; i < keys.Length; i++)
             {
                 var name = keys[i];
                 var produit = db.Produits.First(p => p.Libelle == name);
@@ -190,7 +194,7 @@ namespace WebApplication1.Controllers
 
             var form = Request.Form;
             var keys = form.AllKeys;
-            for (int i = 5; i < keys.Length; i++)
+            for (int i = 4; i < keys.Length; i++)
             {
                 var name = keys[i];
                 var produit = db.Produits.First(p => p.Libelle == name);
@@ -251,6 +255,14 @@ namespace WebApplication1.Controllers
             Devis devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
+
+            double totalHT = 0;
+            double totalTTC = 0;
+
+            db.DonneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(p => {totalHT += p.TotalHT;totalTTC += p.TotalTTC;});
+
+            ViewBag.totalHT = totalHT;
+            ViewBag.totalTTC = totalTTC;
 
             var date = DateTime.Today.AddMonths(-1);
             int nbMois = db.Factures.Where(f => f.Date > date).ToList().Count;

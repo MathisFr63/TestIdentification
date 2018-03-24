@@ -39,7 +39,6 @@ namespace WebApplication1.Models.Papiers
         // Identifiant de l'utilisateur ayant créée le document.
         public string UtilisateurID { get; set; }
 
-
         /// <summary>
         /// Constructeur par défaut d'un document.
         /// </summary>

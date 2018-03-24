@@ -18,50 +18,51 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 <body style="background-color:white;">
-<h2 class="titreIndex">
-    Vos factures
-</h2>
+    <img src="~/image/logo.png" />
+    <h2 class="titreIndex">
+        Vos factures
+    </h2>
 
-@*Affichage de la liste des factures*@
-<table class="table">
-    <tr>
-        <th>Objet</th>
-        <th>Date</th>
-        @*<th>Commentaire</th>
-            <th>Monnaie</th>*@
-        <th>Produits</th>
-        <th>Relances</th>
-        <th>Reglement</th>
-        <th></th>
-    </tr>
-
-    @*Pour chaque facture, affichage de l'objet, de la date de création, de la liste des produits(et de leur quantité), du nombre de relances et du type de règlement*@
-    @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
-    @foreach (var item in Model)
-    {
+    @*Affichage de la liste des factures*@
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Objet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateString)
-            </td>
-            <td>
-                @foreach (var a in item.Produits)
-                {
-                    @Html.DisplayFor(elt => a.Nom); <i>=></i>
-                    @Html.DisplayFor(elt => a.Quantite); <br />
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Relances)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reglement)
-            </td>
+            <th>Objet</th>
+            <th>Date</th>
+            @*<th>Commentaire</th>
+                <th>Monnaie</th>*@
+            <th>Produits</th>
+            @*<th>Relances</th>*@
+            <th>Reglement</th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @*Pour chaque facture, affichage de l'objet, de la date de création, de la liste des produits(et de leur quantité), du nombre de relances et du type de règlement*@
+        @*En plus, ajouté à droite de chaque devis 3 boutons permettant de modifier, afficher les détails et supprimer le devis*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateString)
+                </td>
+                <td>
+                    @foreach (var a in item.Produits)
+                    {
+                        @Html.DisplayFor(elt => a.Nom); <i>=></i>
+                        @Html.DisplayFor(elt => a.Quantite); <br />
+                    }
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Relances)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reglement)
+                </td>
+            </tr>
+        }
+
+    </table>
 </body>
 </html>
