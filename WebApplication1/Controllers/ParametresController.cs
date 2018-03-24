@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
             var parametre = db.Parametres.Find(id);
             if (TryUpdateModel(parametre, "", new string[] {
                 "DureeValiditeDevis", "NbRelanceFacture", "Theme", "NbElementPage", "DefaultTextFeedback", "NbJourStat", "TailleHistorique", "Abonnee",
-                "ConditionsGeneralesDevis", "TexteDeFinDevis", "FooterDevis", "TexteIntroductionDevis",
+                "DefaultUrl", "ConditionsGeneralesDevis", "TexteDeFinDevis", "FooterDevis", "TexteIntroductionDevis",
                 "ConditionsGeneralesFacture", "TexteDeFinFacture", "FooterFacture", "TexteIntroductionFacture" }))
             {
                 try

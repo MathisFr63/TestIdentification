@@ -73,14 +73,22 @@
             @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
             @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
         </div>
+        @if (!isAdmin)
+        {
         <div class="form-group">
-            @if (!isAdmin)
-            {
                 <label class="control-label">Abonnement à la newsletter</label>
                 @Html.EditorFor(model => model.Abonnee, new { htmlAttributes = new { @class = "form-control", @style = "width: 20px; height: 20px;" } })
                 @Html.ValidationMessageFor(model => model.Abonnee, "", new { @class = "text-danger" })
-            }
         </div>
+        }
+        else
+        {
+        <div class="form-group">
+                <label class="control-label">Url image par default</label>
+                @Html.EditorFor(model => model.DefaultUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DefaultUrl, "", new { @class = "text-danger" })
+        </div>
+        }
     </div>
 
     <hr class="separerEdit" />

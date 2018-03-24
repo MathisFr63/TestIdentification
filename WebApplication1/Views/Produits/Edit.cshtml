@@ -37,6 +37,15 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le libelle*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.UrlImage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UrlImage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UrlImage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         @*Div permettant de modifier le prix hors taxes*@
         <div class="form-group">
             @Html.LabelFor(model => model.PrixHT, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -64,6 +73,14 @@
             </div>
         </div>
 
+        @*Div permettant de modifier le taux de TVA*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalTTC, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p style="margin-top: 5px;">@Model.TotalTTC</p>
+            </div>
+        </div>
+
         @*Div permettant de modifier le type (bien / service)*@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -81,7 +98,7 @@
                 @Html.ValidationMessageFor(model => model.Détails, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         @*Bouton permettant de valider la modification du produit*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

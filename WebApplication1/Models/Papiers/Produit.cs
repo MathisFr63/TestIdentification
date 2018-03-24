@@ -35,12 +35,6 @@ namespace WebApplication1.Models.Papiers
         [Display(Name = "Type")]
         public TypeService Type { get; set; }
 
-        // Identifiant de l'utilisateur auquel appartient le produit.
-        //public string UtilisateurID { get; set; }
-
-        // Prix final du produit sans la TVA
-        //public int Prixfinal { get; set; } Prix calculé
-
         //Prix toutes taxes comprises du produit
         [Display(Name = "Prix TTC")]
         public double TotalTTC
@@ -53,8 +47,14 @@ namespace WebApplication1.Models.Papiers
         }
 
         // Image du produit qui est pour l'instant en dur.
-        public WebImage image = new WebImage("~/Images/test.png");
+        public string UrlImage { get; set; }
 
+        public Produit() : this("boite.png") {}
+
+        public Produit(string url)
+        {
+            this.UrlImage = $"/image/{url}";
+        }
 
         /// <summary>
         /// Méthode permettant de retranscrire les données du produit sous forme de chaîne de caractères.

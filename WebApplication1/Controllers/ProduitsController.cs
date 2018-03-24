@@ -106,9 +106,12 @@ namespace WebApplication1.Controllers
         // Méthode permettant d'ajouter un produit à la liste des produits de l'utilisateur après avoir rempli les champs de la page de création.
         public ActionResult Create(Produit produit)
         {
-            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            if (string.IsNullOrEmpty(produit.UrlImage))
+                produit.UrlImage = db.Parametres.Find(user.ParametreID).DefaultUrl;
 
             if (!ModelState.IsValid)
                 return View(produit);
@@ -146,7 +149,7 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var produit = db.Produits.Find(id);
-            if (TryUpdateModel(produit, "", new string[] { "Libelle", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
+            if (TryUpdateModel(produit, "", new string[] { "Libelle", "UrlImage", "Commentaire", "PrixHT", "Reduction", "TVA", "Type" }))
             {
                 try
                 {

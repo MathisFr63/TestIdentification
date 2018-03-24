@@ -35,6 +35,10 @@
 <br />
 
 @*Div permettant d'afficher les détails du Facture*@
+
+@* Il faut modifier ça pour que l'image prenne la place voulue ! *@
+<img src="@Model.UrlImage" alt="Image du produit" style="max-width: 50%" />
+
 <div class="section">
     <table>
         <tbody>
@@ -58,12 +62,6 @@
                             <div class="contact-label">@Html.LabelFor(m => m.Type)</div>
                             <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        @* Il faut modifier ça pour que l'image prenne la place voulue ! *@
-                        <img src="@Url.Content(Model.image.FileName)" alt="Image du produit" style="max-width: 50%" />
                     </div>
                 </td>
             </tr>

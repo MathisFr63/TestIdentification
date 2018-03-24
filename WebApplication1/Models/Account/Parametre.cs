@@ -17,6 +17,7 @@ namespace WebApplication1.Models.Account
         public int NbJourStat { get; set; }
         public int TailleHistorique { get; set; }
         public bool Abonnee { get; set; }
+        public string DefaultUrl { get; set; }
 
         public string ConditionsGeneralesDevis { get; set; }
         public string TexteDeFinDevis { get; set; }
@@ -28,13 +29,13 @@ namespace WebApplication1.Models.Account
         public string FooterFacture { get; set; }
         public string TexteIntroductionFacture { get; set; }
 
-        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6, false, "", "", "", "", "", "", "", "")
+        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6, false, "/image/boite.png", "", "", "", "", "", "", "", "")
         {
         }
 
         public Parametre(int DureeValiditeDevis, int NbRelanceFacture, Theme Theme, int NbElementPage, string DefaultTextFeedback, int NbJourStat, 
-            int TailleHistorique, bool Abonnee, string ConditionsGeneralesDevis, string TexteDeFinDevis, string FooterDevis, string TexteIntroductionDevis,
-            string ConditionsGeneralesFacture, string TexteDeFinFacture, string FooterFacture, string TexteIntroductionFacture)
+            int TailleHistorique, bool Abonnee, string DefaultUrl, string ConditionsGeneralesDevis, string TexteDeFinDevis, string FooterDevis, 
+            string TexteIntroductionDevis, string ConditionsGeneralesFacture, string TexteDeFinFacture, string FooterFacture, string TexteIntroductionFacture)
         {
             this.DureeValiditeDevis = DureeValiditeDevis;
             this.NbRelanceFacture = NbRelanceFacture;
@@ -44,6 +45,7 @@ namespace WebApplication1.Models.Account
             this.NbJourStat = NbJourStat;
             this.TailleHistorique = TailleHistorique;
             this.Abonnee = Abonnee;
+            this.DefaultUrl = DefaultUrl;
 
             this.ConditionsGeneralesDevis = ConditionsGeneralesDevis;
             this.TexteDeFinDevis = TexteDeFinDevis;
