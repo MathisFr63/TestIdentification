@@ -35,7 +35,7 @@
                     <p>@Model.Devis.UtilisateurID</p>
                 </div>
                 <div class="col-xs-6" style="text-align: right">
-                    <p><strong>Devis n° :</strong> @Model.Devis.ID</p>
+                    <p><strong>Devis n° :</strong> @Model.Devis.Identifiant</p>
                     <p><strong>Date :</strong> @Model.Devis.DateString</p>
                     <p><strong>Valide jusqu'au :</strong> @Model.Devis.Date.AddDays(30) </p>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="col-xs-6">
                     <p>Objet : @Html.DisplayFor(model => model.Devis.Objet)</p>
                     <p>Commentaire : @Html.DisplayFor(model => model.Devis.Commentaire)</p>
-                    <p>Monnaie : @Html.DisplayFor(model => model.Devis.Monnaie)</p>
+                    @*<p>Monnaie : @Html.DisplayFor(model => model.Devis.Monnaie)</p>*@
                 </div>
             </div>
 

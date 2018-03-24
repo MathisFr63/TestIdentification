@@ -24,15 +24,16 @@ namespace WebApplication1.Models.Papiers
         /// Constructeur d'une facture prenant en paramètre un devis que l'on souhaite facturer
         /// </summary>
         /// <param name="devis">Devis que l'on souhaite facturer</param>
-        public Facture(Devis devis)
+        public Facture(Devis devis, int nbFactureDuMois)
         {
             Objet = devis.Objet;
             Date = DateTime.Now;
             Commentaire = devis.Commentaire;
-            Monnaie = devis.Monnaie;
+            //Monnaie = devis.Monnaie;
             Produits = devis.Produits;
             UtilisateurID = devis.UtilisateurID;
-
+            string da = string.Format("{0:yyyyMM}", DateTime.Now);
+            Identifiant = $"F{da}{string.Format("{0:0000}", nbFactureDuMois + 1)}";
             Relances = 0;
         }
 
@@ -41,7 +42,7 @@ namespace WebApplication1.Models.Papiers
         /// </summary>
         /// <param name="devis">Devis que l'on souhaite facturer</param>
         /// <param name="type">Type de règlement de la facture</param>
-        public Facture(Devis devis, TypeReglement type) : this(devis)
+        public Facture(Devis devis, int nbMois, TypeReglement type) : this(devis, nbMois)
         {
             Reglement = type;
         }

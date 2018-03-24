@@ -38,13 +38,18 @@
     </div>
     <div class="contact">
         @*<div class="contact-item contact-item-large">
-                <div class="contact-label">Statut</div>
-                <div class="contact-content">Payée</div>
-            </div>*@
+            <div class="contact-label">Statut</div>
+            <div class="contact-content">Payée</div>
+        </div>*@
+
+        <div class="contact-item">
+            <div class="contact-label">Identifiant</div>
+            <div class="contact-content">@Model.Facture.Identifiant</div>
+        </div>
 
         <div class="contact-item">
             <div class="contact-label">Facturée le</div>
-            <div class="contact-content"> @String.Format("{0:dd MMMM yyyy}", Model.Facture.Date) à @String.Format("{0:hh:mm}", Model.Facture.Date)</div>
+            <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Facture.Date) à @string.Format("{0:hh:mm}", Model.Facture.Date)</div>
         </div>
 
         <div class="contact-item">
@@ -76,12 +81,15 @@
 
 
         @{
-            foreach (var p in Model.Facture.Produits)
+            if (Model.Facture.Produits != null)
             {
+                foreach (var p in Model.Facture.Produits)
+                {
                 <div class="contact-item">
                     <div class="contact-label">@p.Nom</div>
                     <div class="contact-content">@p.PrixHT €</div>
                 </div>
+                }
             }
         }
     </div>
@@ -103,7 +111,7 @@
 
         <div class="contact-item">
             <div class="contact-label">Monnaie utilisée</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Monnaie)</div>
+            @*<div class="contact-content">@Html.DisplayFor(model => model.Facture.Monnaie)</div>*@
         </div>
         @*calcul du montant total TTC*@
         @{
@@ -112,13 +120,16 @@
             double sommeHT = 0;
             double totalReduc = 0;
 
-            foreach (var p in Model.Facture.Produits)
+            if (Model.Facture.Produits != null)
             {
-                double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
-                double reduc = PrixTTC * p.Reduction / 100;
-                sommeTTC += PrixTTC * p.Quantite - reduc;
-                sommeHT += p.PrixHT * p.Quantite - reduc;
-                totalReduc += reduc;
+                foreach (var p in Model.Facture.Produits)
+                {
+                    double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                    double reduc = PrixTTC * p.Reduction / 100;
+                    sommeTTC += PrixTTC * p.Quantite - reduc;
+                    sommeHT += p.PrixHT * p.Quantite - reduc;
+                    totalReduc += reduc;
+                }
             }
             double totalTaxe = sommeTTC - sommeHT;
         }

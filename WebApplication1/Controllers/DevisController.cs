@@ -136,6 +136,9 @@ namespace WebApplication1.Controllers
             vm.Devis.Date = DateTime.Now;
             vm.Devis.Valide = true;
 
+            var nbMois = db.Devis.Where(f => f.Date.Year == DateTime.Now.Year && f.Date.Month == DateTime.Now.Month).ToList().Count;
+            vm.Devis.Identifiant = $"D{string.Format("{0:yyyyMM}", DateTime.Now)}{string.Format("{0:0000}", nbMois + 1)}";
+
             db.Devis.Add(vm.Devis);
 
             var keys = Request.Form.AllKeys;
@@ -200,8 +203,8 @@ namespace WebApplication1.Controllers
             }
 
             devis.Objet = form.GetValues(keys[2])[0];
-            devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
-            devis.Commentaire = form.GetValues(keys[4])[0];
+            //devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
+            devis.Commentaire = form.GetValues(keys[3])[0];
             devis.Date = DateTime.Now;
             devis.Valide = true;
             db.SaveChanges();
@@ -249,7 +252,9 @@ namespace WebApplication1.Controllers
 
             if (devis == null) return HttpNotFound();
 
-            return View(new Facture(devis));
+            var date = DateTime.Today.AddMonths(-1);
+            int nbMois = db.Factures.Where(f => f.Date > date).ToList().Count;
+            return View(new Facture(devis, nbMois));
         }
 
         // POST: Devis/Facturer
@@ -258,7 +263,10 @@ namespace WebApplication1.Controllers
         // Méthode permettant de facturer un devis c'est à dire d'ajouter une facture de ce devis dans sa liste des factures après avoir spécifié le type de réglement.
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            var facture = new Facture(db.Devis.Find(id), reglement);
+            var date = DateTime.Today.AddMonths(-1);
+            int nbMois = db.Factures.Where(f => f.Date > date).ToList().Count;
+
+            var facture = new Facture(db.Devis.Find(id), nbMois, reglement);
             db.Factures.Add(facture);
             db.SaveChanges();
 

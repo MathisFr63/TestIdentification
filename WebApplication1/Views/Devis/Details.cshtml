@@ -10,7 +10,7 @@
 @*Chemin de retour*@
 <ul class="breadcrumb" style="margin-bottom:0px;margin-top:0px">
     <li class="breadcrumb-item">
-        <a href=@Url.Action("Index","Devis")>Liste devis</a>
+        <a href=@Url.Action("Index", "Devis")>Liste devis</a>
     </li>
     <li class="breadcrumb-item active">Information devis</li>
 </ul>
@@ -48,8 +48,13 @@
         </div>*@
 
         <div class="contact-item">
+            <div class="contact-label">Identifiant</div>
+            <div class="contact-content">@Model.Devis.Identifiant</div>
+        </div>
+
+        <div class="contact-item">
             <div class="contact-label">Créé le</div>
-            <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}",Model.Devis.Date) à @string.Format("{0:hh:mm}",Model.Devis.Date)</div>
+            <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Devis.Date) à @string.Format("{0:hh:mm}", Model.Devis.Date)</div>
         </div>
 
         <div class="contact-item">
@@ -60,16 +65,16 @@
         <div class="contact-item">
             <div class="contact-label">Validité</div>
             <div class="contact-content">
-            @{ 
+                @{
                 if (Model.Devis.Valide)
                 {
                     <text>Oui</text>
-                }
-                else
-                {
-                    <text>Non</text>
-                }
             }
+            else
+            {
+                <text>Non</text>
+        }
+                }
             </div>
 
         </div>
@@ -125,7 +130,7 @@
 
         <div class="contact-item">
             <div class="contact-label">Monnaie utilisée</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
+            @*<div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>*@
         </div>
         @*calcul du montant total TTC*@
         @{

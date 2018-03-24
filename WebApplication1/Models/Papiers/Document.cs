@@ -8,6 +8,8 @@ namespace WebApplication1.Models.Papiers
     /// </summary>
     public abstract class Document
     {
+        public string Identifiant { get; set; }
+
         // Identifiant permettant de retrouver le document dans la base de données.
         public int ID { get; private set; }
 
@@ -21,7 +23,7 @@ namespace WebApplication1.Models.Papiers
         {
             get
             {
-                return String.Format("{0:d/M/yyyy HH:mm}", Date);
+                return string.Format("{0:d/M/yyyy HH:mm}", Date);
             }
         }
 
@@ -29,7 +31,7 @@ namespace WebApplication1.Models.Papiers
         public string Commentaire { get; set; }
 
         // Monnaie utilisée pour le paiement du document.
-        public TypeMonnaie Monnaie { get; set; }
+        //public TypeMonnaie Monnaie { get; set; }
 
         // Produits liés au document
         public ICollection<DonneeProduit> Produits { get; set; }
@@ -52,12 +54,14 @@ namespace WebApplication1.Models.Papiers
         /// <param name="monnaie">Monnaie utilisée pour le règlement du document</param>
         /// <param name="produits">Produits contenus dans le document</param>
         /// <param name="utilisateurID">Identifiant de l'utilisateur ayant créé le document.</param>
-        public Document(string objet, string commentaire, TypeMonnaie monnaie, ICollection<DonneeProduit> produits, string utilisateurID)
+        public Document(string type, int nbMois, string objet, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID)
         {
+            Identifiant = $"{type}{string.Format("{0:yyyyMM}", DateTime.Now)}{string.Format("{0:0000}", nbMois + 1)}";
+
             Objet = objet;
             Date = DateTime.Now;
             Commentaire = commentaire;
-            Monnaie = monnaie;
+            //Monnaie = monnaie;
             Produits = produits;
             UtilisateurID = utilisateurID;
         }

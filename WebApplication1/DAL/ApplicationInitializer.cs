@@ -123,16 +123,16 @@ namespace WebApplication1.DAL
             //Ajout de devis.
             var devis = new List<Devis>
             {
-                new Devis("Installation radiateur",                               "Installation d'un radiateur neuf à la place d'un radiateur défectueux",   TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("Achat de matériel informatique",                       "Achat de matériel informatique et installation dans les nouveaux locaux", TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("Devis pour 3 Wiko Goa et 86 packs de couches pampers", "",                                                                        TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
-                new Devis("Devis pour un joint de culasse",                       "Réparation du moteur défectueux et changement du joint de culasse",       TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("Devis pour un robient",                                "Installation d'un robinet neuf",                                          TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("Devis pour un joint de culasse et un robinet",         "Réparation du moteur défectueux et changement du joint de culasse",       TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("45 packs de couches",                                  "Devis pour 45 packs de couches",                                          TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("12 Wiko Goa",                                          "Achat de téléphones portables pour les employés de l'entreprise",         TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit9,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("4 Pelles",                                             "Achats de 4 pelles pour remplacer les anciennes",                         TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis("12 TV QLED 2018",                                      "Achat de télévisions pour les employés",                                  TypeMonnaie.Euro, new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(0, "Installation radiateur",                               "Installation d'un radiateur neuf à la place d'un radiateur défectueux",   /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(1, "Achat de matériel informatique",                       "Achat de matériel informatique et installation dans les nouveaux locaux", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(2, "Devis pour 3 Wiko Goa et 86 packs de couches pampers", "",                                                                        /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
+                new Devis(3, "Devis pour un joint de culasse",                       "Réparation du moteur défectueux et changement du joint de culasse",       /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(4, "Devis pour un robient",                                "Installation d'un robinet neuf",                                          /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(5, "Devis pour un joint de culasse et un robinet",         "Réparation du moteur défectueux et changement du joint de culasse",       /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(6, "45 packs de couches",                                  "Devis pour 45 packs de couches",                                          /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(7, "12 Wiko Goa",                                          "Achat de téléphones portables pour les employés de l'entreprise",         /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(8, "4 Pelles",                                             "Achats de 4 pelles pour remplacer les anciennes",                         /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(9, "12 TV QLED 2018",                                      "Achat de télévisions pour les employés",                                  /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
             };
             devis.ForEach(d => context.Devis.Add(d));
 
@@ -140,14 +140,14 @@ namespace WebApplication1.DAL
             // Ajout des factures
             var facture = new List<Facture>
             {
-                new Facture(devis[0], TypeReglement.Carte),
-                new Facture(devis[1], TypeReglement.Cheque),
-                new Facture(devis[2], TypeReglement.CryptoMonnaie),
-                new Facture(devis[3], TypeReglement.Liquide),
-                new Facture(devis[4], TypeReglement.Paypal),
-                new Facture(devis[6], TypeReglement.Carte),
-                new Facture(devis[8], TypeReglement.Cheque),
-                new Facture(devis[9], TypeReglement.Paypal),
+                new Facture(devis[0], 0, TypeReglement.Carte),
+                new Facture(devis[1], 1, TypeReglement.Cheque),
+                new Facture(devis[2], 2, TypeReglement.CryptoMonnaie),
+                new Facture(devis[3], 3, TypeReglement.Liquide),
+                new Facture(devis[4], 4, TypeReglement.Paypal),
+                new Facture(devis[6], 5, TypeReglement.Carte),
+                new Facture(devis[8], 6, TypeReglement.Cheque),
+                new Facture(devis[9], 7, TypeReglement.Paypal),
             };
             facture.ForEach(f => context.Factures.Add(f));
 
