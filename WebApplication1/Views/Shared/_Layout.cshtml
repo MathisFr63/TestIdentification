@@ -101,7 +101,7 @@
                 <ul class="list-unstyled components">
 
                     @*Si l'utilisateur est un administrateur : élément permettant la gestion des feedbacks reçus*@
-                    @if (user.Type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                    @if (user.Type == WebApplication1.Models.Account.TypeUtilisateur.SA)
                     {
                         <li>
                             <a href=@Url.Action("Index", "Feedbacks")>

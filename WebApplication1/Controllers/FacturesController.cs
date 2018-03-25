@@ -28,8 +28,11 @@ namespace WebApplication1.Controllers
             var param = db.Parametres.Find(user.ParametreID);
 
             var factures = db.Factures.ToList();
-            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
-                factures = factures.Where(facture => facture.ClientID == user.ID).ToList();
+            if (user.Type != TypeUtilisateur.SA)
+                if (user.Type != TypeUtilisateur.Administrateur)
+                    factures = factures.Where(f => f.ClientID.ToUpper() == user.ID.ToUpper()).ToList();
+                else
+                    factures = factures.Where(f => f.UtilisateurID.ToUpper() == user.ID.ToUpper()).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 

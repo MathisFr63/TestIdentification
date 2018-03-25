@@ -28,8 +28,12 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
             var ListDevis = db.Devis.ToList();
-            if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
-                ListDevis = ListDevis.Where(devis => devis.ClientID.ToUpper() == user.ID.ToUpper()).ToList();
+            if (user.Type != TypeUtilisateur.SA)
+                if (user.Type != TypeUtilisateur.Administrateur)
+                    ListDevis = ListDevis.Where(devis => devis.ClientID.ToUpper() == user.ID.ToUpper()).ToList();
+                else
+                    ListDevis = ListDevis.Where(devis => devis.UtilisateurID.ToUpper() == user.ID.ToUpper()).ToList();
+
 
             ListDevis.ForEach(devis =>
             {
@@ -87,7 +91,7 @@ namespace WebApplication1.Controllers
 
             if (!string.IsNullOrWhiteSpace(État))
             {
-                    myListTrier = myListTrier.Where(s => s.Etat.ToString().ToUpper().Contains(État.ToUpper()));
+                myListTrier = myListTrier.Where(s => s.Etat.ToString().ToUpper().Contains(État.ToUpper()));
             }
 
             //if (bool.TryParse(Valide, out var valide))

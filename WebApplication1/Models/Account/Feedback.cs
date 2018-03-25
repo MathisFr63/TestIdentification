@@ -20,6 +20,7 @@ namespace WebApplication1.Models.Account
         public string Comment { get; set; }
 
         // État du feedback ("en cours", ou "résolu") permettant de savoir s'il faut toujours réglé un problème.
+        [Display(Name = "État")]
         public bool IsResolved { get; set; }
         // Identifiant de l'utilisateur ayant envoyé le feedback.
         [Display(Name = "Adresse e-mail")]

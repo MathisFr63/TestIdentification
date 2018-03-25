@@ -19,7 +19,13 @@
 
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li>
-            <a title="Imprimer le feedback" target="_blank" href=@Url.Action("Print", "Devis", new { id = Model.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+            <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = Model.ID }) class="btn button-pink">
+                <span class="glyphicon glyphicon-check" />
+            </a>
+            <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = Model.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+            <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@Model.Subject", "@Model.ID")'>
+                <span class="glyphicon glyphicon-trash" />
+            </button>
         </li>
     </ul>
     <h2 style="display:block;" class="titreCRUD">
@@ -32,21 +38,21 @@
 <div class="section">
     <div class="contact">
         <div class="contact-item">
-            <div class="contact-label">Envoyé par</div>
+            <div class="contact-label"><label>Envoyé par</label></div>
             <div class="contact-content">@Html.DisplayFor(model => model.UtilisateurID)</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Sujet</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Subject)</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Subject)</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Etat</div>
+            <div class="contact-label">@Html.LabelFor(model => model.IsResolved)</div>
             @{
                 if (Model.IsResolved)
                 {
-                    <div class="contact-content">Résolue</div>
+                    <div class="contact-content">Résolu</div>
                 }
                 else
                 {
@@ -56,7 +62,7 @@
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Contenu</div>
+            <div class="contact-label"><label>Contenu</label></div>
             <div class="contact-content">@Html.Raw(HttpUtility.HtmlDecode(Model.Comment))</div>
         </div>
     </div>

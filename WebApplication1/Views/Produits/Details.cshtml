@@ -25,6 +25,12 @@
                 <a title="Modifier le produit" href=@Url.Action("Edit", "Produits", new { id = Model.ID}) class="btn button-orange"><span class="glyphicon glyphicon-pencil" /></a>
             }
             <a title="Imprimer le produit" target="_blank" href=@Url.Action("Print", "Produits", new { id = Model.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+            @if (isAdmin)
+            {
+                <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@Model.Libelle", "@Model.ID")'>
+                    <span class="glyphicon glyphicon-trash" />
+                </button>
+            }
         </li>
     </ul>
     <h2 style="display:block;" class="titreCRUD">
