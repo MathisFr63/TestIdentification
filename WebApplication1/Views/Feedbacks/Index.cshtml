@@ -111,11 +111,11 @@
 
             </td>
             <td>
-                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn button-fluo">
-                    <span class="glyphicon glyphicon-check" />
-                </a>
-                <a title="Details Feedbacks" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn button-orange">
+                <a title="Consulter" href=@Url.Action("Details", "Feedbacks", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-file" />
+                </a>
+                <a title="Check" href=@Url.Action("Check", "Feedbacks", new { id = item.ID }) class="btn button-pink">
+                    <span class="glyphicon glyphicon-check" />
                 </a>
                 <a title="Imprimer le Feedback" target="_blank" href=@Url.Action("Print", "Feedbacks", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 <button title="Supprimer produits'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Subject", "@item.ID")'>

@@ -23,12 +23,13 @@
     @*Affichage de la liste des produits*@
     <table class="table">
         <tr>
-            <th>Nom</th>
-            <th>Commentaire</th>
-            <th>PrixHT</th>
-            @*<th>Reduction</th>
-                <th>TVA</th>*@
-            <th>Type</th>
+            <th>@Html.LabelFor(model => model.First().Libelle)</th>
+            <th>@Html.LabelFor(model => model.First().Détails)</th>
+            <th>@Html.LabelFor(model => model.First().TotalTTC)</th>
+            @*<th>@Html.LabelFor(model => model.First().Reduction)</th>*@
+            @*<th>@Html.LabelFor(model => model.First().TVA)</th>*@
+            <th>@Html.LabelFor(model => model.First().Type)</th>
+            @*<th>@Html.LabelFor(model => model.First().OtherInfo)</th>*@
             <th></th>
         </tr>
 
@@ -49,23 +50,39 @@
 
                 @*Affichage du prix hors taxes*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.PrixHT) €
+                    @Html.DisplayFor(modelItem => item.TotalTTC) €
                 </td>
 
                 @*Affichage de la réduction*@
                 @*<td>
-                        @Html.DisplayFor(modelItem => item.Reduction)
-                    </td>
+                    @Html.DisplayFor(modelItem => item.Reduction)
+                </td>*@
 
-                    Affichage du taux de TVA
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TVA)
-                    </td>*@
+                @*Affichage du taux de TVA*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TVA)
+                </td>*@
 
                 @*Affichage du type (bien / service)*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
+
+                @* Affichage des autres informations si il y en a *@
+                @*<td>
+                        @if (String.IsNullOrWhiteSpace(item.OtherInfo))
+                        {
+                            <div class="contact-content">
+                                Aucune
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="contact-content">
+                                <p>@item.OtherInfo</p>
+                            </div>
+                        }
+                </td>*@
             </tr>
         }
     </table>

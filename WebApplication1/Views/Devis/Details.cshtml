@@ -43,9 +43,9 @@
     </div>
     <div class="contact">
         @*<div class="contact-item contact-item-large">
-            <div class="contact-label">Statut</div>
-            <div class="contact-content">Payée</div>
-        </div>*@
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
 
         <div class="contact-item">
             @Html.LabelFor(model => model.Devis.Identifiant)
@@ -59,23 +59,28 @@
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">@Html.LabelFor(model => model.Devis.Valide)</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Devis.Etat)</div>
             <div class="contact-content">
-                @if (Model.Devis.Valide)
-        {
-            <text>Oui</text>
-}
-else
-{
-        <text>Non</text>
-}
+                @if (Model.Devis.Etat == WebApplication1.Models.Papiers.EtatDevis.EnCours)
+                {
+                    <p style="color: blue">En cours</p>
+                }
+                else if (Model.Devis.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé)
+                {
+                    <p style="color: #06d6a0">Facturé</p>
+
+                }
+                else
+                {
+                    <p style="color: red">Rejeté</p>
+                }
             </div>
 
         </div>
 
         <div class="contact-item">
             <div class="contact-label">@Html.LabelFor(model => model.Devis.Commentaire)</div>
-            @{ 
+            @{
                 var info = String.IsNullOrWhiteSpace(Model.Devis.Commentaire) ? "Aucune" : Model.Devis.Commentaire;
             }
             <div class="contact-content">@info</div>
@@ -91,7 +96,7 @@ else
     <div class="section-header">
         <h2 class="section-title">Detail produits</h2>
     </div>
-    <div class="contact col-md-12"> 
+    <div class="contact col-md-12">
 
         <div class="contact-item contact-item-large">
             <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().Libelle)</div>
@@ -137,9 +142,9 @@ else
             </div>*@
 
         @*<div class="contact-item">
-            <div class="contact-label">Monnaie utilisée</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
-        </div>*@
+                <div class="contact-label">Monnaie utilisée</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
+            </div>*@
         @*calcul du montant total TTC*@
         @{
 

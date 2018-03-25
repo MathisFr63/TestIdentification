@@ -46,6 +46,9 @@ namespace WebApplication1.Models.Papiers
             }
         }
 
+        [Display(Name = "Autres informations")]
+        public string OtherInfo { get; set; }
+
         // Image du produit qui est pour l'instant en dur.
         public string UrlImage { get; set; }
 

@@ -37,48 +37,49 @@
 @*Div permettant d'afficher les détails du Facture*@
 
 @* Il faut modifier ça pour que l'image prenne la place voulue ! *@
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="section">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="section-header">
-                                    <h2 class="section-title">Informations produit</h2>
-                                </div>
-                                <div class="contact">
-                                    <div class="contact-item">
-                                        <div class="contact-label">@Html.LabelFor(m => m.Libelle)</div>
-                                        <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
-                                    </div>
-
-                                    <div class="contact-item">
-                                        <div class="contact-label">@Html.LabelFor(m => m.Détails)</div>
-                                        <div class="contact-content">@Html.DisplayFor(model => model.Détails)</div>
-                                    </div>
-
-                                    <div class="contact-item">
-                                        <div class="contact-label">@Html.LabelFor(m => m.Type)</div>
-                                        <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<div style="display:inline-block" class="section">
+    <div class="section-header">
+        <h2 class="section-title">Informations produit</h2>
+    </div>
+    <div class="col-md-10">
+        <div class="contact">
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.Libelle)</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
             </div>
 
-        </div>
-        <div class="col-lg-6">
-            <img src="@Model.UrlImage" alt="Image du produit" style="max-width: 50%" />
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.Détails)</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Détails)</div>
+            </div>
 
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.Type)</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.OtherInfo)</div>
+                @if (String.IsNullOrWhiteSpace(Model.OtherInfo))
+                {
+                    <div class="contact-content">
+                        Aucune
+                    </div>
+                }
+                else
+                {
+                    <div class="contact-content">
+                        @Html.DisplayFor(model => model.OtherInfo)
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div>
 
+    <div class="col-md-2">
+        <img src="@Model.UrlImage" alt="Image du produit" />
+    </div>
+</div>
 
 @*Div permettant d'afficher les détails du Facture*@
 <div class="section">

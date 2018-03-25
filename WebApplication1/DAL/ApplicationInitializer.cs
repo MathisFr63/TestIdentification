@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using WebApplication1.Models.Account;
 using WebApplication1.Models.Entite;
@@ -12,6 +13,8 @@ namespace WebApplication1.DAL
     //public class ApplicationInitializer : DropCreateDatabaseAlways<ApplicationContext>
     public class ApplicationInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
+        public DateTime Datetime { get; private set; }
+
         /// <summary>
         /// Méthode permettant d'initialiser la base de données.
         /// </summary>
@@ -90,18 +93,18 @@ namespace WebApplication1.DAL
             utilisateurs.ForEach(u => context.Utilisateurs.Add(u));
 
             // Ajout de produits.
-            var produit1  = new Produit("radiateur.png")        { PrixHT = 90,       Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "Radiateur",                                   Détails = "Radiateur milieu de gamme" };
-            var produit2  = new Produit("joint_de_culasse.png") { PrixHT = 10,       Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "Joint de culasse",                            Détails = "Petites pièces d'un moteur" };
-            var produit3  = new Produit("robinet.png")          { PrixHT = 20,       Reduction = 15, TVA = 20, Type = TypeService.Bien, Libelle = "Robinet",                                     Détails = "Robinet milieu de gamme" };
-            var produit4  = new Produit("pelle.png")            { PrixHT = 52,       Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Pelle",                                       Détails = "Outils de chantier de haute qualité" };
-            var produit5  = new Produit("airpods.png")          { PrixHT = 159,      Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "AirPods",                                     Détails = "Écouteurs bluetooth de la marque Apple" };
-            var produit6  = new Produit("iphoneX.png")          { PrixHT = 1329,     Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "iPhone X",                                    Détails = "Dernier smartphone de la marque à la pomme" };
-            var produit7  = new Produit("galaxyS9.png")         { PrixHT = 959,      Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "Samsung Galaxy S9+",                          Détails = "Dernier smartphone de la marque Samsung" };
-            var produit8  = new Produit("q9.png")               { PrixHT = 5999,     Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Q9 2018 75(190cm)",                           Détails = "TV QLED Samsung 2018 | Q Contraste | HDR 2000 | Mode Ambiant | Connexion invisible" };
-            var produit9  = new Produit("wiko_goa.png")         { PrixHT = 55.90,    Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "Wiko Goa",                                    Détails = "4 Go Double SIM blanc" };
-            var produit10 = new Produit("macbook_pro.png")      { PrixHT = 5518.98,  Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "MacBook Pro 15 pouces - Gris sidéral - 2017", Détails = "Touch Bar et Touch ID | Processeur Intel Core i7 quadricœur de 7e génération à 2,9 GHz(Turbo Boost jusqu’à 3, 9 GHz) | 16 Go de mémoire LPDDR3 à 2 133 MHz | SSD de 512 Go | Radeon Pro 560 avec 4 Go de mémoire | Quatre ports Thunderbolt 3 | Clavier rétroéclairé - Français" };
-            var produit11 = new Produit("iMacPro.png")          { PrixHT = 15926.99, Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "iMac Pro",                                    Détails = "Intel Xeon W 18 cœurs à 2,3 GHz, Turbo Boost jusqu’à 4,3 GHz | 128 Go de mémoire ECC DDR4 à 2 666 MHz | SSD de 4 To | Radeon Pro Vega 64 avec 16 Go de mémoire HBM2 | Magic Mouse 2 + Magic Trackpad 2 - Gris sidéral | Kit de montage VESA pour iMac Pro - Gris sidéral | Magic Keyboard avec pavé numérique - Français - Gris sidéral | Final Cut Pro X" };
-            var produit12 = new Produit("pampers.png")          { PrixHT = 29.89,    Reduction = 0,  TVA = 20, Type = TypeService.Bien, Libelle = "Pampers - Active Fit Premium Protection",     Détails = "Couches, taille 5 : 11-23 kg (paquet de 68)" };
+            var produit1 = new Produit("radiateur.png") { PrixHT = 90, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Radiateur", Détails = "Radiateur milieu de gamme" };
+            var produit2 = new Produit() { PrixHT = 10, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Joint de culasse", Détails = "Petites pièces d'un moteur" };
+            var produit3 = new Produit("robinet.png") { PrixHT = 20, Reduction = 15, TVA = 20, Type = TypeService.Bien, Libelle = "Robinet", Détails = "Robinet milieu de gamme" };
+            var produit4 = new Produit("pelle.png") { PrixHT = 52, Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Pelle", Détails = "Outils de chantier de haute qualité" };
+            var produit5 = new Produit("airpods.png") { PrixHT = 159, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "AirPods", Détails = "Écouteurs bluetooth de la marque Apple" };
+            var produit6 = new Produit("iphoneX.png") { PrixHT = 1329, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "iPhone X", Détails = "Dernier smartphone de la marque à la pomme" };
+            var produit7 = new Produit("galaxyS9.png") { PrixHT = 959, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Samsung Galaxy S9+", Détails = "Dernier smartphone de la marque Samsung" };
+            var produit8 = new Produit("q9.png") { PrixHT = 5999, Reduction = 10, TVA = 20, Type = TypeService.Bien, Libelle = "Q9 2018 75(190cm)", Détails = "TV QLED Samsung 2018 | Q Contraste | HDR 2000 | Mode Ambiant | Connexion invisible" };
+            var produit9 = new Produit("wiko_goa.png") { PrixHT = 55.90, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Wiko Goa", Détails = "4 Go Double SIM blanc" };
+            var produit10 = new Produit("macbook_pro.png") { PrixHT = 5518.98, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "MacBook Pro 15 pouces - Gris sidéral - 2017", Détails = "Touch Bar et Touch ID | Processeur Intel Core i7 quadricœur de 7e génération à 2,9 GHz(Turbo Boost jusqu’à 3, 9 GHz) | 16 Go de mémoire LPDDR3 à 2 133 MHz | SSD de 512 Go | Radeon Pro 560 avec 4 Go de mémoire | Quatre ports Thunderbolt 3 | Clavier rétroéclairé - Français" };
+            var produit11 = new Produit("iMacPro.png") { PrixHT = 15926.99, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "iMac Pro", Détails = "Intel Xeon W 18 cœurs à 2,3 GHz, Turbo Boost jusqu’à 4,3 GHz | 128 Go de mémoire ECC DDR4 à 2 666 MHz | SSD de 4 To | Radeon Pro Vega 64 avec 16 Go de mémoire HBM2 | Magic Mouse 2 + Magic Trackpad 2 - Gris sidéral | Kit de montage VESA pour iMac Pro - Gris sidéral | Magic Keyboard avec pavé numérique - Français - Gris sidéral | Final Cut Pro X" };
+            var produit12 = new Produit("pampers.png") { PrixHT = 29.89, Reduction = 0, TVA = 20, Type = TypeService.Bien, Libelle = "Pampers - Active Fit Premium Protection", Détails = "Couches, taille 5 : 11-23 kg (paquet de 68)" };
 
             var produits = new List<Produit>
             {
@@ -123,16 +126,16 @@ namespace WebApplication1.DAL
             //Ajout de devis.
             var devis = new List<Devis>
             {
-                new Devis(0, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(1, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(2, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
-                new Devis(3, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(4, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(5, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(6, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(0, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(1, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(2, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(3, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(4, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(5, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr") {Date = DateTime.Today.AddMonths(-2) },
+                new Devis(6, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
                 new Devis(7, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(8, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(9, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
+                new Devis(8, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(9, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
             };
             devis.ForEach(d => context.Devis.Add(d));
 
@@ -151,7 +154,7 @@ namespace WebApplication1.DAL
             };
             facture.ForEach(f => context.Factures.Add(f));
 
-            
+
             // Ajout de feedbacks.
             var feedbacks = new List<Feedback>
             {

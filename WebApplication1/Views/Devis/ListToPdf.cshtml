@@ -22,9 +22,9 @@
     @*Affichage de la liste des devis*@
     <table class="table">
         <tr>
-            <th>Numéro</th>
-            <th>Date</th>
-            <th>Valide</th>
+            <th>@Html.DisplayFor(Model => Model.First().Identifiant)</th>
+            <th>@Html.DisplayFor(Model => Model.First().Date)</th>
+            <th>@Html.DisplayFor(Model => Model.First().Etat)</th>
             @*<th>Commentaire</th>
                 <th>Monnaie</th>*@
             <th>Produits</th>
@@ -42,7 +42,19 @@
                     @Html.DisplayFor(modelItem => item.DateString)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Valide)
+                    @if (item.Etat == WebApplication1.Models.Papiers.EtatDevis.EnCours)
+                    {
+                        <p style="color: blue">En cours</p>
+                    }
+                    else if (item.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé)
+                    {
+                        <p style="color: #06d6a0">Facturé</p>
+
+                    }
+                    else
+                    {
+                        <p style="color: red">Rejeté</p>
+                    }
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Commentaire)

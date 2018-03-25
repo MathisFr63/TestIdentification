@@ -163,13 +163,13 @@
                     bool isRejete = item.Etat == WebApplication1.Models.Papiers.EtatDevis.Rejeté;
                     bool isFactureOrRejete = isFacture || isRejete;
                 }
-                <a title="Details Devis" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn button-fluo">
+                <a title="Consulter" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-file" />
                 </a>
                 <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'" disabled="@isFactureOrRejete">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
-                <button title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue" disabled="@isRejete">
+                <button title="Imprimer le devis" onclick="location.href='@Url.Action("DevisToPdf", "Devis", new { id = item.ID })'" class="btn button-blue" disabled="@isRejete">
                     <span class="glyphicon glyphicon-print" />
                 </button>
                 @*<a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>*@
@@ -195,12 +195,12 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-                                                                                          new
-                                                                                          {
-                                                                                              page,
-                                                                                              sortOrder = ViewBag.CurrentSort,
-                                                                                              currentFilter = ViewBag.CurrentFilter
-                                                                                          }))
+        new
+        {
+            page,
+            sortOrder = ViewBag.CurrentSort,
+            currentFilter = ViewBag.CurrentFilter
+        }))
     </div>
 }
 

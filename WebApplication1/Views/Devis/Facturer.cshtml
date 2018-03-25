@@ -27,22 +27,25 @@
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Créé le</div>
+        <div class="contact-label"><label>Créé le</label></div>
         <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Date) à @string.Format("{0:hh:mm}", Model.Date)</div>
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Autres informations</div>
-        <div class="contact-content">@Html.DisplayFor(model => model.Commentaire)</div>
+        <div class="contact-label">@Html.LabelFor(model => model.Commentaire)</div>
+        @{
+            var info = String.IsNullOrWhiteSpace(Model.Commentaire) ? "Aucune" : Model.Commentaire;
+        }
+        <div class="contact-content">@info</div>
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Total HT</div>
+        <div class="contact-label"><label>Total HT</label></div>
         <div class="contact-content">@ViewBag.totalHT</div>
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Total TTC</div>
+        <div class="contact-label"><label>Total TTC</label></div>
         <div class="contact-content">@ViewBag.totalTTC</div>
     </div>
 
@@ -55,7 +58,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="contact-item">
-                <div class="contact-label">Mode de règlement</div>
+                <div class="contact-label"><label>Mode de règlement</label></div>
                 <div class="contact-content">
                     @Html.EnumDropDownListFor(model => model.Reglement, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Reglement, "", new { @class = "text-danger" })

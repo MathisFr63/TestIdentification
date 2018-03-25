@@ -622,6 +622,17 @@ input[type=submit] {
         box-shadow: 2px 2px 2px #868686;
     }
 
+.button-pink {
+    color: black;
+    background-color: hotpink;
+}
+
+    .button-pink:hover {
+        color: black;
+        background-color: hotpink;
+        box-shadow: 2px 2px 2px deeppink;
+    }
+
 .button {
     display: inline-block;
     /*color: rgba(4,5,8,0.54);*/

@@ -39,22 +39,22 @@
     </div>
     <div class="contact">
         <div class="contact-item">
-            <div class="contact-label">Nom</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Nom)</div>
             <div class="contact-content">@Html.DisplayFor(model => model.Nom)</div>
         </div>
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Prénom</div>
+        <div class="contact-label">@Html.LabelFor(model => model.Prénom)</div>
         <div class="contact-content">@Html.DisplayFor(model => model.Prénom)</div>
     </div>
     <div class="contact-item">
-        <div class="contact-label">Civilité</div>
+        <div class="contact-label">@Html.LabelFor(model => model.Civilite)</div>
         <div class="contact-content">@Html.DisplayFor(model => model.Civilite)</div>
     </div>
 
     <div class="contact-item">
-        <div class="contact-label">Statut</div>
+        <div class="contact-label">@Html.LabelFor(model => model.Type)</div>
         <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
     </div>
 </div>
@@ -70,12 +70,12 @@
                 <div class="contact-content">Payée</div>
             </div>*@
         <div class="contact-item">
-            <div class="contact-label">Mail</div>
+            <div class="contact-label">@Html.LabelFor(model => model.ID)</div>
             <div class="contact-content">@Html.DisplayFor(model => model.ID)</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Adresse</div>
+            <div class="contact-label"><label>Adresse</label></div>
             <div class="contact-content">@ViewBag.lieu.Adresse</div>
         </div>
 
@@ -83,30 +83,30 @@
             {
             @*Affichage du type de l'utilisateur*@
             <div class="contact-item">
-                <div class="contact-label">Adresse</div>
+                <div class="contact-label"><label>Complément</label></div>
                 <div class="contact-content">@ViewBag.lieu.Complement</div>
             </div>
         }
 
         <div class="contact-item">
-            <div class="contact-label">Code postal</div>
+            <div class="contact-label"><label>Code postal</label></div>
             <div class="contact-content">@ViewBag.lieu.CodePostal</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Ville</div>
+            <div class="contact-label"><label>Ville</label></div>
             <div class="contact-content">@ViewBag.lieu.Ville</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Pays</div>
+            <div class="contact-label"><label>Pays</label></div>
             <div class="contact-content">@ViewBag.lieu.Pays</div>
         </div>
         
         <br />
         <div class="contact-item contact-item-large">
-            <div class="contact-label">Préfixe</div>
-            <div class="contact-content">Numéro</div>
+            <div class="contact-label"><label>Préfixe</label></div>
+            <div class="contact-content"><label>Numéro</label></div>
         </div>
 
         @foreach (var t in Model.Telephones)
