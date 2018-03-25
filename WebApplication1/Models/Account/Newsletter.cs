@@ -10,7 +10,7 @@ namespace WebApplication1.Models.Account
     {
         public string Objet { get; set; }
         public string Contenu { get; set; }
-        public string date { get; set; }
+        public string Date { get; set; }
 
         public Newsletter() {}
 
