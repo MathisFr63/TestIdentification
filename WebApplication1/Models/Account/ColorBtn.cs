@@ -7,7 +7,7 @@ namespace WebApplication1.Models.Account
 {
     public enum ColorBtn
     {
-        NoiretBlanc=0,
-        CouleurVive=1
+        NoiretBlanc,
+        CouleurVive
     }
 }

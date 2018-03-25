@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
 
             var factures = db.Factures.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
-                factures = factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
+                factures = factures.Where(facture => facture.ClientID == user.ID).ToList();
 
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
@@ -131,9 +131,12 @@ namespace WebApplication1.Controllers
             Facture facture = db.Factures.Find(id);
             var user = db.Utilisateurs.Find(facture.UtilisateurID);
             var param = db.Parametres.Find(user.ParametreID);
+            var client = db.Utilisateurs.Find(facture.ClientID);
             ViewBag.user = user;
+            ViewBag.client = client;
             ViewBag.param = param;
-            ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
+            ViewBag.lieu = db.Lieux.Find(user.LieuID);
+            ViewBag.lieuC = db.Lieux.Find(client.LieuID);
 
             if (facture == null) return HttpNotFound();
 

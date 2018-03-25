@@ -126,16 +126,16 @@ namespace WebApplication1.DAL
             //Ajout de devis.
             var devis = new List<Devis>
             {
-                new Devis(0, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(1, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(2, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)}, "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(3, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(4, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(5, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr") {Date = DateTime.Today.AddMonths(-2) },
-                new Devis(6, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(7, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,  12)}, "Mathis.FRIZOT@etu.uca.fr"),
-                new Devis(8, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
-                new Devis(9, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(0, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit1,   1)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(1, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit10,  1), new DonneeProduit(produit5, 1), new DonneeProduit(produit11, 1), new DonneeProduit(produit6, 1)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(2, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,   3), new DonneeProduit(produit12, 86)},"Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(3, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(4, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit3,   1)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(5, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit2,   1), new DonneeProduit(produit3, 1)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") {Date = DateTime.Today.AddMonths(-2)},
+                new Devis(6, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit12, 45)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(7, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit9,  12)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr"),
+                new Devis(8, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit4,   4)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
+                new Devis(9, "", /*TypeMonnaie.Euro, */new List<DonneeProduit>{ new DonneeProduit(produit8,  12)}, "Mathis.FRIZOT@etu.uca.fr", "Bernardo.PEREIRA_AUGUSTO@etu.uca.fr") { Etat = EtatDevis.Facturé },
             };
             devis.ForEach(d => context.Devis.Add(d));
 

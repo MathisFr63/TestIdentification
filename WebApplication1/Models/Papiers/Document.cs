@@ -40,6 +40,9 @@ namespace WebApplication1.Models.Papiers
         // Identifiant de l'utilisateur ayant créée le document.
         public string UtilisateurID { get; set; }
 
+        //Destinataire du document.
+        public string ClientID { get; set; }
+
         /// <summary>
         /// Constructeur par défaut d'un document.
         /// </summary>
@@ -54,7 +57,7 @@ namespace WebApplication1.Models.Papiers
         /// <param name="monnaie">Monnaie utilisée pour le règlement du document</param>
         /// <param name="produits">Produits contenus dans le document</param>
         /// <param name="utilisateurID">Identifiant de l'utilisateur ayant créé le document.</param>
-        public Document(string type, int nbMois, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID)
+        public Document(string type, int nbMois, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID, string clientID)
         {
             Identifiant = $"{type}{string.Format("{0:yyyyMM}", DateTime.Now)}{string.Format("{0:0000}", nbMois + 1)}";
 
@@ -63,6 +66,7 @@ namespace WebApplication1.Models.Papiers
             //Monnaie = monnaie;
             Produits = produits;
             UtilisateurID = utilisateurID;
+            ClientID = clientID;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace WebApplication1.Models.Papiers
         /// <param name="monnaie">Monnaie utilisée lors du règlement du devis lors de sa facturation</param>
         /// <param name="produits">Produits contenus dans le devis</param>
         /// <param name="utilisateurID">Identifiant de l'utilisateur ayant créé le devis</param>
-        public Devis(int nbMois, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID) : base("D", nbMois, commentaire, /*monnaie,*/ produits, utilisateurID)
+        public Devis(int nbMois, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID, string clientID) : base("D", nbMois, commentaire, /*monnaie,*/ produits, utilisateurID, clientID)
         {}
     }
 }
