@@ -60,35 +60,35 @@
 <table class="table">
     @using (Html.BeginForm("RechercheAvancee", "Devis", FormMethod.Get))
     {
-    <tr id="listAvancée" style="display: none">
-        <th>
-            <input type="text" name="Numéro" placeholder="Numéro" class="searchBar" value="" />
-        </th>
-        <th>
-            <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
-        </th>
-        <th>
-            <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
-        </th>
-        <th>
-            <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
-        </th>
-        <th>
-            <input type="text" name="TotalTTC" placeholder="Total TTC" class="searchBar" value="" />
-        </th>
-        <th>
-            <button type="submit" value="Search" class="btn button-bluedark">
-                <span class="glyphicon glyphicon-search" />
-            </button>
-        </th>
-    </tr>
+        <tr id="listAvancée" style="display: none">
+            <th>
+                <input type="text" name="Numéro" placeholder="Numéro" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Valide" placeholder="Valide" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+            </th>
+            <th>
+                <input type="text" name="TotalTTC" placeholder="Total TTC" class="searchBar" value="" />
+            </th>
+            <th>
+                <button type="submit" value="Search" class="btn button-bluedark">
+                    <span class="glyphicon glyphicon-search" />
+                </button>
+            </th>
+        </tr>
     }
     <tr>
         <th>@Html.LabelFor(model => model.First().Identifiant)</th>
         <th>@Html.LabelFor(model => model.First().Date)</th>
-        <th>@Html.LabelFor(model => model.First().Valide)</th>
+        <th>@Html.LabelFor(model => model.First().Etat)</th>
         @*<th>Commentaire</th>
-          <th>Monnaie</th>*@
+            <th>Monnaie</th>*@
         <th>Produits</th>
         <th>Total TTC</th>
         <th></th>
@@ -106,14 +106,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateString)
             </td>
-            @if (item.Valide)
-            {
-                <td>Oui</td>
-            }
-            else
-            {
-                <td>Non</td>
-            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Etat)
+            </td>
 
             @*<td>
                     @Html.DisplayFor(modelItem => item.Commentaire)
@@ -151,16 +146,18 @@
                 }
             </td>
             <td>
+                @{bool isFacture = item.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé;
+                }
                 <a title="Details Devis" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-file" />
                 </a>
-                <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'">
+                <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'" disabled="@isFacture">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
                 <a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
                 @if (isAdmin)
                 {
-                    <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange">
+                    <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange" disabled="@isFacture">
                         <span class="glyphicon glyphicon-pencil" />
                     </button>
                     <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Identifiant", "@item.ID")'>
@@ -180,12 +177,12 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-                   new
-                   {
-                       page,
-                       sortOrder = ViewBag.CurrentSort,
-                       currentFilter = ViewBag.CurrentFilter
-                   }))
+                                                            new
+                                                            {
+                                                                page,
+                                                                sortOrder = ViewBag.CurrentSort,
+                                                                currentFilter = ViewBag.CurrentFilter
+                                                            }))
     </div>
 }
 

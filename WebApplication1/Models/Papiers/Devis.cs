@@ -8,7 +8,7 @@ namespace WebApplication1.Models.Papiers
     public class Devis : Document
     {
         // Booléen permettant de désigner si le devis est encore valide selon la durée écoulée
-        public bool Valide { get; set; }
+        public EtatDevis Etat{ get; set; }
 
         //public int Total { get; set; } Prix calculé
 
