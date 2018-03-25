@@ -520,6 +520,31 @@ input[type=submit] {
         box-shadow: 2px 2px 2px #10a57e;
     }
 
+.button-whiteblack {
+    color: #ffffff;
+    background-color: #000000;
+    border-color: #ffffff;
+}
+
+    .button-whiteblack:hover {
+        color: #ffffff;
+        background-color: #000000;
+        border-color: #ffffff;
+        box-shadow: 2px 2px 2px #37449f;
+    }
+
+.button-whiteblack{
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #000000;
+}
+    .button-whiteblackreverse:hover {
+        color: #000000;
+        background-color: #ffffff;
+        border-color: #000000;
+        box-shadow: 2px 2px 2px #37449f;
+    }
+
 .button-bluedark {
     background-color: #5468f1;
     color: white;

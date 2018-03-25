@@ -125,6 +125,7 @@
 
                 @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
                 <td>
+                    @if ()
                     <a title="Details l'utilisateur" href=@Url.Action("Details", "Utilisateurs", new { id = item.ID.Replace('.', '~') }) class="btn button-bluedark">
                         <span class="glyphicon glyphicon-file" />
                     </a>

@@ -16,6 +16,8 @@ namespace WebApplication1.Models.Account
         //public int NbRelanceFacture { get; set; }
         [Display(Name = "Thème")]
         public Theme Theme { get; set; }
+        [Display(Name = "Couleurs des boutons")]
+        public ColorBtn ColorBtn { get; set; }
         [Display(Name = "Nombre d'éléments à afficher par pages")]
         public int NbElementPage { get; set; }
         [Display(Name = "Texte par défaut des feedbacks")]
@@ -47,11 +49,11 @@ namespace WebApplication1.Models.Account
         [Display(Name = "Texte d'introduction")]
         public string TexteIntroductionFacture { get; set; }
 
-        public Parametre() : this(30, 3, Theme.Clear, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6, false, "/image/boite.png", "", "", "", "", "", "", "", "")
+        public Parametre() : this(30, 3, Theme.Clear, ColorBtn.CouleurVive, 15, $"Bonjour,\r\n\r\nCordialement,\r\n", 30, 6, false, "/image/boite.png", "", "", "", "", "", "", "", "")
         {
         }
 
-        public Parametre(int DureeValiditeDevis, int NbRelanceFacture, Theme Theme, int NbElementPage, string DefaultTextFeedback, int NbJourStat,
+        public Parametre(int DureeValiditeDevis, int NbRelanceFacture, Theme Theme, ColorBtn colorBtn, int NbElementPage, string DefaultTextFeedback, int NbJourStat,
             int TailleHistorique, bool Abonnee, string DefaultUrl, string ConditionsGeneralesDevis, string TexteDeFinDevis, string FooterDevis,
             string TexteIntroductionDevis, string ConditionsGeneralesFacture, string TexteDeFinFacture, string FooterFacture, string TexteIntroductionFacture)
         {

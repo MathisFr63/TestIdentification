@@ -170,6 +170,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\ColorBtn.cs" />
     <Compile Include="Models\Account\Feedback.cs" />
     <Compile Include="Models\Account\Newsletter.cs" />
     <Compile Include="Models\Account\Parametre.cs" />

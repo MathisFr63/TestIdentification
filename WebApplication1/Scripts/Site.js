@@ -123,8 +123,8 @@ function addNumero(value, prefixe) {
                     '<input class="form-control text-box single-line" style= "width: 57px" type= "text" value= "' + prefixe + '" name="prefixe' + nb + '" required>' +
                     '<input class="form-control text-box single-line" id="item_Num_ro" name="' + nb + '" type="text" value="' + value + '" required>' +
                 '</div>' +
-                '<button type="reset" value="cancel" title="Créer un Nouveau Devis" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">' +
-                    '<i class="glyphicon glyphicon-remove"></i >' +
+                '<button type="reset" value="cancel" title="Supprimer un numéro" onclick="removeNumero(parentNode.parentNode);" class="btn btn-danger" style="margin:10px">' +
+                    '<i class="glyphicon glyphicon-trash"></i >' +
                 '</button>' +
             '</div>' +
         '</div>';
