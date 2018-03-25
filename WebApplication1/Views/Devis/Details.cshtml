@@ -20,7 +20,9 @@
 
     <ul style="list-style: none; display:block; float: right!important; margin-bottom:0;">
         <li>
-            <a title="Facturer le devis" href=@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID }) class="btn button-bluedark"><span class="fas fa-cart-arrow-down" /></a>
+            @if(isAdmin){
+                <a title="Facturer le devis" href=@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID }) class="btn button-bluedark"><span class="fas fa-cart-arrow-down" /></a>
+            }
             <a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = Model.Devis.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
             @if (isAdmin)
             {
@@ -58,20 +60,20 @@
             <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Devis.Date) à @string.Format("{0:hh:mm}", Model.Devis.Date)</div>
         </div>
 
-        <div class="contact-item">
-            <div class="contact-label">@Html.LabelFor(model => model.Devis.Valide)</div>
-            <div class="contact-content">
-                @if (Model.Devis.Valide)
-        {
-            <text>Oui</text>
-}
-else
-{
-        <text>Non</text>
-}
-            </div>
+        @*<div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(model => model.Devis.Valide)</div>
+                <div class="contact-content">
+                    @if (Model.Devis.Valide)
+            {
+                <text>Oui</text>
+    }
+    else
+    {
+            <text>Non</text>
+    }
+                </div>
 
-        </div>
+            </div>*@
 
         <div class="contact-item">
             <div class="contact-label">@Html.LabelFor(model => model.Devis.Commentaire)</div>
@@ -179,5 +181,7 @@ else
 
 
     </div>
-    <button title="Facturer devis" value="Facturer" class="button button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID })'">Facturer</button>
+    @if(isAdmin){
+        <button title="Facturer devis" value="Facturer" class="button button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID })'">Facturer</button>
+    }
 </div>

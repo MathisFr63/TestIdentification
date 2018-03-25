@@ -35,6 +35,7 @@ namespace WebApplication1.Models.Papiers
             UtilisateurID = devis.UtilisateurID;
             string da = string.Format("{0:yyyyMM}", DateTime.Now);
             Identifiant = $"F{da}{string.Format("{0:0000}", nbFactureDuMois + 1)}";
+            ClientID = devis.ClientID;
             //Relances = 0;
         }
 

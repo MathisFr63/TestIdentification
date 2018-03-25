@@ -38,13 +38,16 @@
     </style>
     <div class="py-5">
         <div class="container">
-            <div class="en-tete">
-                <div>
+            <div class="en-tete row">
+                <div class="col-xs-6">
                     <img src="~/image/logo.png" />
                 </div>
-                <div></div>
-                <div>
-                    <h2>Facture</h2>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6">
+                    <p>@ViewBag.user.Nom @ViewBag.user.Prénom</p>
+                    <p>@ViewBag.lieu.Adresse</p>
+                    <p>@ViewBag.lieu.Ville - @ViewBag.lieu.CodePostal</p>
+                    <p>@Model.Facture.UtilisateurID</p>
                 </div>
             </div>
 
@@ -53,10 +56,10 @@
             <div class="row">
                 <div class="col-xs-6">
                     <h3>Facturer à</h3>
-                    <p>@ViewBag.user.Nom @ViewBag.user.Prénom</p>
-                    <p>@ViewBag.lieu.Adresse</p>
-                    <p>@ViewBag.lieu.Ville - @ViewBag.lieu.CodePostal</p>
-                    <p>@Model.Facture.UtilisateurID</p>
+                    <p>@ViewBag.client.Nom @ViewBag.client.Prénom</p>
+                    <p>@ViewBag.lieuC.Adresse</p>
+                    <p>@ViewBag.lieuC.Ville - @ViewBag.lieuC.CodePostal</p>
+                    <p>@Model.Facture.ClientID</p>
                 </div>
                 <div class="col-xs-6" style="text-align: right">
                     <p><strong>Facture n° :</strong> @Model.Facture.Identifiant</p>

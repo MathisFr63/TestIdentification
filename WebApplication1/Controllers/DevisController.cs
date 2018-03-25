@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             var param = db.Parametres.Find(user.ParametreID);
             var ListDevis = db.Devis.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
-                ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
+                ListDevis = ListDevis.Where(devis => devis.ClientID == user.ID).ToList();
 
             ListDevis[5].Date = DateTime.Today.AddMonths(-5);
 
@@ -317,9 +317,12 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
             var user = db.Utilisateurs.Find(devis.UtilisateurID);
             var param = db.Parametres.Find(user.ParametreID);
+            var client = db.Utilisateurs.Find(devis.ClientID);
             ViewBag.user = user;
+            ViewBag.client = client;
             ViewBag.param = param;
-            ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
+            ViewBag.lieu = db.Lieux.Find(user.LieuID);
+            ViewBag.lieuC = db.Lieux.Find(client.LieuID);
 
 
             if (devis == null) return HttpNotFound();
@@ -336,12 +339,22 @@ namespace WebApplication1.Controllers
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
-
             var ListDevis = db.Devis.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
                 ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
-            ListDevis.ForEach(devis => devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList());
+            ListDevis[5].Date = DateTime.Today.AddMonths(-5);
+
+            ListDevis.ForEach(devis =>
+            {
+                devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
+                if (devis.Etat == EtatDevis.EnCours)
+                    if (!(devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today))
+                        devis.Etat = EtatDevis.Rejeté;
+            });
+
+
+            db.SaveChanges();
 
             if (searchstring != null) page = 1;
             else searchstring = currentFilter;
