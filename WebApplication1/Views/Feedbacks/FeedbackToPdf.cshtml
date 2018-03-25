@@ -24,18 +24,19 @@
             <div class="row">
 
                 @*Affichage du sujet du feedback*@
-                <div class="col-md-6">
-                    <p class="lead">Sujet : @Html.DisplayFor(model => model.Subject)</p>
+                <div class="contact-item">
+                    <p class="lead"><label>Sujet :</label> @Html.DisplayFor(model => model.Subject)</p>
                 </div>
 
                 @*Affichage de l'identifiant de l'utilisateur ayant envoyé le feedback*@
-                <div class="col-md-6">
-                    <p class="lead">Mail : @Html.DisplayFor(model => model.UtilisateurID)</p>
+                <div class="contact-item">
+                    <p class="lead"><label>Mail :</label> @Html.DisplayFor(model => model.UtilisateurID)</p>
                 </div>
 
                 @*Affichage du commentaire lié au feedback*@
-                <div class="col-md-6">
-                    <p class="lead">Détails : @Html.DisplayFor(model => model.Comment)</p>
+                <div class="contact-item">
+                    <div class="lead"><label>Contenu :</label></div>
+                    <div class="lead">@Html.Raw(HttpUtility.HtmlDecode(Model.Comment))</div>
                 </div>
 
                 @*Affichage de l'état du feedback*@

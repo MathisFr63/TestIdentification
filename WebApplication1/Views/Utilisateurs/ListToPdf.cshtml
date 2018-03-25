@@ -26,16 +26,10 @@
         @*Affichage de l'entête de chaque colonne dans le tableau*@
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotDePasse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prénom)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
@@ -48,32 +42,20 @@
         @foreach (var item in Model)
         {
             <tr>
+                @*Affichage du nom et du prénom de l'utilisateur*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+
                 @*Affichage de l'identifiant (adresse e-mail) de l'utilisateur*@
                 <td>
                     @Html.DisplayFor(modelItem => item.ID)
-                </td>
-
-                @*Affichage du mot de passe de l'utilisateur*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.MotDePasse)
-                </td>
-
-                @*Affichage du prénom de l'utilisateur*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Prénom)
-                </td>
-
-                @*Affichage du nom de l'utilisateur*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nom)
                 </td>
 
                 @*Affichage du type de l'utilisateur*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
-
-                @*Boutons permettant la modification, l'affichage des détails, et la suppression de l'utilisateur*@
             </tr>
         }
     </table>

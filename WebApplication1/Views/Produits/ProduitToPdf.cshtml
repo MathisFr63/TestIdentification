@@ -3,6 +3,7 @@
 
 @{
     Layout = null;
+    var type = (new WebApplication1.DAL.ApplicationContext()).ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
     ViewBag.Title = "PDF Produit";
 }
 <!DOCTYPE html>
@@ -37,6 +38,14 @@
                                 <div class="contact-label">@Html.LabelFor(m => m.Détails)</div>
                                 <div class="contact-content">@Html.DisplayFor(model => model.Détails)</div>
                             </div>
+
+                            @if (type != WebApplication1.Models.Account.TypeUtilisateur.Administrateur)
+                            {
+                                <div class="contact-item">
+                                    <div class="contact-label"><label>Créé par</label></div>
+                                    <div class="contact-content">@Html.DisplayFor(model => model.UtilisateurID)</div>
+                                </div>
+                            }
 
                             <div class="contact-item">
                                 <div class="contact-label">@Html.LabelFor(m => m.Type)</div>

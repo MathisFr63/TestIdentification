@@ -15,7 +15,7 @@ namespace WebApplication1.Models.Account
     public class Utilisateur
     {
         // Identifiant de l'utilisateur (son adresse mail) afin de l'identifier dans la base de données.
-        [DisplayName("Adresse e-mail")]
+        [DisplayName("Adresse mail")]
         public string ID { get; set; }
         // Mot de passe de l'uitlisateur lui permettant de se connecter.
         [DisplayName("Mot de passe")]

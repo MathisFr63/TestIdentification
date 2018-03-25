@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers
     public class ProduitsController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
-        
+
 
         // GET: Produits
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des produits de l'utilisateur.
@@ -28,6 +28,9 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.ToList();
+
+            if (user.Type == TypeUtilisateur.Administrateur)
+                listProduit = listProduit.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -58,6 +61,9 @@ namespace WebApplication1.Controllers
             var param = db.Parametres.Find(user.ParametreID);
 
             IEnumerable<Produit> myListTrier = db.Produits.ToList().OrderBy(s => s.Libelle);
+
+            if (user.Type == TypeUtilisateur.Administrateur)
+                myListTrier = myListTrier.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (!string.IsNullOrWhiteSpace(Libellé))
                 myListTrier = myListTrier.Where(s => s.Libelle.ToUpper().Contains(Libellé.ToUpper()));
@@ -114,6 +120,8 @@ namespace WebApplication1.Controllers
             if (string.IsNullOrEmpty(produit.UrlImage))
                 produit.UrlImage = db.Parametres.Find(user.ParametreID).DefaultUrl;
 
+            produit.UtilisateurID = user.ID;
+
             if (!ModelState.IsValid)
                 return View(produit);
 
@@ -126,14 +134,17 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'afficher la page de modification du produit sélectionné et dont l'id et passé par l'url.
         public ActionResult Edit(int? id)
         {
-            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
 
-            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null || (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var produit = db.Produits.Find(id);
 
             if (produit == null)
                 return HttpNotFound();
+
+            if (produit.UtilisateurID != user.ID && user.Type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             return View(produit);
         }
 
@@ -169,15 +180,18 @@ namespace WebApplication1.Controllers
         // Méthode permettant grâce à l'accès par l'url d'accèder à l'affichage des détails du produit sélectionné afin de vérifier si l'utilisateur veut le supprimer.
         public ActionResult Delete(int? id)
         {
-            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
 
-            if (id == null || (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA))
+            if (id == null || (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+
             var produit = db.Produits.Find(id);
             if (produit == null)
                 return HttpNotFound();
-            
+
+            if (produit.UtilisateurID != user.ID && user.Type != TypeUtilisateur.SA)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             return View(produit);
         }
 
@@ -211,11 +225,11 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+
             var produit = db.Produits.Find(id);
             if (produit == null)
                 return HttpNotFound();
-            
+
             return new ViewAsPdf("ProduitToPdf", produit);
         }
 
@@ -223,11 +237,11 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+
             var produit = db.Produits.Find(id);
             if (produit == null)
                 return HttpNotFound();
-            
+
             return View(produit);
         }
 
@@ -237,6 +251,9 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.ToList();
+
+            if (user.Type == TypeUtilisateur.Administrateur)
+                listProduit = listProduit.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;
@@ -266,6 +283,9 @@ namespace WebApplication1.Controllers
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
             var listProduit = db.Produits.ToList();
+
+            if (user.Type == TypeUtilisateur.Administrateur)
+                listProduit = listProduit.Where(p => p.UtilisateurID == user.ID).ToList();
 
             if (searchstring != null)
                 page = 1;

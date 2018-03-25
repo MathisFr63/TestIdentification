@@ -30,9 +30,14 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
-                        <li style="background-color: white;">@Html.ActionLink("Enrollment Date", "Index", new { sortOrder = ViewBag.DateSortParm })</li>
-                        <li style="background-color: white;">@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })</li>
-                        <li style="background-color: white;"><a href="#">Nb factures</a></li>
+                        <li>@Html.ActionLink("Nom ↑", "Index", new { sortOrder = "nomAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Nom ↓", "Index", new { sortOrder = "nomZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Mail ↑", "Index", new { sortOrder = "mailAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Mail ↓", "Index", new { sortOrder = "mailZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Sujet ↑", "Index", new { sortOrder = "sujetAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Sujet ↓", "Index", new { sortOrder = "sujetZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Résolus ↑", "Index", new { sortOrder = "resolus", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("En cours ↑", "Index", new { sortOrder = "enCours", searchString = ViewBag.CurrentFilter as string })</li>
                     </ul>
                 </li>
                 <li>
@@ -130,7 +135,7 @@
 {
     <div class="text-center">
 
-        @Html.PagedListPager(Model, page => Url.Action("Index",new{page,sortOrder = ViewBag.CurrentSort,currentFilter = ViewBag.CurrentFilter}))
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     </div>
 }
 

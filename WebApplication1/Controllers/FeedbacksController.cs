@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
         // GET: Feedbacks
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des feedbacks des utilisateurs de l'application.
-        public ActionResult Index(String searchstring, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
@@ -38,14 +38,17 @@ namespace WebApplication1.Controllers
                 searchstring = currentFilter;
 
             ViewBag.CurrentFilter = searchstring;
+            ViewBag.CurrentSort = sortOrder;
+
+            var ListFeedbacksTrie = SortOrder(ListFeedbacks, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(ListFeedbacks.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(ListFeedbacksTrie.Where(s => s.Subject.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
 
-            return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
+            return View(ListFeedbacksTrie.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult RechercheAvancee(string Nom, string Mail, string Sujet, string Résolu, int? page)
@@ -289,6 +292,29 @@ namespace WebApplication1.Controllers
             }
             else
                 return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
+        }
+
+        private IOrderedEnumerable<Feedback> SortOrder(List<Feedback> fb, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "mailZA":
+                    return fb.OrderByDescending(f => f.UtilisateurID);
+                case "nomAZ":
+                    return fb.OrderBy(f => f.userName);
+                case "nomZA":
+                    return fb.OrderByDescending(f => f.userName);
+                case "sujetAZ":
+                    return fb.OrderBy(f => f.Subject);
+                case "sujetZA":
+                    return fb.OrderByDescending(f => f.Subject);
+                case "enCours":
+                    return fb.OrderBy(f => f.IsResolved);
+                case "resolus":
+                    return fb.OrderByDescending(f => f.IsResolved);
+            }
+
+            return fb.OrderBy(f => f.UtilisateurID);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         // GET: Utilisateurs
         [Authorize]
         // Méthode permettant d'afficher la liste des utilisateurs de l'application si l'utilisateur courant est un administrateur.
-        public ActionResult Index(string sortOrder, String searchstring, string currentFilter, int? page)
+        public ActionResult Index(string sortOrder, string searchstring, string currentFilter, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)

@@ -59,6 +59,9 @@ namespace WebApplication1.Models.Papiers
             this.UrlImage = $"/image/{url}";
         }
 
+        [Display(Name = "Utilisateur")]
+        public string UtilisateurID { get; set; }
+
         /// <summary>
         /// Méthode permettant de retranscrire les données du produit sous forme de chaîne de caractères.
         /// </summary>
