@@ -22,8 +22,8 @@
 @*Div permettant d'afficher les détails du devis avant de le facturer*@
 <div class="contact">
     <div class="contact-item">
-        <div class="contact-label">Objet du devis</div>
-        <div class="contact-content">@Html.DisplayFor(model => model.Objet)</div>
+        <div class="contact-label">@Html.LabelFor(model => model.Identifiant)</div>
+        <div class="contact-content">@Html.DisplayFor(model => model.Identifiant)</div>
     </div>
 
     <div class="contact-item">

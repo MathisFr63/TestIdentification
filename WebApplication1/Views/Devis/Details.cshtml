@@ -48,38 +48,37 @@
         </div>*@
 
         <div class="contact-item">
-            <div class="contact-label">Identifiant</div>
-            <div class="contact-content">@Model.Devis.Identifiant</div>
+            @Html.LabelFor(model => model.Devis.Identifiant)
+            @Html.DisplayFor(model => model.Devis.Identifiant)
+            @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Créé le</div>
+            <div class="contact-label"><label>Créé le </label></div>
             <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Devis.Date) à @string.Format("{0:hh:mm}", Model.Devis.Date)</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Objet du devis</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Objet)</div>
-        </div>
-
-        <div class="contact-item">
-            <div class="contact-label">Validité</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Devis.Valide)</div>
             <div class="contact-content">
                 @if (Model.Devis.Valide)
-                {
-                    <text>Oui</text>
-                }
-                else
-                {
-                    <text>Non</text>
-                }   
+        {
+            <text>Oui</text>
+}
+else
+{
+        <text>Non</text>
+}
             </div>
 
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Note</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Commentaire)</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Devis.Commentaire)</div>
+            @{ 
+                var info = String.IsNullOrWhiteSpace(Model.Devis.Commentaire) ? "Aucune" : Model.Devis.Commentaire;
+            }
+            <div class="contact-content">@info</div>
         </div>
     </div>
     <div class="buttons buttons-small"></div>
@@ -95,11 +94,11 @@
     <div class="contact col-md-12"> 
 
         <div class="contact-item contact-item-large">
-            <div class="contact-content col-md-2">Nom du produit</div>
-            <div class="contact-content col-md-2">Prix HT</div>
-            <div class="contact-content col-md-1">Quantité</div>
+            <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().Libelle)</div>
+            <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().PrixHT)</div>
+            <div class="contact-content col-md-1">@Html.LabelFor(model => model.DonneeProduit.Quantite)</div>
             <div class="contact-content col-md-2">Total HT</div>
-            <div class="contact-content col-md-1">TVA</div>
+            <div class="contact-content col-md-1">@Html.LabelFor(model => model.Produits.First().TVA)</div>
             <div class="contact-content col-md-2">Total TTC</div>
         </div>
 
@@ -137,10 +136,10 @@
                 <div class="contact-content">Payée</div>
             </div>*@
 
-        <div class="contact-item">
+        @*<div class="contact-item">
             <div class="contact-label">Monnaie utilisée</div>
-            @*<div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>*@
-        </div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
+        </div>*@
         @*calcul du montant total TTC*@
         @{
 
@@ -162,19 +161,19 @@
             double totalTaxe = sommeTTC - sommeHT;
         }
         <div class="contact-item">
-            <div class="contact-label">Prix total HT</div>
+            <div class="contact-label"><label>Prix total HT</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", sommeHT) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Prix total TTC</div>
+            <div class="contact-label"><label>Prix total TTC</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", sommeTTC) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Taxe</div>
+            <div class="contact-label"><label>Taxe</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", totalTaxe) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Total réduction</div>
+            <div class="contact-label"><label>Total réduction</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", totalReduc) €</div>
         </div>
 

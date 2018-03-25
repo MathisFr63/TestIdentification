@@ -38,28 +38,26 @@
     </div>
     <div class="contact">
         @*<div class="contact-item contact-item-large">
-            <div class="contact-label">Statut</div>
-            <div class="contact-content">Payée</div>
-        </div>*@
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
 
         <div class="contact-item">
-            <div class="contact-label">Identifiant</div>
+            <div class="contact-label">@Html.LabelFor(model => model.Facture.Identifiant)</div>
             <div class="contact-content">@Model.Facture.Identifiant</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Facturée le</div>
+            <div class="contact-label"><label>Facturée le</label></div>
             <div class="contact-content"> @string.Format("{0:dd MMMM yyyy}", Model.Facture.Date) à @string.Format("{0:hh:mm}", Model.Facture.Date)</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Objet de la facture</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Objet)</div>
-        </div>
-
-        <div class="contact-item">
-            <div class="contact-label">Note</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Commentaire)</div>
+            <div class="contact-label"><label>@Html.LabelFor(model => model.Facture.Commentaire)</label></div>
+            @{
+                var info = String.IsNullOrWhiteSpace(Model.Facture.Commentaire) ? "Aucune" : Model.Facture.Commentaire;
+            }
+            <div class="contact-content">@info</div>
         </div>
     </div>
     <div class="buttons buttons-small"></div>
@@ -117,10 +115,10 @@
                 <div class="contact-content">Payée</div>
             </div>*@
 
-        <div class="contact-item">
+        @*<div class="contact-item">
             <div class="contact-label">Monnaie utilisée</div>
-            @*<div class="contact-content">@Html.DisplayFor(model => model.Facture.Monnaie)</div>*@
-        </div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Monnaie)</div>
+        </div>*@
         @*calcul du montant total TTC*@
         @{
 
@@ -142,43 +140,43 @@
             double totalTaxe = sommeTTC - sommeHT;
         }
         <div class="contact-item">
-            <div class="contact-label">Prix total HT</div>
+            <div class="contact-label"><label>Prix total HT</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", sommeHT) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Prix total TTC</div>
+            <div class="contact-label"><label>Prix total TTC</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", sommeTTC) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Taxe</div>
+            <div class="contact-label"><label>Taxe</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", totalTaxe) €</div>
         </div>
         <div class="contact-item">
-            <div class="contact-label">Total réduction</div>
+            <div class="contact-label"><label>Total réduction</label></div>
             <div class="contact-content">@string.Format("  {0:F2}", totalReduc) €</div>
         </div>
 
         <div class="contact-item">
-            <div class="contact-label">Mode de règlement</div>
+            <div class="contact-label"><label>Mode de règlement</label></div>
             <div class="contact-content">@Html.DisplayFor(model => model.Facture.Reglement)</div>
         </div>
 
         @*<div class="contact-item">
-            <div class="contact-label">Nombre de relances</div>
-            <div class="contact-content">@Html.DisplayFor(model => model.Facture.Relances)</div>
-        </div>*@
+                <div class="contact-label">Nombre de relances</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Facture.Relances)</div>
+            </div>*@
 
     </div>
     @*@if (isAdmin)
-    {
-        <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
-    }*@
+        {
+            <a href=@Url.Action("Relancer", "Factures", new { id = Model.Facture.ID }) class="button button-red">Relancer</a>
+        }*@
 </div>
 
 
 @*@if (ViewBag.ErreurRelance != null && ViewBag.ErreurRelance == true)
-{
-    <script type="text/javascript">
-        alert("Nombre de relance déjà au maximum");
-    </script>
-}*@
+    {
+        <script type="text/javascript">
+            alert("Nombre de relance déjà au maximum");
+        </script>
+    }*@

@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return View(listeTrie.Where(s => s.Identifiant.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             myListTrier.ToList().ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
             if (Objet != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
+                myListTrier = myListTrier.Where(s => s.Identifiant.ToUpper().Contains(Objet.ToUpper()));
 
             if (DateTime.TryParse(Date, out var date))
                 myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
@@ -170,7 +170,7 @@ namespace WebApplication1.Controllers
             int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return new ViewAsPdf(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
+                return new ViewAsPdf(listeTrie.Where(s => s.Identifiant.ToUpper().Contains(searchstring.ToUpper())).ToPagedList(pageNumber, pageSize));
             return new ViewAsPdf(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
@@ -178,14 +178,14 @@ namespace WebApplication1.Controllers
         {
             switch (sortOrder)
             {
-                case "objetZA":
-                    return factures.OrderByDescending(s => s.Objet);
+                case "numeroZA":
+                    return factures.OrderByDescending(s => s.Identifiant);
                 case "dateOldNew":
                     return factures.OrderBy(s => s.Date);
                 case "dateNewOld":
                     return factures.OrderByDescending(s => s.Date);
             }
-            return factures.OrderBy(s => s.Objet);
+            return factures.OrderBy(s => s.Identifiant);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models.Papiers
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication1.Models.Papiers
 {
     /// <summary>
     /// Classe permettant de représenter les données entre un document et les produits qui lui sont liés.
@@ -16,6 +18,7 @@
         public int? FactureID { get; set; }
 
         // Quantité du produit
+        [Display(Name = "Quantité")]
         public int Quantite { get; set; }
         
         // Nom du produit

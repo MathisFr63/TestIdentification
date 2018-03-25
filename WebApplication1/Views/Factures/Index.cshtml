@@ -35,8 +35,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="padding-bottom:5px;padding-top:5px;" data-toggle="dropdown">Trier par<b class="caret"></b></a>
                     <ul class="dropdown-menu dropdown-menu-default trie">
-                        <li>@Html.ActionLink("Objet ↑", "Index", new { sortOrder = "objetAZ", searchString = ViewBag.CurrentFilter as string })</li>
-                        <li>@Html.ActionLink("Objet ↓", "Index", new { sortOrder = "objetZA", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Numéro ↑", "Index", new { sortOrder = "numeroAZ", searchString = ViewBag.CurrentFilter as string })</li>
+                        <li>@Html.ActionLink("Numéro ↓", "Index", new { sortOrder = "numeroZA", searchString = ViewBag.CurrentFilter as string })</li>
                         <li>@Html.ActionLink("Date ↑", "Index", new { sortOrder = "dateNewOld", searchString = ViewBag.CurrentFilter as string })</li>
                         <li>@Html.ActionLink("Date ↓", "Index", new { sortOrder = "dateOldNew", searchString = ViewBag.CurrentFilter as string })</li>
                     </ul>
@@ -75,7 +75,7 @@
         </tr>
     }
     <tr>
-        <th>Objet</th>
+        <th>Numéro</th>
         <th>Date</th>
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
@@ -93,7 +93,7 @@
         <tr>
             <td>
                 <a title="Détails" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="detail">
-                    @Html.DisplayFor(modelItem => item.Objet)
+                    @Html.DisplayFor(modelItem => item.Identifiant)
                 </a>
             </td>
             <td>

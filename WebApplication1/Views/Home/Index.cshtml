@@ -355,7 +355,7 @@ else
                             {
                                 foreach (var item in ViewBag.listeDevis)
                                 {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Devis", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
+                                    <li class="list-group-item"><a href=@Url.Action("Details", "Devis", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Identifiant</b></a></li>
                                 }
                             }
                         </ul>
@@ -375,7 +375,7 @@ else
                             {
                                 foreach (var item in ViewBag.listeFactures)
                                 {
-                                    <li class="list-group-item"><a href=@Url.Action("Details", "Factures", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Objet</b></a></li>
+                                    <li class="list-group-item"><a href=@Url.Action("Details", "Factures", new { id = item.ID })>&nbsp;@item.Date.ToString("dd/MM") –&nbsp;<b>@item.Identifiant</b></a></li>
                                 }
                             }
                         </ul>

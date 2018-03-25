@@ -24,41 +24,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h3>Informations devis:</h3>
-    <hr />
+
     <div class="form-horizontal">
-        @*Div permettant de stocker l'identifiant du devis (sans l'afficher) afin de pouvoir l'utiliser ensuite*@
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Devis.ID)
-
-        @*Div permettant la modification de l'objet du devis*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.Devis.Objet, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Devis.Objet, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*Div permettant la modification de la monnaie utilisée par le devis*@
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Devis.Monnaie, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*Div permettant la modification du commentaire lié au devis*@
-        <div class="form-group">
-            <label class="control-label col-md-2">Autres informations</label>
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS" })
-                @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <br />
         <h3>Informations articles:</h3>
         <hr />
         @*Div permettant la modification des produits que possède le devis*@
@@ -73,9 +40,9 @@
                 <div id="checkboxes" style="display: block;">
                     @foreach (var item in Model.Produits)
                     {
-                    <label>
-                        <input type="checkbox" onclick="toggleArticleEdit('@item.Libelle', 1, '@item.PrixHT', '@item.PrixHT', '@item.TVA', '@item.TotalTTC')" id='@item.Libelle input' style="margin-right: 5px;"/>@item.Libelle
-                    </label>
+                        <label>
+                            <input type="checkbox" onclick="toggleArticleEdit('@item.Libelle', 1, '@item.PrixHT', '@item.PrixHT', '@item.TVA', '@item.TotalTTC')" id='@item.Libelle input' style="margin-right: 5px;" />@item.Libelle
+                        </label>
                     }
                 </div>
             </div>
@@ -86,14 +53,46 @@
         @*Script permettant de sélectionner la quantité voulue pour chaque produit du devis*@
         @foreach (var item in Model.ProduitsSelected)
         {
-        <script type="text/javascript">
+            <script type="text/javascript">
                 @{
                     var totalHT = item.PrixHT*item.Quantite;
                 }
                 toggleArticleEdit("@item.Nom", @item.Quantite, "@item.PrixHT", "@totalHT", "@item.TVA", "@item.TotalTTC");
                 document.getElementById("@item.Nom input").checked = true;
-        </script>
+            </script>
         }
+        <br />
+        <h3>Informations devis:</h3>
+        <hr />
+        @*Div permettant de stocker l'identifiant du devis (sans l'afficher) afin de pouvoir l'utiliser ensuite*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Devis.ID)
+
+        @*Div permettant la modification de l'objet du devis*@
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Devis.Objet, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Devis.Objet, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Devis.Objet, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        @*Div permettant la modification de la monnaie utilisée par le devis*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.Devis.Monnaie, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Devis.Monnaie, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*Div permettant la modification du commentaire lié au devis*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Devis.Commentaire@*, new { @class="col-md-2"}*@)
+                @Html.TextAreaFor(model => model.Devis.Commentaire, new { @class = "form-control textAreaCSS", @style = "min-width: 1000px; min-height: 75px" })
+                @Html.ValidationMessageFor(model => model.Devis.Commentaire, "", new { @class = "text-danger"})
+        </div>
+
 
         @*Bouton permettant de valider la modification du devis (sauvegarder les modification) ou de facturer le devis*@
         <div class="form-group">

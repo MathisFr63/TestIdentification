@@ -48,11 +48,11 @@ namespace WebApplication1.Controllers
             var listeTrie = SortOrder(ListDevis, sortOrder);
 
             if (!String.IsNullOrEmpty(searchstring))
-                return View(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+                return View(listeTrie.Where(s => s.Identifiant.Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
             return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
-        public ActionResult RechercheAvancee(string Objet, string Date, string Valide, string Produit, string TotalTTC, int? page)
+        public ActionResult RechercheAvancee(string Numéro, string Date, string Valide, string Produit, string TotalTTC, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
@@ -68,8 +68,8 @@ namespace WebApplication1.Controllers
                 devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
             });
 
-            if (Objet != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Objet.ToUpper().Contains(Objet.ToUpper()));
+            if (!String.IsNullOrWhiteSpace(Numéro))
+                myListTrier = myListTrier.Where(s => s.Identifiant.ToUpper().Contains(Numéro.ToUpper()));
 
             if (DateTime.TryParse(Date, out var date))
                 myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
@@ -206,7 +206,6 @@ namespace WebApplication1.Controllers
                 });
             }
 
-            devis.Objet = form.GetValues(keys[2])[0];
             //devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
             devis.Commentaire = form.GetValues(keys[3])[0];
             devis.Date = DateTime.Now;
@@ -341,7 +340,7 @@ namespace WebApplication1.Controllers
             var listeTrie = SortOrder(ListDevis, sortOrder);
 
             if (!string.IsNullOrEmpty(searchstring))
-                return new ViewAsPdf(listeTrie.Where(s => s.Objet.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
+                return new ViewAsPdf(listeTrie.Where(s => s.Identifiant.ToUpper().Contains(searchstring.ToUpper())).ToPagedList((page ?? 1), param.NbElementPage));
             return new ViewAsPdf(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
@@ -349,15 +348,15 @@ namespace WebApplication1.Controllers
         {
             switch (sortOrder)
             {
-                case "objetZA":
-                    return ListDevis.OrderByDescending(s => s.Objet);
+                case "numeroZA":
+                    return ListDevis.OrderByDescending(s => s.Identifiant);
                 case "dateOldNew":
                     return ListDevis.OrderBy(s => s.Date);
                 case "dateNewOld":
                     return ListDevis.OrderByDescending(s => s.Date);
             }
 
-            return ListDevis.OrderBy(s => s.Objet);
+            return ListDevis.OrderBy(s => s.Identifiant);
         }
     }
 }

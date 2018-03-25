@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Models.Papiers
 {
@@ -8,14 +9,13 @@ namespace WebApplication1.Models.Papiers
     /// </summary>
     public abstract class Document
     {
+        [Display(Name = "Numéro")]
         public string Identifiant { get; set; }
 
         // Identifiant permettant de retrouver le document dans la base de données.
         public int ID { get; private set; }
 
         // Objet du document
-        public string Objet { get; set; }
-
         // Date de création du document
         public DateTime Date { get; set; }
 
@@ -28,6 +28,7 @@ namespace WebApplication1.Models.Papiers
         }
 
         // Commentaire lié au document afin de mieux l'identifier.
+        [Display(Name = "Autres informations")]
         public string Commentaire { get; set; }
 
         // Monnaie utilisée pour le paiement du document.
@@ -53,11 +54,10 @@ namespace WebApplication1.Models.Papiers
         /// <param name="monnaie">Monnaie utilisée pour le règlement du document</param>
         /// <param name="produits">Produits contenus dans le document</param>
         /// <param name="utilisateurID">Identifiant de l'utilisateur ayant créé le document.</param>
-        public Document(string type, int nbMois, string objet, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID)
+        public Document(string type, int nbMois, string commentaire, /*TypeMonnaie monnaie,*/ ICollection<DonneeProduit> produits, string utilisateurID)
         {
             Identifiant = $"{type}{string.Format("{0:yyyyMM}", DateTime.Now)}{string.Format("{0:0000}", nbMois + 1)}";
 
-            Objet = objet;
             Date = DateTime.Now;
             Commentaire = commentaire;
             //Monnaie = monnaie;

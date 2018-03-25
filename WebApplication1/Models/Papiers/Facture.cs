@@ -28,7 +28,6 @@ namespace WebApplication1.Models.Papiers
         /// <param name="devis">Devis que l'on souhaite facturer</param>
         public Facture(Devis devis, int nbFactureDuMois)
         {
-            Objet = devis.Objet;
             Date = DateTime.Now;
             Commentaire = devis.Commentaire;
             //Monnaie = devis.Monnaie;

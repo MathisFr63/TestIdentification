@@ -19,19 +19,22 @@
             display: flex;
             justify-content: space-between
         }
-            .en-tete *{
+
+            .en-tete * {
                 display: inline-block
             }
+
             .en-tete div {
                 width: 33%
             }
-            .en-tete div:last-child {
-                text-align: right
-            }
-            .en-tete div:nth-child(2){
-                text-align: center
-            }
-        
+
+                .en-tete div:last-child {
+                    text-align: right
+                }
+
+                .en-tete div:nth-child(2) {
+                    text-align: center
+                }
     </style>
     <div class="py-5">
         <div class="container">
@@ -47,9 +50,9 @@
                     <h2>Devis</h2>
                 </div>
             </div>
-            
+
             <hr />
-            
+
             <div class="row">
                 <div class="col-xs-6">
                     <p>@ViewBag.user.Nom @ViewBag.user.Prénom</p>
@@ -63,15 +66,17 @@
                     <p><strong>Valide jusqu'au :</strong> @Model.Devis.Date.AddDays(30) </p>
                 </div>
             </div>
-            
+
             <hr />
 
             <div class="row">
                 <div class="col-xs-6">
                     <p>@ViewBag.param.TexteIntroductionDevis</p>
                     <br />
-                    <p>Objet : @Html.DisplayFor(model => model.Devis.Objet)</p>
-                    <p>Autres informations : @Html.DisplayFor(model => model.Devis.Commentaire)</p>
+                    @if (!String.IsNullOrWhiteSpace(Model.Devis.Commentaire))
+                    {
+                        <p>Autres informations : @Html.DisplayFor(model => model.Devis.Commentaire)</p>
+                    }
                     @*<p>Monnaie : @Html.DisplayFor(model => model.Devis.Monnaie)</p>*@
                 </div>
             </div>
@@ -79,7 +84,7 @@
             <br />
 
             <div class="row">
-                @{ 
+                @{
                     var total = 0.0;
                     var totalTTC = 0.0;
                 }
@@ -96,44 +101,44 @@
                     </tr>
                     @foreach (var item in Model.ProduitsSelected)
                     {
-                    <tr>
-                        <td>
-                            <p>@item.Nom</p>
-                        </td>
-                        <td>
-                            <p>@item.Commentaire</p>
-                        </td>
-                        <td>
-                            <p>@item.PrixHT</p>
-                        </td>
-                        <td>
-                            <p>@item.Quantite</p>
-                        </td>
-                        <td>
-                            <p>
-                                @{
-                                    var montant = item.Quantite * item.PrixHT;
-                                    total += montant;
-                                }
-                                @montant €
-                            </p>
-                        </td>
-                        <td class="col-xs-1">
-                            <p>@item.TVA</p>
-                        </td>
-                        <td class="col-xs-1">
-                            <p>@item.Reduction</p>
-                        </td>
-                        <td class="col-xs-2">
-                            <p>
-                                @{
-                                    var montantTTC = item.TotalTTC * item.Quantite;
-                                    totalTTC += montantTTC;
-                                }
-                                @montantTTC €
-                            </p>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <p>@item.Nom</p>
+                            </td>
+                            <td>
+                                <p>@item.Commentaire</p>
+                            </td>
+                            <td>
+                                <p>@item.PrixHT</p>
+                            </td>
+                            <td>
+                                <p>@item.Quantite</p>
+                            </td>
+                            <td>
+                                <p>
+                                    @{
+                                        var montant = item.Quantite * item.PrixHT;
+                                        total += montant;
+                                    }
+                                    @montant €
+                                </p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.TVA</p>
+                            </td>
+                            <td class="col-xs-1">
+                                <p>@item.Reduction</p>
+                            </td>
+                            <td class="col-xs-2">
+                                <p>
+                                    @{
+                                        var montantTTC = item.TotalTTC * item.Quantite;
+                                        totalTTC += montantTTC;
+                                    }
+                                    @montantTTC €
+                                </p>
+                            </td>
+                        </tr>
                     }
                     <tr>
                         <td></td>
@@ -158,7 +163,10 @@
                 </table>
                 <p style="font-size: 1.5em; text-align: right;"><strong>Montant :</strong> @totalTTC €</p>
                 <br />
-                <p class="cg">*Conditions Générales : @ViewBag.param.ConditionsGeneralesDevis</p>
+                @if (!String.IsNullOrWhiteSpace(@ViewBag.param.ConditionsGeneralesFacture))
+                {
+                    <p class="cg">*Conditions Générales : @ViewBag.param.ConditionsGeneralesFacture</p>
+                }
                 <br />
                 <p>@ViewBag.param.TexteDeFinDevis</p>
             </div>

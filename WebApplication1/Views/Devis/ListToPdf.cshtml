@@ -22,7 +22,7 @@
     @*Affichage de la liste des devis*@
     <table class="table">
         <tr>
-            <th>Objet</th>
+            <th>Numéro</th>
             <th>Date</th>
             <th>Valide</th>
             @*<th>Commentaire</th>
@@ -36,7 +36,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Objet)
+                    @Html.DisplayFor(modelItem => item.Identifiant)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateString)
