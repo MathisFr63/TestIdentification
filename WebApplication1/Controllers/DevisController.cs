@@ -30,11 +30,13 @@ namespace WebApplication1.Controllers
             var ListDevis = db.Devis.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
                 ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
-            
+
             ListDevis.ForEach(devis =>
             {
                 devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
-                devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
+                if (devis.Etat == EtatDevis.EnCours)
+                    if (!(devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today))
+                        devis.Etat = EtatDevis.Rejeté;
             });
 
             db.SaveChanges();
@@ -65,7 +67,7 @@ namespace WebApplication1.Controllers
             myListTrier.ToList().ForEach(devis =>
             {
                 devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
-                devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
+                //devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
             });
 
             if (!String.IsNullOrWhiteSpace(Numéro))
@@ -74,8 +76,8 @@ namespace WebApplication1.Controllers
             if (DateTime.TryParse(Date, out var date))
                 myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
 
-            if (bool.TryParse(Valide, out var valide))
-                myListTrier = myListTrier.Where(s => s.Valide == valide);
+            //if (bool.TryParse(Valide, out var valide))
+            //    myListTrier = myListTrier.Where(s => s.Valide == valide);
 
             if (Produit != null)
                 myListTrier = myListTrier.Where(d =>
@@ -103,7 +105,7 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-            
+
             return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
 
@@ -134,10 +136,11 @@ namespace WebApplication1.Controllers
                 return View(vm);
 
             vm.Devis.Date = DateTime.Now;
-            vm.Devis.Valide = true;
+            vm.Devis.Etat = EtatDevis.EnCours;
 
             var nbMois = 0;
-            var lastDevis = db.Devis.OrderByDescending(f => f.Date).FirstOrDefault();
+
+            var lastDevis = db.Devis.OrderByDescending(f => f.Identifiant).FirstOrDefault();
             if (lastDevis != null && lastDevis.Date.Year == DateTime.Now.Year && lastDevis.Date.Month == DateTime.Now.Month)
                 nbMois = int.Parse(lastDevis.Identifiant.Substring(lastDevis.Identifiant.Length - 4));
 
@@ -171,6 +174,11 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
+            if (devis.Etat == EtatDevis.Facturé || devis.Etat == EtatDevis.EnCours)
+            //if (devis.Etat == EtatDevis.Facturé)
+            {
+                return RedirectToAction("Index");
+            }
 
             return View(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
         }
@@ -183,8 +191,9 @@ namespace WebApplication1.Controllers
         // Méthode permettant la modification du devis sélectionné après avoir modifier les valeurs souhaitées sur la page edit (get)
         public ActionResult EditPost(int id)
         {
-            var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
+            var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
+            var param = db.Parametres.Find(user.ParametreID);
+            if (user.Type != TypeUtilisateur.Administrateur && user.Type != TypeUtilisateur.SA)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var devis = db.Devis.Find(id);
@@ -209,7 +218,7 @@ namespace WebApplication1.Controllers
             //devis.Monnaie = (TypeMonnaie)Enum.Parse(typeof(TypeMonnaie), form.GetValues(keys[3])[0]);
             devis.Commentaire = form.GetValues(keys[3])[0];
             devis.Date = DateTime.Now;
-            devis.Valide = true;
+            devis.Etat = (devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today) ? EtatDevis.EnCours : EtatDevis.Rejeté;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -258,7 +267,7 @@ namespace WebApplication1.Controllers
             double totalHT = 0;
             double totalTTC = 0;
 
-            db.DonneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(p => {totalHT += p.TotalHT;totalTTC += p.TotalTTC;});
+            db.DonneeProduit.Where(dp => dp.DevisID == id).ToList().ForEach(p => { totalHT += p.TotalHT; totalTTC += p.TotalTTC; });
 
             ViewBag.totalHT = totalHT;
             ViewBag.totalTTC = totalTTC;
@@ -274,11 +283,12 @@ namespace WebApplication1.Controllers
         // Méthode permettant de facturer un devis c'est à dire d'ajouter une facture de ce devis dans sa liste des factures après avoir spécifié le type de réglement.
         public ActionResult Facturer(int id, TypeReglement reglement)
         {
-            var date = DateTime.Today.AddMonths(-1);
-            int nbMois = db.Factures.Where(f => f.Date > date).ToList().Count;
+            int nbMois = db.Factures.Where(f => f.Date.Month == DateTime.Today.Month).ToList().Count;
 
-            var facture = new Facture(db.Devis.Find(id), nbMois, reglement);
+            var devis = db.Devis.Find(id);
+            var facture = new Facture(devis, nbMois, reglement);
             db.Factures.Add(facture);
+            devis.Etat = EtatDevis.Facturé;
             db.SaveChanges();
 
             foreach (DonneeProduit dp in db.DonneeProduit.Where(DP => DP.DevisID == id))
@@ -308,7 +318,7 @@ namespace WebApplication1.Controllers
             ViewBag.user = user;
             ViewBag.param = param;
             ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
-            
+
 
             if (devis == null) return HttpNotFound();
 

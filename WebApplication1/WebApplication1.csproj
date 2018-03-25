@@ -180,6 +180,7 @@
     <Compile Include="Models\Entite\TypeEntreprise.cs" />
     <Compile Include="Models\Papiers\Devis.cs" />
     <Compile Include="Models\Entite\Entreprise.cs" />
+    <Compile Include="Models\Papiers\EtatDevis.cs" />
     <Compile Include="Models\Papiers\Produit.cs" />
     <Compile Include="Models\Entite\Telephone.cs" />
     <Compile Include="Models\Papiers\TVA.cs" />
