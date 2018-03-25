@@ -31,6 +31,8 @@ namespace WebApplication1.Controllers
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
                 ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
 
+            ListDevis[5].Date = DateTime.Today.AddMonths(-5);
+
             ListDevis.ForEach(devis =>
             {
                 devis.Produits = db.DonneeProduit.Where(DP => DP.DevisID == devis.ID).ToList();
@@ -38,6 +40,7 @@ namespace WebApplication1.Controllers
                     if (!(devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today))
                         devis.Etat = EtatDevis.Rejeté;
             });
+
 
             db.SaveChanges();
 
@@ -174,8 +177,7 @@ namespace WebApplication1.Controllers
             var devis = db.Devis.Find(id);
 
             if (devis == null) return HttpNotFound();
-            if (devis.Etat == EtatDevis.Facturé || devis.Etat == EtatDevis.EnCours)
-            //if (devis.Etat == EtatDevis.Facturé)
+            if (devis.Etat == EtatDevis.Facturé)
             {
                 return RedirectToAction("Index");
             }

@@ -107,7 +107,19 @@
                 @Html.DisplayFor(modelItem => item.DateString)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Etat)
+                @if (item.Etat == WebApplication1.Models.Papiers.EtatDevis.EnCours)
+                {
+                    <p style="color: blue">En cours</p>
+                }
+                else if (item.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé)
+                {
+                    <p style="color: #06d6a0">Facturé</p>
+
+                }
+                else
+                {
+                    <p style="color: red">Rejeté</p>
+                }
             </td>
 
             @*<td>
@@ -146,21 +158,27 @@
                 }
             </td>
             <td>
-                @{bool isFacture = item.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé;
+                @{
+                    bool isFacture = item.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé;
+                    bool isRejete = item.Etat == WebApplication1.Models.Papiers.EtatDevis.Rejeté;
+                    bool isFactureOrRejete = isFacture || isRejete;
                 }
                 <a title="Details Devis" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-file" />
                 </a>
-                <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'" disabled="@isFacture">
+                <button title="Facturer devis" value="Facturer" class="btn button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = item.ID })'" disabled="@isFactureOrRejete">
                     <span class="fas fa-cart-arrow-down" />
                 </button>
-                <a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>
+                <button title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue" disabled="@isRejete">
+                    <span class="glyphicon glyphicon-print" />
+                </button>
+                @*<a title="Imprimer le devis" target="_blank" href=@Url.Action("DevisToPdf", "Devis", new { id = item.ID }) class="btn button-blue"><span class="glyphicon glyphicon-print" /></a>*@
                 @if (isAdmin)
                 {
-                    <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange" disabled="@isFacture">
+                    <button title="Modifier" onclick="location.href='@Url.Action("Edit", "Devis", new { id = item.ID })'" class="btn button-orange" disabled="@isFactureOrRejete">
                         <span class="glyphicon glyphicon-pencil" />
                     </button>
-                    <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Identifiant", "@item.ID")'>
+                    <button title="Supprimer devis'" class="btn button-delete deleteButton" onclick='togglePopup("@item.Identifiant", "@item.ID")' disabled="@isFacture">
                         <span class="glyphicon glyphicon-trash" />
                     </button>
                 }
@@ -177,12 +195,12 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-                                                            new
-                                                            {
-                                                                page,
-                                                                sortOrder = ViewBag.CurrentSort,
-                                                                currentFilter = ViewBag.CurrentFilter
-                                                            }))
+                                                                                          new
+                                                                                          {
+                                                                                              page,
+                                                                                              sortOrder = ViewBag.CurrentSort,
+                                                                                              currentFilter = ViewBag.CurrentFilter
+                                                                                          }))
     </div>
 }
 
