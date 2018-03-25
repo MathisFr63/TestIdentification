@@ -41,6 +41,12 @@ namespace WebApplication1.ViewModels
             Produits = db.Produits.ToList();//.ForEach(a => Produits.Add(new SelectListItem { Text = a.Libelle, Value = a.ID.ToString() }));
         }
 
+        public DevisProduitViewModel(string userID)
+        {
+            this.Devis = new Devis { UtilisateurID = userID };
+            Produits = db.Produits.ToList();
+        }
+
         /// <summary>
         /// Constructeur d'une DevisProduitViewModel permettant de construire un devisproduit après avoir sélectionner les produits souhaités
         /// </summary>

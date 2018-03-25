@@ -29,9 +29,7 @@ namespace WebApplication1.Controllers
             var param = db.Parametres.Find(user.ParametreID);
             var ListDevis = db.Devis.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
-                ListDevis = ListDevis.Where(devis => devis.ClientID == user.ID).ToList();
-
-            ListDevis[5].Date = DateTime.Today.AddMonths(-5);
+                ListDevis = ListDevis.Where(devis => devis.ClientID.ToUpper() == user.ID.ToUpper()).ToList();
 
             ListDevis.ForEach(devis =>
             {
@@ -120,7 +118,7 @@ namespace WebApplication1.Controllers
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return View(new DevisProduitViewModel());
+            return View(new DevisProduitViewModel(HttpContext.User.Identity.Name));
         }
 
         // POST: Devis/Create
@@ -134,6 +132,12 @@ namespace WebApplication1.Controllers
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
             if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = db.ObtenirUtilisateur(vm.Devis.ClientID);
+            if (user == null)
+            {
+                ModelState.AddModelError("Devis.ClientID", "L'adresse mail du client doit être valide");
+            }
 
             if (!ModelState.IsValid)
                 return View(vm);
@@ -342,8 +346,6 @@ namespace WebApplication1.Controllers
             var ListDevis = db.Devis.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
                 ListDevis = ListDevis.Where(devis => devis.UtilisateurID == user.ID).ToList();
-
-            ListDevis[5].Date = DateTime.Today.AddMonths(-5);
 
             ListDevis.ForEach(devis =>
             {

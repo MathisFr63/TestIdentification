@@ -46,13 +46,25 @@
     </div>
     <div class="contact">
         @*<div class="contact-item contact-item-large">
-                <div class="contact-label">Statut</div>
-                <div class="contact-content">Payée</div>
-            </div>*@
+            <div class="contact-label">Statut</div>
+            <div class="contact-content">Payée</div>
+        </div>*@
 
         <div class="contact-item">
-            @Html.LabelFor(model => model.Devis.Identifiant)
-            @Html.DisplayFor(model => model.Devis.Identifiant)
+            <div class="contact-label"><label>@Html.LabelFor(model => model.Devis.Identifiant)</label></div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Devis.Identifiant)</div>
+            @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label"><label>Fournisseur</label></div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Devis.UtilisateurID)</div>
+            @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label"><label>Client</label></div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Devis.ClientID)</div>
             @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
         </div>
 
@@ -65,128 +77,128 @@
             <div class="contact-label">@Html.LabelFor(model => model.Devis.Etat)</div>
             <div class="contact-content">
                 @if (Model.Devis.Etat == WebApplication1.Models.Papiers.EtatDevis.EnCours)
-                {
-                    <p style="color: blue">En cours</p>
-                }
-                else if (Model.Devis.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé)
-                {
-                    <p style="color: #06d6a0">Facturé</p>
-
-                }
-                else
-                {
-                    <p style="color: red">Rejeté</p>
-                }
-            </div>
-
-            <div class="contact-item">
-                <div class="contact-label">@Html.LabelFor(model => model.Devis.Commentaire)</div>
-                @{
-                    var info = String.IsNullOrWhiteSpace(Model.Devis.Commentaire) ? "Aucune" : Model.Devis.Commentaire;
-                }
-                <div class="contact-content">@info</div>
-            </div>
-        </div>
-        <div class="buttons buttons-small"></div>
-    </div>
-
-
-
-    @*Div permettant d'afficher les détails du devis*@
-    <div class="section">
-        <div class="section-header">
-            <h2 class="section-title">Detail produits</h2>
-        </div>
-        <div class="contact col-md-12">
-
-            <div class="contact-item contact-item-large">
-                <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().Libelle)</div>
-                <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().PrixHT)</div>
-                <div class="contact-content col-md-1">@Html.LabelFor(model => model.DonneeProduit.Quantite)</div>
-                <div class="contact-content col-md-2">Total HT</div>
-                <div class="contact-content col-md-1">@Html.LabelFor(model => model.Produits.First().TVA)</div>
-                <div class="contact-content col-md-2">Total TTC</div>
-            </div>
-
-
-            @{
-                if (Model.Devis.Produits != null)
-                {
-                    foreach (var p in Model.Devis.Produits)
-                    {
-                        <div class="contact-item contact-item-large">
-                            <div class="contact-label col-md-2">@p.Nom</div>
-                            <div class="contact-label col-md-2">@p.PrixHT €</div>
-                            <div class="contact-label col-md-1">@p.Quantite</div>
-                            <div class="contact-label col-md-2">@p.TotalHT €</div>
-                            <div class="contact-label col-md-1">@p.TVA %</div>
-                            <div class="contact-label col-md-2">@p.TotalTTC €</div>
-                        </div>
-                    }
-                }
-            }
-        </div>
-        <div class="buttons buttons-small"></div>
-    </div>
-
-
-
-    @*Div permettant d'afficher les détails du devis*@
-    <div class="section">
-        <div class="section-header">
-            <h2 class="section-title">Detail règlement</h2>
-        </div>
-        <div class="contact">
-            @*<div class="contact-item contact-item-large">
-                    <div class="contact-label">Statut</div>
-                    <div class="contact-content">Payée</div>
-                </div>*@
-
-            @*<div class="contact-item">
-                    <div class="contact-label">Monnaie utilisée</div>
-                    <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
-                </div>*@
-            @*calcul du montant total TTC*@
-            @{
-
-                double sommeTTC = 0;
-                double sommeHT = 0;
-                double totalReduc = 0;
-
-                if (Model.Devis.Produits != null)
-                {
-                    foreach (var p in Model.Devis.Produits)
-                    {
-                        double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
-                        double reduc = PrixTTC * p.Reduction / 100;
-                        sommeTTC += PrixTTC * p.Quantite - reduc;
-                        sommeHT += p.PrixHT * p.Quantite - reduc;
-                        totalReduc += reduc;
-                    }
-                }
-                double totalTaxe = sommeTTC - sommeHT;
-            }
-            <div class="contact-item">
-                <div class="contact-label"><label>Prix total HT</label></div>
-                <div class="contact-content">@string.Format("  {0:F2}", sommeHT) €</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-label"><label>Prix total TTC</label></div>
-                <div class="contact-content">@string.Format("  {0:F2}", sommeTTC) €</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-label"><label>Taxe</label></div>
-                <div class="contact-content">@string.Format("  {0:F2}", totalTaxe) €</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-label"><label>Total réduction</label></div>
-                <div class="contact-content">@string.Format("  {0:F2}", totalReduc) €</div>
-            </div>
-
-
-        </div>
-        @if (isAdmin)
+            {
+                <p style="color: blue">En cours</p>
+        }
+        else if (Model.Devis.Etat == WebApplication1.Models.Papiers.EtatDevis.Facturé)
         {
-            <button title="Facturer devis" value="Facturer" class="button button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID })'">Facturer</button>
+            <p style="color: #06d6a0">Facturé</p>
+
+    }
+    else
+    {
+        <p style="color: red">Rejeté</p>
+}
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">@Html.LabelFor(model => model.Devis.Commentaire)</div>
+            @{
+            var info = String.IsNullOrWhiteSpace(Model.Devis.Commentaire) ? "Aucune" : Model.Devis.Commentaire;
+            }
+            <div class="contact-content">@info</div>
+        </div>
+    </div>
+    <div class="buttons buttons-small"></div>
+</div>
+
+
+
+@*Div permettant d'afficher les détails du devis*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Detail produits</h2>
+    </div>
+    <div>
+        <div class="contact-item contact-item-large">
+            <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().Libelle)</div>
+            <div class="contact-content col-md-2">@Html.LabelFor(model => model.Produits.First().PrixHT)</div>
+            <div class="contact-content col-md-1">@Html.LabelFor(model => model.DonneeProduit.Quantite)</div>
+            <div class="contact-content col-md-2">Total HT</div>
+            <div class="contact-content col-md-1">@Html.LabelFor(model => model.Produits.First().TVA)</div>
+            <div class="contact-content col-md-2">Total TTC</div>
+        </div>
+
+
+        @{
+            if (Model.Devis.Produits != null)
+            {
+                foreach (var p in Model.Devis.Produits)
+                {
+                    <div class="contact-item contact-item-large">
+                        <div class="contact-label col-md-2">@p.Nom</div>
+                        <div class="contact-label col-md-2">@p.PrixHT €</div>
+                        <div class="contact-label col-md-1">@p.Quantite</div>
+                        <div class="contact-label col-md-2">@p.TotalHT €</div>
+                        <div class="contact-label col-md-1">@p.TVA %</div>
+                        <div class="contact-label col-md-2">@p.TotalTTC €</div>
+                    </div>
+                }
+            }
         }
     </div>
+    <div class="buttons buttons-small"></div>
+</div>
+
+
+
+@*Div permettant d'afficher les détails du devis*@
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">Detail règlement</h2>
+    </div>
+    <div class="contact">
+        @*<div class="contact-item contact-item-large">
+                <div class="contact-label">Statut</div>
+                <div class="contact-content">Payée</div>
+            </div>*@
+
+        @*<div class="contact-item">
+                <div class="contact-label">Monnaie utilisée</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Devis.Monnaie)</div>
+            </div>*@
+        @*calcul du montant total TTC*@
+        @{
+
+            double sommeTTC = 0;
+            double sommeHT = 0;
+            double totalReduc = 0;
+
+            if (Model.Devis.Produits != null)
+            {
+                foreach (var p in Model.Devis.Produits)
+                {
+                    double PrixTTC = p.PrixHT + p.PrixHT * p.TVA / 100;
+                    double reduc = PrixTTC * p.Reduction / 100;
+                    sommeTTC += PrixTTC * p.Quantite - reduc;
+                    sommeHT += p.PrixHT * p.Quantite - reduc;
+                    totalReduc += reduc;
+                }
+            }
+            double totalTaxe = sommeTTC - sommeHT;
+        }
+        <div class="contact-item">
+            <div class="contact-label"><label>Prix total HT</label></div>
+            <div class="contact-content">@string.Format("  {0:F2}", sommeHT) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label"><label>Prix total TTC</label></div>
+            <div class="contact-content">@string.Format("  {0:F2}", sommeTTC) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label"><label>Taxe</label></div>
+            <div class="contact-content">@string.Format("  {0:F2}", totalTaxe) €</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label"><label>Total réduction</label></div>
+            <div class="contact-content">@string.Format("  {0:F2}", totalReduc) €</div>
+        </div>
+
+
+    </div>
+    @if (isAdmin)
+    {
+        <button title="Facturer devis" value="Facturer" class="button button-bluedark" onclick="location.href='@Url.Action("Facturer", "Devis", new { id = Model.Devis.ID })'">Facturer</button>
+    }
+</div>
