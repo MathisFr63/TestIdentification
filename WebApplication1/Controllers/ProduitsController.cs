@@ -52,24 +52,24 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult RechercheAvancee(string Libelle, string Commentaire, string PrixTTC, string Type, int? page)
+        public ActionResult RechercheAvancee(string Libellé, string Détails, string TotalTTC, string Type, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
 
             IEnumerable<Produit> myListTrier = db.Produits.ToList().OrderBy(s => s.Libelle);
 
-            if (Libelle != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Libelle.ToUpper().Contains(Libelle.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(Libellé))
+                myListTrier = myListTrier.Where(s => s.Libelle.ToUpper().Contains(Libellé.ToUpper()));
 
-            if (Commentaire != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Détails.ToUpper().Contains(Commentaire.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(Détails))
+                myListTrier = myListTrier.Where(s => s.Détails.ToUpper().Contains(Détails.ToUpper()));
 
-            if (Enum.TryParse(Type, out TypeService searchType))
-                myListTrier = myListTrier.Where(s => s.Type == searchType);
+            if (!string.IsNullOrWhiteSpace(Type))
+                myListTrier = myListTrier.Where(s => s.Type.ToString().ToUpper().Contains(Type.ToUpper()));
 
-            if (double.TryParse(PrixTTC, out double searchPrixTTC))
-                myListTrier = myListTrier.Where(s => s.TotalTTC == searchPrixTTC);
+            if (double.TryParse(TotalTTC, out var totalTTC))
+                myListTrier = myListTrier.Where(d => d.TotalTTC == totalTTC);
 
             return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
         }

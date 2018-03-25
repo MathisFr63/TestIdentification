@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList((page ?? 1), param.NbElementPage));
         }
 
-        public ActionResult RechercheAvancee(string Numéro, string Date, string Valide, string Produit, string TotalTTC, int? page)
+        public ActionResult RechercheAvancee(string Numéro, string User, string Date, string État, string Produits, string TotalTTC, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
@@ -71,22 +71,35 @@ namespace WebApplication1.Controllers
                 //devis.Valide = devis.Date.AddDays(param.DureeValiditeDevis) >= DateTime.Today;
             });
 
-            if (!String.IsNullOrWhiteSpace(Numéro))
+            if (!string.IsNullOrWhiteSpace(Numéro))
                 myListTrier = myListTrier.Where(s => s.Identifiant.ToUpper().Contains(Numéro.ToUpper()));
 
-            if (DateTime.TryParse(Date, out var date))
-                myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
+            if (!string.IsNullOrWhiteSpace(User))
+            {
+                if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
+                    myListTrier = myListTrier.Where(s => s.ClientID.ToUpper().Contains(User.ToUpper()));
+                else
+                    myListTrier = myListTrier.Where(s => s.UtilisateurID.ToUpper().Contains(User.ToUpper()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Date))
+                myListTrier = myListTrier.Where(s => string.Format("{0:d/M/yyyy HH:mm}", s.Date).Contains(Date.ToUpper()));
+
+            if (!string.IsNullOrWhiteSpace(État))
+            {
+                    myListTrier = myListTrier.Where(s => s.Etat.ToString().ToUpper().Contains(État.ToUpper()));
+            }
 
             //if (bool.TryParse(Valide, out var valide))
             //    myListTrier = myListTrier.Where(s => s.Valide == valide);
 
-            if (Produit != null)
+            if (!string.IsNullOrWhiteSpace(Produits))
                 myListTrier = myListTrier.Where(d =>
                 {
-                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
+                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produits.ToUpper()));
                 });
 
-            if (int.TryParse(TotalTTC, out var totalTTC))
+            if (double.TryParse(TotalTTC, out var totalTTC))
                 myListTrier = myListTrier.Where(d =>
                 {
                     double total = 0;

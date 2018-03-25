@@ -60,25 +60,25 @@
 <table class="table">
     @using (Html.BeginForm("RechercheAvancee", "Produits", FormMethod.Get))
     {
-        <tr id="listAvancée" style="display: none">
-            <th>
-                <input type="text" name="Libelle" placeholder="Libelle" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="Commentaire" placeholder="Commentaire" class="searchBar" value="" />
-            </th>
-            <th>
-                <input type="text" name="PrixTTC" placeholder="PrixTTC" class="searchBar" value="" min="0"/>
-            </th>
-            <th>
-                <input type="text" name="Type" placeholder="Type" class="searchBar" value="" />
-            </th>
-            <th>
-                <button type="submit" value="Search" class="btn button-bluedark">
-                    <span class="glyphicon glyphicon-search" />
-                </button>
-            </th>
-        </tr>
+    <tr id="listAvancée" style="display: none">
+        <th>
+            <input type="text" name="Libellé" placeholder="Libellé" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="Détails" placeholder="Détails" class="searchBar" value="" />
+        </th>
+        <th>
+            <input type="text" name="TotalTTC" placeholder="Prix TTC" class="searchBar" value="" min="0" />
+        </th>
+        <th>
+            <input type="text" name="Type" placeholder="Type" class="searchBar" value="" />
+        </th>
+        <th>
+            <button type="submit" value="Search" class="btn button-bluedark">
+                <span class="glyphicon glyphicon-search" />
+            </button>
+        </th>
+    </tr>
     }
 
     <tr class="col-md-12">

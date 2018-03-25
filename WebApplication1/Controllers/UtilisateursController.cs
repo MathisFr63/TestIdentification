@@ -57,17 +57,17 @@ namespace WebApplication1.Controllers
                 var param = db.Parametres.Find(user.ParametreID);
                 IEnumerable<Utilisateur> myListTrier = db.Utilisateurs.ToList();
 
-                if (Nom != string.Empty)
+                if (!string.IsNullOrWhiteSpace(Nom))
                     myListTrier = myListTrier.Where(u => u.Nom.ToUpper().Contains(Nom.ToUpper()));
 
-                if (Prénom != string.Empty)
+                if (!string.IsNullOrWhiteSpace(Prénom))
                     myListTrier = myListTrier.Where(u => u.Prénom.ToUpper().Contains(Prénom.ToUpper()));
 
-                if (Mail != string.Empty)
+                if (!string.IsNullOrWhiteSpace(Mail))
                     myListTrier = myListTrier.Where(u => u.ID.ToUpper().Contains(Mail.ToUpper()));
 
-                if (Enum.TryParse<TypeUtilisateur>(Type, out var type))
-                    myListTrier = myListTrier.Where(u => u.Type == type);
+                if (!string.IsNullOrWhiteSpace(Type))
+                    myListTrier = myListTrier.Where(u => u.Type.ToString().ToUpper().Contains(Type.ToUpper()));
 
                 return View("Index", myListTrier.ToPagedList((page ?? 1), param.NbElementPage));
             }

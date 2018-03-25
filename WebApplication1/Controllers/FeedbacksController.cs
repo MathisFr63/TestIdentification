@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
             return View(ListFeedbacks.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult RechercheAvancee(string Nom, string Mail, string Sujet, string Commentaire, string Résolu, int? page)
+        public ActionResult RechercheAvancee(string Nom, string Mail, string Sujet, string Résolu, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
 
@@ -59,17 +59,14 @@ namespace WebApplication1.Controllers
 
             IEnumerable<Feedback> myListTrier = db.Feedbacks.ToList();
 
-            if (Nom != string.Empty)
+            if (!string.IsNullOrWhiteSpace(Nom))
                 myListTrier = myListTrier.Where(s => s.userName.ToUpper().Contains(Nom.ToUpper()));
 
-            if (Mail != string.Empty)
+            if (!string.IsNullOrWhiteSpace(Mail))
                 myListTrier = myListTrier.Where(s => s.UtilisateurID.ToUpper().Contains(Mail.ToUpper()));
 
-            if (Sujet != string.Empty)
+            if (!string.IsNullOrWhiteSpace(Sujet))
                 myListTrier = myListTrier.Where(s => s.Subject.ToUpper().Contains(Sujet.ToUpper()));
-
-            if (Commentaire != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Comment.ToUpper().Contains(Commentaire.ToUpper()));
 
             if (bool.TryParse(Résolu, out var resolu))
                 myListTrier = myListTrier.Where(s => s.IsResolved == resolu);

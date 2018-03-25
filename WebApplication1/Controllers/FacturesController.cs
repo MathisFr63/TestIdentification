@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
             return View(listeTrie.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult RechercheAvancee(string Objet, string Date, string Produit, /*string Relance,*/ string Reglement, int? page)
+        public ActionResult RechercheAvancee(string Numéro, string User, string Date, string Produits, string TotalTTC, /*string Relance,*/ string Reglement, int? page)
         {
             var user = db.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             var param = db.Parametres.Find(user.ParametreID);
@@ -59,19 +59,40 @@ namespace WebApplication1.Controllers
             IEnumerable<Facture> myListTrier = db.Factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
             myListTrier.ToList().ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
-            if (Objet != string.Empty)
-                myListTrier = myListTrier.Where(s => s.Identifiant.ToUpper().Contains(Objet.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(Numéro))
+                myListTrier = myListTrier.Where(s => s.Identifiant.ToUpper().Contains(Numéro.ToUpper()));
 
-            if (DateTime.TryParse(Date, out var date))
-                myListTrier = myListTrier.Where(s => s.Date.ToString("MMMM dd yyyy") == date.ToString("MMMM dd yyyy"));
+            if (!string.IsNullOrWhiteSpace(User))
+            {
+                if (user.Type == TypeUtilisateur.Administrateur || user.Type == TypeUtilisateur.SA)
+                    myListTrier = myListTrier.Where(s => s.ClientID.ToUpper().Contains(User.ToUpper()));
+                else
+                    myListTrier = myListTrier.Where(s => s.UtilisateurID.ToUpper().Contains(User.ToUpper()));
+            }
 
-            if (Produit != null)
-                myListTrier = myListTrier.Where(d => {
-                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produit.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(Date))
+                myListTrier = myListTrier.Where(s => string.Format("{0:d/M/yyyy HH:mm}", s.Date).Contains(Date.ToUpper()));
+
+            if (!string.IsNullOrWhiteSpace(Produits))
+                myListTrier = myListTrier.Where(d =>
+                {
+                    return d.Produits.ToList().Any(x => x.Nom.ToUpper().Contains(Produits.ToUpper()));
                 });
 
+            if (double.TryParse(TotalTTC, out var totalTTC))
+                myListTrier = myListTrier.Where(d =>
+                {
+                    double total = 0;
+                    d.Produits.ToList().ForEach(x => total += x.TotalTTC);
+                    return total == totalTTC;
+                });
+
+            if (!string.IsNullOrWhiteSpace(Reglement)){
+                myListTrier = myListTrier.Where(s => s.Reglement.ToString().ToUpper().Contains(Reglement.ToUpper()));
+            }
+
             //if (int.TryParse(Relance, out var relance))
-                //myListTrier = myListTrier.Where(d => d.Relances == relance);
+            //myListTrier = myListTrier.Where(d => d.Relances == relance);
 
             if (Enum.TryParse<TypeReglement>(Reglement, out var reglement))
                 myListTrier = myListTrier.Where(d => d.Reglement == reglement);
@@ -91,7 +112,7 @@ namespace WebApplication1.Controllers
 
             //if (erreurRelance != null && erreurRelance == true)
             //    ViewBag.ErreurRelance = true;
-            
+
 
             return View(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
         }
@@ -144,7 +165,7 @@ namespace WebApplication1.Controllers
 
             return new ViewAsPdf(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture })
             {
-                CustomSwitches =  footer
+                CustomSwitches = footer
             };
         }
 
@@ -156,7 +177,7 @@ namespace WebApplication1.Controllers
             var factures = db.Factures.ToList();
             if (user.Type != TypeUtilisateur.SA && user.Type != TypeUtilisateur.Administrateur)
                 factures = factures.Where(facture => facture.UtilisateurID == user.ID).ToList();
-            
+
             factures.ForEach(facture => facture.Produits = db.DonneeProduit.Where(DP => DP.FactureID == facture.ID).ToList());
 
             if (searchstring != null)
@@ -167,7 +188,7 @@ namespace WebApplication1.Controllers
             ViewBag.CurrentFilter = searchstring;
             ViewBag.CurrentSort = sortOrder;
 
-            var listeTrie = SortOrder(factures, sortOrder);            
+            var listeTrie = SortOrder(factures, sortOrder);
 
             int pageSize = param.NbElementPage;
             int pageNumber = (page ?? 1);

@@ -53,19 +53,31 @@
     {
         <tr id="listAvancée" style="display: none">
             <th>
-                <input type="text" name="Objet" placeholder="Numéro" class="searchBar" value="" />
+                <input type="text" name="Numéro" placeholder="Numéro" class="searchBar" value="" />
             </th>
+            @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+            {
+                <th>
+                    <input type="text" name="User" placeholder="Client" class="searchBar" value="" />
+                </th>
+            }
+            else
+            {
+                <th>
+                    <input type="text" name="User" placeholder="Fournisseur" class="searchBar" value="" />
+                </th>
+            }
             <th>
                 <input type="text" name="Date" placeholder="Date" class="searchBar" value="" />
             </th>
             <th>
-                <input type="text" name="Produit" placeholder="Produit" class="searchBar" value="" />
+                <input type="text" name="Produits" placeholder="Produits" class="searchBar" value="" />
             </th>
             <th>
-                <input type="text" name="Relance" placeholder="Relance" class="searchBar" value="" />
+                <input type="text" name="TotalTTC" placeholder="Prix TTC" class="searchBar" value="" />
             </th>
             <th>
-                <input type="text" name="Reglement" placeholder="Reglement" class="searchBar" value="" />
+                <input type="text" name="Reglement" placeholder="Mode de règlement" class="searchBar" value="" />
             </th>
             <th>
                 <button type="submit" value="Search" class="btn button-bluedark">
@@ -190,11 +202,11 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-                                       new
-                                       {
-                                           page,
-                                           sortOrder = ViewBag.CurrentSort,
-                                           currentFilter = ViewBag.CurrentFilter
-                                       }))
+                                                 new
+                                                 {
+                                                     page,
+                                                     sortOrder = ViewBag.CurrentSort,
+                                                     currentFilter = ViewBag.CurrentFilter
+                                                 }))
     </div>
 }
