@@ -19,6 +19,7 @@ namespace WebApplication1.Controllers
     public class ProduitsController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
+        
 
         // GET: Produits
         // Méthode permettant grâce à l'accès par l'url d'afficher la liste des produits de l'utilisateur.
@@ -205,6 +206,7 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
+        [AllowAnonymous]
         public ActionResult Print(int? id)
         {
             if (id == null)

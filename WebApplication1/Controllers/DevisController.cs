@@ -304,13 +304,21 @@ namespace WebApplication1.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var devis = db.Devis.Find(id);
-            ViewBag.user = db.Utilisateurs.Find(devis.UtilisateurID);
+            var user = db.Utilisateurs.Find(devis.UtilisateurID);
+            var param = db.Parametres.Find(user.ParametreID);
+            ViewBag.user = user;
+            ViewBag.param = param;
             ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
             
 
             if (devis == null) return HttpNotFound();
 
-            return new ViewAsPdf(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis });
+            string footer = "--footer-center \"" + param.FooterDevis + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
+
+            return new ViewAsPdf(new DevisProduitViewModel(db.DonneeProduit.Where(DP => DP.DevisID == id).ToList()) { Devis = devis })
+            {
+                CustomSwitches = footer
+            };
         }
 
         public ActionResult ListToPdf(string sortOrder, string searchstring, string currentFilter, int? page)

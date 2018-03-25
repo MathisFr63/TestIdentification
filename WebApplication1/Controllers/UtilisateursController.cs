@@ -289,12 +289,17 @@ namespace WebApplication1.Controllers
 
         public ActionResult Print(string id)
         {
+            id = id.Replace("~", ".");
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            var userType = db.ObtenirUtilisateur(id.Replace("~", ".")).Type;
-            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var userType = db.ObtenirUtilisateur(id).Type;
+            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            ViewBag.lieu = db.Lieux.Find(utilisateur.LieuID);
+
+            utilisateur.Telephones = db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList();
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -302,17 +307,24 @@ namespace WebApplication1.Controllers
             ViewBag.NbDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).Count();
             ViewBag.NbFactures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).Count();
             ViewBag.NbProduits = db.Produits.Count();
+
 
             return new ViewAsPdf("UtilisateurToPdf", utilisateur);
         }
 
         public ActionResult UtilisateurToPdf(string id)
         {
+            id = id.Replace("~", ".");
             var type = db.ObtenirUtilisateur(HttpContext.User.Identity.Name).Type;
-            if (type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id.Replace("~", "."))
+            var userType = db.ObtenirUtilisateur(id).Type;
+            if ((userType == TypeUtilisateur.SA && id != HttpContext.User.Identity.Name) || type != TypeUtilisateur.Administrateur && type != TypeUtilisateur.SA && HttpContext.User.Identity.Name != id)
                 return RedirectToAction("BadUserTypeError", "Home", new { method = "Index", controller = "Home" });
 
             var utilisateur = db.Utilisateurs.Find(id.Replace('~', '.'));
+
+            ViewBag.lieu = db.Lieux.Find(utilisateur.LieuID);
+
+            utilisateur.Telephones = db.Telephones.Where(t => t.UtilisateurID == utilisateur.ID).ToList();
 
             if (utilisateur == null)
                 return HttpNotFound();
@@ -320,6 +332,7 @@ namespace WebApplication1.Controllers
             ViewBag.NbDevis = db.Devis.Where(devis => devis.UtilisateurID == utilisateur.ID).Count();
             ViewBag.NbFactures = db.Factures.Where(facture => facture.UtilisateurID == utilisateur.ID).Count();
             ViewBag.NbProduits = db.Produits.Count();
+
 
             return View(utilisateur);
         }

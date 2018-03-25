@@ -129,12 +129,20 @@ namespace WebApplication1.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Facture facture = db.Factures.Find(id);
-            ViewBag.user = db.Utilisateurs.Find(facture.UtilisateurID);
+            var user = db.Utilisateurs.Find(facture.UtilisateurID);
+            var param = db.Parametres.Find(user.ParametreID);
+            ViewBag.user = user;
+            ViewBag.param = param;
             ViewBag.lieu = db.Lieux.Find(ViewBag.user.LieuID);
 
             if (facture == null) return HttpNotFound();
 
-            return new ViewAsPdf(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture });
+            string footer = "--footer-center \"" + param.FooterFacture + "\"" + " --footer-line --footer-font-size \"9\" --footer-spacing 6 --footer-font-name \"calibri light\"";
+
+            return new ViewAsPdf(new FactureProduitViewModel(db.DonneeProduit.Where(DP => DP.FactureID == id).ToList()) { Facture = facture })
+            {
+                CustomSwitches =  footer
+            };
         }
 
         public ActionResult ListToPdf(string sortOrder, String searchstring, string currentFilter, int? page)

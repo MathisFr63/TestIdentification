@@ -72,6 +72,8 @@
 
             <div class="row">
                 <div class="col-xs-6">
+                    <p>@ViewBag.param.TexteIntroductionFacture</p>
+                    <br />
                     <p>Objet : @Html.DisplayFor(model => model.Facture.Objet)</p>
                     <p>Commentaire : @Html.DisplayFor(model => model.Facture.Commentaire)</p>
                     @*<p>Monnaie : @Html.DisplayFor(model => model.Facture.Monnaie)</p>*@
@@ -148,6 +150,10 @@
                     </tr>
                 </table>
                 <p style="font-size: 1.5em; text-align: right;"><strong>Montant facture :</strong> @totalTTC €</p>
+                <br />
+                <p class="cg">*Conditions Générales : @ViewBag.param.ConditionsGeneralesFacture</p>
+                <br />
+                <p>@ViewBag.param.TexteDeFinFacture</p>
             </div>
         </div>
     </div>

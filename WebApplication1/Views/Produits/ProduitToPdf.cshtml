@@ -17,59 +17,65 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
 <body style="background-color:white;">
-    @*Affichage du Libelle*@
-    <h2>@Html.DisplayFor(model => model.Libelle)</h2>
+    <!--<img src="@Model.UrlImage" alt="Image du produit" style="max-width: 50%" />-->
 
-    <div>
-        <hr />
-        <dl class="dl-horizontal">
+    <div class="section">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="section-header">
+                            <h2 class="section-title">Informations produit</h2>
+                        </div>
+                        <div class="contact">
+                            <div class="contact-item">
+                                <div class="contact-label">@Html.LabelFor(m => m.Libelle)</div>
+                                <div class="contact-content">@Html.DisplayFor(model => model.Libelle)</div>
+                            </div>
 
-            @*Affichage du commentaire*@
-            <dt>
-                @Html.DisplayNameFor(model => model.Détails)
-            </dt>
+                            <div class="contact-item">
+                                <div class="contact-label">@Html.LabelFor(m => m.Détails)</div>
+                                <div class="contact-content">@Html.DisplayFor(model => model.Détails)</div>
+                            </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.Détails)
-            </dd>
+                            <div class="contact-item">
+                                <div class="contact-label">@Html.LabelFor(m => m.Type)</div>
+                                <div class="contact-content">@Html.DisplayFor(model => model.Type)</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-            @*Affichage du prix hors taxes*@
-            <dt>
-                @Html.DisplayNameFor(model => model.PrixHT)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PrixHT)
-            </dd>
+    @*Div permettant d'afficher les détails du Facture*@
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">Tarif produit</h2>
+        </div>
+        <div class="contact">
+            <div class="contact-item">
+                <div class="contact-label"><strong>Prix unitaire HT</strong></div>
+                <div class="contact-content">@Html.DisplayFor(model => model.PrixHT) €</div>
+            </div>
 
-            @*Affichage de la réduction*@
-            <dt>
-                @Html.DisplayNameFor(model => model.Reduction)
-            </dt>
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.TVA)</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.TVA) %</div>
+            </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.Reduction)
-            </dd>
+            <div class="contact-item">
+                <div class="contact-label">@Html.LabelFor(m => m.Reduction)</div>
+                <div class="contact-content">@Html.DisplayFor(model => model.Reduction) %</div>
+            </div>
 
-            @*Affichage du taux de TVA du produit*@
-            <dt>
-                @Html.DisplayNameFor(model => model.TVA)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.TVA)
-            </dd>
-
-            @*Affichage du type du produit (bien / service)*@
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-
-        </dl>
+            <div class="contact-item">
+                <div class="contact-label"><strong>Prix unitaire TTC</strong></div>
+                <div class="contact-content">@String.Format("  {0:F2}", Model.TotalTTC) €</div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
