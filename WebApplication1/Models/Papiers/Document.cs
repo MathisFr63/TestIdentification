@@ -35,6 +35,7 @@ namespace WebApplication1.Models.Papiers
         //public TypeMonnaie Monnaie { get; set; }
 
         // Produits liés au document
+        [Display(Name = "Produits")]
         public ICollection<DonneeProduit> Produits { get; set; }
 
         // Identifiant de l'utilisateur ayant créée le document.

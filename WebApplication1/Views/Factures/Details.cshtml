@@ -38,13 +38,25 @@
     </div>
     <div class="contact">
         @*<div class="contact-item contact-item-large">
-                <div class="contact-label">Statut</div>
-                <div class="contact-content">Payée</div>
-            </div>*@
+            <div class="contact-label">Statut</div>
+            <div class="contact-content">Payée</div>
+        </div>*@
 
         <div class="contact-item">
             <div class="contact-label">@Html.LabelFor(model => model.Facture.Identifiant)</div>
             <div class="contact-content">@Model.Facture.Identifiant</div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label"><label>Par</label></div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.UtilisateurID)</div>
+            @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label"><label>Pour</label></div>
+            <div class="contact-content">@Html.DisplayFor(model => model.Facture.ClientID)</div>
+            @*<div class="contact-content">@Model.Devis.Identifiant</div>*@
         </div>
 
         <div class="contact-item">
@@ -55,7 +67,7 @@
         <div class="contact-item">
             <div class="contact-label"><label>@Html.LabelFor(model => model.Facture.Commentaire)</label></div>
             @{
-                var info = String.IsNullOrWhiteSpace(Model.Facture.Commentaire) ? "Aucune" : Model.Facture.Commentaire;
+            var info = String.IsNullOrWhiteSpace(Model.Facture.Commentaire) ? "Aucune" : Model.Facture.Commentaire;
             }
             <div class="contact-content">@info</div>
         </div>

@@ -85,12 +85,20 @@
     }
     <tr>
         <th>@Html.LabelFor(model => model.First().Identifiant)</th>
+        @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+        {
+            <th>Client</th>
+        }
+        else
+        {
+            <th>Fournisseur</th>
+        }
         <th>@Html.LabelFor(model => model.First().Date)</th>
         <th>@Html.LabelFor(model => model.First().Etat)</th>
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
-        <th>Produits</th>
-        <th>Total TTC</th>
+        <th>@Html.LabelFor(model => model.First().Produits)</th>
+        <th>Prix TTC</th>
         <th></th>
     </tr>
     @*Pour chaque devis, affichage de l'objet, de la date de création, et de la validité*@
@@ -102,6 +110,16 @@
                 <a title="Détails" href=@Url.Action("Details", "Devis", new { id = item.ID }) class="detail">
                     @Html.DisplayFor(modelItem => item.Identifiant)
                 </a>
+            </td>
+            <td>
+                @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                {
+                    @Html.DisplayFor(modelItem => item.ClientID)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.UtilisateurID)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateString)
@@ -195,12 +213,12 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-             new
-             {
-                 page,
-                 sortOrder = ViewBag.CurrentSort,
-                 currentFilter = ViewBag.CurrentFilter
-             }))
+                                 new
+                                 {
+                                     page,
+                                     sortOrder = ViewBag.CurrentSort,
+                                     currentFilter = ViewBag.CurrentFilter
+                                 }))
     </div>
 }
 

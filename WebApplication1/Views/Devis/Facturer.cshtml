@@ -32,6 +32,16 @@
     </div>
 
     <div class="contact-item">
+        <div class="contact-label"><label>Par</label></div>
+        <div class="contact-content">@Html.DisplayFor(model => model.UtilisateurID)</div>
+    </div>
+
+    <div class="contact-item">
+        <div class="contact-label"><label>Pour</label></div>
+        <div class="contact-content">@Html.DisplayFor(model => model.ClientID)</div>
+    </div>
+
+    <div class="contact-item">
         <div class="contact-label">@Html.LabelFor(model => model.Commentaire)</div>
         @{
             var info = String.IsNullOrWhiteSpace(Model.Commentaire) ? "Aucune" : Model.Commentaire;

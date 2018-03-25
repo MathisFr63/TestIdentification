@@ -5,6 +5,7 @@
 @{
     Layout = null;
     ViewBag.Title = "PDF Liste Factures";
+    var type = (new WebApplication1.DAL.ApplicationContext()).ObtenirUtilisateur(System.Web.HttpContext.Current.User.Identity.Name).Type;
 }
 <!DOCTYPE html>
 <html>
@@ -26,13 +27,19 @@
     @*Affichage de la liste des factures*@
     <table class="table">
         <tr>
-            <th>Objet</th>
-            <th>Date</th>
-            @*<th>Commentaire</th>
-                <th>Monnaie</th>*@
-            <th>Produits</th>
-            @*<th>Relances</th>*@
-            <th>Reglement</th>
+            <th>@Html.LabelFor(model => model.First().Identifiant)</th>
+            @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+            {
+                <th>Client</th>
+            }
+            else
+            {
+                <th>Fournisseur</th>
+            }
+            <th>@Html.LabelFor(model => model.First().Date)</th>
+            <th>@Html.LabelFor(Model => Model.First().Produits)</th>
+            <th><label>Total TTC</label></th>
+            <th><label>Mode de règlement</label></th>
             <th></th>
         </tr>
 
@@ -42,7 +49,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Objet)
+                    @Html.DisplayFor(modelItem => item.Identifiant)
+                </td>
+                <td>
+                    @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                    {
+                        @Html.DisplayFor(modelItem => item.ClientID)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.UtilisateurID)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateString)
@@ -54,9 +71,16 @@
                         @Html.DisplayFor(elt => a.Quantite); <br />
                     }
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Relances)
-                    </td>*@
+                <td>
+                    @{
+                        double somme = 0;
+                        foreach (var p in item.Produits)
+                        {
+                            somme += p.TotalTTC * p.Quantite;
+                        }
+                        <p>@string.Format("  {0:F2}", somme) €</p>
+                    }
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Reglement)
                 </td>

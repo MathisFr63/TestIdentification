@@ -75,14 +75,22 @@
         </tr>
     }
     <tr>
-        <th>Numéro</th>
-        <th>Date</th>
+        <th>@Html.LabelFor(model => model.First().Identifiant)</th>
+        @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+        {
+            <th>Client</th>
+        }
+        else
+        {
+            <th>Fournisseur</th>
+        }
+        <th>@Html.LabelFor(model => model.First().Date)</th>
         @*<th>Commentaire</th>
             <th>Monnaie</th>*@
-        <th>Produits</th>
+        <th>@Html.LabelFor(model => model.First().Produits)</th>
         <th>Prix TTC</th>
-@*        <th>Relances</th>*@
-        <th>Reglement</th>
+        @*        <th>Relances</th>*@
+        <th>Mode de règlement</th>
         <th></th>
     </tr>
 
@@ -95,6 +103,16 @@
                 <a title="Détails" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="detail">
                     @Html.DisplayFor(modelItem => item.Identifiant)
                 </a>
+            </td>
+            <td>
+                @if (type == WebApplication1.Models.Account.TypeUtilisateur.Administrateur || type == WebApplication1.Models.Account.TypeUtilisateur.SA)
+                {
+                    @Html.DisplayFor(modelItem => item.ClientID)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.UtilisateurID)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateString)
@@ -137,23 +155,23 @@
                 }
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Relances)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Relances)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Reglement)
             </td>
             <td>
                 @*@if (isAdmin)
-                {
-                    if (item.Relances < 3)
                     {
-                        <a title="Relancer la facture" href=@Url.Action("Relancer", "Factures", new { id = item.ID }) class="btn button-red"><span class="fas fa-sync-alt" /></a>
-                    }
-                    else
-                    {
-                        <a title="Limite atteinte !" class="btn button-red isDisabled"><span class="fas fa-sync-alt" /></a>
-                    }
-                }*@
+                        if (item.Relances < 3)
+                        {
+                            <a title="Relancer la facture" href=@Url.Action("Relancer", "Factures", new { id = item.ID }) class="btn button-red"><span class="fas fa-sync-alt" /></a>
+                        }
+                        else
+                        {
+                            <a title="Limite atteinte !" class="btn button-red isDisabled"><span class="fas fa-sync-alt" /></a>
+                        }
+                    }*@
                 <a title="Consulter" href=@Url.Action("Details", "Factures", new { id = item.ID }) class="btn button-fluo">
                     <span class="glyphicon glyphicon-file" />
                 </a>
@@ -172,11 +190,11 @@
     <div class="text-center">
 
         @Html.PagedListPager(Model, page => Url.Action("Index",
-                   new
-                   {
-                       page,
-                       sortOrder = ViewBag.CurrentSort,
-                       currentFilter = ViewBag.CurrentFilter
-                   }))
+                                       new
+                                       {
+                                           page,
+                                           sortOrder = ViewBag.CurrentSort,
+                                           currentFilter = ViewBag.CurrentFilter
+                                       }))
     </div>
 }
