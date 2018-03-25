@@ -73,7 +73,7 @@
                 @Html.TextAreaFor(model => model.DefaultTextFeedback, new { @class = "form-control textAreaCSS", @rows = 10 })
                 @Html.ValidationMessageFor(model => model.DefaultTextFeedback, "", new { @class = "text-danger" })
             </div>
-            @if (!isAdmin)
+            @if (user.Type != WebApplication1.Models.Account.TypeUtilisateur.SA)
             {
             <div class="form-group">
                 @Html.LabelFor(model => model.Abonnee)
