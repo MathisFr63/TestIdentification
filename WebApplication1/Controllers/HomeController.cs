@@ -203,6 +203,12 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public ActionResult NewsletterSent()
+        {
+            ViewBag.Message = "Votre newsletter a bien été envoyée à tous les abonnés. Pour revenir à l'acceuil, cliquez sur le bouton ci-dessous.";
+            return View();
+        }
+
         // Méthode appelée lorsque l'utilisateur n'a pas le bon type (s'il n'est pas administrateur par exemple) afin d'afficher une page d'erreur lui précisant.
         public ActionResult BadUserTypeError(string message, string method, string control)
         {
@@ -220,6 +226,13 @@ namespace WebApplication1.Controllers
         public ActionResult Newsletter()
         {
             return View();
+        }
+
+        public ActionResult ListeNews()
+        {
+            var list =db.Newsletters.ToList();
+            var listT = list.OrderBy(n => n.Date);
+            return View(listT);
         }
 
         [HttpPost]
@@ -249,8 +262,11 @@ namespace WebApplication1.Controllers
                     smtp.Send(mail);
                 }
             }
+            n.Date = DateTime.Now.ToString("dd MMM yyyy HH:mm");
+            db.Newsletters.Add(n);
+            db.SaveChanges();
 
-            return View();
+            return RedirectToAction("NewsletterSent");
         }
     }
 }

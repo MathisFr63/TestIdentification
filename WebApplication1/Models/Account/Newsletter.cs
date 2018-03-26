@@ -8,8 +8,13 @@ namespace WebApplication1.Models.Account
     /// </summary>
     public class Newsletter
     {
+        [Display(Name = "Identifiant")]
+        public int ID { get; private set; }
+        [Display(Name ="Objet")]
         public string Objet { get; set; }
+        [Display(Name = "Contenu")]
         public string Contenu { get; set; }
+        [Display(Name = "Date")]
         public string Date { get; set; }
 
         public Newsletter() {}

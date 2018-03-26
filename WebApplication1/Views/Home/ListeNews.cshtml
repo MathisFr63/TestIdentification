@@ -1,0 +1,18 @@
+﻿@model System.Linq.IOrderedEnumerable<WebApplication1.Models.Account.Newsletter>
+
+
+@{
+    ViewBag.Title = "ListeNews";
+}
+
+<h2>ListeNews</h2>
+
+@foreach (var item in Model)
+{
+        <div>
+            @Html.DisplayFor(modelItem => item.Objet)<br />
+            @Html.DisplayFor(modelItem => item.Date)<br />
+
+            @Html.Raw(HttpUtility.HtmlDecode(item.Contenu))<br /><br /><br />
+        </div>
+}

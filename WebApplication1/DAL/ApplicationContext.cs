@@ -36,6 +36,8 @@ namespace WebApplication1.DAL
         public DbSet<Produit> Produits { get; set; }
         // Liste de tous les feebacks reçus.
         public DbSet<Feedback> Feedbacks { get; set; }
+        // Liste de tous les newsletters.
+        public DbSet<Newsletter> Newsletters { get; set; }
         // Liste des lieux de tous les utilisateurs.
         public DbSet<Lieu> Lieux { get; set; }
         // Liste des telephones de tous les utilisateurs.

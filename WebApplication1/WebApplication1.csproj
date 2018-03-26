@@ -325,6 +325,8 @@
     <Content Include="Views\Parametres\Index.cshtml" />
     <Content Include="Views\Home\Newsletter.cshtml" />
     <Content Include="Views\Home\Attente.cshtml" />
+    <Content Include="Views\Home\NewsletterSent.cshtml" />
+    <Content Include="Views\Home\ListeNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
