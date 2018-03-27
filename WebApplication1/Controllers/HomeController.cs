@@ -228,12 +228,12 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult ListeNews()
-        {
-            var list =db.Newsletters.ToList();
-            var listT = list.OrderBy(n => n.Date);
-            return View(listT);
-        }
+        //public ActionResult ListeNews()
+        //{
+        //    var list =db.Newsletters.ToList();
+        //    var listT = list.OrderBy(n => n.Date);
+        //    return View(listT);
+        //}
 
         [HttpPost]
         [ValidateInput(false)]
